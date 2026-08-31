@@ -1,0 +1,2130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>GenAI Meets the Real World: – Generative AI at the Edge</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../content/agenticai/agenticai.html" rel="next">
+<link href="../../content/multimodai/multimodai.html" rel="prev">
+<link href="../../images/cover.jpg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-daec65ff3ba034f51daec66ecad3ce27.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Generative AI at the Edge</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools tools-wide tools-end">
+    <a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="../../Generative-AI-at-the-Edge.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url=|url|" title="LinkedIn" class="quarto-navigation-tool px-1" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/physicalai/physicalai.html">GenAI Meets the Real World:</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Acknowledgments</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../about_book.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About this Book</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Classification_of_AI_Applications.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classification of AI Applications</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/foundations/foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">How Generative AI Works, and How It Gets Small</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Generative AI (Proactive)</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/localinf/localinf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SLMs at the Edge</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/setup/setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Arduino UNO Q Setup</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/genai/genai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Generative AI at the Edge:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/multimodai/multimodai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multimodal AI at the Edge:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/physicalai/physicalai.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">GenAI Meets the Real World:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/agenticai/agenticai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Agentic AI at the Edge:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Fixed Function AI (Reactive)</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/imgclass/imgclass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Image Classification on the Arduino UNO Q</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/objdet/objdet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Object Detection on the Arduino UNO Q</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">References &amp; Author</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../About_the_author.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About the author</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">1. Introduction</a>
+  <ul class="collapse">
+  <li><a href="#what-this-tutorial-covers" id="toc-what-this-tutorial-covers" class="nav-link" data-scroll-target="#what-this-tutorial-covers">What This Tutorial Covers</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
+  </ul></li>
+  <li><a href="#setting-up-vs-code-with-remote-ssh" id="toc-setting-up-vs-code-with-remote-ssh" class="nav-link" data-scroll-target="#setting-up-vs-code-with-remote-ssh">2. Setting Up VS Code with Remote-SSH</a>
+  <ul class="collapse">
+  <li><a href="#step-1-install-vs-code" id="toc-step-1-install-vs-code" class="nav-link" data-scroll-target="#step-1-install-vs-code">Step 1 — Install VS Code</a></li>
+  <li><a href="#step-2-install-the-remote-ssh-extension" id="toc-step-2-install-the-remote-ssh-extension" class="nav-link" data-scroll-target="#step-2-install-the-remote-ssh-extension">Step 2 — Install the Remote-SSH Extension</a></li>
+  <li><a href="#step-3-connect-to-the-uno-q" id="toc-step-3-connect-to-the-uno-q" class="nav-link" data-scroll-target="#step-3-connect-to-the-uno-q">Step 3 — Connect to the UNO Q</a></li>
+  <li><a href="#step-4-open-your-projects-folder" id="toc-step-4-open-your-projects-folder" class="nav-link" data-scroll-target="#step-4-open-your-projects-folder">Step 4 — Open Your Projects Folder</a></li>
+  <li><a href="#step-5-open-the-integrated-terminal" id="toc-step-5-open-the-integrated-terminal" class="nav-link" data-scroll-target="#step-5-open-the-integrated-terminal">Step 5 — Open the Integrated Terminal</a></li>
+  <li><a href="#important-disable-heavy-extensions-on-the-remote" id="toc-important-disable-heavy-extensions-on-the-remote" class="nav-link" data-scroll-target="#important-disable-heavy-extensions-on-the-remote">Important: Disable Heavy Extensions on the Remote</a></li>
+  </ul></li>
+  <li><a href="#hardware-and-software-requirements" id="toc-hardware-and-software-requirements" class="nav-link" data-scroll-target="#hardware-and-software-requirements">3. Hardware and Software Requirements</a>
+  <ul class="collapse">
+  <li><a href="#hardware" id="toc-hardware" class="nav-link" data-scroll-target="#hardware">Hardware</a></li>
+  <li><a href="#software-already-on-the-uno-q-from-earlier-chapters" id="toc-software-already-on-the-uno-q-from-earlier-chapters" class="nav-link" data-scroll-target="#software-already-on-the-uno-q-from-earlier-chapters">Software (already on the UNO Q from earlier chapters)</a></li>
+  <li><a href="#software-installed-in-this-chapter" id="toc-software-installed-in-this-chapter" class="nav-link" data-scroll-target="#software-installed-in-this-chapter">Software (installed in this chapter)</a></li>
+  </ul></li>
+  <li><a href="#running-llama-server-as-a-systemd-service" id="toc-running-llama-server-as-a-systemd-service" class="nav-link" data-scroll-target="#running-llama-server-as-a-systemd-service">4. Running llama-server as a systemd Service</a>
+  <ul class="collapse">
+  <li><a href="#step-1-create-the-service-file" id="toc-step-1-create-the-service-file" class="nav-link" data-scroll-target="#step-1-create-the-service-file">Step 1 — Create the Service File</a></li>
+  <li><a href="#step-2-enable-and-start" id="toc-step-2-enable-and-start" class="nav-link" data-scroll-target="#step-2-enable-and-start">Step 2 — Enable and Start</a></li>
+  <li><a href="#step-3-verify-it-survives-a-reboot" id="toc-step-3-verify-it-survives-a-reboot" class="nav-link" data-scroll-target="#step-3-verify-it-survives-a-reboot">Step 3 — Verify It Survives a Reboot</a></li>
+  </ul></li>
+  <li><a href="#the-dual-brain-architecture-for-generative-ai" id="toc-the-dual-brain-architecture-for-generative-ai" class="nav-link" data-scroll-target="#the-dual-brain-architecture-for-generative-ai">5. The Dual-Brain Architecture for Generative AI</a></li>
+  <li><a href="#project-structure-for-a-bridge-flask-slm-app" id="toc-project-structure-for-a-bridge-flask-slm-app" class="nav-link" data-scroll-target="#project-structure-for-a-bridge-flask-slm-app">6. Project Structure for a Bridge + Flask SLM App</a>
+  <ul class="collapse">
+  <li><a href="#step-1-create-the-app-skeleton" id="toc-step-1-create-the-app-skeleton" class="nav-link" data-scroll-target="#step-1-create-the-app-skeleton">Step 1 — Create the App Skeleton</a></li>
+  <li><a href="#step-2-edit-app.yaml" id="toc-step-2-edit-app.yaml" class="nav-link" data-scroll-target="#step-2-edit-app.yaml">Step 2 — Edit <code>app.yaml</code></a></li>
+  </ul></li>
+  <li><a href="#building-the-python-side" id="toc-building-the-python-side" class="nav-link" data-scroll-target="#building-the-python-side">7. Building the Python Side</a>
+  <ul class="collapse">
+  <li><a href="#step-1-pythonrequirements.txt" id="toc-step-1-pythonrequirements.txt" class="nav-link" data-scroll-target="#step-1-pythonrequirements.txt">Step 1 — <code>python/requirements.txt</code></a></li>
+  <li><a href="#step-2-pythonmain.py" id="toc-step-2-pythonmain.py" class="nav-link" data-scroll-target="#step-2-pythonmain.py">Step 2 — <code>python/main.py</code></a></li>
+  </ul></li>
+  <li><a href="#building-the-mcu-side" id="toc-building-the-mcu-side" class="nav-link" data-scroll-target="#building-the-mcu-side">8. Building the MCU Side</a>
+  <ul class="collapse">
+  <li><a href="#step-1-hardware" id="toc-step-1-hardware" class="nav-link" data-scroll-target="#step-1-hardware">Step 1 — Hardware</a></li>
+  <li><a href="#step-2-sketchsketch.ino" id="toc-step-2-sketchsketch.ino" class="nav-link" data-scroll-target="#step-2-sketchsketch.ino">Step 2 — <code>sketch/sketch.ino</code></a></li>
+  <li><a href="#step-3-sketchsketch.yaml" id="toc-step-3-sketchsketch.yaml" class="nav-link" data-scroll-target="#step-3-sketchsketch.yaml">Step 3 — <code>sketch/sketch.yaml</code></a></li>
+  </ul></li>
+  <li><a href="#running-the-full-application" id="toc-running-the-full-application" class="nav-link" data-scroll-target="#running-the-full-application">9. Running the Full Application</a>
+  <ul class="collapse">
+  <li><a href="#step-1-confirm-llama-server-is-running" id="toc-step-1-confirm-llama-server-is-running" class="nav-link" data-scroll-target="#step-1-confirm-llama-server-is-running">Step 1 — Confirm llama-server Is Running</a></li>
+  <li><a href="#step-2-start-the-app" id="toc-step-2-start-the-app" class="nav-link" data-scroll-target="#step-2-start-the-app">Step 2 — Start the App</a></li>
+  <li><a href="#step-3-follow-the-logs" id="toc-step-3-follow-the-logs" class="nav-link" data-scroll-target="#step-3-follow-the-logs">Step 3 — Follow the Logs</a></li>
+  <li><a href="#step-4-stop-the-app" id="toc-step-4-stop-the-app" class="nav-link" data-scroll-target="#step-4-stop-the-app">Step 4 — Stop the App</a></li>
+  </ul></li>
+  <li><a href="#the-optional-flask-endpoint-exposing-the-slm-over-http" id="toc-the-optional-flask-endpoint-exposing-the-slm-over-http" class="nav-link" data-scroll-target="#the-optional-flask-endpoint-exposing-the-slm-over-http">10. The Optional Flask Endpoint: Exposing the SLM Over HTTP</a>
+  <ul class="collapse">
+  <li><a href="#creating-a-live-dashboard-for-exhibiting-the-inference-result" id="toc-creating-a-live-dashboard-for-exhibiting-the-inference-result" class="nav-link" data-scroll-target="#creating-a-live-dashboard-for-exhibiting-the-inference-result">Creating a Live Dashboard for Exhibiting the Inference Result</a></li>
+  </ul></li>
+  <li><a href="#performance-what-to-actually-expect" id="toc-performance-what-to-actually-expect" class="nav-link" data-scroll-target="#performance-what-to-actually-expect">11. Performance: What to Actually Expect</a></li>
+  <li><a href="#tips-tricks-and-troubleshooting" id="toc-tips-tricks-and-troubleshooting" class="nav-link" data-scroll-target="#tips-tricks-and-troubleshooting">12. Tips, Tricks, and Troubleshooting</a>
+  <ul class="collapse">
+  <li><a href="#llama-server-wont-start" id="toc-llama-server-wont-start" class="nav-link" data-scroll-target="#llama-server-wont-start">llama-server Won’t Start</a></li>
+  <li><a href="#model-loops-or-produces-very-long-responses" id="toc-model-loops-or-produces-very-long-responses" class="nav-link" data-scroll-target="#model-loops-or-produces-very-long-responses">Model Loops or Produces Very Long Responses</a></li>
+  <li><a href="#bridge.call-times-out" id="toc-bridge.call-times-out" class="nav-link" data-scroll-target="#bridge.call-times-out">Bridge.call Times Out</a></li>
+  <li><a href="#out-of-memory-crashes" id="toc-out-of-memory-crashes" class="nav-link" data-scroll-target="#out-of-memory-crashes">Out-of-Memory Crashes</a></li>
+  <li><a href="#json-parse-failures-from-the-model" id="toc-json-parse-failures-from-the-model" class="nav-link" data-scroll-target="#json-parse-failures-from-the-model">JSON Parse Failures from the Model</a></li>
+  <li><a href="#disk-space-running-low" id="toc-disk-space-running-low" class="nav-link" data-scroll-target="#disk-space-running-low">Disk Space Running Low</a></li>
+  <li><a href="#the-flask-endpoint-is-not-reachable-from-outside" id="toc-the-flask-endpoint-is-not-reachable-from-outside" class="nav-link" data-scroll-target="#the-flask-endpoint-is-not-reachable-from-outside">The Flask Endpoint Is Not Reachable From Outside</a></li>
+  </ul></li>
+  <li><a href="#going-further" id="toc-going-further" class="nav-link" data-scroll-target="#going-further">13. Going Further</a>
+  <ul class="collapse">
+  <li><a href="#alternative-model-qwen-3.5-2b" id="toc-alternative-model-qwen-3.5-2b" class="nav-link" data-scroll-target="#alternative-model-qwen-3.5-2b">Alternative Model (Qwen 3.5 2B)</a></li>
+  <li><a href="#function-calling-with-the-slm" id="toc-function-calling-with-the-slm" class="nav-link" data-scroll-target="#function-calling-with-the-slm">Function Calling with the SLM</a></li>
+  <li><a href="#multimodal-slms-vision-language-models" id="toc-multimodal-slms-vision-language-models" class="nav-link" data-scroll-target="#multimodal-slms-vision-language-models">Multimodal SLMs (Vision-Language Models)</a></li>
+  <li><a href="#agentic-ai-assistant" id="toc-agentic-ai-assistant" class="nav-link" data-scroll-target="#agentic-ai-assistant">Agentic AI Assistant</a></li>
+  <li><a href="#edge-impulse-integration" id="toc-edge-impulse-integration" class="nav-link" data-scroll-target="#edge-impulse-integration">Edge Impulse Integration</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">14. Conclusion</a>
+  <ul class="collapse">
+  <li><a href="#advantages-of-the-uno-q-approach-for-generative-ai" id="toc-advantages-of-the-uno-q-approach-for-generative-ai" class="nav-link" data-scroll-target="#advantages-of-the-uno-q-approach-for-generative-ai">Advantages of the UNO Q Approach for Generative AI</a></li>
+  <li><a href="#limitations-and-considerations" id="toc-limitations-and-considerations" class="nav-link" data-scroll-target="#limitations-and-considerations">Limitations and Considerations</a></li>
+  <li><a href="#where-generative-ai-fits-in-the-edge-ai-curriculum" id="toc-where-generative-ai-fits-in-the-edge-ai-curriculum" class="nav-link" data-scroll-target="#where-generative-ai-fits-in-the-edge-ai-curriculum">Where Generative AI Fits in the Edge AI Curriculum</a></li>
+  <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next">What’s Next</a></li>
+  </ul></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">15. Resources</a>
+  <ul class="collapse">
+  <li><a href="#useful-resources" id="toc-useful-resources" class="nav-link" data-scroll-target="#useful-resources">Useful Resources</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/edit/main/content/physicalai/physicalai.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/blob/main/content/physicalai/physicalai.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">GenAI Meets the Real World:</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>A Dual-Brain Dengue Risk Classifier with llama.cpp and Bridge RPC</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/jpeg/cover.jpg" class="img-fluid figure-img"></p>
+<figcaption><em>Cover image prompt (Nano Banana: Here is the shortened, single-paragraph prompt to reproduce the image: A clean, colorful vector-style digital illustration of an electronics development board on a green cutting mat. In the exact center of the blue board is a large, prominent Qualcomm QRB2210 processor chip glowing with a bright cyan light, while a smaller STM32U585 chip sits to its right. The board is connected via colorful jumper wires to a variety of components scattered around it, including a servo motor, a small breadboard with a sensor, a row of vertical LEDs, and tactile push-buttons. The scene features crisp line art, smooth gradients, and a textbook-illustration style, softly lit by an overhead light source.</em></figcaption>
+</figure>
+</div>
+<hr>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">1. Introduction</h2>
+<section id="what-this-tutorial-covers" class="level3">
+<h3 class="anchored" data-anchor-id="what-this-tutorial-covers">What This Tutorial Covers</h3>
+<p>This chapter wires the SLM tooling from <a href="../../content/genai/genai.html">Generative AI at the Edge</a> into a real physical-computing application — the loop closes through hardware, not just a terminal. Qwen3.5-0.8B runs as a persistent <code>llama-server</code> <strong>systemd service</strong> on the Linux (MPU) side. A Python application built with the <code>arduino-app-cli</code> framework uses <strong>Bridge RPC</strong> to expose the SLM to an Arduino sketch on the MCU side, which reads real sensors and drives real actuators. An optional Flask endpoint exposes the same service over HTTP to other devices on the network.</p>
+<p><strong>The Project</strong></p>
+<p>Imagine you have a camera monitoring potential stagnant water sources that are suitable for mosquito larval development. A YOLO model could be trained, for example, to detect water on discarded car tires or buckets. The output of such a model would be one of the inputs to a <strong>Dengue Risk Classifier</strong>. The classifier will also have other inputs, such as temperature and humidity, which are also important conditions for mosquito larvae development. Based on those inputs, the classifier should categorize the situation by turning on external LEDS based on the risk and also providing an explanation through a webpage.</p>
+<p><img src="./images/png/yolo-integration.png" class="img-fluid"></p>
+<p><strong>The Architecture</strong></p>
+<p>The worked example is a dengue risk classifier: the MCU reads temperature, humidity, and a water-presence signal from sensors; the SLM categorizes the situation as <code>low</code>, <code>medium</code>, or <code>high</code> risk with a one-sentence explanation; the MCU drives the RGB LEDs to match the risk level. The pattern generalizes to any application where sensors produce structured data and a language model produces a structured verdict.</p>
+<p><img src="./images/png/block-project.png" class="img-fluid"></p>
+<p><strong>Why this approach?</strong></p>
+<ul>
+<li>Full local inference. No API keys, no rate limits, and sensor data never leaves the device.</li>
+<li>The dual-brain architecture works as designed: real-time sensing and actuation on the MCU, AI reasoning on the Linux side, Bridge RPC connecting them.</li>
+<li>Unlike the previous chapters, <code>llama-server</code> runs persistently as a service — it survives reboots and restarts on failure, which is what a real deployment needs instead of a terminal you have to keep open.</li>
+<li>The same llama.cpp <code>llama-server</code> binary speaks an OpenAI-compatible HTTP API, so the same Python code that talks to a local SLM today can fall back to a cloud LLM tomorrow with a one-line URL change.</li>
+</ul>
+<p>By the end of this tutorial you will have a complete UNO Q application that runs from boot, reads sensor data on the MCU, classifies it on the MPU using Qwen3.5-0.8B, drives an RGB LED based on the verdict, and exposes a <code>/classify</code> HTTP endpoint for off-board clients (phones, browsers, other boards).</p>
+</section>
+<section id="prerequisites" class="level3">
+<h3 class="anchored" data-anchor-id="prerequisites">Prerequisites</h3>
+<p>This tutorial assumes you have completed:</p>
+<ul>
+<li><a href="../../content/setup/setup.html">Setup</a> — headless ADB/Wi-Fi/SSH access to the board.</li>
+<li><a href="../../content/genai/genai.html">Generative AI at the Edge</a> — <code>llama.cpp</code> built from source, a Qwen3.5-0.8B GGUF downloaded, and comfort running <code>llama-server</code> by hand and calling it from Python.</li>
+</ul>
+<p>Also useful, but not required for this chapter: <a href="../../content/multimodai/multimodai.html">Multimodal AI at the Edge</a>, if you want the vision pathway too.</p>
+<p>You’ll also want a comfortable way to edit and transfer a multi-file project (<code>app.yaml</code>, <code>python/main.py</code>, <code>sketch/sketch.ino</code>) — Section 2 below sets up VS Code with Remote-SSH for that. <code>nano</code> over SSH plus <code>scp</code> works too if you’d rather stay terminal-only; everything in this chapter is plain text and nothing depends on the editor.</p>
+<blockquote class="blockquote">
+<p>If any of the above is unfamiliar, work through those chapters first. This one builds directly on them rather than repeating the tooling.</p>
+</blockquote>
+</section>
+</section>
+<section id="setting-up-vs-code-with-remote-ssh" class="level2">
+<h2 class="anchored" data-anchor-id="setting-up-vs-code-with-remote-ssh">2. Setting Up VS Code with Remote-SSH</h2>
+<p>Visual Studio Code with the Remote-SSH extension gives you a full IDE experience — file browsing, an integrated terminal, IntelliSense, extensions — running directly against the UNO Q’s filesystem. It’s not required (everything below also works from <code>nano</code> and <code>scp</code>/<code>rsync</code>), but for a project with three files spread across two languages, it’s a meaningfully better workflow than juggling terminal windows.</p>
+<section id="step-1-install-vs-code" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-install-vs-code">Step 1 — Install VS Code</h3>
+<p>Download and install VS Code for your OS from: https://code.visualstudio.com/</p>
+</section>
+<section id="step-2-install-the-remote-ssh-extension" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-install-the-remote-ssh-extension">Step 2 — Install the Remote-SSH Extension</h3>
+<ol type="1">
+<li>Open VS Code.</li>
+<li>Go to the <strong>Extensions</strong> view (<code>Ctrl+Shift+X</code> / <code>Cmd+Shift+X</code>).</li>
+<li>Search for <strong>Remote - SSH</strong> (by Microsoft).</li>
+<li>Click <strong>Install</strong>.</li>
+</ol>
+</section>
+<section id="step-3-connect-to-the-uno-q" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-connect-to-the-uno-q">Step 3 — Connect to the UNO Q</h3>
+<ol type="1">
+<li>Click the <strong>Remote Connection</strong> icon in the bottom-left corner or at the left menu of VS Code (it looks like <code>&gt;&lt;</code>).</li>
+<li>Select <code>+</code> or <strong>Connect to Host…</strong></li>
+<li>Enter: <code>arduino@&lt;UNO_Q_IP_ADDRESS&gt;</code></li>
+</ol>
+<p><img src="./images/png/VS1.png" class="img-fluid"></p>
+<ol start="4" type="1">
+<li>When prompted, hit <code>&lt;Enter&gt;</code>. The Arduino UNO IP Address will appear under <code>SSH</code>.</li>
+<li>Click in the <code>terminal +</code> icon.</li>
+</ol>
+<p><img src="./images/png/iconssh.png" class="img-fluid"></p>
+<ol start="6" type="1">
+<li>Enter your password (or it will authenticate automatically if you set up SSH keys in the Setup chapter).</li>
+</ol>
+<p>VS Code will install a lightweight server component on the UNO Q. This may take a minute on the first connection.</p>
+</section>
+<section id="step-4-open-your-projects-folder" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-open-your-projects-folder">Step 4 — Open Your Projects Folder</h3>
+<p>Once connected:</p>
+<ol type="1">
+<li>Go to <strong>File → Open Folder…</strong></li>
+<li>Navigate to <code>/home/arduino/ArduinoApps/</code></li>
+</ol>
+<p><img src="./images/png/uno-apps.png" class="img-fluid"></p>
+<ol start="3" type="1">
+<li>Click <strong>OK</strong>.</li>
+</ol>
+<p>You now have full file-browsing, editing, and integrated terminal access to the UNO Q.</p>
+<p><img src="./images/png/VC-full.png" class="img-fluid"></p>
+</section>
+<section id="step-5-open-the-integrated-terminal" class="level3">
+<h3 class="anchored" data-anchor-id="step-5-open-the-integrated-terminal">Step 5 — Open the Integrated Terminal</h3>
+<p>If not opened, use <code>Ctrl+`</code> (backtick) to open a terminal inside VS Code. This terminal runs directly on the UNO Q, so you can execute <code>arduino-app-cli</code> commands, install packages, and manage your project — all from within VS Code. Every terminal command in the rest of this chapter can run here instead of a separate SSH session.</p>
+</section>
+<section id="important-disable-heavy-extensions-on-the-remote" class="level3">
+<h3 class="anchored" data-anchor-id="important-disable-heavy-extensions-on-the-remote">Important: Disable Heavy Extensions on the Remote</h3>
+<p>The UNO Q has limited RAM (especially the 2 GB variant). To avoid memory issues while <code>llama-server</code> is also running:</p>
+<ul>
+<li><strong>Disable</strong> GitHub Copilot and other AI assistants on the remote connection.</li>
+<li><strong>Disable</strong> any extension you do not strictly need for Python/C++ editing.</li>
+<li>Keep installed remote extensions to a minimum: <strong>Python</strong>, <strong>C/C++</strong>, and <strong>Pylance</strong> are usually sufficient.</li>
+</ul>
+<p>You can disable extensions selectively for the SSH connection without affecting your local setup: right-click the extension and choose <em>Disable (SSH: arduino@…)</em>.</p>
+</section>
+</section>
+<section id="hardware-and-software-requirements" class="level2">
+<h2 class="anchored" data-anchor-id="hardware-and-software-requirements">3. Hardware and Software Requirements</h2>
+<section id="hardware" class="level3">
+<h3 class="anchored" data-anchor-id="hardware">Hardware</h3>
+<ul>
+<li>Arduino UNO Q <strong>4 GB</strong> variant (the 2 GB variant works with SmolLM2-360M or smaller only — see the candidate-models table in <a href="../../content/genai/genai.html">chapter 2</a>).</li>
+<li>USB-C data cable.</li>
+<li>Host computer with SSH and, optionally, VS Code (Section 2).</li>
+<li>DHT22 temperature/humidity sensor, water-presence switch, and RGB LEDs (and 220 ohm resistors).</li>
+<li>Breadboard and wiring.</li>
+</ul>
+</section>
+<section id="software-already-on-the-uno-q-from-earlier-chapters" class="level3">
+<h3 class="anchored" data-anchor-id="software-already-on-the-uno-q-from-earlier-chapters">Software (already on the UNO Q from earlier chapters)</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Debian Linux (latest image)</td>
+<td>Base OS on the MPU</td>
+</tr>
+<tr class="even">
+<td><code>arduino-app-cli</code></td>
+<td>Build/run dual-brain apps</td>
+</tr>
+<tr class="odd">
+<td>Python 3.13</td>
+<td>Application code</td>
+</tr>
+<tr class="even">
+<td>SSH server</td>
+<td>Remote access</td>
+</tr>
+<tr class="odd">
+<td><code>llama.cpp</code> built from source, Qwen3.5-0.8B GGUF</td>
+<td>From <a href="../../content/genai/genai.html">chapter 2</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="software-installed-in-this-chapter" class="level3">
+<h3 class="anchored" data-anchor-id="software-installed-in-this-chapter">Software (installed in this chapter)</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>flask</code>, <code>requests</code> (Python)</td>
+<td>HTTP endpoint + API client, installed via the app’s <code>requirements.txt</code></td>
+</tr>
+</tbody>
+</table>
+<p>No further build tools are needed — <code>build-essential</code>, <code>cmake</code>, and <code>libcurl4-openssl-dev</code> were already installed when you built <code>llama.cpp</code> in chapter 2.</p>
+</section>
+</section>
+<section id="running-llama-server-as-a-systemd-service" class="level2">
+<h2 class="anchored" data-anchor-id="running-llama-server-as-a-systemd-service">4. Running llama-server as a systemd Service</h2>
+<p>So far, every <code>llama-server</code> you’ve started (chapters 2 and 3) ran interactively, in the foreground, in a terminal you had to keep open. That’s fine for testing, but this project needs the model available continuously — surviving reboots, restarting if it crashes, with no terminal attached. That’s what a <strong>systemd service</strong> gives you.</p>
+<section id="step-1-create-the-service-file" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-create-the-service-file">Step 1 — Create the Service File</h3>
+<p>Since the UNO Q is on the local network, binding to <code>0.0.0.0</code> exposes the SLM endpoint to any device on that LAN, which is exactly what <a href="#10-the-optional-flask-endpoint-exposing-the-slm-over-http">Section 10</a> later does via Flask too.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> nano /etc/systemd/system/llama-server.service</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Paste:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode ini code-with-copy"><code class="sourceCode ini"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[Unit]</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">Description</span><span class="ot">=</span><span class="st">llama.cpp server (Qwen3.5-0.8B on UNO Q)</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">After</span><span class="ot">=</span><span class="st">network-online.target</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">[Service]</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="dt">User</span><span class="ot">=</span><span class="st">arduino</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="dt">WorkingDirectory</span><span class="ot">=</span><span class="st">/home/arduino/llama.cpp</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="dt">ExecStart</span><span class="ot">=</span><span class="st">/home/arduino/llama.cpp/build/bin/llama-server \</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="dt">  -m /home/arduino/models/Qwen_Qwen3.5-0.8B-Q8_0.gguf \</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="dt">  --host 0.0.0.0 --port 8081 \</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="dt">  -c 1024 -t 4 \</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="dt">  --reasoning off \</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="dt">  --reasoning-budget 0 \</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="dt">  --alias qwen3.5-0.8b</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="dt">Restart</span><span class="ot">=</span><span class="st">on-failure</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="dt">RestartSec</span><span class="ot">=</span><span class="dv">10</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="dt">Nice</span><span class="ot">=</span><span class="dv">-5</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="kw">[Install]</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="dt">WantedBy</span><span class="ot">=</span><span class="st">multi-user.target</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p><strong>Note</strong>: If you moved the binaries to <code>~/llama-runtime/</code> (per chapter 2’s optional disk-cleanup step), adjust <code>WorkingDirectory</code> and <code>ExecStart</code> accordingly, and add <code>Environment=LD_LIBRARY_PATH=/home/arduino/llama-runtime</code>.</p>
+</blockquote>
+<p>Key flags (most are unchanged from chapter 2 — the new ones are <code>Restart</code>, <code>RestartSec</code>, and <code>Nice</code>, which only make sense in a persistent service):</p>
+<ul>
+<li><code>--reasoning off --reasoning-budget 0</code> — <strong>critical</strong>. Disables Qwen 3.5’s thinking mode, as covered in chapter 2. The server log should report <code>thinking = 0</code> when this is working.</li>
+<li><code>-c 1024</code> — context length. Larger values eat KV-cache RAM; 1024 is enough for structured classification and short Q&amp;A.</li>
+<li><code>--alias qwen3.5-0.8b</code> — same stable client-facing name used throughout chapters 2 and 3.</li>
+<li><code>Restart=on-failure</code> / <code>RestartSec=10</code> — if the process crashes (e.g., OOM), systemd restarts it automatically after 10 seconds instead of leaving the endpoint dead.</li>
+<li><code>Nice=-5</code> gives <code>llama-server</code> slightly higher scheduling priority than user-space apps. Don’t go lower than -5 or you risk starving the kernel.</li>
+</ul>
+</section>
+<section id="step-2-enable-and-start" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-enable-and-start">Step 2 — Enable and Start</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl daemon-reload</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable <span class="at">--now</span> llama-server.service</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> status llama-server <span class="at">--no-pager</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">journalctl</span> <span class="at">-u</span> llama-server <span class="at">-f</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Wait for <code>HTTP server listening</code> in the journal output, then <code>Ctrl+C</code> to exit the log tail.</p>
+</section>
+<section id="step-3-verify-it-survives-a-reboot" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-verify-it-survives-a-reboot">Step 3 — Verify It Survives a Reboot</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> reboot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>After the board comes back up, SSH in and check:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> status llama-server <span class="at">--no-pager</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> http://127.0.0.1:8081/health</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If both work, the service is solid. You now have a persistent local AI endpoint that starts on boot, restarts on failure, and serves any client on the board via HTTP — the foundation the rest of this chapter builds on.</p>
+</section>
+</section>
+<section id="the-dual-brain-architecture-for-generative-ai" class="level2">
+<h2 class="anchored" data-anchor-id="the-dual-brain-architecture-for-generative-ai">5. The Dual-Brain Architecture for Generative AI</h2>
+<p>The UNO Q’s dual-brain architecture maps naturally onto the SLM use case: real-time sensing on the MCU, AI reasoning on the MPU, with <strong>Bridge RPC</strong> as the glue between them.</p>
+<p><img src="./images/png/dual-brain.png" class="img-fluid"></p>
+<p>Three data paths run through this architecture:</p>
+<ol type="1">
+<li><strong>MCU → MPU (Bridge RPC)</strong> — the sketch calls <code>Bridge.call("classify", ...)</code> and gets a verdict back. This is the on-board, low-latency path.</li>
+<li><strong>MPU → llama-server (HTTP)</strong> — the Python code calls <code>localhost:8081</code> to run inference. Internal to the Linux side.</li>
+<li><strong>External → MPU (Flask)</strong> — other devices on the network call <code>http://&lt;UNO_Q_IP&gt;:7000/classify</code>. The <em>optional</em> off-board path.</li>
+</ol>
+<p>The same <code>classify()</code> logic powers all three. That’s the design.</p>
+<div class="cell" data-fig-width="5.5" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">sequenceDiagram
+    autonumber
+    participant S as STM32U585 (sketch)
+    participant P as Python main.py
+    participant L as llama-server :8081
+    participant M as Qwen3.5-0.8B
+
+    S-&gt;&gt;P: Bridge.call("classify",&lt;br/&gt;29.5, 82, true)
+    P-&gt;&gt;P: build system + few-shot prompt
+    P-&gt;&gt;L: POST /v1/chat/completions&lt;br/&gt;response_format=json_object
+    L-&gt;&gt;M: tokenize prompt
+    loop generate
+        M--&gt;&gt;L: next token
+    end
+    L--&gt;&gt;P: {"risk":"high","reason":"..."}
+    P-&gt;&gt;P: parse JSON, map risk → code (0/1/2)
+    P--&gt;&gt;S: 2.0  (risk code as float)
+    Note over S: set LED red
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="project-structure-for-a-bridge-flask-slm-app" class="level2">
+<h2 class="anchored" data-anchor-id="project-structure-for-a-bridge-flask-slm-app">6. Project Structure for a Bridge + Flask SLM App</h2>
+<p>Create a standard UNO Q app following the structure introduced in <a href="../../content/setup/setup.html">chapter 1</a>. The app is called <code>risk-classifier</code>.</p>
+<pre><code>risk-classifier/
+├── app.yaml
+├── README.md
+├── python/
+│   ├── main.py
+│   └── requirements.txt
+└── sketch/
+    ├── sketch.ino
+    └── sketch.yaml</code></pre>
+<section id="step-1-create-the-app-skeleton" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-create-the-app-skeleton">Step 1 — Create the App Skeleton</h3>
+<p>On the UNO Q:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/ArduinoApps</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app new <span class="st">"risk-classifier"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> risk-classifier</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You can also create the project directly in <a href="#2-setting-up-vs-code-with-remote-ssh">VS Code with Remote-SSH</a> (Section 2 above):</p>
+<p><img src="./images/png/vsc-project-creation.png" class="img-fluid"></p>
+<p>Or in the Arduino App Lab:</p>
+<p><img src="./images/png/app-lab.png" class="img-fluid"></p>
+</section>
+<section id="step-2-edit-app.yaml" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-edit-app.yaml">Step 2 — Edit <code>app.yaml</code></h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Risk Classifier (SLM + Bridge)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">"Dengue risk classification using a local SLM via Bridge RPC and Flask"</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">icon</span><span class="kw">:</span><span class="at"> 🦟</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">"1.0.0"</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="dv">7000</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">bricks</span><span class="kw">:</span><span class="at"> </span><span class="kw">[]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <code>ports: [7000]</code> line tells the App Lab runtime to forward port 7000 so external clients can reach the Flask endpoint. Without this, Flask binds inside the container only and is invisible from outside the board.</p>
+</section>
+</section>
+<section id="building-the-python-side" class="level2">
+<h2 class="anchored" data-anchor-id="building-the-python-side">7. Building the Python Side</h2>
+<p>The Python side does three jobs:</p>
+<ol type="1">
+<li>Provides a <code>classify_risk()</code> function to the MCU sketch over Bridge RPC (returns a numeric code the sketch can use directly).</li>
+<li>Calls llama-server via HTTP to do the actual inference.</li>
+<li>Serves the same logic as an HTTP endpoint via Flask for off-board clients (returns the full JSON verdict).</li>
+</ol>
+<section id="step-1-pythonrequirements.txt" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-pythonrequirements.txt">Step 1 — <code>python/requirements.txt</code></h3>
+<p>Under the <code>python</code> folder, create <code>requirements.txt</code>:</p>
+<pre><code>flask==3.0.3
+requests==2.32.3</code></pre>
+</section>
+<section id="step-2-pythonmain.py" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-pythonmain.py">Step 2 — <code>python/main.py</code></h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">risk-classifier: Dengue risk classification on the UNO Q.</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">Two interfaces over the same classify() function:</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">  1. Bridge RPC for the on-board MCU sketch (returns a float code).</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">  2. Flask HTTP endpoint for off-board clients (returns the full JSON verdict).</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> socket</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> struct</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> threading</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> Flask, request, jsonify</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> arduino.app_utils <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co"># ─── Container-aware host discovery ────────────────────────────────</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Inside the App Lab container, 127.0.0.1 is the *container's* loopback,</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co"># not the UNO Q's. The default gateway in /proc/net/route is the host</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="co"># as seen from this container, which is where llama-server listens.</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _host_gateway():</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Return the default gateway IP (the UNO Q host from inside the container)."""</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(<span class="st">"/proc/net/route"</span>) <span class="im">as</span> f:</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> line <span class="kw">in</span> f.readlines()[<span class="dv">1</span>:]:</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>                fields <span class="op">=</span> line.strip().split()</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> fields[<span class="dv">1</span>] <span class="op">==</span> <span class="st">"00000000"</span> <span class="kw">and</span> <span class="bu">int</span>(fields[<span class="dv">3</span>], <span class="dv">16</span>) <span class="op">&amp;</span> <span class="dv">2</span>:</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">return</span> socket.inet_ntoa(struct.pack(<span class="st">"&lt;L"</span>, <span class="bu">int</span>(fields[<span class="dv">2</span>], <span class="dv">16</span>)))</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">OSError</span>:</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">"127.0.0.1"</span>  <span class="co"># fallback when running outside a container</span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a><span class="co"># ─── Configuration ─────────────────────────────────────────────────</span></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>LLM_HOST <span class="op">=</span> _host_gateway()</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>LLM_URL <span class="op">=</span> <span class="ss">f"http://</span><span class="sc">{</span>LLM_HOST<span class="sc">}</span><span class="ss">:8081/v1/chat/completions"</span></span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>LLM_HEALTH_URL <span class="op">=</span> <span class="ss">f"http://</span><span class="sc">{</span>LLM_HOST<span class="sc">}</span><span class="ss">:8081/health"</span></span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>TIMEOUT_S <span class="op">=</span> <span class="dv">120</span></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>FLASK_PORT <span class="op">=</span> <span class="dv">7000</span></span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Mapping from risk label to numeric code for the MCU</span></span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>RISK_CODE <span class="op">=</span> {<span class="st">"low"</span>: <span class="fl">0.0</span>, <span class="st">"medium"</span>: <span class="fl">1.0</span>, <span class="st">"high"</span>: <span class="fl">2.0</span>}</span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Qwen3.5 non-thinking mode parameters (from Unsloth docs)</span></span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>LLM_PARAMS <span class="op">=</span> {</span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>    <span class="st">"temperature"</span>: <span class="fl">0.7</span>,</span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>    <span class="st">"top_p"</span>: <span class="fl">0.8</span>,</span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>    <span class="st">"presence_penalty"</span>: <span class="fl">1.5</span>,</span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>SYSTEM_PROMPT <span class="op">=</span> (</span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>    <span class="st">"You are an environmental risk classifier for dengue surveillance. "</span></span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Given temperature (Celsius), humidity (%), and whether standing water "</span></span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>    <span class="st">"is reported, output ONLY a JSON object with two fields: "</span></span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>    <span class="st">'"risk" (one of: low, medium, high) and '</span></span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>    <span class="st">'"reason" (one short sentence, max 20 words). '</span></span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Do not include any prose outside the JSON."</span></span>
+<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a>FEW_SHOTS <span class="op">=</span> [</span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"user"</span>,</span>
+<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">'{"temp_c": 18.0, "humidity_pct": 40, "standing_water": false}'</span>},</span>
+<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"assistant"</span>,</span>
+<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">'{"risk":"low","reason":"Cool and dry conditions with no water; Aedes mosquito activity unlikely."}'</span>},</span>
+<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"user"</span>,</span>
+<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">'{"temp_c": 29.5, "humidity_pct": 82, "standing_water": true}'</span>},</span>
+<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"role"</span>: <span class="st">"assistant"</span>,</span>
+<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>     <span class="st">"content"</span>: <span class="st">'{"risk":"high","reason":"Warm humid conditions plus standing water create ideal Aedes breeding habitat."}'</span>},</span>
+<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a><span class="co"># ─── Core inference function (used by both Bridge and Flask) ───────</span></span>
+<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> strip_think_blocks(text):</span>
+<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Remove residual &lt;think&gt;...&lt;/think&gt; tags that Qwen3.5 emits even with</span></span>
+<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a><span class="co">    --reasoning off. A known behavior in current llama.cpp builds."""</span></span>
+<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a>    cleaned <span class="op">=</span> re.sub(<span class="vs">r"&lt;think&gt;</span><span class="dv">.</span><span class="op">*?</span><span class="vs">&lt;/think&gt;"</span>, <span class="st">""</span>, text, flags<span class="op">=</span>re.DOTALL)</span>
+<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> cleaned.strip()</span>
+<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> build_messages(payload):</span>
+<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a>    user_msg <span class="op">=</span> {<span class="st">"role"</span>: <span class="st">"user"</span>,</span>
+<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a>                <span class="st">"content"</span>: json.dumps(payload, ensure_ascii<span class="op">=</span><span class="va">False</span>)}</span>
+<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [{<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: SYSTEM_PROMPT}, <span class="op">*</span>FEW_SHOTS, user_msg]</span>
+<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> call_llm(messages, max_tokens<span class="op">=</span><span class="dv">80</span>):</span>
+<span id="cb10-89"><a href="#cb10-89" aria-hidden="true" tabindex="-1"></a>    body <span class="op">=</span> {</span>
+<span id="cb10-90"><a href="#cb10-90" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model"</span>: <span class="st">"qwen3.5-0.8b"</span>,</span>
+<span id="cb10-91"><a href="#cb10-91" aria-hidden="true" tabindex="-1"></a>        <span class="st">"messages"</span>: messages,</span>
+<span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a>        <span class="st">"max_tokens"</span>: max_tokens,</span>
+<span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a>        <span class="st">"response_format"</span>: {<span class="st">"type"</span>: <span class="st">"json_object"</span>},</span>
+<span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a>        <span class="op">**</span>LLM_PARAMS,</span>
+<span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a>    t0 <span class="op">=</span> time.perf_counter()</span>
+<span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> requests.post(LLM_URL, json<span class="op">=</span>body, timeout<span class="op">=</span>TIMEOUT_S)</span>
+<span id="cb10-98"><a href="#cb10-98" aria-hidden="true" tabindex="-1"></a>    r.raise_for_status()</span>
+<span id="cb10-99"><a href="#cb10-99" aria-hidden="true" tabindex="-1"></a>    latency_ms <span class="op">=</span> (time.perf_counter() <span class="op">-</span> t0) <span class="op">*</span> <span class="dv">1000</span></span>
+<span id="cb10-100"><a href="#cb10-100" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> r.json()[<span class="st">"choices"</span>][<span class="dv">0</span>][<span class="st">"message"</span>][<span class="st">"content"</span>]</span>
+<span id="cb10-101"><a href="#cb10-101" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> strip_think_blocks(content)  <span class="co"># remove residual &lt;think&gt; tags</span></span>
+<span id="cb10-102"><a href="#cb10-102" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> content, latency_ms</span>
+<span id="cb10-103"><a href="#cb10-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-104"><a href="#cb10-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-105"><a href="#cb10-105" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> parse_verdict(content):</span>
+<span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Defensive parse: tolerate stray code fences if the model adds them."""</span></span>
+<span id="cb10-107"><a href="#cb10-107" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb10-108"><a href="#cb10-108" aria-hidden="true" tabindex="-1"></a>        verdict <span class="op">=</span> json.loads(content)</span>
+<span id="cb10-109"><a href="#cb10-109" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> json.JSONDecodeError:</span>
+<span id="cb10-110"><a href="#cb10-110" aria-hidden="true" tabindex="-1"></a>        cleaned <span class="op">=</span> content.strip().lstrip(<span class="st">"`"</span>).rstrip(<span class="st">"`"</span>).strip()</span>
+<span id="cb10-111"><a href="#cb10-111" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> cleaned.startswith(<span class="st">"json"</span>):</span>
+<span id="cb10-112"><a href="#cb10-112" aria-hidden="true" tabindex="-1"></a>            cleaned <span class="op">=</span> cleaned[<span class="dv">4</span>:].lstrip()</span>
+<span id="cb10-113"><a href="#cb10-113" aria-hidden="true" tabindex="-1"></a>        verdict <span class="op">=</span> json.loads(cleaned)</span>
+<span id="cb10-114"><a href="#cb10-114" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> verdict.get(<span class="st">"risk"</span>) <span class="kw">not</span> <span class="kw">in</span> {<span class="st">"low"</span>, <span class="st">"medium"</span>, <span class="st">"high"</span>}:</span>
+<span id="cb10-115"><a href="#cb10-115" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"unexpected risk value: </span><span class="sc">{</span>verdict<span class="sc">!r}</span><span class="ss">"</span>)</span>
+<span id="cb10-116"><a href="#cb10-116" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> verdict</span>
+<span id="cb10-117"><a href="#cb10-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-118"><a href="#cb10-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-119"><a href="#cb10-119" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> classify(temp_c, humidity_pct, standing_water):</span>
+<span id="cb10-120"><a href="#cb10-120" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Inner classifier. Returns the full verdict dict.</span></span>
+<span id="cb10-121"><a href="#cb10-121" aria-hidden="true" tabindex="-1"></a><span class="co">    Used by the Flask endpoint and wrapped by classify_risk() for Bridge."""</span></span>
+<span id="cb10-122"><a href="#cb10-122" aria-hidden="true" tabindex="-1"></a>    payload <span class="op">=</span> {</span>
+<span id="cb10-123"><a href="#cb10-123" aria-hidden="true" tabindex="-1"></a>        <span class="st">"temp_c"</span>: <span class="bu">float</span>(temp_c),</span>
+<span id="cb10-124"><a href="#cb10-124" aria-hidden="true" tabindex="-1"></a>        <span class="st">"humidity_pct"</span>: <span class="bu">float</span>(humidity_pct),</span>
+<span id="cb10-125"><a href="#cb10-125" aria-hidden="true" tabindex="-1"></a>        <span class="st">"standing_water"</span>: <span class="bu">bool</span>(standing_water),</span>
+<span id="cb10-126"><a href="#cb10-126" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb10-127"><a href="#cb10-127" aria-hidden="true" tabindex="-1"></a>    messages <span class="op">=</span> build_messages(payload)</span>
+<span id="cb10-128"><a href="#cb10-128" aria-hidden="true" tabindex="-1"></a>    content, latency_ms <span class="op">=</span> call_llm(messages)</span>
+<span id="cb10-129"><a href="#cb10-129" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb10-130"><a href="#cb10-130" aria-hidden="true" tabindex="-1"></a>        verdict <span class="op">=</span> parse_verdict(content)</span>
+<span id="cb10-131"><a href="#cb10-131" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> (json.JSONDecodeError, <span class="pp">ValueError</span>):</span>
+<span id="cb10-132"><a href="#cb10-132" aria-hidden="true" tabindex="-1"></a>        <span class="co"># one retry with stricter parameters</span></span>
+<span id="cb10-133"><a href="#cb10-133" aria-hidden="true" tabindex="-1"></a>        content, latency_ms2 <span class="op">=</span> call_llm(messages, max_tokens<span class="op">=</span><span class="dv">60</span>)</span>
+<span id="cb10-134"><a href="#cb10-134" aria-hidden="true" tabindex="-1"></a>        verdict <span class="op">=</span> parse_verdict(content)</span>
+<span id="cb10-135"><a href="#cb10-135" aria-hidden="true" tabindex="-1"></a>        latency_ms <span class="op">+=</span> latency_ms2</span>
+<span id="cb10-136"><a href="#cb10-136" aria-hidden="true" tabindex="-1"></a>    verdict[<span class="st">"latency_ms"</span>] <span class="op">=</span> <span class="bu">round</span>(latency_ms, <span class="dv">1</span>)</span>
+<span id="cb10-137"><a href="#cb10-137" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"[classify] </span><span class="sc">{</span>payload<span class="sc">}</span><span class="ss"> -&gt; </span><span class="sc">{</span>verdict<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-138"><a href="#cb10-138" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> verdict</span>
+<span id="cb10-139"><a href="#cb10-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-140"><a href="#cb10-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-141"><a href="#cb10-141" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> classify_risk(temp_c, humidity_pct, standing_water):</span>
+<span id="cb10-142"><a href="#cb10-142" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Bridge-facing wrapper. Returns a float code: 0=low, 1=medium, 2=high.</span></span>
+<span id="cb10-143"><a href="#cb10-143" aria-hidden="true" tabindex="-1"></a><span class="co">    The Bridge serializes float cleanly in both directions; the sketch</span></span>
+<span id="cb10-144"><a href="#cb10-144" aria-hidden="true" tabindex="-1"></a><span class="co">    reads the code into a float and drives the LEDs."""</span></span>
+<span id="cb10-145"><a href="#cb10-145" aria-hidden="true" tabindex="-1"></a>    verdict <span class="op">=</span> classify(temp_c, humidity_pct, standing_water)</span>
+<span id="cb10-146"><a href="#cb10-146" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> RISK_CODE.get(verdict.get(<span class="st">"risk"</span>, <span class="st">"unknown"</span>), <span class="op">-</span><span class="fl">1.0</span>)</span>
+<span id="cb10-147"><a href="#cb10-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-148"><a href="#cb10-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-149"><a href="#cb10-149" aria-hidden="true" tabindex="-1"></a><span class="co"># ─── Flask app (off-board interface) ───────────────────────────────</span></span>
+<span id="cb10-150"><a href="#cb10-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-151"><a href="#cb10-151" aria-hidden="true" tabindex="-1"></a>flask_app <span class="op">=</span> Flask(<span class="va">__name__</span>)</span>
+<span id="cb10-152"><a href="#cb10-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-153"><a href="#cb10-153" aria-hidden="true" tabindex="-1"></a><span class="at">@flask_app.route</span>(<span class="st">"/healthz"</span>, methods<span class="op">=</span>[<span class="st">"GET"</span>])</span>
+<span id="cb10-154"><a href="#cb10-154" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> healthz():</span>
+<span id="cb10-155"><a href="#cb10-155" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb10-156"><a href="#cb10-156" aria-hidden="true" tabindex="-1"></a>        r <span class="op">=</span> requests.get(LLM_HEALTH_URL, timeout<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb10-157"><a href="#cb10-157" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> jsonify({<span class="st">"flask"</span>: <span class="st">"ok"</span>, <span class="st">"llm"</span>: r.json()}), <span class="dv">200</span></span>
+<span id="cb10-158"><a href="#cb10-158" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb10-159"><a href="#cb10-159" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> jsonify({<span class="st">"flask"</span>: <span class="st">"ok"</span>, <span class="st">"llm_error"</span>: <span class="bu">str</span>(e)}), <span class="dv">503</span></span>
+<span id="cb10-160"><a href="#cb10-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-161"><a href="#cb10-161" aria-hidden="true" tabindex="-1"></a><span class="at">@flask_app.route</span>(<span class="st">"/classify"</span>, methods<span class="op">=</span>[<span class="st">"POST"</span>])</span>
+<span id="cb10-162"><a href="#cb10-162" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> classify_endpoint():</span>
+<span id="cb10-163"><a href="#cb10-163" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> request.get_json(force<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb10-164"><a href="#cb10-164" aria-hidden="true" tabindex="-1"></a>    required <span class="op">=</span> {<span class="st">"temp_c"</span>, <span class="st">"humidity_pct"</span>, <span class="st">"standing_water"</span>}</span>
+<span id="cb10-165"><a href="#cb10-165" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> required.issubset(p):</span>
+<span id="cb10-166"><a href="#cb10-166" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> jsonify({<span class="st">"error"</span>: <span class="ss">f"missing: </span><span class="sc">{</span>required <span class="op">-</span> <span class="bu">set</span>(p)<span class="sc">}</span><span class="ss">"</span>}), <span class="dv">400</span></span>
+<span id="cb10-167"><a href="#cb10-167" aria-hidden="true" tabindex="-1"></a>    verdict <span class="op">=</span> classify(p[<span class="st">"temp_c"</span>], p[<span class="st">"humidity_pct"</span>], p[<span class="st">"standing_water"</span>])</span>
+<span id="cb10-168"><a href="#cb10-168" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> jsonify(verdict), <span class="dv">200</span></span>
+<span id="cb10-169"><a href="#cb10-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-170"><a href="#cb10-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-171"><a href="#cb10-171" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_flask():</span>
+<span id="cb10-172"><a href="#cb10-172" aria-hidden="true" tabindex="-1"></a>    <span class="co"># threaded=False because the model handles one request at a time anyway</span></span>
+<span id="cb10-173"><a href="#cb10-173" aria-hidden="true" tabindex="-1"></a>    flask_app.run(host<span class="op">=</span><span class="st">"0.0.0.0"</span>, port<span class="op">=</span>FLASK_PORT, threaded<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb10-174"><a href="#cb10-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-175"><a href="#cb10-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-176"><a href="#cb10-176" aria-hidden="true" tabindex="-1"></a><span class="co"># ─── Main entry: register Bridge function, start Flask, run loop ──</span></span>
+<span id="cb10-177"><a href="#cb10-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-178"><a href="#cb10-178" aria-hidden="true" tabindex="-1"></a><span class="co"># Expose the float-returning wrapper to the MCU sketch.</span></span>
+<span id="cb10-179"><a href="#cb10-179" aria-hidden="true" tabindex="-1"></a><span class="co"># (The sketch reads the result with rpc.result(float_var), so we MUST</span></span>
+<span id="cb10-180"><a href="#cb10-180" aria-hidden="true" tabindex="-1"></a><span class="co">#  return a numeric type, not a dict.)</span></span>
+<span id="cb10-181"><a href="#cb10-181" aria-hidden="true" tabindex="-1"></a>Bridge.provide(<span class="st">"classify"</span>, classify_risk)</span>
+<span id="cb10-182"><a href="#cb10-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-183"><a href="#cb10-183" aria-hidden="true" tabindex="-1"></a><span class="co"># Start Flask in a background thread</span></span>
+<span id="cb10-184"><a href="#cb10-184" aria-hidden="true" tabindex="-1"></a>threading.Thread(target<span class="op">=</span>run_flask, daemon<span class="op">=</span><span class="va">True</span>).start()</span>
+<span id="cb10-185"><a href="#cb10-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-186"><a href="#cb10-186" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[init] llama-server target: </span><span class="sc">{</span>LLM_URL<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-187"><a href="#cb10-187" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"[init] Bridge registered, Flask on :</span><span class="sc">{</span>FLASK_PORT<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-188"><a href="#cb10-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-189"><a href="#cb10-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-190"><a href="#cb10-190" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> loop():</span>
+<span id="cb10-191"><a href="#cb10-191" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The main loop is idle. All work is event-driven</span></span>
+<span id="cb10-192"><a href="#cb10-192" aria-hidden="true" tabindex="-1"></a>    <span class="co"># (Bridge calls from MCU, HTTP requests from Flask).</span></span>
+<span id="cb10-193"><a href="#cb10-193" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="dv">1</span>)</span>
+<span id="cb10-194"><a href="#cb10-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-195"><a href="#cb10-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-196"><a href="#cb10-196" aria-hidden="true" tabindex="-1"></a>App.run(user_loop<span class="op">=</span>loop)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Design choices highlights:</p>
+<ul>
+<li><strong>One inference path, two interfaces.</strong> Bridge RPC and Flask both end up calling the same <code>classify()</code> function. The Bridge gets a wrapper that returns a numeric code; Flask gets the full JSON verdict. Separation of concerns between interface and logic.</li>
+<li><strong>Float on the Bridge, dict over HTTP.</strong> The sketch can only consume primitive types via <code>rpc.result()</code>, so the Bridge wrapper collapses the verdict to a float. Off-board HTTP clients get the richer JSON.</li>
+<li><strong><code>response_format: json_object</code></strong> tells llama-server to constrain decoding to valid JSON. Not a prompt hint — a real grammar constraint on token selection.</li>
+<li><strong><code>presence_penalty=1.5</code></strong> is critical for Qwen3.5 Small models to prevent repetition loops, per the Unsloth recommendation.</li>
+<li><strong>Few-shot in code, not in the prompt template.</strong> Keeps the chat template clean and lets you swap models without rewriting prompts.</li>
+<li><strong><code>threaded=False</code></strong> on Flask. The model serves one request at a time; threading just queues backpressure on a board with no extra cores to spare.</li>
+</ul>
+</section>
+</section>
+<section id="building-the-mcu-side" class="level2">
+<h2 class="anchored" data-anchor-id="building-the-mcu-side">8. Building the MCU Side</h2>
+<p>The sketch reads sensors (temperature, humidity, water presence), calls <code>Bridge.call("classify", ...)</code>, and drives actuators (RGB LEDs).</p>
+<section id="step-1-hardware" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-hardware">Step 1 — Hardware</h3>
+<p>Connect the sensors (DHT22 and button) and the actuators (RGB LEDs):</p>
+<pre class="text"><code>Red LED     : D9  → LED → 220Ω → GND   (high risk)
+Yellow LED  : D10 → LED → 220Ω → GND   (medium risk)
+Green LED   : D11 → LED → 220Ω → GND   (low risk)
+
+DHT22:
+  VCC  → 3.3V          (NOT 5V — STM32U585 GPIO is 3.3V)
+  GND  → GND
+  DATA → D2
+  10kΩ pull-up between DATA and VCC
+
+Button: one leg → D3
+        other leg → GND</code></pre>
+<p><img src="./images/jpeg/hw.jpg" class="img-fluid"></p>
+</section>
+<section id="step-2-sketchsketch.ino" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-sketchsketch.ino">Step 2 — <code>sketch/sketch.ino</code></h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">"Arduino_RouterBridge.h"</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;DHT.h&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#define DHTPIN  </span><span class="dv">2</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#define DHTTYPE </span>DHT22</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> BTN_PIN <span class="op">=</span> <span class="dv">3</span><span class="op">;</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> LED_R   <span class="op">=</span> <span class="dv">9</span><span class="op">;</span>    <span class="co">// red   = high risk</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> LED_Y   <span class="op">=</span> <span class="dv">10</span><span class="op">;</span>   <span class="co">// amber = medium risk</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span> LED_G   <span class="op">=</span> <span class="dv">11</span><span class="op">;</span>   <span class="co">// green = low risk</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>DHT dht<span class="op">(</span>DHTPIN<span class="op">,</span> DHTTYPE<span class="op">);</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="dt">unsigned</span> <span class="dt">long</span> lastReading <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">unsigned</span> <span class="dt">long</span> READING_PERIOD_MS <span class="op">=</span> <span class="dv">30000</span><span class="op">;</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co">// ── Button state with debounce ──────────────────────────────</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> water_state <span class="op">=</span> <span class="kw">false</span><span class="op">;</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>  last_btn_reading <span class="op">=</span> HIGH<span class="op">;</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>  btn_state        <span class="op">=</span> HIGH<span class="op">;</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="dt">unsigned</span> <span class="dt">long</span> last_debounce_time <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">unsigned</span> <span class="dt">long</span> DEBOUNCE_MS <span class="op">=</span> <span class="dv">50</span><span class="op">;</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> updateButton<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> reading <span class="op">=</span> digitalRead<span class="op">(</span>BTN_PIN<span class="op">);</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>reading <span class="op">!=</span> last_btn_reading<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>    last_debounce_time <span class="op">=</span> millis<span class="op">();</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">((</span>millis<span class="op">()</span> <span class="op">-</span> last_debounce_time<span class="op">)</span> <span class="op">&gt;</span> DEBOUNCE_MS<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>reading <span class="op">!=</span> btn_state<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>      btn_state <span class="op">=</span> reading<span class="op">;</span></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> <span class="op">(</span>btn_state <span class="op">==</span> LOW<span class="op">)</span> <span class="op">{</span>            <span class="co">// falling edge = press</span></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>        water_state <span class="op">=</span> <span class="op">!</span>water_state<span class="op">;</span></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>        Serial<span class="op">.</span>print<span class="op">(</span><span class="st">"[btn] water_state -&gt; "</span><span class="op">);</span></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>        Serial<span class="op">.</span>println<span class="op">(</span>water_state <span class="op">?</span> <span class="st">"YES"</span> <span class="op">:</span> <span class="st">"no"</span><span class="op">);</span></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>      <span class="op">}</span></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>  last_btn_reading <span class="op">=</span> reading<span class="op">;</span></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> setLEDs<span class="op">(</span><span class="dt">bool</span> r<span class="op">,</span> <span class="dt">bool</span> y<span class="op">,</span> <span class="dt">bool</span> g<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>  digitalWrite<span class="op">(</span>LED_R<span class="op">,</span> r <span class="op">?</span> HIGH <span class="op">:</span> LOW<span class="op">);</span></span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>  digitalWrite<span class="op">(</span>LED_Y<span class="op">,</span> y <span class="op">?</span> HIGH <span class="op">:</span> LOW<span class="op">);</span></span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>  digitalWrite<span class="op">(</span>LED_G<span class="op">,</span> g <span class="op">?</span> HIGH <span class="op">:</span> LOW<span class="op">);</span></span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a><span class="co">// Print float as "X.YY" without depending on dtostrf or printf-float support.</span></span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> printFloat2<span class="op">(</span><span class="dt">float</span> v<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>isnan<span class="op">(</span>v<span class="op">))</span> <span class="op">{</span> Serial<span class="op">.</span>print<span class="op">(</span><span class="st">"nan"</span><span class="op">);</span> <span class="cf">return</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>v <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span>    <span class="op">{</span> Serial<span class="op">.</span>print<span class="op">(</span><span class="st">"-"</span><span class="op">);</span> v <span class="op">=</span> <span class="op">-</span>v<span class="op">;</span> <span class="op">}</span></span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> whole <span class="op">=</span> <span class="op">(</span><span class="dt">int</span><span class="op">)</span>v<span class="op">;</span></span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> frac  <span class="op">=</span> <span class="op">(</span><span class="dt">int</span><span class="op">)((</span>v <span class="op">-</span> whole<span class="op">)</span> <span class="op">*</span> <span class="fl">100.0</span><span class="bu">f</span> <span class="op">+</span> <span class="fl">0.5</span><span class="bu">f</span><span class="op">);</span></span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>frac <span class="op">&gt;=</span> <span class="dv">100</span><span class="op">)</span> <span class="op">{</span> whole<span class="op">++;</span> frac <span class="op">-=</span> <span class="dv">100</span><span class="op">;</span> <span class="op">}</span></span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a>  Serial<span class="op">.</span>print<span class="op">(</span>whole<span class="op">);</span></span>
+<span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a>  Serial<span class="op">.</span>print<span class="op">(</span><span class="st">"."</span><span class="op">);</span></span>
+<span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>frac <span class="op">&lt;</span> <span class="dv">10</span><span class="op">)</span> Serial<span class="op">.</span>print<span class="op">(</span><span class="st">"0"</span><span class="op">);</span></span>
+<span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a>  Serial<span class="op">.</span>print<span class="op">(</span>frac<span class="op">);</span></span>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb12-60"><a href="#cb12-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-61"><a href="#cb12-61" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> setup<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb12-62"><a href="#cb12-62" aria-hidden="true" tabindex="-1"></a>  pinMode<span class="op">(</span>LED_R<span class="op">,</span> OUTPUT<span class="op">);</span></span>
+<span id="cb12-63"><a href="#cb12-63" aria-hidden="true" tabindex="-1"></a>  pinMode<span class="op">(</span>LED_Y<span class="op">,</span> OUTPUT<span class="op">);</span></span>
+<span id="cb12-64"><a href="#cb12-64" aria-hidden="true" tabindex="-1"></a>  pinMode<span class="op">(</span>LED_G<span class="op">,</span> OUTPUT<span class="op">);</span></span>
+<span id="cb12-65"><a href="#cb12-65" aria-hidden="true" tabindex="-1"></a>  pinMode<span class="op">(</span>BTN_PIN<span class="op">,</span> INPUT_PULLUP<span class="op">);</span></span>
+<span id="cb12-66"><a href="#cb12-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-67"><a href="#cb12-67" aria-hidden="true" tabindex="-1"></a>  Serial<span class="op">.</span>begin<span class="op">(</span><span class="dv">115200</span><span class="op">);</span></span>
+<span id="cb12-68"><a href="#cb12-68" aria-hidden="true" tabindex="-1"></a>  dht<span class="op">.</span>begin<span class="op">();</span></span>
+<span id="cb12-69"><a href="#cb12-69" aria-hidden="true" tabindex="-1"></a>  Bridge<span class="op">.</span>begin<span class="op">();</span></span>
+<span id="cb12-70"><a href="#cb12-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-71"><a href="#cb12-71" aria-hidden="true" tabindex="-1"></a>  <span class="co">// boot blink</span></span>
+<span id="cb12-72"><a href="#cb12-72" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">3</span><span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb12-73"><a href="#cb12-73" aria-hidden="true" tabindex="-1"></a>    setLEDs<span class="op">(</span><span class="kw">true</span><span class="op">,</span> <span class="kw">true</span><span class="op">,</span> <span class="kw">true</span><span class="op">);</span>  delay<span class="op">(</span><span class="dv">150</span><span class="op">);</span></span>
+<span id="cb12-74"><a href="#cb12-74" aria-hidden="true" tabindex="-1"></a>    setLEDs<span class="op">(</span><span class="kw">false</span><span class="op">,</span> <span class="kw">false</span><span class="op">,</span> <span class="kw">false</span><span class="op">);</span> delay<span class="op">(</span><span class="dv">150</span><span class="op">);</span></span>
+<span id="cb12-75"><a href="#cb12-75" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb12-76"><a href="#cb12-76" aria-hidden="true" tabindex="-1"></a>  setLEDs<span class="op">(</span><span class="kw">false</span><span class="op">,</span> <span class="kw">false</span><span class="op">,</span> <span class="kw">true</span><span class="op">);</span>  <span class="co">// green = ready</span></span>
+<span id="cb12-77"><a href="#cb12-77" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb12-78"><a href="#cb12-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-79"><a href="#cb12-79" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> loop<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb12-80"><a href="#cb12-80" aria-hidden="true" tabindex="-1"></a>  updateButton<span class="op">();</span>   <span class="co">// poll button every loop pass</span></span>
+<span id="cb12-81"><a href="#cb12-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-82"><a href="#cb12-82" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>millis<span class="op">()</span> <span class="op">-</span> lastReading <span class="op">&lt;</span> READING_PERIOD_MS<span class="op">)</span> <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb12-83"><a href="#cb12-83" aria-hidden="true" tabindex="-1"></a>  lastReading <span class="op">=</span> millis<span class="op">();</span></span>
+<span id="cb12-84"><a href="#cb12-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-85"><a href="#cb12-85" aria-hidden="true" tabindex="-1"></a>  <span class="dt">float</span> temp_c       <span class="op">=</span> dht<span class="op">.</span>readTemperature<span class="op">();</span></span>
+<span id="cb12-86"><a href="#cb12-86" aria-hidden="true" tabindex="-1"></a>  <span class="dt">float</span> humidity_pct <span class="op">=</span> dht<span class="op">.</span>readHumidity<span class="op">();</span></span>
+<span id="cb12-87"><a href="#cb12-87" aria-hidden="true" tabindex="-1"></a>  <span class="dt">bool</span>  standing_water <span class="op">=</span> water_state<span class="op">;</span></span>
+<span id="cb12-88"><a href="#cb12-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-89"><a href="#cb12-89" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>isnan<span class="op">(</span>temp_c<span class="op">)</span> <span class="op">||</span> isnan<span class="op">(</span>humidity_pct<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb12-90"><a href="#cb12-90" aria-hidden="true" tabindex="-1"></a>    Serial<span class="op">.</span>println<span class="op">(</span><span class="st">"DHT22 read failed"</span><span class="op">);</span></span>
+<span id="cb12-91"><a href="#cb12-91" aria-hidden="true" tabindex="-1"></a>    setLEDs<span class="op">(</span><span class="kw">true</span><span class="op">,</span> <span class="kw">true</span><span class="op">,</span> <span class="kw">false</span><span class="op">);</span>  <span class="co">// R+Y = sensor error</span></span>
+<span id="cb12-92"><a href="#cb12-92" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb12-93"><a href="#cb12-93" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb12-94"><a href="#cb12-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-95"><a href="#cb12-95" aria-hidden="true" tabindex="-1"></a>  Serial<span class="op">.</span>print<span class="op">(</span><span class="st">"Classifying: "</span><span class="op">);</span></span>
+<span id="cb12-96"><a href="#cb12-96" aria-hidden="true" tabindex="-1"></a>  printFloat2<span class="op">(</span>temp_c<span class="op">);</span>       Serial<span class="op">.</span>print<span class="op">(</span><span class="st">"C, "</span><span class="op">);</span></span>
+<span id="cb12-97"><a href="#cb12-97" aria-hidden="true" tabindex="-1"></a>  printFloat2<span class="op">(</span>humidity_pct<span class="op">);</span> Serial<span class="op">.</span>print<span class="op">(</span><span class="st">"%, water="</span><span class="op">);</span></span>
+<span id="cb12-98"><a href="#cb12-98" aria-hidden="true" tabindex="-1"></a>  Serial<span class="op">.</span>println<span class="op">(</span>standing_water <span class="op">?</span> <span class="st">"yes"</span> <span class="op">:</span> <span class="st">"no"</span><span class="op">);</span></span>
+<span id="cb12-99"><a href="#cb12-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-100"><a href="#cb12-100" aria-hidden="true" tabindex="-1"></a>  setLEDs<span class="op">(</span><span class="kw">true</span><span class="op">,</span> <span class="kw">true</span><span class="op">,</span> <span class="kw">true</span><span class="op">);</span>   <span class="co">// all three on = inference in progress</span></span>
+<span id="cb12-101"><a href="#cb12-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-102"><a href="#cb12-102" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Bridge.call() returns an RpcCall object — do NOT assign to String or use &gt;&gt;.</span></span>
+<span id="cb12-103"><a href="#cb12-103" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Use .result(var) to extract the return value: returns true on success.</span></span>
+<span id="cb12-104"><a href="#cb12-104" aria-hidden="true" tabindex="-1"></a>  <span class="dt">float</span> risk_f <span class="op">=</span> <span class="op">-</span><span class="fl">1.0</span><span class="bu">f</span><span class="op">;</span></span>
+<span id="cb12-105"><a href="#cb12-105" aria-hidden="true" tabindex="-1"></a>  RpcCall rpc <span class="op">=</span> Bridge<span class="op">.</span>call<span class="op">(</span><span class="st">"classify"</span><span class="op">,</span> temp_c<span class="op">,</span> humidity_pct<span class="op">,</span> standing_water<span class="op">);</span></span>
+<span id="cb12-106"><a href="#cb12-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-107"><a href="#cb12-107" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>rpc<span class="op">.</span>result<span class="op">(</span>risk_f<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb12-108"><a href="#cb12-108" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> risk_code <span class="op">=</span> <span class="op">(</span><span class="dt">int</span><span class="op">)(</span>risk_f <span class="op">+</span> <span class="fl">0.5</span><span class="bu">f</span><span class="op">);</span>   <span class="co">// 0 = low, 1 = medium, 2 = high</span></span>
+<span id="cb12-109"><a href="#cb12-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-110"><a href="#cb12-110" aria-hidden="true" tabindex="-1"></a>    Serial<span class="op">.</span>print<span class="op">(</span><span class="st">"[result] risk_code="</span><span class="op">);</span></span>
+<span id="cb12-111"><a href="#cb12-111" aria-hidden="true" tabindex="-1"></a>    Serial<span class="op">.</span>println<span class="op">(</span>risk_code<span class="op">);</span></span>
+<span id="cb12-112"><a href="#cb12-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-113"><a href="#cb12-113" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>      <span class="op">(</span>risk_code <span class="op">==</span> <span class="dv">0</span><span class="op">)</span> setLEDs<span class="op">(</span><span class="kw">false</span><span class="op">,</span> <span class="kw">false</span><span class="op">,</span> <span class="kw">true</span><span class="op">);</span>   <span class="co">// green  — low</span></span>
+<span id="cb12-114"><a href="#cb12-114" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>risk_code <span class="op">==</span> <span class="dv">1</span><span class="op">)</span> setLEDs<span class="op">(</span><span class="kw">false</span><span class="op">,</span> <span class="kw">true</span><span class="op">,</span>  <span class="kw">false</span><span class="op">);</span>  <span class="co">// yellow — medium</span></span>
+<span id="cb12-115"><a href="#cb12-115" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>risk_code <span class="op">==</span> <span class="dv">2</span><span class="op">)</span> setLEDs<span class="op">(</span><span class="kw">true</span><span class="op">,</span>  <span class="kw">false</span><span class="op">,</span> <span class="kw">false</span><span class="op">);</span>  <span class="co">// red    — high</span></span>
+<span id="cb12-116"><a href="#cb12-116" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>                     setLEDs<span class="op">(</span><span class="kw">true</span><span class="op">,</span>  <span class="kw">false</span><span class="op">,</span> <span class="kw">true</span><span class="op">);</span>   <span class="co">// R+G    — unexpected</span></span>
+<span id="cb12-117"><a href="#cb12-117" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb12-118"><a href="#cb12-118" aria-hidden="true" tabindex="-1"></a>    Serial<span class="op">.</span>print<span class="op">(</span><span class="st">"[rpc error] code="</span><span class="op">);</span></span>
+<span id="cb12-119"><a href="#cb12-119" aria-hidden="true" tabindex="-1"></a>    Serial<span class="op">.</span>println<span class="op">(</span>rpc<span class="op">.</span>getErrorCode<span class="op">());</span></span>
+<span id="cb12-120"><a href="#cb12-120" aria-hidden="true" tabindex="-1"></a>    Serial<span class="op">.</span>print<span class="op">(</span><span class="st">"[rpc error] msg="</span><span class="op">);</span></span>
+<span id="cb12-121"><a href="#cb12-121" aria-hidden="true" tabindex="-1"></a>    Serial<span class="op">.</span>println<span class="op">(</span>rpc<span class="op">.</span>getErrorMessage<span class="op">());</span></span>
+<span id="cb12-122"><a href="#cb12-122" aria-hidden="true" tabindex="-1"></a>    setLEDs<span class="op">(</span><span class="kw">true</span><span class="op">,</span> <span class="kw">false</span><span class="op">,</span> <span class="kw">true</span><span class="op">);</span>   <span class="co">// R+G = RPC-level error</span></span>
+<span id="cb12-123"><a href="#cb12-123" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb12-124"><a href="#cb12-124" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong><code>RpcCall</code> API note:</strong> <code>Bridge.call()</code> returns an <code>RpcCall</code> object. To extract the Python function’s return value, call <code>.result(variable)</code> — it returns <code>true</code> on success and fills <code>variable</code> by reference. Don’t attempt direct assignment (<code>String s = Bridge.call(...)</code>) or the stream operator (<code>&gt;&gt; variable</code>); neither is defined for <code>RpcCall</code>. On failure, <code>.getErrorCode()</code> and <code>.getErrorMessage()</code> give diagnostics. The Python wrapper returns a <code>float</code> (0/1/2), which the Bridge serializes cleanly in both directions.</p>
+<p><strong>Common mistake:</strong> <code>Bridge.call()</code> returns a value. Forgetting to capture it (or treating the call as fire-and-forget) is a silent bug: the sketch compiles and runs, but the MCU never sees what the SLM decided. Always capture the return value and validate it.</p>
+<blockquote class="blockquote">
+<p><strong>Note</strong>: The exact <code>Bridge.call</code> return-value access syntax depends on the version of <code>Arduino_RouterBridge</code>. Check the library’s <code>examples/</code> directory for the version installed on your board if the lines above do not compile cleanly.</p>
+</blockquote>
+</section>
+<section id="step-3-sketchsketch.yaml" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-sketchsketch.yaml">Step 3 — <code>sketch/sketch.yaml</code></h3>
+<p>The <code>fqbn</code> (<code>arduino:zephyr:uno_q</code>) tells the compiler which board target to use. The DHT sensor library and its Adafruit Unified Sensor dependency are fetched from the Arduino Library Manager. <code>Arduino_RPClite</code> is the low-level transport backing Bridge RPC.</p>
+<p><strong>Verify the library is available before the first build:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-cli</span> lib list <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-i</span> dht</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If nothing appears, install it manually:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-cli</span> lib install <span class="st">"DHT sensor library"</span>@1.4.6</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-cli</span> lib install <span class="st">"Adafruit Unified Sensor"</span>@1.1.14</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-cli</span> lib list <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-i</span> dht   <span class="co"># confirm it's there</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="./images/png/dht-lib.png" class="img-fluid"></p>
+<p>Next, if necessary, adapt the <code>sketch.yaml</code> according to the libraries:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">profiles</span><span class="kw">:</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">default</span><span class="kw">:</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">fqbn</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">platforms</span><span class="kw">:</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">platform</span><span class="kw">:</span><span class="at"> arduino:zephyr</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">libraries</span><span class="kw">:</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> DHT sensor library (1.4.6)</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">dependency</span><span class="kw">:</span><span class="at"> Adafruit Unified Sensor (1.1.14)</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">dependency</span><span class="kw">:</span><span class="at"> Arduino_RPClite (0.2.1)</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="fu">default_profile</span><span class="kw">:</span><span class="at"> default</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="running-the-full-application" class="level2">
+<h2 class="anchored" data-anchor-id="running-the-full-application">9. Running the Full Application</h2>
+<section id="step-1-confirm-llama-server-is-running" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-confirm-llama-server-is-running">Step 1 — Confirm llama-server Is Running</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">systemctl</span> status llama-server <span class="at">--no-pager</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> http://127.0.0.1:8081/health</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You should see <code>"status":"ok"</code>.</p>
+</section>
+<section id="step-2-start-the-app" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-start-the-app">Step 2 — Start the App</h3>
+<p>From inside <code>~/ArduinoApps/risk-classifier/</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app start .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>(or the <code>[Start]</code> button if you’re using the Arduino App Lab)</p>
+<p>The first run takes 2–3 minutes. <code>arduino-app-cli</code> builds the Python container, installs Flask and requests, compiles the sketch, and flashes the MCU.</p>
+<p><strong>How to use it for testing:</strong></p>
+<ol type="1">
+<li>Power on. All LEDs blink three times, then the green LED stays on.</li>
+<li>Press the button. The Serial Monitor (in Arduino App Lab) prints <code>[btn] water_state -&gt; YES</code>. Press again to flip it back to <code>no</code>. The state holds between inferences.</li>
+<li>Every 30 seconds, the sketch fires an inference. You’ll see <code>Classifying: 25.30C, 60.20%, water=yes</code> (or no), then all three LEDs come on for ~30 s during inference, then back to the corresponding color depending on the “risk” when it’s done.</li>
+</ol>
+<p><img src="./images/png/serial-mon.png" class="img-fluid"></p>
+</section>
+<section id="step-3-follow-the-logs" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-follow-the-logs">Step 3 — Follow the Logs</h3>
+<p>In a second terminal (or the Arduino App Lab <code>Python</code> tab):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app logs . <span class="at">--follow</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Every 30 seconds you should see lines like:</p>
+<p><code>Test Condition: Ambient temperature in the lab, button not pressed ("no water").</code></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[main]</span> <span class="pp">[</span><span class="ss">classify</span><span class="pp">]</span> {<span class="st">'temp_c'</span>: 24.299999237060547, <span class="st">'humidity_pct'</span>: 38.70000076293945, <span class="st">'standing_water'</span>: False} <span class="at">-</span><span class="op">&gt;</span> {<span class="st">'risk'</span>: <span class="st">'low'</span>, <span class="st">'reason'</span>: <span class="st">'Cool and dry temperatures with no standing water make dengue risk low.'</span>, <span class="st">'latency_ms'</span>: 10772.6}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>Test Condition: Pressing the sensor between fingers, button pressed ("water").</code></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[main]</span> <span class="pp">[</span><span class="ss">classify</span><span class="pp">]</span> {<span class="st">'temp_c'</span>: 27.600000381469727, <span class="st">'humidity_pct'</span>: 87.80000305175781, <span class="st">'standing_water'</span>: True} <span class="at">-</span><span class="op">&gt;</span> {<span class="st">'risk'</span>: <span class="st">'high'</span>, <span class="st">'reason'</span>: <span class="st">'Warm humid conditions with standing water create ideal Aedes breeding habitat.'</span>, <span class="st">'latency_ms'</span>: 10618.3}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Watch the RGB LEDs on the board. After each inference cycle, exactly one LED stays on: <strong>green</strong> for low risk, <strong>yellow</strong> for medium, <strong>red</strong> for high. Under ambient lab conditions (cool, dry, no water), you should see green; pressing the button and warming the sensor by hand should eventually turn it yellow or red.</p>
+<p><img src="./images/png/red-led.jpg" class="img-fluid"></p>
+</section>
+<section id="step-4-stop-the-app" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-stop-the-app">Step 4 — Stop the App</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app stop .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="the-optional-flask-endpoint-exposing-the-slm-over-http" class="level2">
+<h2 class="anchored" data-anchor-id="the-optional-flask-endpoint-exposing-the-slm-over-http">10. The Optional Flask Endpoint: Exposing the SLM Over HTTP</h2>
+<p>While the app is running, the Flask endpoint at port 7000 is available to any device on the same Wi-Fi network. From your host computer:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-X</span> POST http://<span class="op">&lt;</span>UNO_Q_IP<span class="op">&gt;</span>:7000/classify <span class="dt">\</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">"Content-Type: application/json"</span> <span class="dt">\</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-d</span> <span class="st">'{"temp_c": 30.1, "humidity_pct": 85, "standing_water": true}'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-X</span> POST http://192.168.5.114:7000/classify <span class="dt">\</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">"Content-Type: application/json"</span> <span class="dt">\</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-d</span> <span class="st">'{"temp_c": 30.1, "humidity_pct": 85, "standing_water": true}'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You should see:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"risk"</span><span class="fu">:</span> <span class="st">"high"</span><span class="fu">,</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"reason"</span><span class="fu">:</span> <span class="st">"Warm humid conditions with standing water create ideal Aedes breeding habitat."</span><span class="fu">,</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"latency_ms"</span><span class="fu">:</span> <span class="fl">8234.7</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is the same <code>classify()</code> function the MCU calls via Bridge — one logic path, two interfaces. From a phone, browser, or another UNO Q on the same network, the SLM is now a microservice.</p>
+<section id="creating-a-live-dashboard-for-exhibiting-the-inference-result" class="level3">
+<h3 class="anchored" data-anchor-id="creating-a-live-dashboard-for-exhibiting-the-inference-result">Creating a Live Dashboard for Exhibiting the Inference Result</h3>
+<p>Once the Flask server is running, add a <code>GET /status</code> endpoint that returns the latest result, and a <code>GET /</code> route that serves a live dashboard. Two small additions to <code>main.py</code>, no new dependencies needed.</p>
+<section id="changes-to-pythonmain.py" class="level4">
+<h4 class="anchored" data-anchor-id="changes-to-pythonmain.py">Changes to <code>python/main.py</code></h4>
+<p><strong>1 — Add a global to store the last reading</strong> (near the top, after <code>FLASK_PORT</code>):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Latest classification result — updated on every MCU reading</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>_last_status <span class="op">=</span> {</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"risk"</span>: <span class="st">"unknown"</span>,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"reason"</span>: <span class="st">"No reading yet."</span>,</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"temp_c"</span>: <span class="va">None</span>,</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"humidity_pct"</span>: <span class="va">None</span>,</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"standing_water"</span>: <span class="va">None</span>,</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"latency_ms"</span>: <span class="dv">0</span>,</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>2 — Update <code>classify_risk</code> to save the full state:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> classify_risk(temp_c, humidity_pct, standing_water):</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Bridge-facing wrapper. Returns a float code: 0=low, 1=medium, 2=high.</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Also updates _last_status so the dashboard can show the latest verdict."""</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> _last_status</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    verdict <span class="op">=</span> classify(<span class="bu">float</span>(temp_c), <span class="bu">float</span>(humidity_pct), <span class="bu">bool</span>(standing_water))</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    _last_status <span class="op">=</span> {</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"risk"</span>:          verdict.get(<span class="st">"risk"</span>, <span class="st">"unknown"</span>),</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"reason"</span>:        verdict.get(<span class="st">"reason"</span>, <span class="st">""</span>),</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"temp_c"</span>:        <span class="bu">round</span>(<span class="bu">float</span>(temp_c), <span class="dv">1</span>),</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"humidity_pct"</span>:  <span class="bu">round</span>(<span class="bu">float</span>(humidity_pct), <span class="dv">1</span>),</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"standing_water"</span>: <span class="bu">bool</span>(standing_water),</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"latency_ms"</span>:    verdict.get(<span class="st">"latency_ms"</span>, <span class="dv">0</span>),</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> RISK_CODE.get(verdict.get(<span class="st">"risk"</span>, <span class="st">"unknown"</span>), <span class="op">-</span><span class="fl">1.0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>3 — Add two Flask routes</strong> (alongside the existing <code>/classify</code> and <code>/healthz</code>):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flask <span class="im">import</span> render_template_string   <span class="co"># add to the existing flask import line</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="at">@flask_app.route</span>(<span class="st">"/status"</span>, methods<span class="op">=</span>[<span class="st">"GET"</span>])</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> status_endpoint():</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> jsonify(_last_status), <span class="dv">200</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="at">@flask_app.route</span>(<span class="st">"/"</span>, methods<span class="op">=</span>[<span class="st">"GET"</span>])</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dashboard():</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> render_template_string(DASHBOARD_HTML)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>4 — Add the dashboard HTML</strong> (paste this constant before <code>flask_app = Flask(__name__)</code>):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>DASHBOARD_HTML <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;!doctype html&gt;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;html lang="en"&gt;</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;head&gt;</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;meta charset="utf-8"&gt;</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;title&gt;Dengue Risk Monitor · UNO Q&lt;/title&gt;</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;style&gt;</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="st">    * { box-sizing: border-box; margin: 0; padding: 0; }</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="st">    body { font-family: system-ui, sans-serif; background: #0f172a; color: #e2e8f0;</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="st">           display: flex; flex-direction: column; align-items: center;</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="st">           min-height: 100vh; padding: 2rem 1rem; }</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="st">    h1   { font-size: 1.3rem; letter-spacing: .05em; color: #94a3b8; margin-bottom: 2rem; }</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="st">    #card {</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="st">      width: 100%; max-width: 420px; border-radius: 1.5rem;</span></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="st">      padding: 2.5rem 2rem; text-align: center;</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="st">      transition: background .6s, box-shadow .6s;</span></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a><span class="st">      background: #1e293b; box-shadow: 0 0 0 0 transparent;</span></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a><span class="st">    #card.low    { background: #14532d; box-shadow: 0 0 40px 4px #22c55e55; }</span></span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a><span class="st">    #card.medium { background: #713f12; box-shadow: 0 0 40px 4px #eab30855; }</span></span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a><span class="st">    #card.high   { background: #7f1d1d; box-shadow: 0 0 40px 4px #ef444455; }</span></span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a><span class="st">    #risk-label  { font-size: 4rem; font-weight: 800; letter-spacing: .04em;</span></span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a><span class="st">                   text-transform: uppercase; margin-bottom: .5rem; }</span></span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a><span class="st">    #reason      { font-size: 1rem; color: #cbd5e1; margin-bottom: 2rem; min-height: 2.5em; }</span></span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a><span class="st">    .metrics     { display: grid; grid-template-columns: 1fr 1fr 1fr;</span></span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a><span class="st">                   gap: .75rem; margin-bottom: 1.5rem; }</span></span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a><span class="st">    .metric      { background: #ffffff18; border-radius: .75rem; padding: .75rem .5rem; }</span></span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a><span class="st">    .metric .val { font-size: 1.4rem; font-weight: 700; }</span></span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a><span class="st">    .metric .lbl { font-size: .7rem; color: #94a3b8; text-transform: uppercase; }</span></span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a><span class="st">    #meta        { font-size: .75rem; color: #64748b; }</span></span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a><span class="st">    #dot         { display: inline-block; width: .5rem; height: .5rem;</span></span>
+<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a><span class="st">                   border-radius: 50%; background: #64748b;</span></span>
+<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a><span class="st">                   margin-right: .3rem; vertical-align: middle; }</span></span>
+<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a><span class="st">    #dot.live    { background: #22c55e; animation: pulse 1.5s infinite; }</span></span>
+<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a><span class="st">    @keyframes pulse { 0%,100%</span><span class="sc">{opacity:1}</span><span class="st"> 50%</span><span class="sc">{opacity:.3}</span><span class="st"> }</span></span>
+<span id="cb28-37"><a href="#cb28-37" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;/style&gt;</span></span>
+<span id="cb28-38"><a href="#cb28-38" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/head&gt;</span></span>
+<span id="cb28-39"><a href="#cb28-39" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;body&gt;</span></span>
+<span id="cb28-40"><a href="#cb28-40" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;h1&gt;🦟 Dengue Risk Monitor &amp;nbsp;·&amp;nbsp; Arduino UNO Q&lt;/h1&gt;</span></span>
+<span id="cb28-41"><a href="#cb28-41" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;div id="card"&gt;</span></span>
+<span id="cb28-42"><a href="#cb28-42" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;div id="risk-label"&gt;—&lt;/div&gt;</span></span>
+<span id="cb28-43"><a href="#cb28-43" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;div id="reason"&gt;Waiting for first reading…&lt;/div&gt;</span></span>
+<span id="cb28-44"><a href="#cb28-44" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;div class="metrics"&gt;</span></span>
+<span id="cb28-45"><a href="#cb28-45" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;div class="metric"&gt;&lt;div class="val" id="temp"&gt;—&lt;/div&gt;&lt;div class="lbl"&gt;°C&lt;/div&gt;&lt;/div&gt;</span></span>
+<span id="cb28-46"><a href="#cb28-46" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;div class="metric"&gt;&lt;div class="val" id="hum"&gt;—&lt;/div&gt;&lt;div class="lbl"&gt;Humidity %&lt;/div&gt;&lt;/div&gt;</span></span>
+<span id="cb28-47"><a href="#cb28-47" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;div class="metric"&gt;&lt;div class="val" id="water"&gt;—&lt;/div&gt;&lt;div class="lbl"&gt;Water&lt;/div&gt;&lt;/div&gt;</span></span>
+<span id="cb28-48"><a href="#cb28-48" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;/div&gt;</span></span>
+<span id="cb28-49"><a href="#cb28-49" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;div id="meta"&gt;&lt;span id="dot"&gt;&lt;/span&gt;&lt;span id="ts"&gt;connecting…&lt;/span&gt;&lt;/div&gt;</span></span>
+<span id="cb28-50"><a href="#cb28-50" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;/div&gt;</span></span>
+<span id="cb28-51"><a href="#cb28-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-52"><a href="#cb28-52" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;script&gt;</span></span>
+<span id="cb28-53"><a href="#cb28-53" aria-hidden="true" tabindex="-1"></a><span class="st">    const COLORS = { low: "low", medium: "medium", high: "high" };</span></span>
+<span id="cb28-54"><a href="#cb28-54" aria-hidden="true" tabindex="-1"></a><span class="st">    const EMOJI  = { low: "🟢", medium: "🟡", high: "🔴", unknown: "⚪" };</span></span>
+<span id="cb28-55"><a href="#cb28-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-56"><a href="#cb28-56" aria-hidden="true" tabindex="-1"></a><span class="st">    async function refresh() {</span></span>
+<span id="cb28-57"><a href="#cb28-57" aria-hidden="true" tabindex="-1"></a><span class="st">      try {</span></span>
+<span id="cb28-58"><a href="#cb28-58" aria-hidden="true" tabindex="-1"></a><span class="st">        const r = await fetch("/status");</span></span>
+<span id="cb28-59"><a href="#cb28-59" aria-hidden="true" tabindex="-1"></a><span class="st">        const d = await r.json();</span></span>
+<span id="cb28-60"><a href="#cb28-60" aria-hidden="true" tabindex="-1"></a><span class="st">        const card = document.getElementById("card");</span></span>
+<span id="cb28-61"><a href="#cb28-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-62"><a href="#cb28-62" aria-hidden="true" tabindex="-1"></a><span class="st">        card.className = COLORS[d.risk] || "";</span></span>
+<span id="cb28-63"><a href="#cb28-63" aria-hidden="true" tabindex="-1"></a><span class="st">        document.getElementById("risk-label").textContent =</span></span>
+<span id="cb28-64"><a href="#cb28-64" aria-hidden="true" tabindex="-1"></a><span class="st">          (EMOJI[d.risk] || "") + " " + (d.risk || "unknown").toUpperCase();</span></span>
+<span id="cb28-65"><a href="#cb28-65" aria-hidden="true" tabindex="-1"></a><span class="st">        document.getElementById("reason").textContent = d.reason || "";</span></span>
+<span id="cb28-66"><a href="#cb28-66" aria-hidden="true" tabindex="-1"></a><span class="st">        document.getElementById("temp").textContent  =</span></span>
+<span id="cb28-67"><a href="#cb28-67" aria-hidden="true" tabindex="-1"></a><span class="st">          d.temp_c   !== null ? d.temp_c.toFixed(1)   : "—";</span></span>
+<span id="cb28-68"><a href="#cb28-68" aria-hidden="true" tabindex="-1"></a><span class="st">        document.getElementById("hum").textContent   =</span></span>
+<span id="cb28-69"><a href="#cb28-69" aria-hidden="true" tabindex="-1"></a><span class="st">          d.humidity_pct !== null ? d.humidity_pct.toFixed(1) : "—";</span></span>
+<span id="cb28-70"><a href="#cb28-70" aria-hidden="true" tabindex="-1"></a><span class="st">        document.getElementById("water").textContent =</span></span>
+<span id="cb28-71"><a href="#cb28-71" aria-hidden="true" tabindex="-1"></a><span class="st">          d.standing_water === null ? "—" : d.standing_water ? "YES" : "no";</span></span>
+<span id="cb28-72"><a href="#cb28-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-73"><a href="#cb28-73" aria-hidden="true" tabindex="-1"></a><span class="st">        const dot = document.getElementById("dot");</span></span>
+<span id="cb28-74"><a href="#cb28-74" aria-hidden="true" tabindex="-1"></a><span class="st">        dot.className = "live";</span></span>
+<span id="cb28-75"><a href="#cb28-75" aria-hidden="true" tabindex="-1"></a><span class="st">        setTimeout(() =&gt; dot.className = "", 800);</span></span>
+<span id="cb28-76"><a href="#cb28-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-77"><a href="#cb28-77" aria-hidden="true" tabindex="-1"></a><span class="st">        document.getElementById("ts").textContent =</span></span>
+<span id="cb28-78"><a href="#cb28-78" aria-hidden="true" tabindex="-1"></a><span class="st">          "Last reading: " + new Date().toLocaleTimeString() +</span></span>
+<span id="cb28-79"><a href="#cb28-79" aria-hidden="true" tabindex="-1"></a><span class="st">          "  ·  " + (d.latency_ms / 1000).toFixed(1) + " s inference";</span></span>
+<span id="cb28-80"><a href="#cb28-80" aria-hidden="true" tabindex="-1"></a><span class="st">      } catch(e) {</span></span>
+<span id="cb28-81"><a href="#cb28-81" aria-hidden="true" tabindex="-1"></a><span class="st">        document.getElementById("ts").textContent = "⚠ fetch error – retrying";</span></span>
+<span id="cb28-82"><a href="#cb28-82" aria-hidden="true" tabindex="-1"></a><span class="st">      }</span></span>
+<span id="cb28-83"><a href="#cb28-83" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
+<span id="cb28-84"><a href="#cb28-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-85"><a href="#cb28-85" aria-hidden="true" tabindex="-1"></a><span class="st">    refresh();</span></span>
+<span id="cb28-86"><a href="#cb28-86" aria-hidden="true" tabindex="-1"></a><span class="st">    setInterval(refresh, 5000);   // poll every 5 s</span></span>
+<span id="cb28-87"><a href="#cb28-87" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;/script&gt;</span></span>
+<span id="cb28-88"><a href="#cb28-88" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/body&gt;</span></span>
+<span id="cb28-89"><a href="#cb28-89" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/html&gt;</span></span>
+<span id="cb28-90"><a href="#cb28-90" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p>The complete <code>main.py</code> can be found on the <a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/blob/main/Gen_AI_Edge/Scripts/main.py">project repo</a>.</p>
+</blockquote>
+</section>
+<section id="usage" class="level4">
+<h4 class="anchored" data-anchor-id="usage">Usage</h4>
+<p>While the app is running, open a browser on any device on the same Wi-Fi network:</p>
+<pre><code>http://&lt;UNO_Q_IP&gt;:7000/</code></pre>
+<p>The page polls <code>/status</code> every 5 seconds and updates without a full reload. The card background changes color to match the risk level (green, amber, or red), matching the LED on the board.</p>
+<p>The raw JSON endpoint is still available for other clients:</p>
+<pre><code>http://&lt;UNO_Q_IP&gt;:7000/status</code></pre>
+<p><img src="./images/png/webpage.png" class="img-fluid"></p>
+</section>
+</section>
+</section>
+<section id="performance-what-to-actually-expect" class="level2">
+<h2 class="anchored" data-anchor-id="performance-what-to-actually-expect">11. Performance: What to Actually Expect</h2>
+<p>Chapter 2 measured raw <code>llama-server</code> throughput in isolation. These numbers are for the full application — Bridge RPC, JSON parsing, and prompt-building overhead included — measured on a UNO Q 4 GB with the factory image, Qwen3.5-0.8B Q8_0, no heatsink, no fan:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cold model load (boot of llama-server)</td>
+<td>~4 s</td>
+</tr>
+<tr class="even">
+<td>Idle RAM (llama-server + app running)</td>
+<td>~700–800 MB</td>
+</tr>
+<tr class="odd">
+<td>Model + context memory usage</td>
+<td>~1,122 MiB</td>
+</tr>
+<tr class="even">
+<td>Prompt processing throughput</td>
+<td>~9.9 tokens/s</td>
+</tr>
+<tr class="odd">
+<td>Generation throughput</td>
+<td>~4.75 tokens/s</td>
+</tr>
+<tr class="even">
+<td>End-to-end <code>classify()</code> latency</td>
+<td>6–12 s</td>
+</tr>
+<tr class="odd">
+<td>CPU usage during decode</td>
+<td>4 cores @ 100%</td>
+</tr>
+<tr class="even">
+<td>Idle board temperature (no inference)</td>
+<td>~34 °C</td>
+</tr>
+<tr class="odd">
+<td>Temperature during normal inference</td>
+<td>~54 °C</td>
+</tr>
+<tr class="even">
+<td>Temperature during sustained long answers</td>
+<td>~62 °C</td>
+</tr>
+<tr class="odd">
+<td>Thermal throttle threshold</td>
+<td>70–80 °C (never reached)</td>
+</tr>
+<tr class="even">
+<td>Power consuption (Max.)</td>
+<td>3.1 W</td>
+</tr>
+</tbody>
+</table>
+<p>Honest takeaways:</p>
+<ul>
+<li><strong>Usable but not desktop-class.</strong> Prompt processing at ~9.9 tok/s and generation at ~4.75 tok/s make the setup workable for periodic classification calls, but responses take 6–12 seconds depending on length. The ~1122 MiB memory footprint (model + context) leaves about 2.5 GB for the OS, App Lab container, and your Python app. Tight but viable on the 4 GB board.</li>
+<li><strong>Q4 quantization shows quality tradeoffs.</strong> At 0.8B parameters, the model has less redundancy than a 7B model, so Q4 compression removes information that matters. Strong few-shot prompting and <code>presence_penalty=1.5</code> compensate for most of it, but some responses are weaker than a 1B+ model would produce. <strong>Use Q8_0</strong> or the Unsloth Dynamic quant if storage allows.</li>
+<li><strong>Thermal behavior is not a concern.</strong> The +20 °C rise from idle to inference is modest, and even sustained workloads only reach ~62 °C, well under the 70–80 °C throttle threshold. The UNO Q runs cooler than a Raspberry Pi 5 under comparable loads. No heatsink is required for normal lab use.</li>
+<li><strong>Thinking mode kills the board.</strong> With thinking enabled, the model spends 30–60 seconds generating internal reasoning chains before producing any output, and often loops without reaching a conclusion. Always run Qwen3.5 Small with <code>--reasoning off --reasoning-budget 0</code>.</li>
+<li><strong>Repetition loops.</strong> Without <code>presence_penalty=1.5</code>, the model tends to repeat phrases or produce circular responses. A known behavior of small Qwen3.5 variants, well-documented in the Unsloth guide.</li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>Token throughput vs.&nbsp;wall-clock latency</strong></p>
+<p>People often optimize for tokens/second when wall-clock latency is what actually matters. A 30-token verdict at 10 tok/s (3 s) feels twice as responsive as a 100-token verdict at 10 tok/s (10 s). Cap <code>max_tokens</code> aggressively and design prompts to keep responses short.</p>
+</blockquote>
+</section>
+<section id="tips-tricks-and-troubleshooting" class="level2">
+<h2 class="anchored" data-anchor-id="tips-tricks-and-troubleshooting">12. Tips, Tricks, and Troubleshooting</h2>
+<section id="llama-server-wont-start" class="level3">
+<h3 class="anchored" data-anchor-id="llama-server-wont-start">llama-server Won’t Start</h3>
+<p>Check the journal:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">journalctl</span> <span class="at">-u</span> llama-server <span class="at">-n</span> 50 <span class="at">--no-pager</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Common causes: model file path wrong in the unit file, port 8080 already in use (<code>sudo lsof -i :8080</code>), or the GGUF file is incompatible with your llama.cpp version (rebuild or download newer binaries).</p>
+</section>
+<section id="model-loops-or-produces-very-long-responses" class="level3">
+<h3 class="anchored" data-anchor-id="model-loops-or-produces-very-long-responses">Model Loops or Produces Very Long Responses</h3>
+<p>This almost always means thinking mode is active — see chapter 2 for why. Verify the <code>--reasoning off --reasoning-budget 0</code> flags are present in your systemd service (<code>ExecStart</code> line), not just something you once typed in a terminal. Also check that <code>presence_penalty</code> is set to 1.5 in your API calls.</p>
+<p>If you see the deprecation warning about <code>--chat-template-kwargs</code>, update your command line to use <code>--reasoning off --reasoning-budget 0</code> instead.</p>
+</section>
+<section id="bridge.call-times-out" class="level3">
+<h3 class="anchored" data-anchor-id="bridge.call-times-out">Bridge.call Times Out</h3>
+<p>If the MCU times out waiting for <code>classify()</code>:</p>
+<ul>
+<li>Confirm Python logs show the request arriving (<code>arduino-app-cli app logs .</code>).</li>
+<li>Increase the Bridge call timeout on the MCU side (check <code>Arduino_RouterBridge</code> examples; some versions default to 5 seconds, which is less than the 6–12 s inference takes).</li>
+<li>Confirm llama-server is responding: <code>curl http://127.0.0.1:8081/health</code>.</li>
+</ul>
+</section>
+<section id="out-of-memory-crashes" class="level3">
+<h3 class="anchored" data-anchor-id="out-of-memory-crashes">Out-of-Memory Crashes</h3>
+<p>If the kernel OOM-killer takes out your Python container:</p>
+<ul>
+<li>Confirm swap is enabled. Running <code>free -h</code> should show a non-zero swap size.</li>
+<li>Reduce the context length in the systemd service to 1024.</li>
+</ul>
+</section>
+<section id="json-parse-failures-from-the-model" class="level3">
+<h3 class="anchored" data-anchor-id="json-parse-failures-from-the-model">JSON Parse Failures from the Model</h3>
+<p>Even with <code>response_format: json_object</code>, occasional models output stray text. The <code>parse_verdict</code> function in <code>main.py</code> already retries once. If failures persist:</p>
+<ul>
+<li>Strengthen the system prompt: add <code>"Output MUST start with { and end with }"</code>.</li>
+<li>Switch to llama.cpp grammar-based decoding.
+<ul>
+<li>Replace <code>response_format: {"type":"json_object"}</code> with a GBNF grammar that constrains output to exactly <code>{"risk": "&lt;low|medium|high&gt;", "reason": "&lt;string&gt;"}</code>.</li>
+</ul></li>
+<li>Try the Unsloth Dynamic quant (<code>UD-Q4_K_XL</code>), which sometimes produces cleaner output.</li>
+</ul>
+</section>
+<section id="disk-space-running-low" class="level3">
+<h3 class="anchored" data-anchor-id="disk-space-running-low">Disk Space Running Low</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df</span> <span class="at">-h</span> /</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The root partition is ~9.8 GB total. If you’re running low:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check what is using space</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> du <span class="at">-sh</span> /var/lib/docker <span class="dv">2</span><span class="op">&gt;</span>/dev/null</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> du <span class="at">-sh</span> /home/arduino/<span class="pp">*</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-h</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean unused Docker images from arduino-app-cli</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> system cleanup</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean apt cache</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt clean</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt autoremove <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If you deleted the llama.cpp source tree and still need to rebuild later, use a shallow clone: <code>git clone --depth 1 https://github.com/ggml-org/llama.cpp</code></p>
+</section>
+<section id="the-flask-endpoint-is-not-reachable-from-outside" class="level3">
+<h3 class="anchored" data-anchor-id="the-flask-endpoint-is-not-reachable-from-outside">The Flask Endpoint Is Not Reachable From Outside</h3>
+<ul>
+<li>Confirm <code>ports: [7000]</code> is in <code>app.yaml</code>.</li>
+<li>Confirm the host is on the same Wi-Fi network: <code>ping &lt;UNO_Q_IP&gt;</code>.</li>
+<li>Confirm Flask is bound to <code>0.0.0.0</code>, not <code>127.0.0.1</code>.</li>
+<li>Some networks isolate clients from each other. Try a hotspot from your phone.</li>
+</ul>
+</section>
+</section>
+<section id="going-further" class="level2">
+<h2 class="anchored" data-anchor-id="going-further">13. Going Further</h2>
+<section id="alternative-model-qwen-3.5-2b" class="level3">
+<h3 class="anchored" data-anchor-id="alternative-model-qwen-3.5-2b">Alternative Model (Qwen 3.5 2B)</h3>
+<blockquote class="blockquote">
+<p><strong>2B Q4 is a better choice for projects, such as the dengue classifier</strong>, but <strong>0.8B Q8 is the better choice for interactive demos</strong>.</p>
+</blockquote>
+<p>The general rule from the empirical Qwen3.5 work is that parameter count beats quantization. A 4-bit version of Qwen3.5 27B can still be substantially stronger than Qwen3.5 9B while using nearly the same amount of memory, and the same pattern holds further down the stack. The jump from 0.8B to 2B is the largest for agent tasks and long contexts. That is where the extra parameters really show up. The Kaitchup’s broader review concludes that Q4 overall is very safe for Qwen3.5, so the 2B at Q4 keeps most of its raw capability.</p>
+<p>On the UNO Q specifically:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 45%">
+<col style="width: 30%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Dimension</th>
+<th>0.8B Q8_0</th>
+<th>2B UD-Q4_K_XL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Model file size</td>
+<td>~880 MB</td>
+<td>~1.25 GB</td>
+</tr>
+<tr class="even">
+<td>RAM footprint (model + 1024 ctx)</td>
+<td>~1.1 GB</td>
+<td>~1.9–2.0 GB</td>
+</tr>
+<tr class="odd">
+<td>Free RAM after load (out of ~3 GB usable)</td>
+<td>~1.7 GB</td>
+<td>~0.8 GB</td>
+</tr>
+<tr class="even">
+<td>Generation speed (measured / estimated)</td>
+<td>~4.75 tok/s</td>
+<td>~1.8–2.5 tok/s</td>
+</tr>
+<tr class="odd">
+<td>End-to-end <code>classify()</code> latency</td>
+<td>6–12 s</td>
+<td>15–25 s (est.)</td>
+</tr>
+<tr class="even">
+<td>Quality on structured JSON</td>
+<td>Good with a strong few-shot</td>
+<td>Noticeably more robust</td>
+</tr>
+<tr class="odd">
+<td>Quality on free-form chat</td>
+<td>Adequate</td>
+<td>Meaningfully better</td>
+</tr>
+<tr class="even">
+<td>Thermal load</td>
+<td>~54 °C inference</td>
+<td>~58–62 °C inference</td>
+</tr>
+<tr class="odd">
+<td>Storage room left on <code>/home/arduino</code></td>
+<td>comfortable</td>
+<td>comfortable</td>
+</tr>
+</tbody>
+</table>
+<p>What this means in practice:</p>
+<ul>
+<li><strong>For the dengue classifier (a Bridge call every 30 s):</strong> the 2B Q4 wins on quality, and the extra ~10 s latency is invisible inside a 30 s polling window. The structured JSON path becomes more reliable — fewer parse-and-retry rounds, better adherence to the few-shot pattern, less reliance on <code>presence_penalty</code> tricks.</li>
+<li><strong>For the WebUI / chat demos:</strong> the 0.8B Q8 stays responsive. At ~2 tok/s, a 100-token answer on the 2B takes 50 seconds, which feels broken in a chat context even if the answer is better.</li>
+<li><strong>For headroom:</strong> 0.8B Q8 leaves ~1.7 GB free. 2B Q4 leaves ~0.8 GB. Tight but workable, as long as nothing else on the board spikes (browsers, App Lab build, large Flask request bursts). If you ever want to run two models, or expand context beyond 1024, the 0.8B is the safer foundation.</li>
+</ul>
+<p>Two things worth trying before committing:</p>
+<ol type="1">
+<li><strong>Try the Unsloth <code>UD-Q4_K_XL</code> variant of the 2B</strong>, not vanilla Q4_K_M. UD‑Q4-K‑XL outperforming other Q4 quants, while being ~8GB smaller in the Unsloth benchmarks — they upcast the sensitive tensors automatically, so you get most of Q6 quality at near-Q4 size. The same trick that helps Q4 on big models helps even more on small ones.</li>
+<li><strong>Run the same test prompt on both</strong> and compare wall-clock time and JSON quality. With <code>llama-server</code>, swapping models is a matter of editing the systemd unit’s <code>ExecStart</code> line, then <code>sudo systemctl daemon-reload &amp;&amp; sudo systemctl restart llama-server</code> — the same swap pattern chapter 3 covers for the interactive (non-service) case.</li>
+</ol>
+</section>
+<section id="function-calling-with-the-slm" class="level3">
+<h3 class="anchored" data-anchor-id="function-calling-with-the-slm">Function Calling with the SLM</h3>
+<p>Qwen3.5 supports function-calling formats. The natural pattern on the UNO Q is to register the <strong>MCU sketch’s</strong> capabilities as tools the SLM can call: “read humidity,” “set LED color,” “trigger buzzer.” The Python side mediates: the SLM emits a tool-call, Python forwards it over Bridge to the sketch, the sketch executes, the result goes back to the SLM, which then generates a final reply.</p>
+<p>This inverts the data flow from this chapter — instead of the MCU calling Python, the SLM (via Python) calls the MCU. Both patterns are valid; function calling is more flexible but adds an extra round trip per tool use.</p>
+</section>
+<section id="multimodal-slms-vision-language-models" class="level3">
+<h3 class="anchored" data-anchor-id="multimodal-slms-vision-language-models">Multimodal SLMs (Vision-Language Models)</h3>
+<p>Qwen3.5 has native multimodal capabilities, covered hands-on in <a href="../../content/multimodai/multimodai.html">Multimodal AI at the Edge</a>: the same 0.8B weights used here run a vision pathway with a matching <code>mmproj</code> file. A natural extension of this project replaces the button (a stand-in for a water-presence sensor) with a camera and that vision pathway — the MCU triggers a capture, the vision-enabled <code>classify()</code> describes and judges the frame, and the same LED output logic applies unchanged.</p>
+</section>
+<section id="agentic-ai-assistant" class="level3">
+<h3 class="anchored" data-anchor-id="agentic-ai-assistant">Agentic AI Assistant</h3>
+<p>This chapter’s <code>classify()</code> is a single fixed call: sensors in, one verdict out. <a href="../../content/agenticai/agenticai.html">Agentic AI at the Edge</a> builds the next step — an agent loop where the SLM decides <em>which</em> tool to call, reads the result, and decides what to do next, rather than following a script you wrote. It starts hardware-free (system info, a calculator, the onboard LED and LED matrix) and then shows how this chapter’s own sensor/actuator tools plug into that same loop unchanged. For where the pattern scales beyond that, see <strong><a href="https://github.com/laurenvil/Uno-QClaw">QClaw</a></strong>, an on-device agentic AI assistant for the Arduino Uno Q developed by <a href="https://www.linkedin.com/in/david-laurenvil-3a223410/">David Laurenvill</a>, which writes, compiles, and uploads Arduino sketches; captures camera frames; drives Linux-side LEDs; reports network state; and scans I²C buses — all running entirely on the board. No internet. No API keys. No cloud.</p>
+</section>
+<section id="edge-impulse-integration" class="level3">
+<h3 class="anchored" data-anchor-id="edge-impulse-integration">Edge Impulse Integration</h3>
+<p>For applications where you want a <em>trained</em> classifier (rather than a general-purpose SLM doing zero-shot reasoning), Edge Impulse is the production path. The UNO Q has first-class Edge Impulse support. A practical hybrid: an Edge Impulse model handles high-frequency classification, while an SLM handles rare “I’m not sure” cases that need richer reasoning.</p>
+<p>For example, the YOLO model mentioned at the beginning of this tutorial could be trained in Edge Impulse Studio to detect standing water in tires, automatically triggering the “Water Switch” input of the Dengue Risk Classifier and thereby replacing the button used in the project.</p>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">14. Conclusion</h2>
+<p>This tutorial wrapped the SLM tooling from chapter 2 into a complete generative-AI application: <code>llama-server</code> running as a persistent systemd service with Qwen3.5-0.8B, a Python application that exposes it both to the on-board MCU via Bridge RPC and to off-board clients via Flask, and an Arduino sketch that drives an RGB LED based on the SLM’s verdict. We addressed the real constraints of the hardware (a single 9.8 GB partition with limited free space, 4 GB of shared RAM, and CPU-only inference on four Cortex-A53 cores) and found practical workarounds for each.</p>
+<section id="advantages-of-the-uno-q-approach-for-generative-ai" class="level3">
+<h3 class="anchored" data-anchor-id="advantages-of-the-uno-q-approach-for-generative-ai">Advantages of the UNO Q Approach for Generative AI</h3>
+<p><strong>For ML System Engineering:</strong></p>
+<ul>
+<li><strong>Local generative AI on Arduino hardware.</strong> Until the UNO Q, “running an LLM on an Arduino” was a contradiction. Now, on the same board used for Blink, a language model classifies sensor data without an internet connection.</li>
+<li><strong>The dual-brain story comes to life.</strong> Generative AI on the MPU plus real-time actuation on the MCU is exactly the boundary the dual-brain architecture was designed to expose. You see <em>why</em> you’d want both processors, not just <em>that</em> the board has them.</li>
+<li><strong>Standard production patterns.</strong> systemd services, OpenAI-compatible HTTP APIs, structured-output JSON, Bridge RPC for IPC, Flask microservices. All real techniques you’ll use in real edge-AI projects.</li>
+</ul>
+<p><strong>Technical advantages:</strong></p>
+<ul>
+<li>The OpenAI-compatible API surface means the code can switch from local SLM to a cloud LLM (and back) with a one-line URL change.</li>
+<li><code>response_format: json_object</code> and grammar-constrained decoding mean the SLM’s output is reliable enough to drive actuators directly.</li>
+<li>Bridge RPC handles the IPC details so you can focus on logic rather than wire formats.</li>
+</ul>
+</section>
+<section id="limitations-and-considerations" class="level3">
+<h3 class="anchored" data-anchor-id="limitations-and-considerations">Limitations and Considerations</h3>
+<p>Being honest about what doesn’t work well at this scale:</p>
+<ul>
+<li><strong>Storage is tight.</strong> The factory image leaves ~830 MB free on a single 9.8 GB partition. Building llama.cpp, downloading a model, and running an App Lab container all compete for that space. Students need to learn disk management as part of the tutorial — a useful skill, but also a friction point.</li>
+<li><strong>Q4 quantization degrades sub-1B models noticeably.</strong> A 0.8B model at Q4 loses more quality than a 7B model at Q4 — less redundancy to exploit. Strong few-shot prompting and <code>presence_penalty</code> mitigate this, but don’t eliminate it.</li>
+<li><strong>No NPU acceleration.</strong> The QRB2210’s Adreno 702 GPU is not a reliable llama.cpp target. CPU is the only option, and that means four A53 cores at 2 GHz doing all the work.</li>
+<li><strong>Thinking mode is unusable on this hardware.</strong> Qwen3.5’s reasoning mode produces multi-minute inference times and frequent loops on the UNO Q. Always use <code>--reasoning off --reasoning-budget 0</code>.</li>
+<li><strong>Ollama.</strong> Ollama supports Qwen3.5, but with a higher memory overhead (~250 MB for the daemon). On the 4 GB UNO Q, llama.cpp’s lighter footprint is the better fit.</li>
+<li><strong>SLM quality at this size is still uneven.</strong> A 0.8B-parameter model will sometimes produce nonsense JSON, refuse benign prompts, or hallucinate reasons. Keep a human in the loop for any safety-critical decision.</li>
+</ul>
+</section>
+<section id="where-generative-ai-fits-in-the-edge-ai-curriculum" class="level3">
+<h3 class="anchored" data-anchor-id="where-generative-ai-fits-in-the-edge-ai-curriculum">Where Generative AI Fits in the Edge AI Curriculum</h3>
+<p><img src="./images/png/comp.png" class="img-fluid"></p>
+<p>The UNO Q is where generative AI becomes possible at the edge but stays bounded: small models, short outputs, batch-rate inference. Students who understand the constraints here won’t be surprised when they hit the same constraints on a real production deployment.</p>
+</section>
+<section id="whats-next" class="level3">
+<h3 class="anchored" data-anchor-id="whats-next">What’s Next</h3>
+<ul>
+<li><strong>Function Calling and Tool Use on the UNO Q</strong> — using the SLM to call MCU capabilities (read sensors, drive actuators) rather than just classify sensor data.</li>
+<li><strong>Vision-Language Models</strong> — you’ve already got this one: see <a href="../../content/multimodai/multimodai.html">Multimodal AI at the Edge</a> for adding a camera and running a VLM that describes what it sees, with the MCU triggering snapshots and the MPU generating captions.</li>
+<li><strong>Edge RAG on the UNO Q</strong> — embedding local documents (datasheets, manuals, course notes) and using the SLM to answer questions about them, fully offline.</li>
+<li><strong>Agentic Mode on the UNO Q</strong> — see <a href="../../content/agenticai/agenticai.html">Agentic AI at the Edge</a>: the SLM decides <em>which</em> tool to call, reads the result, and decides what to do next, rather than following a fixed script like this chapter’s <code>classify()</code>.</li>
+</ul>
+</section>
+</section>
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">15. Resources</h2>
+<section id="useful-resources" class="level3">
+<h3 class="anchored" data-anchor-id="useful-resources">Useful Resources</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Resource</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Generative AI at the Edge (prerequisite chapter)</td>
+<td><a href="../../content/genai/genai.html">Generative AI at the Edge</a></td>
+</tr>
+<tr class="even">
+<td>Multimodal AI at the Edge (related project)</td>
+<td><a href="../../content/multimodai/multimodai.html">Multimodal AI at the Edge</a></td>
+</tr>
+<tr class="odd">
+<td>Project repository</td>
+<td><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/Gen_AI_Edge" class="uri">https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/Gen_AI_Edge</a></td>
+</tr>
+<tr class="even">
+<td>llama.cpp repository</td>
+<td><a href="https://github.com/ggml-org/llama.cpp" class="uri">https://github.com/ggml-org/llama.cpp</a></td>
+</tr>
+<tr class="odd">
+<td>llama.cpp HTTP server docs</td>
+<td><a href="https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md" class="uri">https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md</a></td>
+</tr>
+<tr class="even">
+<td>Qwen3.5-0.8B GGUF (Bartowski)</td>
+<td><a href="https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF" class="uri">https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF</a></td>
+</tr>
+<tr class="odd">
+<td>Qwen3.5-0.8B GGUF (Unsloth Dynamic)</td>
+<td><a href="https://huggingface.co/unsloth/Qwen3.5-0.8B-GGUF" class="uri">https://huggingface.co/unsloth/Qwen3.5-0.8B-GGUF</a></td>
+</tr>
+<tr class="even">
+<td>Unsloth Qwen3.5 inference guide</td>
+<td><a href="https://unsloth.ai/docs/models/qwen3.5" class="uri">https://unsloth.ai/docs/models/qwen3.5</a></td>
+</tr>
+<tr class="odd">
+<td>Qwen3.5 reasoning control discussion</td>
+<td><a href="https://github.com/ggml-org/llama.cpp/discussions/20476" class="uri">https://github.com/ggml-org/llama.cpp/discussions/20476</a></td>
+</tr>
+<tr class="even">
+<td>SmolLM2 GGUF family (Bartowski)</td>
+<td><a href="https://huggingface.co/bartowski?search=SmolLM2" class="uri">https://huggingface.co/bartowski?search=SmolLM2</a></td>
+</tr>
+<tr class="odd">
+<td>Arduino UNO Q Documentation</td>
+<td><a href="https://docs.arduino.cc/hardware/uno-q" class="uri">https://docs.arduino.cc/hardware/uno-q</a></td>
+</tr>
+<tr class="even">
+<td>Arduino_RouterBridge library</td>
+<td><a href="https://github.com/arduino-libraries/Arduino_RouterBridge" class="uri">https://github.com/arduino-libraries/Arduino_RouterBridge</a></td>
+</tr>
+<tr class="odd">
+<td>Running LLMs on UNO Q with yzma</td>
+<td><a href="https://projecthub.arduino.cc/marc-edgeimpulse/running-local-llms-and-vlms-on-the-arduino-uno-q-with-yzma-74e288" class="uri">https://projecthub.arduino.cc/marc-edgeimpulse/running-local-llms-and-vlms-on-the-arduino-uno-q-with-yzma-74e288</a></td>
+</tr>
+<tr class="even">
+<td>LiteRT-LM (alternative SLM runtime)</td>
+<td><a href="https://github.com/google-ai-edge/LiteRT-LM" class="uri">https://github.com/google-ai-edge/LiteRT-LM</a></td>
+</tr>
+<tr class="odd">
+<td>yzma (Go wrapper for llama.cpp)</td>
+<td><a href="https://github.com/hybridgroup/yzma" class="uri">https://github.com/hybridgroup/yzma</a></td>
+</tr>
+<tr class="even">
+<td>QClaw</td>
+<td><a href="https://github.com/laurenvil/Uno-QClaw" class="uri">https://github.com/laurenvil/Uno-QClaw</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="references" class="level3">
+<h3 class="anchored" data-anchor-id="references">References</h3>
+<ol type="1">
+<li>Qwen Team, “Qwen3.5 Small Model Series,” Alibaba Cloud, March 2026.</li>
+<li>Unsloth, “Qwen3.5 — How to Run Locally,” <a href="https://unsloth.ai/docs/models/qwen3.5" class="uri">https://unsloth.ai/docs/models/qwen3.5</a>, March 2026.</li>
+<li>Gerganov, G., “llama.cpp: Inference of Meta’s LLaMA model (and others) in pure C/C++,” <a href="https://github.com/ggml-org/llama.cpp" class="uri">https://github.com/ggml-org/llama.cpp</a></li>
+<li>Bartowski, “Qwen_Qwen3.5-0.8B-GGUF,” <a href="https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF" class="uri">https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF</a></li>
+<li>llama.cpp discussion, “Qwen3.5 Small: How to truly disable thinking?” <a href="https://github.com/ggml-org/llama.cpp/discussions/20476" class="uri">https://github.com/ggml-org/llama.cpp/discussions/20476</a></li>
+<li>llama.cpp issue, “enable_thinking param cannot turn off thinking for qwen3.5,” <a href="https://github.com/ggml-org/llama.cpp/issues/20182" class="uri">https://github.com/ggml-org/llama.cpp/issues/20182</a></li>
+<li>Arduino, “Arduino UNO Q Product Page,” <a href="https://www.arduino.cc/product-uno-q/" class="uri">https://www.arduino.cc/product-uno-q/</a></li>
+<li>Arduino, “App CLI Documentation,” <a href="https://docs.arduino.cc/software/app-lab/tutorials/cli" class="uri">https://docs.arduino.cc/software/app-lab/tutorials/cli</a></li>
+<li>Pous, M., “Running local LLMs and VLMs on the Arduino UNO Q with yzma,” Arduino Project Hub, Feb 2026.</li>
+<li>Edge Impulse, “Arduino UNO Q,” <a href="https://docs.edgeimpulse.com/hardware/boards/arduino-uno-q" class="uri">https://docs.edgeimpulse.com/hardware/boards/arduino-uno-q</a></li>
+</ol>
+<hr>
+<p><em>Tutorial created for IESTI05 — Edge AI Machine Learning System Engineering, UNIFEI. Licensed under GNU General Public License 3.0.</em></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../content/multimodai/multimodai.html" class="pagination-link" aria-label="Multimodal AI at the Edge:">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Multimodal AI at the Edge:</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../content/agenticai/agenticai.html" class="pagination-link" aria-label="Agentic AI at the Edge:">
+        <span class="nav-page-text">Agentic AI at the Edge:</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Written and edited by Prof.&nbsp;Marcelo Rovai (UNIFEI University)</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/edit/main/content/physicalai/physicalai.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/blob/main/content/physicalai/physicalai.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

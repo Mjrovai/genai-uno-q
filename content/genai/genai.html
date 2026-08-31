@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Generative AI at the Edge: – Generative AI at the Edge</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../content/multimodai/multimodai.html" rel="next">
+<link href="../../content/setup/setup.html" rel="prev">
+<link href="../../images/cover.jpg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-daec65ff3ba034f51daec66ecad3ce27.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Generative AI at the Edge</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools tools-wide tools-end">
+    <a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="../../Generative-AI-at-the-Edge.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url=|url|" title="LinkedIn" class="quarto-navigation-tool px-1" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/genai/genai.html">Generative AI at the Edge:</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Acknowledgments</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../about_book.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About this Book</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Classification_of_AI_Applications.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classification of AI Applications</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/foundations/foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">How Generative AI Works, and How It Gets Small</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Generative AI (Proactive)</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/localinf/localinf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SLMs at the Edge</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/setup/setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Arduino UNO Q Setup</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/genai/genai.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Generative AI at the Edge:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/multimodai/multimodai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multimodal AI at the Edge:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/physicalai/physicalai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">GenAI Meets the Real World:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/agenticai/agenticai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Agentic AI at the Edge:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Fixed Function AI (Reactive)</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/imgclass/imgclass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Image Classification on the Arduino UNO Q</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/objdet/objdet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Object Detection on the Arduino UNO Q</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">References &amp; Author</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../About_the_author.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About the author</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">1. Introduction</a>
+  <ul class="collapse">
+  <li><a href="#what-this-tutorial-covers" id="toc-what-this-tutorial-covers" class="nav-link" data-scroll-target="#what-this-tutorial-covers">What This Tutorial Covers</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">Prerequisites</a></li>
+  </ul></li>
+  <li><a href="#small-language-models-on-the-edge-whats-realistic-on-the-uno-q" id="toc-small-language-models-on-the-edge-whats-realistic-on-the-uno-q" class="nav-link" data-scroll-target="#small-language-models-on-the-edge-whats-realistic-on-the-uno-q">2. Small Language Models on the Edge: What’s Realistic on the UNO Q</a>
+  <ul class="collapse">
+  <li><a href="#why-slms-matter-for-edge-ai" id="toc-why-slms-matter-for-edge-ai" class="nav-link" data-scroll-target="#why-slms-matter-for-edge-ai">Why SLMs Matter for Edge AI</a></li>
+  <li><a href="#the-memory-reality-on-a-4-gb-uno-q" id="toc-the-memory-reality-on-a-4-gb-uno-q" class="nav-link" data-scroll-target="#the-memory-reality-on-a-4-gb-uno-q">The Memory Reality on a 4 GB UNO Q</a></li>
+  <li><a href="#storage-reality-a-single-partition" id="toc-storage-reality-a-single-partition" class="nav-link" data-scroll-target="#storage-reality-a-single-partition">Storage Reality: A Single Partition</a></li>
+  <li><a href="#why-qwen-3.5" id="toc-why-qwen-3.5" class="nav-link" data-scroll-target="#why-qwen-3.5">Why Qwen 3.5</a></li>
+  <li><a href="#candidate-models" id="toc-candidate-models" class="nav-link" data-scroll-target="#candidate-models">Candidate Models</a></li>
+  <li><a href="#quantization-q4-vs-q8-for-sub-1b-models" id="toc-quantization-q4-vs-q8-for-sub-1b-models" class="nav-link" data-scroll-target="#quantization-q4-vs-q8-for-sub-1b-models">Quantization: Q4 vs Q8 for Sub-1B Models</a></li>
+  </ul></li>
+  <li><a href="#hardware-and-software-requirements" id="toc-hardware-and-software-requirements" class="nav-link" data-scroll-target="#hardware-and-software-requirements">3. Hardware and Software Requirements</a>
+  <ul class="collapse">
+  <li><a href="#hardware" id="toc-hardware" class="nav-link" data-scroll-target="#hardware">Hardware</a></li>
+  <li><a href="#software-already-on-the-uno-q-from-setup" id="toc-software-already-on-the-uno-q-from-setup" class="nav-link" data-scroll-target="#software-already-on-the-uno-q-from-setup">Software (already on the UNO Q from Setup)</a></li>
+  <li><a href="#software-installed-in-this-tutorial" id="toc-software-installed-in-this-tutorial" class="nav-link" data-scroll-target="#software-installed-in-this-tutorial">Software (installed in this tutorial)</a></li>
+  </ul></li>
+  <li><a href="#preparing-the-linux-side" id="toc-preparing-the-linux-side" class="nav-link" data-scroll-target="#preparing-the-linux-side">4. Preparing the Linux Side</a>
+  <ul class="collapse">
+  <li><a href="#step-1-verify-swap-is-present" id="toc-step-1-verify-swap-is-present" class="nav-link" data-scroll-target="#step-1-verify-swap-is-present">Step 1 — Verify Swap Is Present</a></li>
+  <li><a href="#step-2-install-build-tools" id="toc-step-2-install-build-tools" class="nav-link" data-scroll-target="#step-2-install-build-tools">Step 2 — Install Build Tools</a></li>
+  </ul></li>
+  <li><a href="#building-llama.cpp-from-source" id="toc-building-llama.cpp-from-source" class="nav-link" data-scroll-target="#building-llama.cpp-from-source">5. Building llama.cpp from Source</a>
+  <ul class="collapse">
+  <li><a href="#step-1-clone-the-repository" id="toc-step-1-clone-the-repository" class="nav-link" data-scroll-target="#step-1-clone-the-repository">Step 1 — Clone the Repository</a></li>
+  <li><a href="#step-2-configure-and-build" id="toc-step-2-configure-and-build" class="nav-link" data-scroll-target="#step-2-configure-and-build">Step 2 — Configure and Build</a></li>
+  <li><a href="#step-3-verify-the-binaries" id="toc-step-3-verify-the-binaries" class="nav-link" data-scroll-target="#step-3-verify-the-binaries">Step 3 — Verify the Binaries</a></li>
+  <li><a href="#step-4-reclaim-disk-space-optional" id="toc-step-4-reclaim-disk-space-optional" class="nav-link" data-scroll-target="#step-4-reclaim-disk-space-optional">Step 4 — Reclaim Disk Space (Optional)</a></li>
+  </ul></li>
+  <li><a href="#choosing-and-downloading-a-model" id="toc-choosing-and-downloading-a-model" class="nav-link" data-scroll-target="#choosing-and-downloading-a-model">6. Choosing and Downloading a Model</a>
+  <ul class="collapse">
+  <li><a href="#step-1-create-the-models-directory" id="toc-step-1-create-the-models-directory" class="nav-link" data-scroll-target="#step-1-create-the-models-directory">Step 1 — Create the Models Directory</a></li>
+  <li><a href="#step-2-download-qwen3.5-0.8b" id="toc-step-2-download-qwen3.5-0.8b" class="nav-link" data-scroll-target="#step-2-download-qwen3.5-0.8b">Step 2 — Download Qwen3.5-0.8B</a></li>
+  <li><a href="#a-note-on-quantization-quality-for-sub-1b-models" id="toc-a-note-on-quantization-quality-for-sub-1b-models" class="nav-link" data-scroll-target="#a-note-on-quantization-quality-for-sub-1b-models">A Note on Quantization Quality for Sub-1B Models</a></li>
+  </ul></li>
+  <li><a href="#using-llama-cli" id="toc-using-llama-cli" class="nav-link" data-scroll-target="#using-llama-cli">7. Using llama-cli</a>
+  <ul class="collapse">
+  <li><a href="#qwen-3.5-and-thinking-mode" id="toc-qwen-3.5-and-thinking-mode" class="nav-link" data-scroll-target="#qwen-3.5-and-thinking-mode">Qwen 3.5 and Thinking Mode</a></li>
+  <li><a href="#create-a-helper-script" id="toc-create-a-helper-script" class="nav-link" data-scroll-target="#create-a-helper-script">Create a Helper Script</a></li>
+  <li><a href="#use-it-with-a-simple-command" id="toc-use-it-with-a-simple-command" class="nav-link" data-scroll-target="#use-it-with-a-simple-command">Use It With a Simple Command</a></li>
+  </ul></li>
+  <li><a href="#using-llama-server" id="toc-using-llama-server" class="nav-link" data-scroll-target="#using-llama-server">8. Using llama-server</a>
+  <ul class="collapse">
+  <li><a href="#step-1-start-llama-server-terminal-1" id="toc-step-1-start-llama-server-terminal-1" class="nav-link" data-scroll-target="#step-1-start-llama-server-terminal-1">Step 1 — Start llama-server (Terminal 1)</a></li>
+  <li><a href="#step-2-quick-test-with-curl-terminal-2" id="toc-step-2-quick-test-with-curl-terminal-2" class="nav-link" data-scroll-target="#step-2-quick-test-with-curl-terminal-2">Step 2 — Quick Test With curl (Terminal 2)</a></li>
+  <li><a href="#step-3-stop-the-server" id="toc-step-3-stop-the-server" class="nav-link" data-scroll-target="#step-3-stop-the-server">Step 3 — Stop the Server</a></li>
+  <li><a href="#step-4-thermal-monitoring-optional" id="toc-step-4-thermal-monitoring-optional" class="nav-link" data-scroll-target="#step-4-thermal-monitoring-optional">Step 4 — Thermal Monitoring (Optional)</a></li>
+  <li><a href="#step-5-the-built-in-webui-optional" id="toc-step-5-the-built-in-webui-optional" class="nav-link" data-scroll-target="#step-5-the-built-in-webui-optional">Step 5 — The Built-In WebUI (Optional)</a></li>
+  </ul></li>
+  <li><a href="#talking-to-llama-server-from-python" id="toc-talking-to-llama-server-from-python" class="nav-link" data-scroll-target="#talking-to-llama-server-from-python">9. Talking to llama-server From Python</a>
+  <ul class="collapse">
+  <li><a href="#using-the-openai-client-library" id="toc-using-the-openai-client-library" class="nav-link" data-scroll-target="#using-the-openai-client-library">9.1 Using the <code>openai</code> Client Library</a></li>
+  <li><a href="#alternative-raw-http-with-requests" id="toc-alternative-raw-http-with-requests" class="nav-link" data-scroll-target="#alternative-raw-http-with-requests">9.2 Alternative: Raw HTTP With <code>requests</code></a></li>
+  <li><a href="#library-vs.-direct-http-when-to-use-which" id="toc-library-vs.-direct-http-when-to-use-which" class="nav-link" data-scroll-target="#library-vs.-direct-http-when-to-use-which">9.3 Library vs.&nbsp;Direct HTTP: When to Use Which</a></li>
+  </ul></li>
+  <li><a href="#performance-what-to-actually-expect" id="toc-performance-what-to-actually-expect" class="nav-link" data-scroll-target="#performance-what-to-actually-expect">10. Performance: What to Actually Expect</a></li>
+  <li><a href="#tips-tricks-and-troubleshooting" id="toc-tips-tricks-and-troubleshooting" class="nav-link" data-scroll-target="#tips-tricks-and-troubleshooting">11. Tips, Tricks, and Troubleshooting</a>
+  <ul class="collapse">
+  <li><a href="#model-loops-or-produces-very-long-responses" id="toc-model-loops-or-produces-very-long-responses" class="nav-link" data-scroll-target="#model-loops-or-produces-very-long-responses">Model Loops or Produces Very Long Responses</a></li>
+  <li><a href="#llama-cli-shows-reasoning-even-with-flags" id="toc-llama-cli-shows-reasoning-even-with-flags" class="nav-link" data-scroll-target="#llama-cli-shows-reasoning-even-with-flags">llama-cli Shows Reasoning Even With Flags</a></li>
+  <li><a href="#out-of-memory-crashes" id="toc-out-of-memory-crashes" class="nav-link" data-scroll-target="#out-of-memory-crashes">Out-of-Memory Crashes</a></li>
+  <li><a href="#json-parse-failures-from-the-model" id="toc-json-parse-failures-from-the-model" class="nav-link" data-scroll-target="#json-parse-failures-from-the-model">JSON Parse Failures From the Model</a></li>
+  <li><a href="#disk-space-running-low" id="toc-disk-space-running-low" class="nav-link" data-scroll-target="#disk-space-running-low">Disk Space Running Low</a></li>
+  </ul></li>
+  <li><a href="#going-further" id="toc-going-further" class="nav-link" data-scroll-target="#going-further">12. Going Further</a>
+  <ul class="collapse">
+  <li><a href="#alternative-model-qwen-3.5-2b" id="toc-alternative-model-qwen-3.5-2b" class="nav-link" data-scroll-target="#alternative-model-qwen-3.5-2b">Alternative Model (Qwen 3.5 2B)</a></li>
+  <li><a href="#alternative-slm-backends" id="toc-alternative-slm-backends" class="nav-link" data-scroll-target="#alternative-slm-backends">Alternative SLM Backends</a></li>
+  <li><a href="#function-calling-and-multimodal-models" id="toc-function-calling-and-multimodal-models" class="nav-link" data-scroll-target="#function-calling-and-multimodal-models">Function Calling and Multimodal Models</a></li>
+  <li><a href="#agentic-ai-assistant" id="toc-agentic-ai-assistant" class="nav-link" data-scroll-target="#agentic-ai-assistant">Agentic AI Assistant</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">13. Conclusion</a>
+  <ul class="collapse">
+  <li><a href="#what-we-covered" id="toc-what-we-covered" class="nav-link" data-scroll-target="#what-we-covered">What We Covered</a></li>
+  <li><a href="#advantages-of-this-approach" id="toc-advantages-of-this-approach" class="nav-link" data-scroll-target="#advantages-of-this-approach">Advantages of This Approach</a></li>
+  <li><a href="#limitations-and-considerations" id="toc-limitations-and-considerations" class="nav-link" data-scroll-target="#limitations-and-considerations">Limitations and Considerations</a></li>
+  <li><a href="#where-generative-ai-fits-in-the-edge-ai-curriculum" id="toc-where-generative-ai-fits-in-the-edge-ai-curriculum" class="nav-link" data-scroll-target="#where-generative-ai-fits-in-the-edge-ai-curriculum">Where Generative AI Fits in the Edge AI Curriculum</a></li>
+  <li><a href="#a-note-on-the-arduino-ventuno-q" id="toc-a-note-on-the-arduino-ventuno-q" class="nav-link" data-scroll-target="#a-note-on-the-arduino-ventuno-q">A Note on the Arduino VENTUNO Q</a></li>
+  </ul></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">14. Resources</a>
+  <ul class="collapse">
+  <li><a href="#useful-resources" id="toc-useful-resources" class="nav-link" data-scroll-target="#useful-resources">Useful Resources</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/edit/main/content/genai/genai.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/blob/main/content/genai/genai.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Generative AI at the Edge:</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Running Small Language Models with llama.cpp</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/jpeg/cover.jpg" class="img-fluid figure-img"></p>
+<figcaption><em>Cover image prompt (Nano Banana: Here is the shortened, single-paragraph prompt to reproduce the image: A clean, colorful vector-style digital illustration of an electronics development board on a green cutting mat. In the exact center of the blue board is a large, prominent Qualcomm QRB2210 processor chip glowing with a bright cyan light, while a smaller STM32U585 chip sits to its right. The board is connected via colorful jumper wires to a variety of components scattered around it, including a servo motor, a small breadboard with a sensor, a row of vertical LEDs, and tactile push-buttons. The scene features crisp line art, smooth gradients, and a textbook-illustration style, softly lit by an overhead light source.</em></figcaption>
+</figure>
+</div>
+<hr>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">1. Introduction</h2>
+<section id="what-this-tutorial-covers" class="level3">
+<h3 class="anchored" data-anchor-id="what-this-tutorial-covers">What This Tutorial Covers</h3>
+<p>This tutorial runs a Small Language Model (SLM) directly on the Arduino UNO Q, with no internet connection and no cloud API calls. The inference engine is <code>llama.cpp</code>, running entirely on the Linux (MPU) side. You will learn three ways to talk to it:</p>
+<ol type="1">
+<li><strong>The command line</strong> (<code>llama-cli</code>) — one-shot prompts, no server, the fastest way to sanity-check a model.</li>
+<li><strong>A local HTTP server</strong> (<code>llama-server</code>) — an OpenAI-compatible API you start by hand and query with <code>curl</code> or Python.</li>
+<li><strong>Python</strong> — first with the standard <code>openai</code> client library, then with raw HTTP calls, so you can see what the library is doing for you underneath.</li>
+</ol>
+<p>This chapter is deliberately self-contained and tool-focused: no Bridge RPC, no MCU sketch, no systemd service. Those come next, once you’re comfortable with the tools themselves — see <a href="#12-going-further">Going Further</a> for where this leads.</p>
+<p><strong>Why this approach?</strong></p>
+<ul>
+<li>Full local inference. No API keys, no rate limits, and prompts never leave the device.</li>
+<li><code>llama.cpp</code> gives you fine-grained control over memory usage (KV cache quantization, context length, thread count), which matters when RAM is shared with the OS.</li>
+<li><code>llama-server</code> speaks an OpenAI-compatible HTTP API, so the same client code that talks to a local SLM today can point at a cloud LLM tomorrow with a one-line URL change — the pattern you’ll use for real applications, not just this tutorial.</li>
+</ul>
+<p>By the end of this tutorial, you will be able to build <code>llama.cpp</code> from source, run a quantized SLM interactively from the terminal, serve it over HTTP, and call it from Python using both a standard client library and raw requests.</p>
+</section>
+<section id="prerequisites" class="level3">
+<h3 class="anchored" data-anchor-id="prerequisites">Prerequisites</h3>
+<p>This tutorial assumes you have completed the <a href="../../content/setup/setup.html">Setup</a> chapter and are comfortable connecting to the UNO Q via SSH (or VS Code Remote-SSH) and using basic Linux commands.</p>
+</section>
+</section>
+<section id="small-language-models-on-the-edge-whats-realistic-on-the-uno-q" class="level2">
+<h2 class="anchored" data-anchor-id="small-language-models-on-the-edge-whats-realistic-on-the-uno-q">2. Small Language Models on the Edge: What’s Realistic on the UNO Q</h2>
+<p>A Small Language Model (SLM) here means a transformer-based language model with roughly 100 million to 7 billion parameters, optimized (pruned, distilled, and quantized) to run on CPU-only hardware with a few GB of RAM. The “small” is relative — modern GPTs have well over 1 trillion parameters — but these models are big enough to handle real classification, summarization, structured output, and short conversational tasks.</p>
+<section id="why-slms-matter-for-edge-ai" class="level3">
+<h3 class="anchored" data-anchor-id="why-slms-matter-for-edge-ai">Why SLMs Matter for Edge AI</h3>
+<p>Early TinyML models were single-purpose: a wake-word detector, an image classifier, a vibration anomaly detector. One model, one task. SLMs change that. A single sub-1B-parameter model can classify, summarize, reformat, translate, and reason about structured inputs, all at the edge, all without a network call. The cost is latency (seconds, not milliseconds) and the need for a Linux-capable platform with at least 2 GB of RAM. The UNO Q sits right at that threshold.</p>
+</section>
+<section id="the-memory-reality-on-a-4-gb-uno-q" class="level3">
+<h3 class="anchored" data-anchor-id="the-memory-reality-on-a-4-gb-uno-q">The Memory Reality on a 4 GB UNO Q</h3>
+<p>The UNO Q 4 GB variant has 4 GB of LPDDR4X RAM shared between the OS, system services, the App Lab runtime, and your application. After boot, with no user app running, <code>free -h</code> typically shows about 2.8 to 3.0 GB available and 600 to 900 MB in use.</p>
+<p><img src="./images/png/free-mem.png" class="img-fluid"></p>
+<p>Below, <code>htop</code> shows the UNO Q 4GB running a 0.8B-parameter SLM at 8-bit quantization:</p>
+<p><img src="./images/png/htop-inference.png" class="img-fluid"></p>
+<blockquote class="blockquote">
+<p>The 2 GB variant can run the smallest models (SmolLM2-135M, SmolLM2-360M) but cannot comfortably fit 0.8B-parameter models. This chapter targets the 4 GB board.</p>
+</blockquote>
+</section>
+<section id="storage-reality-a-single-partition" class="level3">
+<h3 class="anchored" data-anchor-id="storage-reality-a-single-partition">Storage Reality: A Single Partition</h3>
+<blockquote class="blockquote">
+<p><strong>Storage layout depends on your factory image.</strong> Run <code>df -h</code> to check. There are two layouts in the wild:</p>
+<ul>
+<li><strong>Older images:</strong> <code>/</code> and <code>/home</code> share a single ~9.8 GB partition with ~830 MB free after boot. Disk management matters; follow the cleanup steps in this chapter.</li>
+<li><strong>Newer images:</strong> <code>/home/arduino</code> is on a separate ~18 GB partition; llama.cpp source, models, and any project all land there. The 9.8 GB root partition stays mostly untouched by this tutorial, and you can skip the shallow-clone and build-tree-deletion steps.</li>
+</ul>
+</blockquote>
+<p>Check your available space before starting:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df</span> <span class="at">-h</span> /home/arduino</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You need at least <strong>5 GB of free space</strong> to complete the build and model download. If you have less, see <a href="#11-tips-tricks-and-troubleshooting">Section 11</a> for cleanup tips.</p>
+</section>
+<section id="why-qwen-3.5" class="level3">
+<h3 class="anchored" data-anchor-id="why-qwen-3.5">Why Qwen 3.5</h3>
+<p><a href="https://qwen.ai/blog?id=qwen3.5">Qwen3.5-0.8B</a> (released February 2026 by Alibaba’s Qwen team) is the recommended SLM for the UNO Q for a few reasons:</p>
+<ul>
+<li><strong>Designed for edge devices.</strong> The Qwen3.5 Small series (0.8B, 2B, 4B, 9B) uses a hybrid architecture that combines Gated Delta Networks with sparse Attention and is tuned for low-latency inference on constrained hardware.</li>
+<li><strong>Hybrid thinking/non-thinking mode.</strong> In non-thinking mode the model answers directly without internal chain-of-thought, which keeps latency low and avoids the “reasoning loops” that plague thinking models on slow hardware.</li>
+<li><strong>201 languages.</strong> Useful for multilingual teaching contexts (English/Portuguese/Spanish/etc.) and for Global South deployments.</li>
+<li><strong>Newer than LLama 3.2 and Gemma 3.</strong> Better quality-per-parameter than earlier models at this size point on most benchmarks.</li>
+<li><strong>Apache 2.0 licensed.</strong> No restrictions on academic or commercial deployment.</li>
+</ul>
+<p><img src="./images/png/qwen3-5-family-comparison.png" class="img-fluid"></p>
+</section>
+<section id="candidate-models" class="level3">
+<h3 class="anchored" data-anchor-id="candidate-models">Candidate Models</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Params</th>
+<th>Size</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>SmolLM2-135M-Instruct Q4_K_M</code></td>
+<td>135 M</td>
+<td>~95 MB</td>
+<td>Very fast, limited reasoning. Good for routing/classification only.</td>
+</tr>
+<tr class="even">
+<td><code>SmolLM2-360M-Instruct Q4_K_M</code></td>
+<td>360 M</td>
+<td>~230 MB</td>
+<td>Balanced. Recommended fallback if 0.8B is too tight on space.</td>
+</tr>
+<tr class="odd">
+<td><code>Qwen3.5-0.8B Q8.0</code></td>
+<td>800 M</td>
+<td>~880 MB</td>
+<td><strong>Our primary choice.</strong> Best quality-per-parameter for edge.</td>
+</tr>
+<tr class="even">
+<td><code>Qwen3.5-2B (Q4-Q8)</code></td>
+<td>2B</td>
+<td>1.25 to 2 GB</td>
+<td>Excellent, but a little slower.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="quantization-q4-vs-q8-for-sub-1b-models" class="level3">
+<h3 class="anchored" data-anchor-id="quantization-q4-vs-q8-for-sub-1b-models">Quantization: Q4 vs Q8 for Sub-1B Models</h3>
+<p>During testing on the UNO Q, Q4_K_M quantization produced noticeably weaker output quality for sub-1B models compared to Q8_0. The aggressive 4-bit compression loses too much information when the model has only 800M parameters to begin with. There’s less redundancy to exploit than in bigger models.</p>
+<blockquote class="blockquote">
+<p>At sub-1B scale, Q4 is aggressive. The quantization error compounds in smaller model. Q6 or Q8 helps a lot.</p>
+<p>Also, prefer <code>min_p</code> over <code>top_p</code> for sampling. Something like <code>min_p=0.05</code> with <code>temp=0.7</code> works better for small models because it dynamically adjusts the candidate pool based on the probability distribution rather than using a fixed cutoff. <code>top_p</code> at low temperatures produces a very narrow beam, and repetition becomes almost inevitable at these model sizes.</p>
+</blockquote>
+<p>Recommendations:</p>
+<ul>
+<li><strong>Start with Q4_K_M</strong> (~550 MB for Qwen3.5-0.8B) to verify the workflow fits on your board.</li>
+<li><strong>Try Unsloth Dynamic quants</strong> (<code>UD-Q4_K_XL</code>). These upcast critical layers to 8 or 16 bits while keeping overall size close to Q4. Available from the <a href="https://huggingface.co/unsloth/Qwen3.5-0.8B-GGUF">unsloth/Qwen3.5-0.8B-GGUF</a> repo.</li>
+<li><strong>Try Q8_0</strong> if you have space (~850 MB). Quality is meaningfully better, but leaves very little headroom on the current factory image. (This is the choice for this tutorial.)</li>
+<li><strong>For production use, combine Q4 with strong few-shot prompting</strong> and <code>response_format: json_object</code> to compensate for quantization noise.</li>
+</ul>
+<blockquote class="blockquote">
+<p><a href="https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/blob/main/Qwen3.5-2B-UD-Q4_K_XL.gguf">unsloth/Qwen3.5-2B-GGUF (UD-Q4_K_XL)</a> is a great model when latency is not an issue. The 2B model with Unlosh Dynamic quants (<code>UD-Q4_K_XL</code>) should have double the latency of the 0.8B/8_0 model, but it has superior performance.</p>
+</blockquote>
+</section>
+</section>
+<section id="hardware-and-software-requirements" class="level2">
+<h2 class="anchored" data-anchor-id="hardware-and-software-requirements">3. Hardware and Software Requirements</h2>
+<section id="hardware" class="level3">
+<h3 class="anchored" data-anchor-id="hardware">Hardware</h3>
+<ul>
+<li>Arduino UNO Q <strong>4 GB</strong> variant (the 2 GB variant works with SmolLM2-360M or smaller only).</li>
+<li>USB-C data cable.</li>
+<li>Host computer with SSH (see the Setup chapter).</li>
+</ul>
+</section>
+<section id="software-already-on-the-uno-q-from-setup" class="level3">
+<h3 class="anchored" data-anchor-id="software-already-on-the-uno-q-from-setup">Software (already on the UNO Q from Setup)</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Debian Linux (latest image)</td>
+<td>Base OS on the MPU</td>
+</tr>
+<tr class="even">
+<td>Python 3.13</td>
+<td>Application code</td>
+</tr>
+<tr class="odd">
+<td>SSH server</td>
+<td>Remote access</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="software-installed-in-this-tutorial" class="level3">
+<h3 class="anchored" data-anchor-id="software-installed-in-this-tutorial">Software (installed in this tutorial)</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>build-essential</code>, <code>cmake</code>, <code>git</code></td>
+<td>Build llama.cpp from source</td>
+</tr>
+<tr class="even">
+<td><code>libcurl4-openssl-dev</code></td>
+<td>Enables in-binary model downloads</td>
+</tr>
+<tr class="odd">
+<td><code>openai</code>, <code>requests</code> (Python)</td>
+<td>Talking to <code>llama-server</code> from Python</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="preparing-the-linux-side" class="level2">
+<h2 class="anchored" data-anchor-id="preparing-the-linux-side">4. Preparing the Linux Side</h2>
+<p>SSH into the board and check what you have:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">uname</span> <span class="at">-m</span>            <span class="co"># aarch64</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">free</span> <span class="at">-h</span>             <span class="co"># ~3.6 Gi total, ~3.0 Gi available</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">df</span> <span class="at">-h</span> /             <span class="co"># root partition — check available space</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="step-1-verify-swap-is-present" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-verify-swap-is-present">Step 1 — Verify Swap Is Present</h3>
+<p>The current factory image includes <strong>1.8 GB of swap</strong> pre-configured. Verify:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">free</span> <span class="at">-h</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You should see a <code>Swap:</code> line showing about 1.8 Gi total.</p>
+<p><img src="./images/png/swap-mem.png" class="img-fluid"></p>
+<p>If swap is missing (older images), add it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> fallocate <span class="at">-l</span> 2G /home/swapfile</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chmod 600 /home/swapfile</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mkswap /home/swapfile</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> swapon /home/swapfile</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">'/home/swapfile none swap sw 0 0'</span> <span class="kw">|</span> <span class="fu">sudo</span> tee <span class="at">-a</span> /etc/fstab</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p>Swap acts as a safety net during the brief model-loading phase. You don’t want to hit it during inference (it would tank throughput), but having it prevents the OOM killer from ending your processes during the load spike.</p>
+</blockquote>
+</section>
+<section id="step-2-install-build-tools" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-install-build-tools">Step 2 — Install Build Tools</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install <span class="at">-y</span> build-essential cmake git pkg-config <span class="dt">\</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                    libcurl4-openssl-dev</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="building-llama.cpp-from-source" class="level2">
+<h2 class="anchored" data-anchor-id="building-llama.cpp-from-source">5. Building llama.cpp from Source</h2>
+<p>llama.cpp’s Makefile-based build is deprecated; the supported path is CMake. The old <code>LLAMA_CURL=1 make</code> recipe you may find in older tutorials fails with <code>make: command not found</code> on the UNO Q’s factory image, which does not include <code>make</code> by default.</p>
+<section id="step-1-clone-the-repository" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-clone-the-repository">Step 1 — Clone the Repository</h3>
+<p>A full clone of the llama.cpp repo pulls ~400 MB of git history you don’t need. A shallow clone saves disk space:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /home/arduino</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="at">--depth</span> 1 https://github.com/ggml-org/llama.cpp</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> llama.cpp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This brings the clone down from ~550 MB to roughly 80–100 MB.</p>
+</section>
+<section id="step-2-configure-and-build" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-configure-and-build">Step 2 — Configure and Build</h3>
+<p>From the llama.cpp folder, run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">-B</span> build <span class="dt">\</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-DLLAMA_CURL</span><span class="op">=</span>ON <span class="dt">\</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-DGGML_NATIVE</span><span class="op">=</span>ON <span class="dt">\</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-DCMAKE_BUILD_TYPE</span><span class="op">=</span>Release</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">--build</span> build <span class="at">--config</span> Release <span class="at">-j4</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The flags:</p>
+<ul>
+<li><code>LLAMA_CURL=ON</code> enables model downloads directly inside <code>llama-server</code> and <code>llama-cli</code>.</li>
+<li><code>GGML_NATIVE=ON</code> detects the A53’s NEON SIMD capabilities and emits the right CPU intrinsics.</li>
+<li><code>-j4</code> uses all four cores. The build takes 20–25 minutes on the UNO Q.</li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>If the build runs out of memory</strong> (the board freezes or the build dies), drop to <code>-j2</code>. The build takes longer but stays under the OOM threshold. With the factory swap in place, <code>-j4</code> normally works.</p>
+</blockquote>
+</section>
+<section id="step-3-verify-the-binaries" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-verify-the-binaries">Step 3 — Verify the Binaries</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> build/bin/llama-cli build/bin/llama-server</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-cli</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="./images/png/llama_cpp-version.png" class="img-fluid"></p>
+</section>
+<section id="step-4-reclaim-disk-space-optional" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-reclaim-disk-space-optional">Step 4 — Reclaim Disk Space (Optional)</h3>
+<p>The build tree adds about 142 MB of intermediate files. On a board with limited storage, copy the runtime binaries to a slim directory and delete the rest:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /home/arduino</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> llama-runtime</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> llama.cpp/build/bin/llama-server llama-runtime/</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> llama.cpp/build/bin/llama-cli    llama-runtime/</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> llama.cpp/build/bin/<span class="pp">*</span>.so<span class="pp">*</span>        llama-runtime/ <span class="dv">2</span><span class="op">&gt;</span>/dev/null</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Verify standalone operation</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> llama-runtime</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="va">LD_LIBRARY_PATH</span><span class="op">=</span>. <span class="ex">./llama-cli</span> <span class="at">--version</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete the source + build tree (saves ~690 MB)</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-rf</span> /home/arduino/llama.cpp</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="fu">df</span> <span class="at">-h</span> /</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>After cleanup, you should have roughly 1.5 GB free — enough for the model and normal system operation.</p>
+<blockquote class="blockquote">
+<p><strong>Alternative: Use pre-built binaries.</strong> llama.cpp publishes pre-built aarch64 Linux binaries on its <a href="https://github.com/ggml-org/llama.cpp/releases">GitHub Releases page</a>. Download the tarball, extract <code>llama-server</code> and <code>llama-cli</code>, and skip the whole build step. This turns this section into a 2-minute download instead of a 25-minute build, which is useful for classroom setups where you don’t need to teach the build process.</p>
+</blockquote>
+</section>
+</section>
+<section id="choosing-and-downloading-a-model" class="level2">
+<h2 class="anchored" data-anchor-id="choosing-and-downloading-a-model">6. Choosing and Downloading a Model</h2>
+<section id="step-1-create-the-models-directory" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-create-the-models-directory">Step 1 — Create the Models Directory</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> /home/arduino/models</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /home/arduino/models</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="step-2-download-qwen3.5-0.8b" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-download-qwen3.5-0.8b">Step 2 — Download Qwen3.5-0.8B</h3>
+<p>Two of the best quantizations are from <a href="https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF/tree/main">Bartowski</a> and <a href="https://huggingface.co/unsloth/Qwen3.5-0.8B-GGUF/tree/main">Unsloth.</a></p>
+<p>For the first part of this tutorial, the test was with 4-bit and 8-bit Bartowski quantization. The best result was with the <a href="https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF/blob/main/Qwen_Qwen3.5-0.8B-Q8_0.gguf">Q8_0 version</a> (about 797 MB).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/models</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF/resolve/main/<span class="dt">\</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>Qwen_Qwen3.5-0.8B-Q8_0.gguf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For 4-bit quantization (about 553 MB):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF/resolve/main/<span class="dt">\</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>Qwen_Qwen3.5-0.8B-Q4_K_M.gguf</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> Qwen_Qwen3.5-0.8B-Q4_K_M.gguf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>I also make tests with Unsloth. The Unsloth Dynamic quant, which upcasts critical model layers to 16 bits while keeping the overall file size close to Q8:</p>
+<blockquote class="blockquote">
+<p>The best is to put the models inside a directory to not make confusion</p>
+</blockquote>
+<pre><code>mkdir -p ~/models/Qwen3.5-0.8B-GGUF
+cd ~/models/Qwen3.5-0.8B-GGUF
+
+wget -c "https://huggingface.co/unsloth/Qwen3.5-0.8B-GGUF/resolve/main/\
+Qwen3.5-0.8B-Q8_0.gguf"</code></pre>
+<p><strong>For the 2 GB UNO Q or extremely tight storage:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://huggingface.co/bartowski/SmolLM2-360M-Instruct-GGUF/resolve/main/<span class="dt">\</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>SmolLM2-360M-Instruct-Q4_K_M.gguf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p>Adjust the model path in the sections below accordingly.</p>
+</blockquote>
+</section>
+<section id="a-note-on-quantization-quality-for-sub-1b-models" class="level3">
+<h3 class="anchored" data-anchor-id="a-note-on-quantization-quality-for-sub-1b-models">A Note on Quantization Quality for Sub-1B Models</h3>
+<p>During testing, the Q4_K_M quantization of Qwen3.5-0.8B produced noticeably weaker structured outputs compared to larger models at the same quantization level. That’s expected: aggressive 4-bit quantization removes information that a 0.8B model can’t afford to lose, because smaller models have less redundancy.</p>
+<p>Things that helped in the tests:</p>
+<ul>
+<li><strong>Strong few-shot prompting</strong> (two examples in the system prompt). The most effective single fix.</li>
+<li><strong><code>response_format: json_object</code></strong> to constrain decoding to valid JSON.</li>
+<li><strong><code>presence_penalty=1.5</code></strong> to prevent repetition loops.</li>
+<li><strong>Low <code>max_tokens</code></strong> (60–80) to keep answers short and focused.</li>
+<li><strong>Trying the Unsloth <code>UD-Q4_K_XL</code> quant</strong>, which upcasts sensitive layers automatically.</li>
+</ul>
+</section>
+</section>
+<section id="using-llama-cli" class="level2">
+<h2 class="anchored" data-anchor-id="using-llama-cli">7. Using llama-cli</h2>
+<p><code>llama-cli</code> is a self-contained, one-shot tool: no HTTP, no extra process, just “run a prompt, see the text, exit.” It’s the fastest way to sanity-check a model before building anything on top of it. Once you want anything persistent, multi-client, or called from a program, you’ll move to <code>llama-server</code> (Section 8).</p>
+<section id="qwen-3.5-and-thinking-mode" class="level3">
+<h3 class="anchored" data-anchor-id="qwen-3.5-and-thinking-mode">Qwen 3.5 and Thinking Mode</h3>
+<p>Qwen3.5 is a hybrid reasoning model, and by default the models are in “thinking mode.” For edge use, disable it. <code>llama-cli</code> needs to be told this explicitly via the <code>--reasoning</code> flags. Without them, the model may enter thinking mode, producing long internal reasoning chains that burn minutes of CPU time and often loop without reaching a conclusion.</p>
+<p>In current llama.cpp builds, use <code>--reasoning off</code> and <code>--reasoning-budget 0</code> on the command line. The older <code>--chat-template-kwargs '{"enable_thinking":false}'</code> flag is <strong>deprecated</strong> and produces a warning. If you see it in other tutorials, replace it with the newer flags.</p>
+<p>Recommended inference parameters for non-thinking mode (from the <a href="https://unsloth.ai/docs/models/qwen3.5">Unsloth Qwen3.5 guide</a>):</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 12%">
+<col style="width: 62%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Value</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>temperature</code></td>
+<td>0.7 to 1.0</td>
+<td>Moderate creativity for general tasks</td>
+</tr>
+<tr class="even">
+<td><code>top_p</code></td>
+<td>0.8</td>
+<td>Nucleus sampling</td>
+</tr>
+<tr class="odd">
+<td><code>top_k</code></td>
+<td>20</td>
+<td>Limit token pool</td>
+</tr>
+<tr class="even">
+<td><code>min_p</code></td>
+<td>0.0</td>
+<td>Disabled</td>
+</tr>
+<tr class="odd">
+<td><code>presence_penalty</code></td>
+<td>1.5</td>
+<td>Prevent repetition loops (critical for small models)</td>
+</tr>
+<tr class="even">
+<td><code>repetition_penalty</code></td>
+<td>1.0</td>
+<td>Disabled (presence_penalty handles it)</td>
+</tr>
+</tbody>
+</table>
+<p>Call <code>llama-cli</code> with those settings:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/llama.cpp</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-cli</span> <span class="dt">\</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> ~/models/Qwen_Qwen3.5-0.8B-Q8_0.gguf <span class="dt">\</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--threads</span> 4 <span class="dt">\</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--ctx-size</span> 1024 <span class="dt">\</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--temperature</span> 0.7 <span class="dt">\</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--top-p</span> 0.8 <span class="dt">\</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--top-k</span> 20 <span class="dt">\</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--min-p</span> 0.0 <span class="dt">\</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--presence-penalty</span> 1.5 <span class="dt">\</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--repeat-penalty</span> 1.0 <span class="dt">\</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning</span> off <span class="dt">\</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning-budget</span> 0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>At the prompt <code>&gt;</code>, type a question, for example:</p>
+<blockquote class="blockquote">
+<p><code>&gt; What is the capital of Brazil. Answer with one word.</code></p>
+</blockquote>
+<p><img src="./images/png/llama-cli-test.png" class="img-fluid"></p>
+<p>Latency in tokens/s is acceptable and usable, in the 5–10 tokens/s range.</p>
+<p>While inference runs, monitor CPU use and temperature:</p>
+<p><img src="./images/png/temp-cpu-use.png" class="img-fluid"></p>
+<p>The UNO Q handles SLMs well. The inferences were done without any heatsink or fan. Internal temperature increased by about 20 °C (from ~30 °C to ~50 °C). For long answers, the temperature reached ~60 °C, which is lower than a Raspberry Pi 5 with an active cooler.</p>
+<blockquote class="blockquote">
+<p>Check session 8. Using llama-server / Step 4 — Thermal Monitoring for creating a scriot to measure the temperature</p>
+</blockquote>
+</section>
+<section id="create-a-helper-script" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-helper-script">Create a Helper Script</h3>
+<p>You can wrap the full <code>llama-cli</code> command in a small shell script and run it instead of typing all the flags every time.</p>
+<p>On the UNO Q:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> ~/qwen_cli_llama.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Paste:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Simple Qwen3.5 0.8B 8-bit CLI on UNO-Q without thinking</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="va">MODEL</span><span class="op">=</span>~/models/Qwen_Qwen3.5-0.8B-Q8_0.gguf</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="va">LLAMA</span><span class="op">=</span>~/llama.cpp/build/bin/llama-cli</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="st">"</span><span class="va">$LLAMA</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> <span class="st">"</span><span class="va">$MODEL</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--threads</span> 4 <span class="dt">\</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--ctx-size</span> 1024 <span class="dt">\</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--temperature</span> 0.7 <span class="dt">\</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--top-p</span> 0.8 <span class="dt">\</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--top-k</span> 20 <span class="dt">\</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">--min-p</span> 0.0 <span class="dt">\</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">--presence-penalty</span> 1.5 <span class="dt">\</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">--repeat-penalty</span> 1.0 <span class="dt">\</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning</span> off <span class="dt">\</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning-budget</span> 0 <span class="dt">\</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">-p</span> <span class="st">"</span><span class="va">$*</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Save and make it executable:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x ~/qwen_cli_llama.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p>Optionally, add <code>~/</code> to your <code>PATH</code> in <code>~/.bashrc</code> or <code>~/.profile</code> so you can call it without the full path.</p>
+</blockquote>
+</section>
+<section id="use-it-with-a-simple-command" class="level3">
+<h3 class="anchored" data-anchor-id="use-it-with-a-simple-command">Use It With a Simple Command</h3>
+<p>Now run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">~/qwen_cli_llama.sh</span> <span class="st">"Explain edge AI in two sentences."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="./images/png/llama-cpp-example.png" class="img-fluid"></p>
+<p>or, after adding <code>~/</code> to <code>PATH</code> and reloading the shell:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">qwen_cli_llama.sh</span> <span class="st">"Explain edge AI in two sentences."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+</section>
+<section id="using-llama-server" class="level2">
+<h2 class="anchored" data-anchor-id="using-llama-server">8. Using llama-server</h2>
+<p>The Arduino UNO Q can host a small language model directly on its Linux side, and the easiest way to expose that model to other programs — Python scripts, <code>curl</code>, a browser — is through <code>llama-server</code>. Instead of calling the model via a one-shot CLI, <code>llama-server</code> loads the GGUF file into RAM once and exposes a simple HTTP API on localhost, so any client can send prompts and receive completions via JSON.</p>
+<p>In this chapter you’ll run <code>llama-server</code> <strong>interactively, in the foreground</strong> — no systemd, no background service. That’s enough to learn the API and build client code against it. (Turning it into a service that survives reboots is covered in a later, project-focused chapter.)</p>
+<p>You need <strong>two SSH sessions</strong> open to the UNO Q at the same time:</p>
+<ul>
+<li><strong>Terminal 1</strong> runs <code>llama-server</code> in the foreground (you’ll see logs here).</li>
+<li><strong>Terminal 2</strong> sends queries with <code>curl</code> and Python.</li>
+</ul>
+<section id="step-1-start-llama-server-terminal-1" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-start-llama-server-terminal-1">Step 1 — Start llama-server (Terminal 1)</h3>
+<p>In your first terminal:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/llama.cpp</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-server</span> <span class="dt">\</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> ~/models/Qwen_Qwen3.5-0.8B-Q8_0.gguf <span class="dt">\</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--threads</span> 4 <span class="dt">\</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--ctx-size</span> 1024 <span class="dt">\</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--port</span> 8081 <span class="dt">\</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning</span> off <span class="dt">\</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning-budget</span> 0 <span class="dt">\</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--alias</span> qwen3.5-0.8b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p><strong><code>--alias</code> gives the server a stable name to answer to</strong>, independent of the GGUF filename. Client code (curl, Python, the WebUI) can always ask for <code>"model": "qwen3.5-0.8b"</code> no matter which actual file is loaded behind it — which matters the moment you start swapping models (see the multimodal chapter for a worked example). Use it from here on, every time you start <code>llama-server</code>.</p>
+</blockquote>
+<p>Watch the log output. You should see:</p>
+<ul>
+<li>The model loading (file path, parameter count, quantization type)</li>
+<li><code>thinking = 0</code>, which confirms reasoning mode is disabled</li>
+<li><code>HTTP server listening</code> on the port you chose</li>
+</ul>
+<p><img src="./images/png/server-running.png" class="img-fluid"></p>
+<p>If port 8081 is busy, try another port:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ss <span class="at">-ltnp</span> <span class="kw">|</span> <span class="fu">grep</span> 8081</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p><strong>Do not close this terminal.</strong> The server runs as long as this process is alive. When you’re done testing, press <code>Ctrl+C</code> to stop it.</p>
+</blockquote>
+</section>
+<section id="step-2-quick-test-with-curl-terminal-2" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-quick-test-with-curl-terminal-2">Step 2 — Quick Test With curl (Terminal 2)</h3>
+<p>Open a second SSH session to the UNO Q. First, verify the server is alive:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> http://127.0.0.1:8081/health <span class="kw">|</span> <span class="ex">python3</span> <span class="at">-m</span> json.tool</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="./images/png/server-test.png" class="img-fluid"></p>
+<p>You should see <code>"status": "ok"</code>. Now send a prompt using the <code>/completion</code> endpoint:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> http://127.0.0.1:8081/completion <span class="dt">\</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">"Content-Type: application/json"</span> <span class="dt">\</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-d</span> <span class="st">'{</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="st">    "prompt": "In 2 sentences, what is the Olympic Games?",</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="st">    "n_predict": 128</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="st">  }'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="./images/png/raw-answer.png" class="img-fluid"></p>
+<p>Switch back to <strong>Terminal 1</strong> while it processes. You’ll see the server log each token as it generates, plus timing information. That’s the main advantage of running in the foreground: you see exactly what the model is doing.</p>
+<p><img src="./images/png/server-data.png" class="img-fluid"></p>
+<p>Now try the OpenAI-compatible <code>/v1/chat/completions</code> endpoint, which is what the Python clients in Section 9 use:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> http://127.0.0.1:8081/v1/chat/completions <span class="dt">\</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">"Content-Type: application/json"</span> <span class="dt">\</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-d</span> <span class="st">'{</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="st">    "model": "qwen3.5-0.8b",</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="st">    "messages": [</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="st">      {"role": "system", "content": "You are concise. Answer in one sentence."},</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="st">      {"role": "user", "content": "What is TinyML?"}</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="st">    ],</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="st">    "max_tokens": 80,</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="st">    "temperature": 0.7,</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="st">    "top_p": 0.8,</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="st">    "presence_penalty": 1.5</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="st">  }'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The response arrives as a JSON object. The model’s answer is in <code>choices[0].message.content</code>.</p>
+<p><img src="./images/png/curl-test-server.png" class="img-fluid"></p>
+</section>
+<section id="step-3-stop-the-server" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-stop-the-server">Step 3 — Stop the Server</h3>
+<p>When you’re done testing, go back to <strong>Terminal 1</strong> and press <code>Ctrl+C</code>. The model unloads and the port is freed. Keep it running for the next section — you’ll need it for the Python examples.</p>
+</section>
+<section id="step-4-thermal-monitoring-optional" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-thermal-monitoring-optional">Step 4 — Thermal Monitoring (Optional)</h3>
+<p>The UNO Q exposes Qualcomm thermal data through Linux thermal and hwmon interfaces. To monitor the MPU temperature in real time during inference:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check thermal zone type</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /sys/class/thermal/thermal_zone0/type</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Read current temperature (in millidegrees Celsius)</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /sys/class/thermal/thermal_zone0/temp</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Live monitor (updates every second)</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="ex">watch</span> <span class="at">-n</span> 1 <span class="st">"cat /sys/class/hwmon/hwmon0/temp1_input"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For a friendlier readout, drop a small Python script in <code>~/q_temp_monitor.py</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env python3</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># The mapss_thermal zone exposes the QRB2210 SoC temperature</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>TEMP_PATH <span class="op">=</span> Path(<span class="st">"/sys/class/hwmon/hwmon0/temp1_input"</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_temp_c():</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    raw <span class="op">=</span> <span class="bu">int</span>(TEMP_PATH.read_text().strip())</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> raw <span class="op">/</span> <span class="fl">1000.0</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>read_temp_c()<span class="sc">:.1f}</span><span class="ss"> °C"</span>)</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>            time.sleep(<span class="fl">1.0</span>)</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">KeyboardInterrupt</span>:</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Make it executable and run it in a side terminal while the SLM works:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x ~/q_temp_monitor.py</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="ex">~/q_temp_monitor.py</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="./images/png/temp.png" class="img-fluid"></p>
+<p>You should see the reading climb from ~32 °C at idle to whatever your workload pushes it to during inference.</p>
+<section id="thermal-behavior-measured" class="level4">
+<h4 class="anchored" data-anchor-id="thermal-behavior-measured">Thermal Behavior (Measured)</h4>
+<p>During testing on a UNO Q 4 GB <strong>without any heatsink or fan</strong>:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Condition</th>
+<th>Internal CPU Temperature</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Idle (no inference)</td>
+<td>~34 °C</td>
+</tr>
+<tr class="even">
+<td>Normal inference (short prompts)</td>
+<td>~54 °C (+20 °C above idle)</td>
+</tr>
+<tr class="odd">
+<td>Sustained inference (long answers)</td>
+<td>~62 °C</td>
+</tr>
+</tbody>
+</table>
+<p>All of these are well under the 70–80 °C range where ARM cores begin to throttle. The UNO Q runs cooler than a Raspberry Pi 5 under comparable loads. <strong>No heatsink or fan is required</strong> for normal SLM workloads, even in sustained use.</p>
+</section>
+</section>
+<section id="step-5-the-built-in-webui-optional" class="level3">
+<h3 class="anchored" data-anchor-id="step-5-the-built-in-webui-optional">Step 5 — The Built-In WebUI (Optional)</h3>
+<p>Recent llama.cpp builds ship a SvelteKit-based chat interface embedded directly into the <code>llama-server</code> binary. No extra install, no extra flag. If the build from Section 5 is recent enough, the UI is already running on the same port as the API.</p>
+<p>From the UNO Q itself, use <code>http://127.0.0.1:8081/</code>, or tunnel from your laptop with <code>ssh -L 8081:127.0.0.1:8081 arduino@&lt;UNO_Q_IP&gt;</code> and open <code>http://localhost:8081/</code> in the host browser.</p>
+<p>Alternatively, adding <code>--host 0.0.0.0</code> to llama. cpp.cpp command, the WebUI can be opened from your desktop browser using the UNO Q IP Address:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/llama.cpp</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-server</span> <span class="dt">\</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> ~/models/Qwen_Qwen3.5-0.8B-Q8_0.gguf <span class="dt">\</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--threads</span> 4 <span class="dt">\</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--ctx-size</span> 1024 <span class="dt">\</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--port</span> 8081 <span class="dt">\</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--host</span> 0.0.0.0 <span class="dt">\</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning</span> off <span class="dt">\</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning-budget</span> 0 <span class="dt">\</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--alias</span> qwen3.5-0.8b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>And so, from any device on the same Wi-Fi, open:</p>
+<p><strong>http://<uno_q_ip>:8081/</uno_q_ip></strong> (for example, in my case: http://192.168.5.114:8081/)</p>
+<p><img src="./images/png/llama-ui.png" class="img-fluid"></p>
+<p>What’s useful here:</p>
+<ul>
+<li>Streaming chat against your local Qwen3.5-0.8B, no extra app needed.</li>
+<li>A live sampling panel for <code>temperature</code>, <code>top_p</code>, <code>presence_penalty</code>, and friends. Useful for tuning before you bake values into Python code.</li>
+<li>Reasoning/thinking blocks render in their own collapsible section. With <code>--reasoning off --reasoning-budget 0</code> the section stays empty, which is a quick visual confirmation that the flag worked.</li>
+<li>For more information, see <a href="https://github.com/ggml-org/llama.cpp/discussions/16938">guide: using <code>llama-ui</code> — the new WebUI of llama.cpp</a>.</li>
+</ul>
+<p>What to skip on a 4 GB UNO Q:</p>
+<ul>
+<li><strong>File uploads.</strong> The UI accepts images and PDFs, but Qwen3.5-0.8B is text-only (We will learn how to handle image further) . Dropping an image either gets ignored or produces a hallucination. Vision-capable GGUFs (Qwen3.5-VL, LLaVA variants) don’t fit comfortably in this board’s RAM.</li>
+<li><strong>MCP tool calling and built-in agent tools.</strong> Available in the UI, but enabling filesystem or shell tools on a server bound to <code>0.0.0.0</code> is a security footgun. Keep them off in this setup.</li>
+</ul>
+<blockquote class="blockquote">
+<p>If the URL returns a bare JSON error instead of a UI, your <code>llama-server</code> build predates the embedded WebUI. Rebuild from the latest llama.cpp <code>master</code>, or grab a recent pre-built aarch64 binary from the GitHub Releases page.</p>
+</blockquote>
+</section>
+</section>
+<section id="talking-to-llama-server-from-python" class="level2">
+<h2 class="anchored" data-anchor-id="talking-to-llama-server-from-python">9. Talking to llama-server From Python</h2>
+<p><code>llama-server</code> speaks the same API shape as OpenAI’s Chat Completions endpoint. That means you have two ways to call it from Python: the official <code>openai</code> client library (recommended — it’s the standard interface, and the same code works against a cloud model later), or raw HTTP requests (useful to understand what the library does underneath, or when you can’t add a dependency).</p>
+<p>With <strong>Terminal 1</strong> still running <code>llama-server</code> from Section 8, use <strong>Terminal 2</strong> for the examples below.</p>
+<section id="using-the-openai-client-library" class="level3">
+<h3 class="anchored" data-anchor-id="using-the-openai-client-library">9.1 Using the <code>openai</code> Client Library</h3>
+<p>Install it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">--user</span> openai</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Create <code>~/qwen_client.py</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> ~/qwen_client.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Paste:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env python3</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co">Chat with the local Qwen3.5 SLM served by llama-server,</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co">using the standard OpenAI-compatible client library.</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co">Run llama-server in another terminal first, then call this script.</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="co"># llama-server doesn't check the API key, but the client requires one.</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI(base_url<span class="op">=</span><span class="st">"http://127.0.0.1:8081/v1"</span>, api_key<span class="op">=</span><span class="st">"not-needed"</span>)</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>MODEL <span class="op">=</span> <span class="st">"qwen3.5-0.8b"</span></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> strip_think(text):</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Remove residual &lt;think&gt;...&lt;/think&gt; tags from Qwen3.5 output."""</span></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> re.sub(<span class="vs">r"&lt;think&gt;</span><span class="dv">.</span><span class="op">*?</span><span class="vs">&lt;/think&gt;"</span>, <span class="st">""</span>, text, flags<span class="op">=</span>re.DOTALL).strip()</span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ask(messages, max_tokens<span class="op">=</span><span class="dv">128</span>, stream<span class="op">=</span><span class="va">True</span>):</span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Send a chat completion request and return the cleaned response."""</span></span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>        model<span class="op">=</span>MODEL,</span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>        messages<span class="op">=</span>messages,</span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>        max_tokens<span class="op">=</span>max_tokens,</span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>        temperature<span class="op">=</span><span class="fl">0.7</span>,</span>
+<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>        top_p<span class="op">=</span><span class="fl">0.8</span>,</span>
+<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>        presence_penalty<span class="op">=</span><span class="fl">1.5</span>,</span>
+<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>        stream<span class="op">=</span>stream,</span>
+<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> stream:</span>
+<span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> strip_think(response.choices[<span class="dv">0</span>].message.content)</span>
+<span id="cb32-33"><a href="#cb32-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-34"><a href="#cb32-34" aria-hidden="true" tabindex="-1"></a>    chunks <span class="op">=</span> []</span>
+<span id="cb32-35"><a href="#cb32-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> chunk <span class="kw">in</span> response:</span>
+<span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a>        delta <span class="op">=</span> chunk.choices[<span class="dv">0</span>].delta.content <span class="kw">or</span> <span class="st">""</span></span>
+<span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(delta, end<span class="op">=</span><span class="st">""</span>, flush<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb32-38"><a href="#cb32-38" aria-hidden="true" tabindex="-1"></a>        chunks.append(delta)</span>
+<span id="cb32-39"><a href="#cb32-39" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>()</span>
+<span id="cb32-40"><a href="#cb32-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> strip_think(<span class="st">""</span>.join(chunks))</span>
+<span id="cb32-41"><a href="#cb32-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-42"><a href="#cb32-42" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<span id="cb32-43"><a href="#cb32-43" aria-hidden="true" tabindex="-1"></a>    system <span class="op">=</span> <span class="st">"You are concise."</span></span>
+<span id="cb32-44"><a href="#cb32-44" aria-hidden="true" tabindex="-1"></a>    history <span class="op">=</span> [{<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: system}]</span>
+<span id="cb32-45"><a href="#cb32-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-46"><a href="#cb32-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(sys.argv) <span class="op">&gt;</span> <span class="dv">1</span>:</span>
+<span id="cb32-47"><a href="#cb32-47" aria-hidden="true" tabindex="-1"></a>        <span class="co"># One-shot mode: pass the prompt as arguments</span></span>
+<span id="cb32-48"><a href="#cb32-48" aria-hidden="true" tabindex="-1"></a>        prompt <span class="op">=</span> <span class="st">" "</span>.join(sys.argv[<span class="dv">1</span>:])</span>
+<span id="cb32-49"><a href="#cb32-49" aria-hidden="true" tabindex="-1"></a>        history.append({<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: prompt})</span>
+<span id="cb32-50"><a href="#cb32-50" aria-hidden="true" tabindex="-1"></a>        ask(history)</span>
+<span id="cb32-51"><a href="#cb32-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb32-52"><a href="#cb32-52" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Interactive REPL with conversation memory</span></span>
+<span id="cb32-53"><a href="#cb32-53" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Qwen3.5 on UNO Q (via llama-server + openai). Ctrl+C to exit.</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb32-54"><a href="#cb32-54" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb32-55"><a href="#cb32-55" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb32-56"><a href="#cb32-56" aria-hidden="true" tabindex="-1"></a>                prompt <span class="op">=</span> <span class="bu">input</span>(<span class="st">"&gt; "</span>).strip()</span>
+<span id="cb32-57"><a href="#cb32-57" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="kw">not</span> prompt:</span>
+<span id="cb32-58"><a href="#cb32-58" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">continue</span></span>
+<span id="cb32-59"><a href="#cb32-59" aria-hidden="true" tabindex="-1"></a>                history.append({<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: prompt})</span>
+<span id="cb32-60"><a href="#cb32-60" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>()</span>
+<span id="cb32-61"><a href="#cb32-61" aria-hidden="true" tabindex="-1"></a>                reply <span class="op">=</span> ask(history)</span>
+<span id="cb32-62"><a href="#cb32-62" aria-hidden="true" tabindex="-1"></a>                history.append({<span class="st">"role"</span>: <span class="st">"assistant"</span>, <span class="st">"content"</span>: reply})</span>
+<span id="cb32-63"><a href="#cb32-63" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>()</span>
+<span id="cb32-64"><a href="#cb32-64" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> (<span class="pp">KeyboardInterrupt</span>, <span class="pp">EOFError</span>):</span>
+<span id="cb32-65"><a href="#cb32-65" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Bye!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Make it executable and test:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x ~/qwen_client.py</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co"># One-shot test</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="ex">~/qwen_client.py</span> <span class="st">"In one sentence, what causes dengue fever?"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="./images/png/server-on-shot-test.png" class="img-fluid"></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Interactive REPL, with memory across turns</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="ex">~/qwen_client.py</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="./images/png/python-tests.png" class="img-fluid"></p>
+<p>Two things worth noticing in this script:</p>
+<ul>
+<li><strong><code>stream=True</code> by default.</strong> Tokens print as they’re generated instead of waiting for the full response — the same experience you get from the WebUI or <code>llama-cli</code>.</li>
+<li><strong><code>history</code> is a plain Python list.</strong> Each turn appends both the user prompt and the assistant’s reply, so the model sees the full conversation on the next call. This is exactly how multi-turn “memory” works with any OpenAI-compatible API — there’s no hidden server-side state.</li>
+</ul>
+<section id="structured-json-output" class="level4">
+<h4 class="anchored" data-anchor-id="structured-json-output">Structured JSON output</h4>
+<p>The same client works for structured tasks, not just chat. Ask the model to produce JSON:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">~/qwen_client.py</span> <span class="st">"Given: temp=30.2C, humidity=85%, standing water=yes. Classify dengue risk as low/medium/high. Reply ONLY with JSON: {</span><span class="dt">\"</span><span class="st">risk</span><span class="dt">\"</span><span class="st">:</span><span class="dt">\"</span><span class="st">...</span><span class="dt">\"</span><span class="st">, </span><span class="dt">\"</span><span class="st">reason</span><span class="dt">\"</span><span class="st">:</span><span class="dt">\"</span><span class="st">...</span><span class="dt">\"</span><span class="st">}"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="./images/png/json-return.png" class="img-fluid"></p>
+<p>The model returns valid JSON most of the time at Q8 quantization. This pattern — sensor-like input in, structured verdict out — is exactly what a real application built on this chapter would use; see <a href="#12-going-further">Going Further</a>.</p>
+</section>
+</section>
+<section id="alternative-raw-http-with-requests" class="level3">
+<h3 class="anchored" data-anchor-id="alternative-raw-http-with-requests">9.2 Alternative: Raw HTTP With <code>requests</code></h3>
+<p>Sometimes you don’t want the <code>openai</code> dependency — an embedded script, a minimal container image, or just wanting to see the wire format directly. <code>llama-server</code>’s HTTP API is plain JSON over HTTP, so <code>requests</code> works fine too:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>resp <span class="op">=</span> requests.post(</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"http://127.0.0.1:8081/v1/chat/completions"</span>,</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    json<span class="op">=</span>{</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model"</span>: <span class="st">"qwen3.5-0.8b"</span>,</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"messages"</span>: [</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>            {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: <span class="st">"You are concise."</span>},</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>            {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"What is TinyML?"</span>},</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>        ],</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"max_tokens"</span>: <span class="dv">80</span>,</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"temperature"</span>: <span class="fl">0.7</span>,</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"top_p"</span>: <span class="fl">0.8</span>,</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"presence_penalty"</span>: <span class="fl">1.5</span>,</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>    timeout<span class="op">=</span><span class="dv">120</span>,</span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>resp.raise_for_status()</span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(resp.json()[<span class="st">"choices"</span>][<span class="dv">0</span>][<span class="st">"message"</span>][<span class="st">"content"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="library-vs.-direct-http-when-to-use-which" class="level3">
+<h3 class="anchored" data-anchor-id="library-vs.-direct-http-when-to-use-which">9.3 Library vs.&nbsp;Direct HTTP: When to Use Which</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><code>openai</code> library</th>
+<th>raw <code>requests</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Code</td>
+<td>Shorter, typed response objects</td>
+<td>More verbose, manual JSON parsing</td>
+</tr>
+<tr class="even">
+<td>Streaming</td>
+<td>Built-in iterator over chunks</td>
+<td>Manual SSE line parsing</td>
+</tr>
+<tr class="odd">
+<td>Swapping to a cloud provider</td>
+<td>Change <code>base_url</code> + <code>api_key</code>, done</td>
+<td>Change the URL and headers by hand</td>
+</tr>
+<tr class="even">
+<td>Dependencies</td>
+<td>Adds <code>openai</code> package</td>
+<td>Only <code>requests</code> (often already installed)</td>
+</tr>
+<tr class="odd">
+<td>Error handling</td>
+<td>Raises typed exceptions</td>
+<td>You inspect <code>status_code</code> / <code>response.text</code> yourself</td>
+</tr>
+<tr class="even">
+<td>Best for</td>
+<td>Application code, anything long-lived</td>
+<td>Quick scripts, debugging, constrained environments</td>
+</tr>
+</tbody>
+</table>
+<p>For anything beyond a one-off test, prefer the library — it’s the same code you’d write against a real OpenAI, Groq, or other hosted endpoint, which is the point of <code>llama-server</code> implementing that API in the first place.</p>
+</section>
+</section>
+<section id="performance-what-to-actually-expect" class="level2">
+<h2 class="anchored" data-anchor-id="performance-what-to-actually-expect">10. Performance: What to Actually Expect</h2>
+<p>Measured on a UNO Q 4 GB with the factory image, Qwen3.5-0.8B Q8_0, no heatsink, no fan:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cold model load (boot of llama-server)</td>
+<td>~4 s</td>
+</tr>
+<tr class="even">
+<td>Idle RAM (llama-server running)</td>
+<td>~700–800 MB</td>
+</tr>
+<tr class="odd">
+<td>Model + context memory usage</td>
+<td>~1,122 MiB</td>
+</tr>
+<tr class="even">
+<td>Prompt processing throughput</td>
+<td>~9.9 tokens/s</td>
+</tr>
+<tr class="odd">
+<td>Generation throughput</td>
+<td>~4.75 tokens/s</td>
+</tr>
+<tr class="even">
+<td>CPU usage during decode</td>
+<td>4 cores @ 100%</td>
+</tr>
+<tr class="odd">
+<td>Idle board temperature (no inference)</td>
+<td>~34 °C</td>
+</tr>
+<tr class="even">
+<td>Temperature during normal inference</td>
+<td>~54 °C</td>
+</tr>
+<tr class="odd">
+<td>Temperature during sustained long answers</td>
+<td>~62 °C</td>
+</tr>
+<tr class="even">
+<td>Thermal throttle threshold</td>
+<td>70–80 °C (never reached)</td>
+</tr>
+<tr class="odd">
+<td>Power consumption (max.)</td>
+<td>3.1 W</td>
+</tr>
+</tbody>
+</table>
+<p>Takeaways:</p>
+<ul>
+<li><strong>Usable but not desktop-class.</strong> Prompt processing at ~9.9 tok/s and generation at ~4.75 tok/s make the setup workable for periodic queries, but responses take a few seconds depending on length. The ~1,122 MiB memory footprint (model + context) leaves about 2.5 GB for the OS and your application. Tight but viable on the 4 GB board.</li>
+<li><strong>Q4 quantization shows quality tradeoffs.</strong> At 0.8B parameters, the model has less redundancy than a 7B model, so Q4 compression removes information that matters. Strong few-shot prompting and <code>presence_penalty=1.5</code> compensate for most of it. <strong>Use Q8_0</strong> or the Unsloth Dynamic quant if storage allows.</li>
+<li><strong>Thermal behavior is not a concern.</strong> The +20 °C rise from idle to inference is modest, and even sustained workloads only reach ~62 °C, well under the 70–80 °C throttle threshold. No heatsink is required for normal lab use.</li>
+<li><strong>Thinking mode kills the board.</strong> With thinking enabled, the model spends 30–60 seconds generating internal reasoning chains before producing any output, and often loops without reaching a conclusion. Always run Qwen3.5 Small with <code>--reasoning off --reasoning-budget 0</code>.</li>
+<li><strong>Repetition loops.</strong> Without <code>presence_penalty=1.5</code>, the model tends to repeat phrases or produce circular responses. A known behavior of small Qwen3.5 variants, well-documented in the Unsloth guide.</li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>Token throughput vs.&nbsp;wall-clock latency</strong></p>
+<p>People often optimize for tokens/second when wall-clock latency is what actually matters. A 30-token answer at 10 tok/s (3 s) feels twice as responsive as a 100-token answer at 10 tok/s (10 s). Cap <code>max_tokens</code> aggressively and design prompts to keep responses short.</p>
+</blockquote>
+</section>
+<section id="tips-tricks-and-troubleshooting" class="level2">
+<h2 class="anchored" data-anchor-id="tips-tricks-and-troubleshooting">11. Tips, Tricks, and Troubleshooting</h2>
+<section id="model-loops-or-produces-very-long-responses" class="level3">
+<h3 class="anchored" data-anchor-id="model-loops-or-produces-very-long-responses">Model Loops or Produces Very Long Responses</h3>
+<p>This almost always means thinking mode is active. Verify the <code>--reasoning off --reasoning-budget 0</code> flags are present on your <code>llama-server</code> / <code>llama-cli</code> command line, and that <code>presence_penalty</code> is set to 1.5 in your API calls.</p>
+<p>Even with <code>--reasoning off</code>, Qwen3.5 may still emit an empty <code>&lt;think&gt;&lt;/think&gt;</code> tag in its output. That’s cosmetic — the <code>strip_think()</code> function in the Python examples handles it. The content inside the tags is empty, so no actual reasoning is happening.</p>
+<p>If you see the deprecation warning about <code>--chat-template-kwargs</code>, update your command line to use <code>--reasoning off --reasoning-budget 0</code> instead.</p>
+</section>
+<section id="llama-cli-shows-reasoning-even-with-flags" class="level3">
+<h3 class="anchored" data-anchor-id="llama-cli-shows-reasoning-even-with-flags">llama-cli Shows Reasoning Even With Flags</h3>
+<p>A known issue: <code>llama-cli</code> is less reliable than <code>llama-server</code> for suppressing Qwen 3.5 reasoning traces. For anything you build on top, prefer <code>llama-server</code>. The CLI is best reserved for quick experiments.</p>
+</section>
+<section id="out-of-memory-crashes" class="level3">
+<h3 class="anchored" data-anchor-id="out-of-memory-crashes">Out-of-Memory Crashes</h3>
+<p>If the kernel OOM-killer takes out <code>llama-server</code> during model load:</p>
+<ul>
+<li>Confirm swap is enabled. Running <code>free -h</code> should show a non-zero swap size.</li>
+<li>Reduce <code>--ctx-size</code> (try 1024 or lower).</li>
+</ul>
+</section>
+<section id="json-parse-failures-from-the-model" class="level3">
+<h3 class="anchored" data-anchor-id="json-parse-failures-from-the-model">JSON Parse Failures From the Model</h3>
+<p>Even when asking for JSON explicitly, occasional responses include stray text. A simple, robust pattern:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> parse_verdict(content):</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> json.loads(content)</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> json.JSONDecodeError:</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>        cleaned <span class="op">=</span> content.strip().strip(<span class="st">"`"</span>)</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> cleaned.startswith(<span class="st">"json"</span>):</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>            cleaned <span class="op">=</span> cleaned[<span class="dv">4</span>:].lstrip()</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> json.loads(cleaned)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If failures persist, strengthen the system prompt (<code>"Output MUST start with { and end with }"</code>), or look into llama.cpp’s grammar-based decoding (GBNF) for a hard constraint instead of a prompt hint.</p>
+</section>
+<section id="disk-space-running-low" class="level3">
+<h3 class="anchored" data-anchor-id="disk-space-running-low">Disk Space Running Low</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df</span> <span class="at">-h</span> /</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The root partition is ~9.8 GB total on older images. If you’re running low:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check what is using space</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> du <span class="at">-sh</span> /home/arduino/<span class="pp">*</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-h</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean apt cache</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt clean</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt autoremove <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If you deleted the llama.cpp source tree and still need to rebuild later, use a shallow clone: <code>git clone --depth 1 https://github.com/ggml-org/llama.cpp</code></p>
+</section>
+</section>
+<section id="going-further" class="level2">
+<h2 class="anchored" data-anchor-id="going-further">12. Going Further</h2>
+<p>This chapter deliberately stopped at “the tools work and you can call them from Python.” Two follow-up chapters build real applications on top of what you just learned:</p>
+<ul>
+<li><strong>A vision-language project</strong> — giving a small model eyes: loading a multimodal SLM and its projector, running a vision server, and reasoning about camera input.</li>
+<li><strong>A dual-brain generative AI project</strong> — wrapping <code>llama-server</code> as a systemd service, connecting it to an Arduino sketch over Bridge RPC, and exposing it to other devices over Flask: a complete sensor-in, SLM-reasoning, actuator-out application.</li>
+</ul>
+<section id="alternative-model-qwen-3.5-2b" class="level3">
+<h3 class="anchored" data-anchor-id="alternative-model-qwen-3.5-2b">Alternative Model (Qwen 3.5 2B)</h3>
+<p>The general rule from the empirical Qwen3.5 work is that parameter count beats quantization. A 4-bit version of a larger Qwen3.5 model can still be substantially stronger than a smaller one at higher precision, using nearly the same amount of memory. The jump from 0.8B to 2B is the largest for agent tasks and long contexts.</p>
+<p>On the UNO Q specifically:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 45%">
+<col style="width: 30%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Dimension</th>
+<th>0.8B Q8_0</th>
+<th>2B UD-Q4_K_XL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Model file size</td>
+<td>~880 MB</td>
+<td>~1.25 GB</td>
+</tr>
+<tr class="even">
+<td>RAM footprint (model + 1024 ctx)</td>
+<td>~1.1 GB</td>
+<td>~1.9–2.0 GB</td>
+</tr>
+<tr class="odd">
+<td>Free RAM after load (out of ~3 GB usable)</td>
+<td>~1.7 GB</td>
+<td>~0.8 GB</td>
+</tr>
+<tr class="even">
+<td>Generation speed (measured / estimated)</td>
+<td>~4.75 tok/s</td>
+<td>~1.8–2.5 tok/s</td>
+</tr>
+<tr class="odd">
+<td>Quality on structured JSON</td>
+<td>Good with a strong few-shot</td>
+<td>Noticeably more robust</td>
+</tr>
+<tr class="even">
+<td>Quality on free-form chat</td>
+<td>Adequate</td>
+<td>Meaningfully better</td>
+</tr>
+<tr class="odd">
+<td>Thermal load</td>
+<td>~54 °C inference</td>
+<td>~58–62 °C inference</td>
+</tr>
+</tbody>
+</table>
+<p>What this means in practice: the 0.8B Q8 stays responsive for chat and interactive demos; the 2B is worth the extra latency when quality matters more than snappy responses (e.g., an infrequent classification call rather than a live chat).</p>
+<blockquote class="blockquote">
+<p><strong>Worth trying before committing:</strong> the Unsloth <code>UD-Q4_K_XL</code> variant of the 2B, not vanilla Q4_K_M — it upcasts sensitive tensors automatically, so you get most of Q6 quality at near-Q4 size.</p>
+</blockquote>
+</section>
+<section id="alternative-slm-backends" class="level3">
+<h3 class="anchored" data-anchor-id="alternative-slm-backends">Alternative SLM Backends</h3>
+<p>This tutorial used llama.cpp because it’s the lowest-overhead path on a CPU-only ARM64 board. Three other backends worth knowing about:</p>
+<ul>
+<li><strong>Ollama</strong> — easier setup, slightly higher overhead (Not simple to install in the UNO Q)</li>
+<li><strong>LiteRT-LM</strong> — Google’s <code>.litertlm</code> format with built-in function calling and Python presets. Officially supports Raspberry Pi (and therefore the UNO Q’s aarch64 Debian). Tradeoff: limited to Gemma family models.</li>
+<li><strong>yzma</strong> — a Go wrapper around llama.cpp with <code>purego</code> instead of CGo. Single Go binary, no daemon needed. Useful when you want to package everything into one executable.</li>
+</ul>
+</section>
+<section id="function-calling-and-multimodal-models" class="level3">
+<h3 class="anchored" data-anchor-id="function-calling-and-multimodal-models">Function Calling and Multimodal Models</h3>
+<p>Qwen3.5 supports function-calling formats, which lets the model itself decide when to call external tools (read a sensor, drive an actuator) instead of just answering a prompt. It also has native multimodal variants (text + image in a unified latent space) — the 0.8B text-only model used here is one point on a spectrum that includes vision-capable siblings. Both topics are picked up in the follow-up project chapters above.</p>
+</section>
+<section id="agentic-ai-assistant" class="level3">
+<h3 class="anchored" data-anchor-id="agentic-ai-assistant">Agentic AI Assistant</h3>
+<p>For example, implement the <strong><a href="https://github.com/laurenvil/Uno-QClaw">QClaw</a></strong>, an on-device agentic AI assistant for the Arduino Uno Q, developed by <a href="https://www.linkedin.com/in/david-laurenvil-3a223410/">David Laurenvill</a>. It writes, compiles, and uploads Arduino sketches; captures camera frames; drives Linux-side LEDs; reports network state; and scans I²C buses — all running entirely on the board. No internet. No API keys. No cloud.</p>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">13. Conclusion</h2>
+<section id="what-we-covered" class="level3">
+<h3 class="anchored" data-anchor-id="what-we-covered">What We Covered</h3>
+<p>This tutorial got a Small Language Model running locally on the Arduino UNO Q, entirely offline: building <code>llama.cpp</code> from source, downloading and comparing quantized Qwen3.5 models, running one-shot prompts with <code>llama-cli</code>, serving the model over HTTP with <code>llama-server</code>, and calling it from Python — first the standard way with the <code>openai</code> client library, then with raw <code>requests</code> to see what’s underneath. We also measured what’s realistic on this hardware: throughput, memory footprint, and thermal behavior.</p>
+</section>
+<section id="advantages-of-this-approach" class="level3">
+<h3 class="anchored" data-anchor-id="advantages-of-this-approach">Advantages of This Approach</h3>
+<ul>
+<li><strong>Local generative AI on Arduino hardware.</strong> Until the UNO Q, “running an LLM on an Arduino” was a contradiction. Now, on the same board used for Blink, a language model answers questions without an internet connection.</li>
+<li><strong>Standard, transferable tools.</strong> An OpenAI-compatible HTTP API and the official <code>openai</code> client library are the same tools you’d use against a hosted model. Nothing here is UNO-Q-specific except the hardware constraints.</li>
+<li><strong>The OpenAI-compatible API surface means application code can switch from a local SLM to a cloud LLM (and back) with a one-line URL change</strong> — a pattern worth internalizing early.</li>
+</ul>
+</section>
+<section id="limitations-and-considerations" class="level3">
+<h3 class="anchored" data-anchor-id="limitations-and-considerations">Limitations and Considerations</h3>
+<ul>
+<li><strong>Storage is tight.</strong> The factory image leaves ~830 MB free on a single 9.8 GB partition on older images. Building llama.cpp and downloading a model compete for that space.</li>
+<li><strong>Q4 quantization degrades sub-1B models noticeably.</strong> A 0.8B model at Q4 loses more quality than a larger model at Q4 — less redundancy to exploit.</li>
+<li><strong>No NPU acceleration.</strong> The QRB2210’s Adreno 702 GPU is not a reliable llama.cpp target. CPU is the only option: four A53 cores at 2 GHz doing all the work.</li>
+<li><strong>Thinking mode is unusable on this hardware.</strong> Qwen3.5’s reasoning mode produces multi-minute inference times and frequent loops on the UNO Q. Always use <code>--reasoning off --reasoning-budget 0</code>.</li>
+<li><strong>SLM quality at this size is still uneven.</strong> A 0.8B-parameter model will sometimes produce nonsense JSON, refuse benign prompts, or hallucinate reasons. Keep a human in the loop for any safety-critical decision.</li>
+</ul>
+</section>
+<section id="where-generative-ai-fits-in-the-edge-ai-curriculum" class="level3">
+<h3 class="anchored" data-anchor-id="where-generative-ai-fits-in-the-edge-ai-curriculum">Where Generative AI Fits in the Edge AI Curriculum</h3>
+<p><img src="./images/png/comp.png" class="img-fluid"></p>
+<p>The UNO Q is where generative AI becomes possible at the edge but stays bounded: small models, short outputs, batch-rate inference. Students who understand the constraints here won’t be surprised when they hit the same constraints on a real production deployment.</p>
+</section>
+<section id="a-note-on-the-arduino-ventuno-q" class="level3">
+<h3 class="anchored" data-anchor-id="a-note-on-the-arduino-ventuno-q">A Note on the Arduino VENTUNO Q</h3>
+<p>The VENTUNO Q, with its 40 TOPS Dragonwing IQ8 NPU and 16 GB of RAM, will change what’s realistic. SLMs with several billion parameters become interactive; multimodal Qwen3.5-4B (with native vision) becomes practical; multi-turn agents with tool use work in real time. The patterns from this chapter (llama.cpp + OpenAI-compatible HTTP) port directly. Only the model sizes and the latency numbers change.</p>
+</section>
+</section>
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">14. Resources</h2>
+<section id="useful-resources" class="level3">
+<h3 class="anchored" data-anchor-id="useful-resources">Useful Resources</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Resource</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>llama.cpp repository</td>
+<td><a href="https://github.com/ggml-org/llama.cpp" class="uri">https://github.com/ggml-org/llama.cpp</a></td>
+</tr>
+<tr class="even">
+<td>llama.cpp HTTP server docs</td>
+<td><a href="https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md" class="uri">https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md</a></td>
+</tr>
+<tr class="odd">
+<td>OpenAI Python library</td>
+<td><a href="https://github.com/openai/openai-python" class="uri">https://github.com/openai/openai-python</a></td>
+</tr>
+<tr class="even">
+<td>Qwen3.5-0.8B GGUF (Bartowski)</td>
+<td><a href="https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF" class="uri">https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF</a></td>
+</tr>
+<tr class="odd">
+<td>Qwen3.5-0.8B GGUF (Unsloth Dynamic)</td>
+<td><a href="https://huggingface.co/unsloth/Qwen3.5-0.8B-GGUF" class="uri">https://huggingface.co/unsloth/Qwen3.5-0.8B-GGUF</a></td>
+</tr>
+<tr class="even">
+<td>Unsloth Qwen3.5 inference guide</td>
+<td><a href="https://unsloth.ai/docs/models/qwen3.5" class="uri">https://unsloth.ai/docs/models/qwen3.5</a></td>
+</tr>
+<tr class="odd">
+<td>Qwen3.5 reasoning control discussion</td>
+<td><a href="https://github.com/ggml-org/llama.cpp/discussions/20476" class="uri">https://github.com/ggml-org/llama.cpp/discussions/20476</a></td>
+</tr>
+<tr class="even">
+<td>SmolLM2 GGUF family (Bartowski)</td>
+<td><a href="https://huggingface.co/bartowski?search=SmolLM2" class="uri">https://huggingface.co/bartowski?search=SmolLM2</a></td>
+</tr>
+<tr class="odd">
+<td>Arduino UNO Q Documentation</td>
+<td><a href="https://docs.arduino.cc/hardware/uno-q" class="uri">https://docs.arduino.cc/hardware/uno-q</a></td>
+</tr>
+<tr class="even">
+<td>Running LLMs on UNO Q with yzma</td>
+<td><a href="https://projecthub.arduino.cc/marc-edgeimpulse/running-local-llms-and-vlms-on-the-arduino-uno-q-with-yzma-74e288" class="uri">https://projecthub.arduino.cc/marc-edgeimpulse/running-local-llms-and-vlms-on-the-arduino-uno-q-with-yzma-74e288</a></td>
+</tr>
+<tr class="odd">
+<td>LiteRT-LM (alternative SLM runtime)</td>
+<td><a href="https://github.com/google-ai-edge/LiteRT-LM" class="uri">https://github.com/google-ai-edge/LiteRT-LM</a></td>
+</tr>
+<tr class="even">
+<td>yzma (Go wrapper for llama.cpp)</td>
+<td><a href="https://github.com/hybridgroup/yzma" class="uri">https://github.com/hybridgroup/yzma</a></td>
+</tr>
+<tr class="odd">
+<td>QClaw</td>
+<td><a href="https://github.com/laurenvil/Uno-QClaw" class="uri">https://github.com/laurenvil/Uno-QClaw</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="references" class="level3">
+<h3 class="anchored" data-anchor-id="references">References</h3>
+<ol type="1">
+<li>Qwen Team, “Qwen3.5 Small Model Series,” Alibaba Cloud, March 2026.</li>
+<li>Unsloth, “Qwen3.5 — How to Run Locally,” <a href="https://unsloth.ai/docs/models/qwen3.5" class="uri">https://unsloth.ai/docs/models/qwen3.5</a>, March 2026.</li>
+<li>Gerganov, G., “llama.cpp: Inference of Meta’s LLaMA model (and others) in pure C/C++,” <a href="https://github.com/ggml-org/llama.cpp" class="uri">https://github.com/ggml-org/llama.cpp</a></li>
+<li>Bartowski, “Qwen_Qwen3.5-0.8B-GGUF,” <a href="https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF" class="uri">https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF</a></li>
+<li>llama.cpp discussion, “Qwen3.5 Small: How to truly disable thinking?” <a href="https://github.com/ggml-org/llama.cpp/discussions/20476" class="uri">https://github.com/ggml-org/llama.cpp/discussions/20476</a></li>
+<li>llama.cpp issue, “enable_thinking param cannot turn off thinking for qwen3.5,” <a href="https://github.com/ggml-org/llama.cpp/issues/20182" class="uri">https://github.com/ggml-org/llama.cpp/issues/20182</a></li>
+<li>Arduino, “Arduino UNO Q Product Page,” <a href="https://www.arduino.cc/product-uno-q/" class="uri">https://www.arduino.cc/product-uno-q/</a></li>
+<li>Pous, M., “Running local LLMs and VLMs on the Arduino UNO Q with yzma,” Arduino Project Hub, Feb 2026.</li>
+</ol>
+<hr>
+<p><em>Tutorial created for IESTI05 — Edge AI Machine Learning System Engineering, UNIFEI. Licensed under GNU General Public License 3.0.</em></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../content/setup/setup.html" class="pagination-link" aria-label="Arduino UNO Q Setup">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Arduino UNO Q Setup</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../content/multimodai/multimodai.html" class="pagination-link" aria-label="Multimodal AI at the Edge:">
+        <span class="nav-page-text">Multimodal AI at the Edge:</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Written and edited by Prof.&nbsp;Marcelo Rovai (UNIFEI University)</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/edit/main/content/genai/genai.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/blob/main/content/genai/genai.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

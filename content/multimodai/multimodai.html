@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Multimodal AI at the Edge: – Generative AI at the Edge</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../content/physicalai/physicalai.html" rel="next">
+<link href="../../content/genai/genai.html" rel="prev">
+<link href="../../images/cover.jpg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-daec65ff3ba034f51daec66ecad3ce27.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Generative AI at the Edge</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools tools-wide tools-end">
+    <a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="../../Generative-AI-at-the-Edge.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url=|url|" title="LinkedIn" class="quarto-navigation-tool px-1" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/multimodai/multimodai.html">Multimodal AI at the Edge:</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Acknowledgments</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../about_book.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About this Book</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Classification_of_AI_Applications.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classification of AI Applications</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/foundations/foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">How Generative AI Works, and How It Gets Small</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Generative AI (Proactive)</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/localinf/localinf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SLMs at the Edge</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/setup/setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Arduino UNO Q Setup</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/genai/genai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Generative AI at the Edge:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/multimodai/multimodai.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Multimodal AI at the Edge:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/physicalai/physicalai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">GenAI Meets the Real World:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/agenticai/agenticai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Agentic AI at the Edge:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Fixed Function AI (Reactive)</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/imgclass/imgclass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Image Classification on the Arduino UNO Q</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/objdet/objdet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Object Detection on the Arduino UNO Q</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">References &amp; Author</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../About_the_author.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About the author</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#where-we-left-off" id="toc-where-we-left-off" class="nav-link active" data-scroll-target="#where-we-left-off">1. Where We Left Off</a></li>
+  <li><a href="#giving-a-small-model-eyes-the-projector" id="toc-giving-a-small-model-eyes-the-projector" class="nav-link" data-scroll-target="#giving-a-small-model-eyes-the-projector">2. Giving a Small Model Eyes: The Projector</a>
+  <ul class="collapse">
+  <li><a href="#one-model-that-was-trained-to-see" id="toc-one-model-that-was-trained-to-see" class="nav-link" data-scroll-target="#one-model-that-was-trained-to-see">One model that was trained to see</a></li>
+  <li><a href="#what-happens-to-the-image-at-inference" id="toc-what-happens-to-the-image-at-inference" class="nav-link" data-scroll-target="#what-happens-to-the-image-at-inference">What happens to the image at inference</a></li>
+  <li><a href="#the-context-window" id="toc-the-context-window" class="nav-link" data-scroll-target="#the-context-window">The context window</a></li>
+  </ul></li>
+  <li><a href="#loading-the-model-and-its-projector" id="toc-loading-the-model-and-its-projector" class="nav-link" data-scroll-target="#loading-the-model-and-its-projector">3. Loading the Model and Its Projector</a>
+  <ul class="collapse">
+  <li><a href="#a-note-on-the-projectors-format" id="toc-a-note-on-the-projectors-format" class="nav-link" data-scroll-target="#a-note-on-the-projectors-format">A note on the projector’s format</a></li>
+  </ul></li>
+  <li><a href="#running-the-vision-server" id="toc-running-the-vision-server" class="nav-link" data-scroll-target="#running-the-vision-server">4. Running the Vision Server</a>
+  <ul class="collapse">
+  <li><a href="#what-the-small-model-gets-right-and-wrong" id="toc-what-the-small-model-gets-right-and-wrong" class="nav-link" data-scroll-target="#what-the-small-model-gets-right-and-wrong">What the small model gets right, and wrong</a></li>
+  </ul></li>
+  <li><a href="#first-contact-and-the-api" id="toc-first-contact-and-the-api" class="nav-link" data-scroll-target="#first-contact-and-the-api">5. First Contact, and the API</a></li>
+  <li><a href="#when-it-never-stops-and-other-cpu-realities" id="toc-when-it-never-stops-and-other-cpu-realities" class="nav-link" data-scroll-target="#when-it-never-stops-and-other-cpu-realities">6. When It “Never Stops,” and Other CPU Realities</a>
+  <ul class="collapse">
+  <li><a href="#the-speed-levers-in-order-of-payoff" id="toc-the-speed-levers-in-order-of-payoff" class="nav-link" data-scroll-target="#the-speed-levers-in-order-of-payoff">The speed levers, in order of payoff</a></li>
+  </ul></li>
+  <li><a href="#which-model-0.8b-or-2b" id="toc-which-model-0.8b-or-2b" class="nav-link" data-scroll-target="#which-model-0.8b-or-2b">7. Which Model: 0.8B or 2B?</a></li>
+  <li><a href="#swapping-models-0.8b-for-speed-2b-for-depth" id="toc-swapping-models-0.8b-for-speed-2b-for-depth" class="nav-link" data-scroll-target="#swapping-models-0.8b-for-speed-2b-for-depth">8. Swapping Models: 0.8B for Speed, 2B for Depth</a>
+  <ul class="collapse">
+  <li><a href="#get-the-2b-model-and-its-projector" id="toc-get-the-2b-model-and-its-projector" class="nav-link" data-scroll-target="#get-the-2b-model-and-its-projector">Get the 2B model and its projector</a></li>
+  <li><a href="#two-startup-scripts" id="toc-two-startup-scripts" class="nav-link" data-scroll-target="#two-startup-scripts">Two startup scripts</a></li>
+  <li><a href="#running-one-then-the-other" id="toc-running-one-then-the-other" class="nav-link" data-scroll-target="#running-one-then-the-other">Running one, then the other</a></li>
+  <li><a href="#a-rule-of-thumb" id="toc-a-rule-of-thumb" class="nav-link" data-scroll-target="#a-rule-of-thumb">A rule of thumb</a></li>
+  </ul></li>
+  <li><a href="#vistext-mosquito" id="toc-vistext-mosquito" class="nav-link" data-scroll-target="#vistext-mosquito">9. VisText-Mosquito</a></li>
+  <li><a href="#reasoning-mode-and-the-trap-i-fell-into" id="toc-reasoning-mode-and-the-trap-i-fell-into" class="nav-link" data-scroll-target="#reasoning-mode-and-the-trap-i-fell-into">10. Reasoning Mode, and the Trap I Fell Into</a></li>
+  <li><a href="#going-further" id="toc-going-further" class="nav-link" data-scroll-target="#going-further">11. Going Further</a>
+  <ul class="collapse">
+  <li><a href="#feed-it-a-live-camera" id="toc-feed-it-a-live-camera" class="nav-link" data-scroll-target="#feed-it-a-live-camera">Feed it a live camera</a></li>
+  <li><a href="#build-a-labeled-dataset-one-frame-at-a-time" id="toc-build-a-labeled-dataset-one-frame-at-a-time" class="nav-link" data-scroll-target="#build-a-labeled-dataset-one-frame-at-a-time">Build a labeled dataset, one frame at a time</a></li>
+  <li><a href="#zero-shot-now-fine-tuned-later" id="toc-zero-shot-now-fine-tuned-later" class="nav-link" data-scroll-target="#zero-shot-now-fine-tuned-later">Zero-shot now, fine-tuned later</a></li>
+  <li><a href="#feeding-this-into-a-dual-brain-project" id="toc-feeding-this-into-a-dual-brain-project" class="nav-link" data-scroll-target="#feeding-this-into-a-dual-brain-project">Feeding this into a dual-brain project</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">12. Conclusion</a>
+  <ul class="collapse">
+  <li><a href="#what-works" id="toc-what-works" class="nav-link" data-scroll-target="#what-works">What Works</a></li>
+  <li><a href="#limitations-and-considerations" id="toc-limitations-and-considerations" class="nav-link" data-scroll-target="#limitations-and-considerations">Limitations and Considerations</a></li>
+  <li><a href="#where-this-fits" id="toc-where-this-fits" class="nav-link" data-scroll-target="#where-this-fits">Where This Fits</a></li>
+  <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next">What’s Next</a></li>
+  <li><a href="#a-note-on-the-arduino-ventuno-q" id="toc-a-note-on-the-arduino-ventuno-q" class="nav-link" data-scroll-target="#a-note-on-the-arduino-ventuno-q">A Note on the Arduino VENTUNO Q</a></li>
+  </ul></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">13. Resources</a>
+  <ul class="collapse">
+  <li><a href="#useful-resources" id="toc-useful-resources" class="nav-link" data-scroll-target="#useful-resources">Useful Resources</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/edit/main/content/multimodai/multimodai.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/blob/main/content/multimodai/multimodai.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Multimodal AI at the Edge:</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Giving a Small Model Eyes</p>
+<p><img src="./images/jpeg/cover.jpg" class="img-fluid"></p>
+<blockquote class="blockquote">
+<p>This chapter builds on <a href="../../content/genai/genai.html">Generative AI at the Edge</a>: it assumes you’ve already built <code>llama.cpp</code> from source, downloaded a Qwen3.5-0.8B GGUF, and are comfortable running <code>llama-server</code> by hand and calling it from Python. If any of that is unfamiliar, work through that chapter first.</p>
+</blockquote>
+<hr>
+<section id="where-we-left-off" class="level2">
+<h2 class="anchored" data-anchor-id="where-we-left-off">1. Where We Left Off</h2>
+<p>In the previous chapter, the model read text. You ran <code>llama-cli</code> and <code>llama-server</code> from a single GGUF file (<code>Qwen_Qwen3.5-0.8B-Q8_0.gguf</code>), called it from Python, and got back answers to text prompts — all on the board, no cloud call.</p>
+<p>Text is a strange interface for a lot of real problems, though. Think of a mosquito-breeding-site inspection: the thing you actually want to catch is <em>visual</em> — water sitting in an old tire, a plant saucer that never drains, a bucket left open after the rain. A health agent walking a neighborhood doesn’t type numbers into a form. They look.</p>
+<p>So this chapter gives the same board eyes. By the end, you’ll have the UNO Q looking at a photo (or a real image from a webcam) and answering a question like <strong>“is this a potential mosquito breeding site, and why?”</strong> — and you’ll understand exactly what it costs to run that on a CPU the size of a coin.</p>
+<p><img src="./images/png/project.png" class="img-fluid"></p>
+<p>We should be honest about the costs as we go, because that’s the part most tutorials skip. Vision on this hardware works. It’s also slow, and the slowness teaches you something real about how these models work.</p>
+</section>
+<section id="giving-a-small-model-eyes-the-projector" class="level2">
+<h2 class="anchored" data-anchor-id="giving-a-small-model-eyes-the-projector">2. Giving a Small Model Eyes: The Projector</h2>
+<p>A text-only Qwen runs from a single GGUF. To make it describe an image, you add one more file, the <code>mmproj</code>, and the same model can suddenly talk about a photo. That second file is where the vision machinery lives. Understanding what’s inside it explains both how the model “sees” and why a couple of the serving flags matter.</p>
+<section id="one-model-that-was-trained-to-see" class="level3">
+<h3 class="anchored" data-anchor-id="one-model-that-was-trained-to-see">One model that was trained to see</h3>
+<p>Qwen3.5 isn’t a text model with vision bolted on. Qwen describes it as a <strong>unified vision-language foundation</strong>: the model was trained on text and image tokens together from the start, an approach they call early <strong>fusion.</strong> That matters, because the older mental model, a frozen language model with a separately trained adapter glued onto a frozen image encoder, is the LLaVA or Moondream recipe, and it isn’t how this model was built. The vision and language sides grew up together.</p>
+<blockquote class="blockquote">
+<p>It’s also why Qwen3.5 beats the earlier Qwen3-VL models on visual benchmarks rather than inheriting from them. Different family.</p>
+</blockquote>
+<p>At inference, though, there’s still a clear pipeline, and llama.cpp makes it visible by splitting the weights across two files. The <code>-m</code> file holds the language model. The <code>mmproj</code> file contains the vision encoder and the small connector that connects it to the language side. That split is a packaging convenience, not a sign the base is text-only: you can run the model without the <code>mmproj</code> to skip the vision pathway and save memory, which is exactly what you did in the previous chapter.</p>
+<pre><code>image ──▶ vision encoder ──▶ projector / connector ──▶ language model ──▶ text
+          └──────── mmproj GGUF ────────┘               └─── -m GGUF ───┘
+                  (inference path; weights split across two files)</code></pre>
+</section>
+<section id="what-happens-to-the-image-at-inference" class="level3">
+<h3 class="anchored" data-anchor-id="what-happens-to-the-image-at-inference">What happens to the image at inference</h3>
+<p><img src="./images/png/diagram-2.png" class="img-fluid"></p>
+<p><strong>1. Vision Encoder:</strong> The image gets resized and chopped into a grid of small patches. Those patches go into the Vision Transformer, the vision encoder, which returns one feature vector per patch: what’s in that region and how it relates to its neighbors. Those vectors live in the encoder’s own space. They have nothing to do with the language model’s vocabulary or its embedding dimensions.</p>
+<p><strong>2. Multimodal Connector (Early Fusion):</strong> That mismatch is what the connector resolves. The language model reads token embeddings in its own d-dimensional space. Text gets there through a lookup table; image patches don’t have one. The connector reshapes the visual vectors to the model’s embedding dimension and lands them in the region of that space the model already understands, so a patch of <code>fur</code> (image) ends up behaving the way the text embedding for “fur” would. In an early-fusion model, alignment is learned jointly with the rest of the network, not trained as a bolt-on afterward.</p>
+<p><strong>3. Spliced Embeddings (Input Stream):</strong> Once mapped, the visual vectors are spliced into the token stream where an image placeholder sits, and the model processes one mixed sequence of text and image embeddings. From the model’s point of view, there’s no special “image mode”; the picture has become something that reads like tokens.</p>
+<p><strong>4. Language Model:</strong> Qwen3.5’s internals aren’t a vanilla transformer, for the curious, it uses an efficient hybrid of linear-attention blocks and a sparse mixture-of-experts. Sparse MoE appears in Qwen’s family-level highlights, but the 0.8B’s own spec sheet lists a plain feed-forward network (intermediate dimension 3584) with no experts and no router, with full attention only on periodic layers. That detail doesn’t change the picture here, but it’s why the architecture is described as a hybrid rather than a standard decoder.</p>
+<p>That’s why “describe this image” produces a caption: the model continues the sequence conditioned on the visual embeddings it can read.</p>
+<blockquote class="blockquote">
+<p>The vision pathway produces no text. It emits embeddings, nothing else. Every word in the answer comes from the language model. The projector’s only job is to make the image <em>legible</em>.</p>
+</blockquote>
+</section>
+<section id="the-context-window" class="level3">
+<h3 class="anchored" data-anchor-id="the-context-window">The context window</h3>
+<p>Each image becomes a real block of embeddings, occupying a specific position in the context window. Not one token, many. A single image runs into the hundreds or low thousands of tokens on its own. Qwen3.5 uses dynamic resolution, so a bigger or busier image produces more visual tokens. That’s the number the <code>--image-min-tokens</code> and <code>--image-max-tokens</code> flags cap (these only apply to dynamic-resolution models, which is why they bite here), and we’ll come back to it when we talk about speed.</p>
+<p>The immediate consequence: the <code>-c 1024</code> context that was fine for the text classifier will overflow before you’ve even added a prompt. Give it <code>4096</code>.</p>
+</section>
+</section>
+<section id="loading-the-model-and-its-projector" class="level2">
+<h2 class="anchored" data-anchor-id="loading-the-model-and-its-projector">3. Loading the Model and Its Projector</h2>
+<p>If you still have <code>llama-server</code> running from the previous chapter, stop it first (<code>Ctrl+C</code> in its terminal) — it’s holding port 8081 and some RAM, and you want both back for this.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># confirm the port is free</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ss <span class="at">-ltnp</span> <span class="kw">|</span> <span class="fu">grep</span> 8081      <span class="co"># should print nothing</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">free</span> <span class="at">-h</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For vision, you must load two files: the <code>model</code> and its <code>mmproj</code>. A warning that will save you an afternoon: the two have to come from the <em>same</em> model, because their embedding dimensions must match. Pair a projector with the wrong base, and the load fails outright with an <code>n_embd</code> mismatch. The good news is you already have the base model from the previous chapter — the same 0.8B GGUF you ran text-only there works here too, with the vision pathway switched off or on depending on whether you pass <code>--mmproj</code>. There’s no separate “text-only” and “VL” download to keep straight, just the model plus its matching projector.</p>
+<p>In the <a href="https://huggingface.co/unsloth/Qwen3.5-0.8B-GGUF/tree/main">Unsloth QWEN3.5-0.8B model webpage on HF</a>, for example, you can see all available files and versions (see them at the bottom of the page):</p>
+<p><img src="./images/png/img-proj.png" class="img-fluid"></p>
+<p>Download the projector:</p>
+<pre><code>cd ~/models/Qwen3.5-0.8B-GGUF
+wget -c "https://huggingface.co/unsloth/Qwen3.5-0.8B-GGUF/resolve/main/\
+mmproj-F16.gguf"</code></pre>
+<blockquote class="blockquote">
+<p>If you downloaded the model from <a href="https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF/tree/main">Bartowski</a>, download the projector from Bartowski accordingly.</p>
+</blockquote>
+<pre><code>cd ~/models
+wget -c "https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF/resolve/main/\
+mmproj-Qwen_Qwen3.5-0.8B-f16.gguf"</code></pre>
+<section id="a-note-on-the-projectors-format" class="level3">
+<h3 class="anchored" data-anchor-id="a-note-on-the-projectors-format">A note on the projector’s format</h3>
+<p>You’ll usually find the <code>mmproj</code> offered in BF16, F16, and F32. On the UNO Q, prefer F16. The board’s Cortex-A53 cores have no native BF16 path, so BF16 weights get converted on the fly, which wastes memory bandwidth you can’t spare.</p>
+<blockquote class="blockquote">
+<p>When switching the 0.8B’s projector from BF16 to F16, the description time for a 640×640 image dropped from 4 to about 1 minute. Same model, same image, just a friendlier weight format.</p>
+</blockquote>
+</section>
+</section>
+<section id="running-the-vision-server" class="level2">
+<h2 class="anchored" data-anchor-id="running-the-vision-server">4. Running the Vision Server</h2>
+<p>Here’s the command for the 0.8B model. Run it in the foreground the first time so you can read the startup log:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-server</span> <span class="dt">\</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-m</span>       /home/arduino/models/Qwen_Qwen3.5-0.8B-Q8_0.gguf <span class="dt">\</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--mmproj</span> /home/arduino/models/mmproj-Qwen_Qwen3.5-0.8B-f16.gguf <span class="dt">\</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--host</span> 0.0.0.0 <span class="at">--port</span> 8081 <span class="dt">\</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">-c</span> 4096 <span class="at">-t</span> 4 <span class="dt">\</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">-n</span> 256 <span class="dt">\</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--jinja</span> <span class="dt">\</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--image-max-tokens</span> 256 <span class="dt">\</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning</span> off <span class="dt">\</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning-budget</span> 0 <span class="dt">\</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--alias</span> Bart-qwen3.5-0.8b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Four flags deserve a comment.</p>
+<p><code>--host 0.0.0.0</code> is what lets you reach the WebUI from your desktop or mobile, instead of only from the board itself. Without it, the server binds to localhost, and your laptop can’t see it.</p>
+<p><code>--jinja</code> turns on the model’s own chat template. Skip it, and you can hit a nasty failure mode where generation never stops, because the generic fallback template doesn’t register Qwen’s end-of-turn token as a stop string. The model just keeps going until it fills the context.</p>
+<blockquote class="blockquote">
+<p>The first time I ran without <code>--jinja</code>, I sat watching it generate forever and assumed the board had locked up. It hadn’t. It just didn’t know when to shut up.</p>
+</blockquote>
+<p><code>-n 256</code> caps output length as a safety net. We’ll revisit this when reasoning enters the picture, because it interacts with the thinking trace in a way that surprised me.</p>
+<p><code>--alias qwen3.5-0.8b</code> gives the server a stable name that doesn’t depend on the GGUF filename or which model happens to be loaded. Client code always asks for <code>"model": "qwen3.5-0.8b"</code>; the server answers whether it’s currently running text-only, with vision, or a completely different model behind that name. This is what makes the model-swapping pattern in <a href="#8-swapping-models-08b-for-speed-2b-for-depth">§8</a> painless — the alias never changes.</p>
+<p>On startup, look for a <code>clip</code> / <code>mtmd</code> block confirming the projector loaded, a line reporting image support enabled, and <code>HTTP server listening</code> on <code>0.0.0.0:8081</code>.</p>
+<p><img src="./images/png/starting-multimodal.png" class="img-fluid"></p>
+<p>If a request later comes back with “image processing requires a vision model,” the <code>mmproj</code> didn’t load: check that you passed <code>--mmproj</code> and that the file path is right.</p>
+<p>Then open <code>http://&lt;UNO_Q_IP&gt;:8081/</code> on your desktop or mobile and drop in an image.</p>
+<blockquote class="blockquote">
+<p><strong>Use images smaller than 640x640.</strong></p>
+</blockquote>
+<p><img src="./images/png/image-20260821125747406.png" class="img-fluid"></p>
+<blockquote class="blockquote">
+<p>The total latency from start to finish was around a minute and half, which is pretty nice for such a small model. Regarding energy, the peak was 2.3W and the temperature gap around 20 °C (reached 56 °C).</p>
+</blockquote>
+<section id="what-the-small-model-gets-right-and-wrong" class="level3">
+<h3 class="anchored" data-anchor-id="what-the-small-model-gets-right-and-wrong">What the small model gets right, and wrong</h3>
+<p>I tested the 0.8B on a generated scene: The description was genuinely good for the whole scene. It named the platform, the kids, the ladder, the path, the clouds, and the mountains. Then it called the hanging papayas “quinces or similar fruits.”</p>
+<p>That’s worth keeping in sight, because it’s the signature of a small VLM. The gist is solid; the specifics are unreliable. The model made up the fruits wrong. For a breeding-site screen, this matters: the model can reliably tell you “there’s a container with standing water,” but don’t trust it to identify the container as a specific 200-liter drum. Design the question around what it’s actually good at.</p>
+</section>
+</section>
+<section id="first-contact-and-the-api" class="level2">
+<h2 class="anchored" data-anchor-id="first-contact-and-the-api">5. First Contact, and the API</h2>
+<p>The embedded WebUI is the quickest smoke test, but for anything repeatable you want the API. The server speaks the OpenAI-compatible format, so you send the image as a base64 data URI inside an <code>image_url</code> content block.</p>
+<p>Let’s create a directory (<code>images</code>) and put a few images there. For example:</p>
+<p><code>/home/arduino/ArduinoApps/images/test-papaya.png</code></p>
+<blockquote class="blockquote">
+<p><strong>One trap to avoid:</strong> don’t paste the base64 string straight into a <code>curl -d '...'</code> argument. A base64 image is large enough to exceed the shell’s argument-size limit, and you’ll get <code>curl: Argument list too long</code> before the request is even sent. Write the body to a file (or pipe it on stdin) so it never goes through the command line.</p>
+</blockquote>
+<p>With the server running, go to the created directory</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ArduinoApps/images</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Define the image:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="va">IMG</span><span class="op">=</span><span class="va">$(</span><span class="fu">base64</span> <span class="at">-w</span> 0 test-papaya.png<span class="va">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>And run the model to describe the image:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&gt;</span> /tmp/req.json <span class="op">&lt;&lt;EOF</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="st">{</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="st">  "max_tokens": 256,</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="st">  "messages": [{</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="st">    "role": "user",</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="st">    "content": [</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="st">      {"type": "image_url", "image_url": {"url": "data:image/png;base64,</span><span class="va">$IMG</span><span class="st">"}},</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="st">      {"type": "text", "text": "Describe this image."}</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="st">    ]</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="st">  }]</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> http://127.0.0.1:8081/v1/chat/completions <span class="dt">\</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">"Content-Type: application/json"</span> <span class="dt">\</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">--data</span> @/tmp/req.json</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p>Match the media type to your file (<code>image/png</code> for a <code>.png</code>, <code>image/jpeg</code> for a <code>.jpg</code>). A single-model <code>llama-server</code> ignores the <code>model</code> field, so you can leave it out.</p>
+</blockquote>
+<p><img src="./images/png/server-test.png" class="img-fluid"></p>
+<p>OK, we tested and it works! But for real work, Python is cleaner, and it sidesteps the argument-length trap entirely by putting the image in the request body rather than on the command line.</p>
+<p>Let’s create a Python script. We can do it directly on the terminal, using the Arduino App Lab or the VS Code. Let’s go with the nano here:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ArduinoApps</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> image_caption.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Enter the script and save it with <code>[CTRL]+[X]</code> and <code>[y]</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> base64</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>SERVER <span class="op">=</span> <span class="st">"http://127.0.0.1:8081/v1/chat/completions"</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> encode_image(path):</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(path, <span class="st">"rb"</span>) <span class="im">as</span> f:</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> base64.b64encode(f.read()).decode(<span class="st">"utf-8"</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> describe_image(path, prompt<span class="op">=</span><span class="st">"Describe this image. Keep it to a paragraph."</span>, max_tokens<span class="op">=</span><span class="dv">256</span>):</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    data_uri <span class="op">=</span> <span class="ss">f"data:image/jpeg;base64,</span><span class="sc">{</span>encode_image(path)<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    payload <span class="op">=</span> {</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"messages"</span>: [{</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">"role"</span>: <span class="st">"user"</span>,</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>            <span class="st">"content"</span>: [</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>                {<span class="st">"type"</span>: <span class="st">"image_url"</span>, <span class="st">"image_url"</span>: {<span class="st">"url"</span>: data_uri}},</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>                {<span class="st">"type"</span>: <span class="st">"text"</span>, <span class="st">"text"</span>: prompt},</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>            ],</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>        }],</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">"temperature"</span>: <span class="fl">0.7</span>,</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">"max_tokens"</span>: max_tokens,</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> requests.post(SERVER, json<span class="op">=</span>payload, timeout<span class="op">=</span><span class="dv">300</span>)</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    r.raise_for_status()</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> r.json()[<span class="st">"choices"</span>][<span class="dv">0</span>][<span class="st">"message"</span>][<span class="st">"content"</span>]</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(describe_image(<span class="st">"images/test-papaya.png"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p>Note the <code>timeout=300</code>. On this board, a vision request can take between 1 and 2 minutes, and the default request’s timeout will give up long before the model does.</p>
+</blockquote>
+<p>Let’s use a different image from a dataset we’ll explore later with the “Textual Reasoning on Mosquito Breeding Sites” project:</p>
+<p><img src="./images/png/test-tire-water.jpg" class="img-fluid"></p>
+<p>Run the Python script</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> image_caption.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="./images/png/python-test.png" class="img-fluid"></p>
+</section>
+<section id="when-it-never-stops-and-other-cpu-realities" class="level2">
+<h2 class="anchored" data-anchor-id="when-it-never-stops-and-other-cpu-realities">6. When It “Never Stops,” and Other CPU Realities</h2>
+<p>Some lessons learned during the tests:</p>
+<p><strong>Symptom one: it runs forever.</strong> Covered above. The fix is <code>--jinja</code> plus the <code>-n</code> cap. If you have both and it still runs away, the WebUI’s own “max tokens” setting is overriding the server’s <code>-n</code>. Lower it in the sampler panel too.</p>
+<p><strong>Symptom two: it freezes at 2%.</strong> I uploaded a tall two-panel collage at full resolution, and the progress bar parked at 2% with an ETA of 113 seconds. Ten minutes later, still 2%. My first instinct was a memory problem, swap thrashing as the model spilled past 4 GB. I was wrong. I checked <code>free -h</code> and swap was at zero. The board wasn’t out of memory. It was out of time. A large, busy image makes the dynamic-resolution encoder produce a high patch count, and the ViT has to process every one of them on four CPU cores. The encoding wasn’t stuck. It was facing tens of minutes of honest math.</p>
+<p>That one cost me an afternoon, and the lesson is sharp: on this board, <strong>vision is compute-bound on image size, not memory-bound at sane sizes.</strong> Resolution is the single biggest lever you have.</p>
+<p><strong>Reading <code>free -h</code> correctly.</strong> When I ran the 2B model and checked memory mid-describe, I saw this:</p>
+<pre><code>               total        used        free      shared  buff/cache   available
+Mem:           3.6Gi       1.5Gi        83Mi      36Mi      2.2Gi        2.1Gi
+Swap:          1.8Gi        20Mi       1.8Gi</code></pre>
+<p>The <code>free</code> column says 83 MiB, and panic sets in. Don’t. <code>llama-server</code> memory-maps the GGUF, so the model weights show up under <code>buff/cache</code> (that 2.2 GiB), not under <code>used</code>. The number that matters is <code>available</code>: 2.1 GiB still free, and swap basically untouched at 20 MiB. The 2B fits comfortably. It’s just slow.</p>
+<section id="the-speed-levers-in-order-of-payoff" class="level3">
+<h3 class="anchored" data-anchor-id="the-speed-levers-in-order-of-payoff">The speed levers, in order of payoff</h3>
+<p>Once you know it’s compute-bound, the fixes follow. The most direct one targets the encoder’s token budget. Because Qwen3.5 uses dynamic resolution, <code>llama-server</code> lets you cap how many tokens an image is allowed to become:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">--image-max-tokens</span> 256</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Encode time scales with that count, so capping it directly reduces the work — and a model is often smart enough to describe a scene well with far fewer image tokens than the default. Start at 256 and tune.</p>
+<p>After that: downscale the input (feed it ~448–512 px, complementary to the token cap), keep the output short (every generated token costs real time on this CPU), and, if you want a one-time win, rebuild llama.cpp with OpenBLAS (<code>-DGGML_BLAS=ON -DGGML_BLAS_VENDOR=OpenBLAS</code>) since the encode and prefill are matrix-multiply heavy. Measure that last one before and after, because the gain on ARM varies.</p>
+<p>One more, unrelated to speed but worth folding in: for image workloads, drop <code>--cache-prompt</code>. There’s a known issue where each image adds 1000+ KV tokens to the prompt cache, the cache grows without bound across repeated requests, and the process eventually gets OOM-killed. The in-slot cache still works within a session, so a single-slot setup loses nothing meaningful by turning it off. On a 4 GB board, that’s cheap insurance.</p>
+</section>
+</section>
+<section id="which-model-0.8b-or-2b" class="level2">
+<h2 class="anchored" data-anchor-id="which-model-0.8b-or-2b">7. Which Model: 0.8B or 2B?</h2>
+<p>I ran both on the same 640×640 image, so the comparison is real and not a guess.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 37%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Qwen3.5-0.8B (Q8_0)</th>
+<th>Qwen3.5-2B (UD-Q4_K_XL)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Projector (F16)</td>
+<td>~220 MB</td>
+<td>668 MB</td>
+</tr>
+<tr class="even">
+<td>Decode speed</td>
+<td>5.42 tok/s</td>
+<td>2.44 tok/s</td>
+</tr>
+<tr class="odd">
+<td>Time for one describe</td>
+<td>~1 min</td>
+<td>~4 min</td>
+</tr>
+<tr class="even">
+<td>Peak RAM (mmap incl.)</td>
+<td>well under the ceiling</td>
+<td>~3 GB, fits, swap ~0</td>
+</tr>
+<tr class="odd">
+<td>Description quality</td>
+<td>good gist, shaky specifics</td>
+<td>noticeably better</td>
+</tr>
+</tbody>
+</table>
+<p>The bigger projector isn’t optional, by the way. If you go 2B, you use its 668 MB projector, because the small one won’t match. The file is 3× larger because the vision encoder inside it is bigger, which is also why the encoding is slower: every patch passes through a heavier tower.</p>
+<p>So it’s a real trade, not a free upgrade. The 2B writes clearer answers and stays within the RAM budget, but five minutes per image rules out anything interactive. My take: treat them as two tiers. The 0.8B is the fast screen for when you need an answer in roughly a minute. The 2B is the quality pass for when correctness matters more than latency, and the device can sit and think. <code>--image-max-tokens</code> is the dial between them, and tuning it on the 2B is the most useful experiment you can run.</p>
+</section>
+<section id="swapping-models-0.8b-for-speed-2b-for-depth" class="level2">
+<h2 class="anchored" data-anchor-id="swapping-models-0.8b-for-speed-2b-for-depth">8. Swapping Models: 0.8B for Speed, 2B for Depth</h2>
+<p>§7 established the trade-off. In practice, you don’t pick one model and stick with it — you swap. Point a camera at a yard all day, and most frames are obviously nothing: dry ground, a wall, a parked car. A handful are ambiguous and worth a second, slower opinion. The natural pattern is a fast <strong>screen</strong> on the 0.8B, and a slower <strong>deep read</strong> on the 2B only for the frames that need it. The board can’t run both at once comfortably (§7’s RAM numbers), so “swap” here means <em>one server at a time on the same port</em>, not two processes running in parallel.</p>
+<section id="get-the-2b-model-and-its-projector" class="level3">
+<h3 class="anchored" data-anchor-id="get-the-2b-model-and-its-projector">Get the 2B model and its projector</h3>
+<p>Same models directory as before:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /home/arduino/models</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 2B language model — UD-Q4_K_XL, the quality/size sweet spot from Section 7</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/main/<span class="dt">\</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>Qwen3.5-2B-UD-Q4_K_XL.gguf</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Its matching projector — do NOT reuse the 0.8B's mmproj (see Section 3, the n_embd mismatch trap)</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/main/<span class="dt">\</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>mmproj-F16.gguf <span class="at">-O</span> mmproj-F16_2B.gguf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="two-startup-scripts" class="level3">
+<h3 class="anchored" data-anchor-id="two-startup-scripts">Two startup scripts</h3>
+<p>Wrap each model’s launch command in its own script, so switching is one command instead of retyping flags:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> ~/run-qwen-0.8b-vision.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> <span class="at">-e</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">exec</span> /home/arduino/llama.cpp/build/bin/llama-server <span class="dt">\</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-m</span>       /home/arduino/models/Qwen_Qwen3.5-0.8B-Q8_0.gguf <span class="dt">\</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--mmproj</span> /home/arduino/models/mmproj-F16_0.8B.gguf <span class="dt">\</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--host</span> 0.0.0.0 <span class="at">--port</span> 8081 <span class="dt">\</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">-c</span> 4096 <span class="at">-t</span> 4 <span class="dt">\</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">-n</span> 256 <span class="dt">\</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--jinja</span> <span class="dt">\</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--image-max-tokens</span> 256 <span class="dt">\</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning</span> off <span class="dt">\</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning-budget</span> 0 <span class="dt">\</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--alias</span> qwen3.5-0.8b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> ~/run-qwen-2b-vision.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> <span class="at">-e</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="bu">exec</span> /home/arduino/llama.cpp/build/bin/llama-server <span class="dt">\</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-m</span>       /home/arduino/models/Qwen3.5-2B-UD-Q4_K_XL.gguf <span class="dt">\</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--mmproj</span> /home/arduino/models/mmproj-F16_2B.gguf <span class="dt">\</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--host</span> 0.0.0.0 <span class="at">--port</span> 8081 <span class="dt">\</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">-c</span> 4096 <span class="at">-t</span> 4 <span class="dt">\</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">-n</span> 512 <span class="dt">\</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--jinja</span> <span class="dt">\</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--image-max-tokens</span> 256 <span class="dt">\</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning</span> off <span class="dt">\</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning-budget</span> 0 <span class="dt">\</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--alias</span> qwen3.5-2b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x ~/run-qwen-0.8b-vision.sh ~/run-qwen-2b-vision.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Distinct aliases (<code>qwen3.5-0.8b</code> vs <code>qwen3.5-2b</code>) are deliberate here, unlike the single-model chapters before this one: since only one server runs at a time on port 8081, the alias echoed back in <code>choices[...]</code>’s response is your confirmation that the swap actually took effect, not just cosmetic. Your client code doesn’t need to hardcode either name — a single-model <code>llama-server</code> ignores whatever <code>"model"</code> string a request sends, so the same Python script from Section 5 works unmodified against either script below. Reading the alias back is just how you’d sanity-check which one answered.</p>
+</section>
+<section id="running-one-then-the-other" class="level3">
+<h3 class="anchored" data-anchor-id="running-one-then-the-other">Running one, then the other</h3>
+<p>Stop whichever server is currently running (<code>Ctrl+C</code>), then:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">~/run-qwen-0.8b-vision.sh</span>     <span class="co"># fast screen, ~1 min/image</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ...or...</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="ex">~/run-qwen-2b-vision.sh</span>       <span class="co"># deep read, ~4-5 min/image</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If you want the server to keep running after you disconnect SSH — useful when a describe call takes several minutes and you don’t want a dropped connection to kill it — run it inside <code>tmux</code> instead of directly:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install <span class="at">-y</span> tmux</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ex">tmux</span> new <span class="at">-s</span> vlm</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="ex">~/run-qwen-0.8b-vision.sh</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Ctrl+B then D to detach; the server keeps running</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Reattach later with <code>tmux attach -t vlm</code>, and stop the server with <code>Ctrl+C</code> inside that session.</p>
+</section>
+<section id="a-rule-of-thumb" class="level3">
+<h3 class="anchored" data-anchor-id="a-rule-of-thumb">A rule of thumb</h3>
+<p>Use the smallest model that meets the task. The 0.8B is the right default for anything interactive or run over many frames — a live camera loop, a first-pass filter over a folder of field photos. Reach for the 2B only when a specific case needs the extra reasoning quality and the extra few minutes are acceptable: a second opinion on an ambiguous frame, or a final quality pass before a labeled dataset ships. In a real deployment, the natural design is a two-stage pipeline — the 0.8B screens everything, and only the frames it flags as uncertain get escalated to the 2B.</p>
+</section>
+</section>
+<section id="vistext-mosquito" class="level2">
+<h2 class="anchored" data-anchor-id="vistext-mosquito">9. VisText-Mosquito</h2>
+<p><img src="./images/png/mos-logo.png" class="img-fluid"></p>
+<p>We will explore some images from the <a href="https://arxiv.org/abs/2506.14629">VisText-Mosquito</a>, a multimodal dataset that integrates visual and textual data to support automated detection, segmentation, and reasoning for mosquito breeding site analysis.</p>
+<p>The project developed a fine-tuned <strong>Mosquito-LLaMA3-8B</strong> model which achieved the best results, with a final loss of 0.0028, a BLEU score of 54.7, BERTScore of 0.91, and ROUGE-L of 0.85. This dataset is publicly available at <a href="https://data.mendeley.com/datasets/rtsfh7jh7p/3">dataset</a>.</p>
+<p>Here we will try to see if our Arduino UNO-Q running the small <strong>Qwen3.5-0.8B</strong>, without any fine-tuning, can also reason about an image, verifying if it can be considered a mosquito breeding site.</p>
+<p>For example, let’s try one of the images of the dataset, using the prompt described on the VisText-Mosquito paper.</p>
+<p><img src="./images/jpeg/test-bucket.jpg" class="img-fluid"></p>
+<p>The prompt:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">You</span> are creating a dataset for an image analysis model designed to identify potential mosquito breeding sites. The dataset will consist of image-question-answer pairs. For the provided image, generate a question asking whether it depicts a potential mosquito breeding site. Then, provide a detailed answer explaining why or why not. Don<span class="st">'t give extra text. </span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="st">Output format: </span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="st">Question: [Your generated question] </span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="st">Response: [Yes/No] </span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="st">Reasoning(Why): [Your detailed reasoning]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Running it on the Server app, we got:</p>
+<p><img src="./images/png/bucket-result-bad.png" class="img-fluid"></p>
+<p>The model understood the question, had an understanding of the image and followed correctly the result structure, BUT fail completely on the analysis. The image YES, is a potential breeding site.</p>
+<p>Well, one solution is try to turn-on model reasoning mode. Let’s see if thinking deeper it can return a better result.</p>
+</section>
+<section id="reasoning-mode-and-the-trap-i-fell-into" class="level2">
+<h2 class="anchored" data-anchor-id="reasoning-mode-and-the-trap-i-fell-into">10. Reasoning Mode, and the Trap I Fell Into</h2>
+<p>For the task below, I wanted to see if the model’s reasoning would reach a good verdict. So I dropped <code>--reasoning off</code> and let it think. The output came back cut off mid-sentence, right before the conclusion. The token counter read exactly 256.</p>
+<p>Worth knowing before you turn thinking on: Qwen3.5-0.8B’s own model card flags that this size is more prone to thinking loops than the larger ones, sometimes failing to stop on its own. So the runaway generation we hit early on, the “it never stops” that sent me chasing the <code>--jinja</code> flag, was partly this. The small model in thinking mode genuinely struggles to terminate. Keeping it in its default non-thinking mode for the classifier was the right call for several reasons.</p>
+<p>The cut-off above has a simpler cause, though. With reasoning on, the model writes a long internal <code>&lt;think&gt;</code> trace <em>before</em> the real answer. My <code>-n 256</code> cap was fully consumed by the thinking, so the model never reached the structured output I actually asked for. The fix is to give it room for both and remember that the WebUI’s max-tokens overrides the server flag. Here is the new server command, not turning off the reasoning:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-server</span> <span class="dt">\</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-m</span>       /home/arduino/models/Qwen_Qwen3.5-0.8B-Q8_0.gguf <span class="dt">\</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--mmproj</span> /home/arduino/models/mmproj-F16_0.8B.gguf <span class="dt">\</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--host</span> 0.0.0.0 <span class="at">--port</span> 8081 <span class="dt">\</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">-c</span> 4096 <span class="at">-t</span> 4 <span class="dt">\</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">-n</span> 1024 <span class="dt">\</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--jinja</span> <span class="dt">\</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--image-max-tokens</span> 256 <span class="dt">\</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--alias</span> qwen3.5-0.8b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The answer took longer:</p>
+<ul>
+<li>1’20” start+img proc.</li>
+<li>1’ for reasoning</li>
+<li>20” for writing answer at 5.3tk/s</li>
+</ul>
+<p><img src="./images/png/infer-success.png" class="img-fluid"></p>
+<p><strong>The answer was correct!</strong></p>
+<p>Let’s open the “Reasoning tab” and see the thinking process of the model:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> user wants me to analyze the provided image and generate a dataset entry for an image analysis model.</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> image shows a garden scene with a planter pot sitting on pebbles.</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Inside</span> the pot, there is a dark, reflective surface that looks like water.</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="ex">Above</span> the pot, there is green leafy plant.</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> surface in the pot is dark and glossy, reflecting light.</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> surrounding area has pebbles and other greenery.</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> question is: <span class="st">"Do these plants in this image represent a potential mosquito breeding site?"</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Reasoning:</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="ex">1.</span> <span class="pp">**</span>Water Source:<span class="pp">**</span> The pot contains water. Mosquitoes breed in stagnant water.</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="ex">2.</span> <span class="pp">**</span>Vegetation:<span class="pp">**</span> While the leaves are green, they are somewhat dry and sparse, not in a dense, lush overgrowth typical of a breeding zone <span class="er">(</span><span class="ex">though</span> they can be in a pond<span class="kw">)</span><span class="bu">.</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="ex">3.</span> <span class="pp">**</span>Texture:<span class="pp">**</span> The surface inside the pot is clearly dark, reflective, and glossy. This looks like a pond or a pool of water.</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="ex">4.</span> <span class="pp">**</span>Context:<span class="pp">**</span> A planter pot is a very common container for ponds or pools in gardens.</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="ex">5.</span> <span class="pp">**</span>Conclusion:<span class="pp">**</span> The presence of a water source in a pot strongly suggests a potential breeding site.</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="ex">So,</span> the output should be:</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a><span class="ex">Question:</span> Do these plants in this image represent a potential mosquito breeding site<span class="pp">?</span></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="ex">Response:</span> Yes</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a><span class="ex">Reasoning:</span> [Detailed explanation]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>And, the power consumption stayed at a maximum of 3.1W (brief peacks) with a temperature delta of 24 °C.</p>
+<blockquote class="blockquote">
+<p>Bytheway, during iddle periods, when waing to answer a question for example, with the server runing, the power consumption atayed below 500mW.</p>
+</blockquote>
+<p>Let’s try another image, now an old tire:</p>
+<p><img src="./images/png/tire-test.png" class="img-fluid"></p>
+<p>Again a great and correct answer. Even without fine-tuning the model, those tests seem very promising.</p>
+<p>On a garden photo of a dark ceramic bowl holding still water with plants growing around the rim, the model produced a clean <strong>Yes</strong> with sound reasoning: “<em>The image shows a planter pot containing stagnant water. Mosquitoes breed in stagnant water. The dark, reflective surface inside the pot indicates a pond or pool. While the surrounding plants are green, the primary indicator of a breeding site is the water source itself</em>”.</p>
+<p>On an abandoned tire in the garden, “<em>The image shows a tire lying on the ground with a large hole in the rubber, providing a suitable breeding spot for mosquitoes</em>.”</p>
+<p>Both are usable labeled rows!</p>
+<p>To really compare with the VisText-Mosquito results, we would need to test with a lot more images. Run it over a folder of field photos with an adapted Python helper as discussed before, write each result to disk, and you have the start of a real dataset, generated on a device that costs less than the camera that took the photos.</p>
+<p><strong>But for our little experiment here, the UNO-Q and the multimodal model, Qwen 3.5-0.8B, show a great results!</strong></p>
+<p>Two cautions before you trust the labels. The model is confidently wrong sometimes, especially on the visual specifics, so a human should spot-check (“curate”) the set before it trains anything that matters. And keep the <code>max_tokens</code> generous here, since the structured answer plus any reasoning is longer than a one-line caption.</p>
+</section>
+<section id="going-further" class="level2">
+<h2 class="anchored" data-anchor-id="going-further">11. Going Further</h2>
+<p>The classifier sees now. Here are four directions that each turn a one-afternoon experiment into something closer to a deployment.</p>
+<section id="feed-it-a-live-camera" class="level3">
+<h3 class="anchored" data-anchor-id="feed-it-a-live-camera">Feed it a live camera</h3>
+<p>The whole chapter worked from files you dropped into a folder. A field deployment doesn’t have that luxury — it has a camera pointed at a yard.</p>
+<p>First, turn off the UNO-Q:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> halt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="get-the-hardware" class="level4">
+<h4 class="anchored" data-anchor-id="get-the-hardware">Get the Hardware</h4>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 70%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Arduino UNO Q (4 GB)</td>
+<td>Edge AI inference + MCU actuation</td>
+</tr>
+<tr class="even">
+<td>USB webcam</td>
+<td>Image capture</td>
+</tr>
+<tr class="odd">
+<td>USB hub with PD</td>
+<td>Connect webcam + power to the single USB-C port</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Connect the hub to the Power Supply</li>
+<li>Connect the WebCam</li>
+<li>Connect the UNO-Q</li>
+</ul>
+<p><img src="./images/png/hub.jpg" class="img-fluid"></p>
+<p>Once the board is back up, SSH in as usual. Nothing starts automatically — you’ll start <code>llama-server</code> by hand again, same as before.</p>
+<p>The change from the earlier sections is small. Grab a frame, write it to disk at a sane resolution, and hand the path to the same <code>describe_image()</code> you already wrote. Let’s start capturing an image (a frame) from my desk.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install <span class="at">-y</span> fswebcam</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="ex">fswebcam</span> <span class="at">-r</span> 640x480 <span class="at">--skip</span> 20 <span class="at">--no-banner</span> /home/arduino/ArduinoApps/images/frame.jpg</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The  <code>--skip 20</code>  discards the first 20 frames, giving the camera time to auto-adjust exposure.</p>
+<p>Keep the capture at 512 px or below (in this case <code>640x480</code>). A 1080p frame from a cheap webcam hands the encoder a few thousand patches, and you’re back to staring at a 2% progress bar. Downscale at capture time, not after — that’s the lesson from Section 6, applied at the source.</p>
+<p>Here an image taken from my desk:</p>
+<p><img src="./images/png/image-desk.jpg" class="img-fluid"></p>
+<p>We can run the simple prompt to describe the image without reasoning; it is faster. Start the server and open the WebUI:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> llama.cpp</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-server</span> <span class="dt">\</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-m</span>       /home/arduino/models/Qwen_Qwen3.5-0.8B-Q8_0.gguf <span class="dt">\</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--mmproj</span> /home/arduino/models/mmproj-F16_0.8B.gguf <span class="dt">\</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--host</span> 0.0.0.0 <span class="at">--port</span> 8081 <span class="dt">\</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">-c</span> 4096 <span class="at">-t</span> 4 <span class="dt">\</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">-n</span> 256 <span class="dt">\</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--jinja</span> <span class="dt">\</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--image-max-tokens</span> 256 <span class="dt">\</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning</span> off <span class="dt">\</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning-budget</span> 0 <span class="dt">\</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--alias</span> qwen3.5-0.8b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="./images/png/desk.png" class="img-fluid"></p>
+<p>It is a great description! The model captured all the main components of the image.</p>
+<p>Let’s now stop the server and restart it with the Reasoning ON and enter the VisText-Mosquito prompt as before:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-server</span> <span class="dt">\</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-m</span>       /home/arduino/models/Qwen_Qwen3.5-0.8B-Q8_0.gguf <span class="dt">\</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--mmproj</span> /home/arduino/models/mmproj-F16_0.8B.gguf <span class="dt">\</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--host</span> 0.0.0.0 <span class="at">--port</span> 8081 <span class="dt">\</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">-c</span> 4096 <span class="at">-t</span> 4 <span class="dt">\</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">-n</span> 1024 <span class="dt">\</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--jinja</span> <span class="dt">\</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--image-max-tokens</span> 256 <span class="dt">\</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--alias</span> qwen3.5-0.8b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="./images/png/desk-infer-2.png" class="img-fluid"></p>
+<p><strong>It is working!</strong> And it’s nice to learn that my desk is not suitable for mosquito breeding ;-)</p>
+<p>Let’s now adapt the early <code>image_caption.py</code> script to use the VisText-Mosquito prompt, targeting <code>frame.jpg</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> base64</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>SERVER <span class="op">=</span> <span class="st">"http://127.0.0.1:8081/v1/chat/completions"</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>PROMPT <span class="op">=</span> <span class="st">'''</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="st">You are creating a dataset for an image analysis model designed to identify potential mosquito breeding sites. The dataset will consist of image-question-answer pairs. </span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="st">For the provided image:</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="st">1. Generate a question asking whether it depicts a potential mosquito breeding site</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="st">2. Provide a detailed answer explaining why or why not</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="st">Output ONLY in this exact format (no extra text, no explanations):</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="st">Question: Does this image depict a potential mosquito breeding site?</span></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a><span class="st">Response: [Yes/No]</span></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a><span class="st">Reasoning(Why): [Your detailed reasoning here]</span></span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a><span class="st">'''</span></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> encode_image(path):</span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(path, <span class="st">"rb"</span>) <span class="im">as</span> f:</span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> base64.b64encode(f.read()).decode(<span class="st">"utf-8"</span>)</span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> describe_image(path, prompt<span class="op">=</span>PROMPT, max_tokens<span class="op">=</span><span class="dv">1024</span>):</span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>    data_uri <span class="op">=</span> <span class="ss">f"data:image/jpeg;base64,</span><span class="sc">{</span>encode_image(path)<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a>    payload <span class="op">=</span> {</span>
+<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a>        <span class="st">"messages"</span>: [{</span>
+<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a>            <span class="st">"role"</span>: <span class="st">"user"</span>,</span>
+<span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a>            <span class="st">"content"</span>: [</span>
+<span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a>                {<span class="st">"type"</span>: <span class="st">"image_url"</span>, <span class="st">"image_url"</span>: {<span class="st">"url"</span>: data_uri}},</span>
+<span id="cb29-34"><a href="#cb29-34" aria-hidden="true" tabindex="-1"></a>                {<span class="st">"type"</span>: <span class="st">"text"</span>, <span class="st">"text"</span>: prompt},</span>
+<span id="cb29-35"><a href="#cb29-35" aria-hidden="true" tabindex="-1"></a>            ],</span>
+<span id="cb29-36"><a href="#cb29-36" aria-hidden="true" tabindex="-1"></a>        }],</span>
+<span id="cb29-37"><a href="#cb29-37" aria-hidden="true" tabindex="-1"></a>        <span class="st">"temperature"</span>: <span class="fl">0.3</span>,</span>
+<span id="cb29-38"><a href="#cb29-38" aria-hidden="true" tabindex="-1"></a>        <span class="st">"max_tokens"</span>: max_tokens,</span>
+<span id="cb29-39"><a href="#cb29-39" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb29-40"><a href="#cb29-40" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> requests.post(SERVER, json<span class="op">=</span>payload, timeout<span class="op">=</span><span class="dv">300</span>)</span>
+<span id="cb29-41"><a href="#cb29-41" aria-hidden="true" tabindex="-1"></a>    r.raise_for_status()</span>
+<span id="cb29-42"><a href="#cb29-42" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb29-43"><a href="#cb29-43" aria-hidden="true" tabindex="-1"></a>    msg <span class="op">=</span> r.json()[<span class="st">"choices"</span>][<span class="dv">0</span>][<span class="st">"message"</span>]</span>
+<span id="cb29-44"><a href="#cb29-44" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb29-45"><a href="#cb29-45" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Combine both reasoning_content (thinking) + content (final answer)</span></span>
+<span id="cb29-46"><a href="#cb29-46" aria-hidden="true" tabindex="-1"></a>    reasoning <span class="op">=</span> msg.get(<span class="st">"reasoning_content"</span>, <span class="st">""</span>)</span>
+<span id="cb29-47"><a href="#cb29-47" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> msg.get(<span class="st">"content"</span>, <span class="st">""</span>)</span>
+<span id="cb29-48"><a href="#cb29-48" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb29-49"><a href="#cb29-49" aria-hidden="true" tabindex="-1"></a>    <span class="co"># If content is empty, use reasoning; otherwise combine them</span></span>
+<span id="cb29-50"><a href="#cb29-50" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> content.strip():</span>
+<span id="cb29-51"><a href="#cb29-51" aria-hidden="true" tabindex="-1"></a>        answer <span class="op">=</span> content</span>
+<span id="cb29-52"><a href="#cb29-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb29-53"><a href="#cb29-53" aria-hidden="true" tabindex="-1"></a>        answer <span class="op">=</span> reasoning</span>
+<span id="cb29-54"><a href="#cb29-54" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb29-55"><a href="#cb29-55" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> answer</span>
+<span id="cb29-56"><a href="#cb29-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-57"><a href="#cb29-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-58"><a href="#cb29-58" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<span id="cb29-59"><a href="#cb29-59" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(describe_image(<span class="st">"images/frame.jpg"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The result:</p>
+<p><img src="./images/png/script-mosquito.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="build-a-labeled-dataset-one-frame-at-a-time" class="level3">
+<h3 class="anchored" data-anchor-id="build-a-labeled-dataset-one-frame-at-a-time">Build a labeled dataset, one frame at a time</h3>
+<p>Section 9 showed the board producing a clean Question/Response/Reasoning row from a single image. Point the same code at a folder of field photos instead of one file, append each verdict to a JSONL file, and you have the start of a labeled dataset — generated offline, overnight, on a device that costs less than the camera that shot the photos.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json, glob</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"labels.jsonl"</span>, <span class="st">"w"</span>) <span class="im">as</span> out:</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> path <span class="kw">in</span> <span class="bu">sorted</span>(glob.glob(<span class="st">"images/field/*.jpg"</span>)):</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>        verdict <span class="op">=</span> describe_image(path, prompt<span class="op">=</span>MOSQUITO_PROMPT, max_tokens<span class="op">=</span><span class="dv">1024</span>)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>        out.write(json.dumps({<span class="st">"image"</span>: path, <span class="st">"verdict"</span>: verdict}) <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"done: </span><span class="sc">{</span>path<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The catch is the one I keep coming back to: the model is confidently wrong often enough that you can’t ship the labels unread. Treat the output as a first draft a human curates, not as ground truth. Even so, pre-labeling beats labeling from scratch — your reviewer is correcting, not authoring, and that’s most of the cost gone.</p>
+</section>
+<section id="zero-shot-now-fine-tuned-later" class="level3">
+<h3 class="anchored" data-anchor-id="zero-shot-now-fine-tuned-later">Zero-shot now, fine-tuned later</h3>
+<p>What you’ve built is zero-shot: a general model reasoning about a task it was never trained for. The VisText-Mosquito authors went the other way and fine-tuned Mosquito-LLaMA3-8B on their dataset, landing a BLEU of 54.7 and a final loss near 0.003. That’s the quality ceiling for this task, and it sits well above what an un-tuned 0.8B reaches.</p>
+<p>The two approaches aren’t rivals. Zero-shot is how you bootstrap the dataset cheaply; fine-tuning is how you turn that dataset into a specialist. The UNO Q does the first job. The training happens on a workstation, and a small fine-tuned model can come back to the board for inference.</p>
+</section>
+<section id="feeding-this-into-a-dual-brain-project" class="level3">
+<h3 class="anchored" data-anchor-id="feeding-this-into-a-dual-brain-project">Feeding this into a dual-brain project</h3>
+<p>Everything in this chapter ran on the Linux side alone: a camera or a file, a description, a verdict, printed to a terminal. The <a href="../../content/physicalai/physicalai.html">Gen_AI_Edge project</a> wires the <em>other</em> half of the UNO Q into a generative-AI application — an MCU sketch reading sensors, Bridge RPC connecting Python and the sketch, and an RGB LED reporting a verdict, with <code>llama-server</code> running as a proper systemd service. A button stands in there for a water-presence sensor. With a camera and the vision pathway from this chapter, that input can come from the model itself instead: the MCU triggers a capture on a timer or a motion sensor, the Linux side runs the describe-and-classify step you built here, and the verdict drives the LED. The Bridge RPC plumbing doesn’t change — only the source of the signal does. That’s the arc across the two chapters: the MCU senses, the MPU reasons, and the reasoning can include sight.</p>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">12. Conclusion</h2>
+<p>You now have the same UNO Q from the previous chapter, but looking at photos — or a live camera frame — and judging mosquito habitat, with a clear picture of what that costs: roughly a minute per image on the 0.8B, a couple more with reasoning on, about five on the 2B, all on four CPU cores, no cloud. You know why <code>--jinja</code> and the context size matter, why a frozen progress bar is usually the encoder doing honest work rather than a crash, and how to read <code>free -h</code> without scaring yourself.</p>
+<section id="what-works" class="level3">
+<h3 class="anchored" data-anchor-id="what-works">What Works</h3>
+<ul>
+<li><strong>Vision genuinely runs on this board.</strong> A coin-sized CPU describes a scene and reasons about it offline. A couple of years ago that sentence would have been a joke.</li>
+<li><strong>The gist is reliable.</strong> “There’s a container holding standing water” is the kind of judgment the 0.8B gets right consistently, and that’s exactly the judgment a breeding-site screen needs.</li>
+<li><strong>One model, two modes.</strong> The same weights that answered text prompts in the previous chapter run the vision describer here. The <code>mmproj</code> is the only addition, and there’s no separate VL download to manage.</li>
+</ul>
+</section>
+<section id="limitations-and-considerations" class="level3">
+<h3 class="anchored" data-anchor-id="limitations-and-considerations">Limitations and Considerations</h3>
+<p>Being honest about what doesn’t work well at this scale:</p>
+<ul>
+<li><strong>It’s slow.</strong> A minute to a few minutes per image rules out anything interactive. This is a batch tool, not a chat.</li>
+<li><strong>Confidently wrong on specifics.</strong> The model called papayas “mangos.” It will name the wrong container, invent a detail, occasionally flip a verdict. Trust it for the gist, never for the specifics, and keep a human curating anything that feeds a downstream model.</li>
+<li><strong>Compute-bound on image size, not memory-bound.</strong> A too-large image doesn’t crash the board, it just makes you wait ten minutes for an answer you could’ve had in one. Resolution is the lever.</li>
+<li><strong>Thinking mode is a double-edged tool.</strong> It fixed the verdict that non-thinking mode got wrong, but the 0.8B struggles to terminate its own reasoning, so you pay for it with a generous <code>max_tokens</code> and the occasional cut-off.</li>
+</ul>
+</section>
+<section id="where-this-fits" class="level3">
+<h3 class="anchored" data-anchor-id="where-this-fits">Where This Fits</h3>
+<p>The interesting use here isn’t real-time vision — the latency forbids it. It’s dataset bootstrapping. A board this cheap, generating first-draft labels offline, turns the expensive part of a supervised pipeline (the labeling) into something a single field device can do overnight. The 0.8B is the fast screen; the 2B is the quality pass for when correctness outweighs latency. <code>--image-max-tokens</code> is the dial between them.</p>
+</section>
+<section id="whats-next" class="level3">
+<h3 class="anchored" data-anchor-id="whats-next">What’s Next</h3>
+<ul>
+<li>A live camera feeding frames on a timer or motion trigger, instead of files dropped into a folder.</li>
+<li>A fine-tuned specialist (the VisText-Mosquito path) replacing zero-shot reasoning for the production classifier.</li>
+<li>The full dual-brain loop in the <a href="../../content/physicalai/physicalai.html">Gen_AI_Edge project</a>: MCU triggers the capture, MPU runs the verdict, LED responds — the camera replacing that project’s button.</li>
+</ul>
+</section>
+<section id="a-note-on-the-arduino-ventuno-q" class="level3">
+<h3 class="anchored" data-anchor-id="a-note-on-the-arduino-ventuno-q">A Note on the Arduino VENTUNO Q</h3>
+<p>The 16 GB VENTUNO Q, with its Dragonwing NPU, changes the math. The Qwen3.5-2B becomes interactive instead of a five-minute wait, the 4B’s native vision fits with room to spare, and the encode step stops being the bottleneck. The patterns here port directly — same <code>mmproj</code> split, same flags, same dual-brain wiring. Only the clock changes.</p>
+</section>
+</section>
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">13. Resources</h2>
+<section id="useful-resources" class="level3">
+<h3 class="anchored" data-anchor-id="useful-resources">Useful Resources</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Resource</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Generative AI at the Edge (prerequisite chapter)</td>
+<td><a href="../../content/genai/genai.html">Generative AI at the Edge</a></td>
+</tr>
+<tr class="even">
+<td>GenAI Meets the Real World (dual-brain project, next step)</td>
+<td><a href="../../content/physicalai/physicalai.html">GenAI Meets the Real World</a></td>
+</tr>
+<tr class="odd">
+<td>Project repository</td>
+<td>https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/Multimodal_AI_Edge</td>
+</tr>
+<tr class="even">
+<td>llama.cpp repository</td>
+<td><a href="https://github.com/ggml-org/llama.cpp" class="uri">https://github.com/ggml-org/llama.cpp</a></td>
+</tr>
+<tr class="odd">
+<td>llama.cpp multimodal (mtmd) documentation</td>
+<td><a href="https://github.com/ggml-org/llama.cpp/blob/master/docs/multimodal.md" class="uri">https://github.com/ggml-org/llama.cpp/blob/master/docs/multimodal.md</a></td>
+</tr>
+<tr class="even">
+<td>llama.cpp mtmd / libmtmd README</td>
+<td><a href="https://github.com/ggml-org/llama.cpp/blob/master/tools/mtmd/README.md" class="uri">https://github.com/ggml-org/llama.cpp/blob/master/tools/mtmd/README.md</a></td>
+</tr>
+<tr class="odd">
+<td>llama.cpp HTTP server docs</td>
+<td><a href="https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md" class="uri">https://github.com/ggml-org/llama.cpp/blob/master/tools/server/README.md</a></td>
+</tr>
+<tr class="even">
+<td>Qwen3.5-0.8B GGUF + mmproj (Unsloth)</td>
+<td><a href="https://huggingface.co/unsloth/Qwen3.5-0.8B-GGUF" class="uri">https://huggingface.co/unsloth/Qwen3.5-0.8B-GGUF</a></td>
+</tr>
+<tr class="odd">
+<td>Qwen3.5-0.8B GGUF (Bartowski)</td>
+<td><a href="https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF" class="uri">https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF</a></td>
+</tr>
+<tr class="even">
+<td>ggml-org multimodal GGUF collection</td>
+<td><a href="https://huggingface.co/collections/ggml-org/multimodal-ggufs-68244e01ff1f39e5bebeeedc" class="uri">https://huggingface.co/collections/ggml-org/multimodal-ggufs-68244e01ff1f39e5bebeeedc</a></td>
+</tr>
+<tr class="odd">
+<td>VisText-Mosquito paper (arXiv)</td>
+<td><a href="https://arxiv.org/abs/2506.14629" class="uri">https://arxiv.org/abs/2506.14629</a></td>
+</tr>
+<tr class="even">
+<td>VisText-Mosquito dataset (Mendeley)</td>
+<td><a href="https://data.mendeley.com/datasets/rtsfh7jh7p/3" class="uri">https://data.mendeley.com/datasets/rtsfh7jh7p/3</a></td>
+</tr>
+<tr class="odd">
+<td>VisText-Mosquito code repository</td>
+<td><a href="https://github.com/adnanul-islam-jisun/VisText-Mosquito" class="uri">https://github.com/adnanul-islam-jisun/VisText-Mosquito</a></td>
+</tr>
+<tr class="even">
+<td>Arduino UNO Q Documentation</td>
+<td><a href="https://docs.arduino.cc/hardware/uno-q" class="uri">https://docs.arduino.cc/hardware/uno-q</a></td>
+</tr>
+<tr class="odd">
+<td>Arduino_RouterBridge library</td>
+<td><a href="https://github.com/arduino-libraries/Arduino_RouterBridge" class="uri">https://github.com/arduino-libraries/Arduino_RouterBridge</a></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="references" class="level3">
+<h3 class="anchored" data-anchor-id="references">References</h3>
+<ol type="1">
+<li>Qwen Team, “Qwen3.5 Small Model Series,” Alibaba Cloud, 2026.</li>
+<li>llama.cpp, “Multimodal Support (libmtmd / mmproj),” <a href="https://github.com/ggml-org/llama.cpp/blob/master/docs/multimodal.md" class="uri">https://github.com/ggml-org/llama.cpp/blob/master/docs/multimodal.md</a></li>
+<li>Islam, M. A., Sayeedi, M. F. A., Shuvo, M. A., Bappy, S. R., Islam, M. A., and Shatabda, S., “VisText-Mosquito: A Unified Multimodal Benchmark Dataset for Visual Detection, Segmentation, and Textual Reasoning on Mosquito Breeding Sites,” arXiv:2506.14629, 2025.</li>
+<li>Gerganov, G., “llama.cpp: Inference of Meta’s LLaMA model (and others) in pure C/C++,” <a href="https://github.com/ggml-org/llama.cpp" class="uri">https://github.com/ggml-org/llama.cpp</a></li>
+<li>Unsloth, “Qwen3.5 — How to Run Locally,” <a href="https://unsloth.ai/docs/models/qwen3.5" class="uri">https://unsloth.ai/docs/models/qwen3.5</a>, 2026.</li>
+<li>Arduino, “Arduino UNO Q Product Page,” <a href="https://www.arduino.cc/product-uno-q/" class="uri">https://www.arduino.cc/product-uno-q/</a></li>
+</ol>
+<hr>
+<p><em>Tutorial created for IESTI05 — Edge AI Machine Learning System Engineering, UNIFEI. Licensed under GNU General Public License 3.0.</em></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../content/genai/genai.html" class="pagination-link" aria-label="Generative AI at the Edge:">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Generative AI at the Edge:</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../content/physicalai/physicalai.html" class="pagination-link" aria-label="GenAI Meets the Real World:">
+        <span class="nav-page-text">GenAI Meets the Real World:</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Written and edited by Prof.&nbsp;Marcelo Rovai (UNIFEI University)</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/edit/main/content/multimodai/multimodai.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/blob/main/content/multimodai/multimodai.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

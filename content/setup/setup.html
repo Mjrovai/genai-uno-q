@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Arduino UNO Q Setup – Generative AI at the Edge</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../content/genai/genai.html" rel="next">
+<link href="../../content/localinf/localinf.html" rel="prev">
+<link href="../../images/cover.jpg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-daec65ff3ba034f51daec66ecad3ce27.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Generative AI at the Edge</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools tools-wide tools-end">
+    <a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="../../Generative-AI-at-the-Edge.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url=|url|" title="LinkedIn" class="quarto-navigation-tool px-1" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/setup/setup.html">Arduino UNO Q Setup</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Acknowledgments</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../about_book.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About this Book</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Classification_of_AI_Applications.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classification of AI Applications</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/foundations/foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">How Generative AI Works, and How It Gets Small</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Generative AI (Proactive)</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/localinf/localinf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SLMs at the Edge</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/setup/setup.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Arduino UNO Q Setup</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/genai/genai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Generative AI at the Edge:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/multimodai/multimodai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multimodal AI at the Edge:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/physicalai/physicalai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">GenAI Meets the Real World:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/agenticai/agenticai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Agentic AI at the Edge:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Fixed Function AI (Reactive)</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/imgclass/imgclass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Image Classification on the Arduino UNO Q</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/objdet/objdet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Object Detection on the Arduino UNO Q</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">References &amp; Author</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../About_the_author.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About the author</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">1. Introduction</a>
+  <ul class="collapse">
+  <li><a href="#what-this-tutorial-covers" id="toc-what-this-tutorial-covers" class="nav-link" data-scroll-target="#what-this-tutorial-covers">What This Tutorial Covers</a></li>
+  </ul></li>
+  <li><a href="#what-is-the-arduino-uno-q" id="toc-what-is-the-arduino-uno-q" class="nav-link" data-scroll-target="#what-is-the-arduino-uno-q">2. What Is the Arduino UNO Q?</a>
+  <ul class="collapse">
+  <li><a href="#available-variants" id="toc-available-variants" class="nav-link" data-scroll-target="#available-variants">Available Variants</a></li>
+  <li><a href="#key-connectivity" id="toc-key-connectivity" class="nav-link" data-scroll-target="#key-connectivity">Key Connectivity</a></li>
+  </ul></li>
+  <li><a href="#hardware-and-software-requirements" id="toc-hardware-and-software-requirements" class="nav-link" data-scroll-target="#hardware-and-software-requirements">3. Hardware and Software Requirements</a>
+  <ul class="collapse">
+  <li><a href="#hardware" id="toc-hardware" class="nav-link" data-scroll-target="#hardware">Hardware</a></li>
+  <li><a href="#software-on-your-host-computer" id="toc-software-on-your-host-computer" class="nav-link" data-scroll-target="#software-on-your-host-computer">Software (on your host computer)</a></li>
+  </ul></li>
+  <li><a href="#installing-adb-on-your-host-computer" id="toc-installing-adb-on-your-host-computer" class="nav-link" data-scroll-target="#installing-adb-on-your-host-computer">4. Installing ADB on Your Host Computer</a>
+  <ul class="collapse">
+  <li><a href="#linux-ubuntudebian" id="toc-linux-ubuntudebian" class="nav-link" data-scroll-target="#linux-ubuntudebian">Linux (Ubuntu/Debian)</a></li>
+  <li><a href="#macos" id="toc-macos" class="nav-link" data-scroll-target="#macos">macOS</a></li>
+  <li><a href="#windows" id="toc-windows" class="nav-link" data-scroll-target="#windows">Windows</a></li>
+  <li><a href="#verify-the-installation" id="toc-verify-the-installation" class="nav-link" data-scroll-target="#verify-the-installation">Verify the Installation</a></li>
+  </ul></li>
+  <li><a href="#flashing-the-latest-linux-image-recommended" id="toc-flashing-the-latest-linux-image-recommended" class="nav-link" data-scroll-target="#flashing-the-latest-linux-image-recommended">5. Flashing the Latest Linux Image (Recommended)</a>
+  <ul class="collapse">
+  <li><a href="#step-1-download-the-flasher-cli" id="toc-step-1-download-the-flasher-cli" class="nav-link" data-scroll-target="#step-1-download-the-flasher-cli">Step 1 — Download the Flasher CLI</a></li>
+  <li><a href="#step-2-put-the-board-into-flash-mode-edl-mode" id="toc-step-2-put-the-board-into-flash-mode-edl-mode" class="nav-link" data-scroll-target="#step-2-put-the-board-into-flash-mode-edl-mode">Step 2 — Put the Board into Flash Mode (EDL Mode)</a></li>
+  <li><a href="#step-3-flash-the-latest-image" id="toc-step-3-flash-the-latest-image" class="nav-link" data-scroll-target="#step-3-flash-the-latest-image">Step 3 — Flash the Latest Image</a></li>
+  <li><a href="#step-4-remove-the-jumper-and-reboot" id="toc-step-4-remove-the-jumper-and-reboot" class="nav-link" data-scroll-target="#step-4-remove-the-jumper-and-reboot">Step 4 — Remove the Jumper and Reboot</a></li>
+  <li><a href="#flashing-a-local-image-alternative" id="toc-flashing-a-local-image-alternative" class="nav-link" data-scroll-target="#flashing-a-local-image-alternative">Flashing a Local Image (Alternative)</a></li>
+  </ul></li>
+  <li><a href="#first-connection-headless-setup-via-adb" id="toc-first-connection-headless-setup-via-adb" class="nav-link" data-scroll-target="#first-connection-headless-setup-via-adb">6. First Connection: Headless Setup via ADB</a>
+  <ul class="collapse">
+  <li><a href="#step-1-connect-the-board" id="toc-step-1-connect-the-board" class="nav-link" data-scroll-target="#step-1-connect-the-board">Step 1 — Connect the Board</a></li>
+  <li><a href="#step-2-verify-adb-sees-the-device" id="toc-step-2-verify-adb-sees-the-device" class="nav-link" data-scroll-target="#step-2-verify-adb-sees-the-device">Step 2 — Verify ADB Sees the Device</a></li>
+  <li><a href="#step-3-open-a-shell-on-the-board" id="toc-step-3-open-a-shell-on-the-board" class="nav-link" data-scroll-target="#step-3-open-a-shell-on-the-board">Step 3 — Open a Shell on the Board</a></li>
+  <li><a href="#step-4-change-the-default-password-recommended" id="toc-step-4-change-the-default-password-recommended" class="nav-link" data-scroll-target="#step-4-change-the-default-password-recommended">Step 4 — Change the Default Password (Recommended)</a></li>
+  <li><a href="#step-5-check-board-information" id="toc-step-5-check-board-information" class="nav-link" data-scroll-target="#step-5-check-board-information">Step 5 — Check Board Information</a></li>
+  </ul></li>
+  <li><a href="#configuring-wi-fi-from-the-terminal" id="toc-configuring-wi-fi-from-the-terminal" class="nav-link" data-scroll-target="#configuring-wi-fi-from-the-terminal">7. Configuring Wi-Fi from the Terminal</a>
+  <ul class="collapse">
+  <li><a href="#step-1-enter-the-adb-shell" id="toc-step-1-enter-the-adb-shell" class="nav-link" data-scroll-target="#step-1-enter-the-adb-shell">Step 1 — Enter the ADB Shell</a></li>
+  <li><a href="#step-2-scan-for-available-networks" id="toc-step-2-scan-for-available-networks" class="nav-link" data-scroll-target="#step-2-scan-for-available-networks">Step 2 — Scan for Available Networks</a></li>
+  <li><a href="#step-3-connect-to-your-wi-fi-network" id="toc-step-3-connect-to-your-wi-fi-network" class="nav-link" data-scroll-target="#step-3-connect-to-your-wi-fi-network">Step 3 — Connect to Your Wi-Fi Network</a></li>
+  <li><a href="#step-4-verify-the-connection" id="toc-step-4-verify-the-connection" class="nav-link" data-scroll-target="#step-4-verify-the-connection">Step 4 — Verify the Connection</a></li>
+  <li><a href="#switching-networks-later" id="toc-switching-networks-later" class="nav-link" data-scroll-target="#switching-networks-later">Switching Networks Later</a></li>
+  </ul></li>
+  <li><a href="#enabling-and-using-ssh" id="toc-enabling-and-using-ssh" class="nav-link" data-scroll-target="#enabling-and-using-ssh">8. Enabling and Using SSH</a>
+  <ul class="collapse">
+  <li><a href="#step-1-enable-the-ssh-server" id="toc-step-1-enable-the-ssh-server" class="nav-link" data-scroll-target="#step-1-enable-the-ssh-server">Step 1 — Enable the SSH Server</a></li>
+  <li><a href="#step-2-exit-adb-and-connect-via-ssh" id="toc-step-2-exit-adb-and-connect-via-ssh" class="nav-link" data-scroll-target="#step-2-exit-adb-and-connect-via-ssh">Step 2 — Exit ADB and Connect via SSH</a></li>
+  <li><a href="#alternative-connect-using-hostname" id="toc-alternative-connect-using-hostname" class="nav-link" data-scroll-target="#alternative-connect-using-hostname">Alternative: Connect Using Hostname</a></li>
+  <li><a href="#if-the-ssh-password-is-not-working" id="toc-if-the-ssh-password-is-not-working" class="nav-link" data-scroll-target="#if-the-ssh-password-is-not-working">If the SSH Password Is Not Working</a></li>
+  <li><a href="#step-3-check-the-cpu-and-memory-with-htop" id="toc-step-3-check-the-cpu-and-memory-with-htop" class="nav-link" data-scroll-target="#step-3-check-the-cpu-and-memory-with-htop">Step 3 —Check the CPU and memory with htop</a></li>
+  <li><a href="#step-4-updateupgrade-the-system" id="toc-step-4-updateupgrade-the-system" class="nav-link" data-scroll-target="#step-4-updateupgrade-the-system">Step 4 —Update/Upgrade the system</a></li>
+  <li><a href="#step-5-transfer-files-if-necessary" id="toc-step-5-transfer-files-if-necessary" class="nav-link" data-scroll-target="#step-5-transfer-files-if-necessary">Step 5 — Transfer Files (if necessary)</a></li>
+  </ul></li>
+  <li><a href="#exploring-pre-installed-examples" id="toc-exploring-pre-installed-examples" class="nav-link" data-scroll-target="#exploring-pre-installed-examples">9. Exploring Pre-Installed Examples</a>
+  <ul class="collapse">
+  <li><a href="#step-1-exploring-the-pre-loaded-ai-models" id="toc-step-1-exploring-the-pre-loaded-ai-models" class="nav-link" data-scroll-target="#step-1-exploring-the-pre-loaded-ai-models">Step 1 — Exploring the Pre-loaded AI models</a></li>
+  <li><a href="#step-2-running-an-example-via-terminal" id="toc-step-2-running-an-example-via-terminal" class="nav-link" data-scroll-target="#step-2-running-an-example-via-terminal">Step 2 — Running an example via terminal</a></li>
+  </ul></li>
+  <li><a href="#the-arduino-app-cli-command-reference" id="toc-the-arduino-app-cli-command-reference" class="nav-link" data-scroll-target="#the-arduino-app-cli-command-reference">10. The arduino-app-cli Command Reference</a></li>
+  <li><a href="#essential-linux-commands-for-the-uno-q" id="toc-essential-linux-commands-for-the-uno-q" class="nav-link" data-scroll-target="#essential-linux-commands-for-the-uno-q">11. Essential Linux Commands for the UNO Q</a>
+  <ul class="collapse">
+  <li><a href="#system-information" id="toc-system-information" class="nav-link" data-scroll-target="#system-information">System Information</a></li>
+  <li><a href="#network-management" id="toc-network-management" class="nav-link" data-scroll-target="#network-management">Network Management</a></li>
+  <li><a href="#package-management" id="toc-package-management" class="nav-link" data-scroll-target="#package-management">Package Management</a></li>
+  <li><a href="#file-operations" id="toc-file-operations" class="nav-link" data-scroll-target="#file-operations">File Operations</a></li>
+  <li><a href="#service-management" id="toc-service-management" class="nav-link" data-scroll-target="#service-management">Service Management</a></li>
+  </ul></li>
+  <li><a href="#tips-tricks-and-troubleshooting" id="toc-tips-tricks-and-troubleshooting" class="nav-link" data-scroll-target="#tips-tricks-and-troubleshooting">12. Tips, Tricks, and Troubleshooting</a>
+  <ul class="collapse">
+  <li><a href="#adb-not-detecting-the-board" id="toc-adb-not-detecting-the-board" class="nav-link" data-scroll-target="#adb-not-detecting-the-board">ADB Not Detecting the Board</a></li>
+  <li><a href="#ssh-connection-refused" id="toc-ssh-connection-refused" class="nav-link" data-scroll-target="#ssh-connection-refused">SSH Connection Refused</a></li>
+  <li><a href="#ssh-password-rejected" id="toc-ssh-password-rejected" class="nav-link" data-scroll-target="#ssh-password-rejected">SSH Password Rejected</a></li>
+  <li><a href="#wi-fi-not-connecting" id="toc-wi-fi-not-connecting" class="nav-link" data-scroll-target="#wi-fi-not-connecting">Wi-Fi Not Connecting</a></li>
+  <li><a href="#app.run-missing-error" id="toc-app.run-missing-error" class="nav-link" data-scroll-target="#app.run-missing-error">“App.run() Missing” Error</a></li>
+  <li><a href="#memory-issues-especially-on-the-2-gb-variant" id="toc-memory-issues-especially-on-the-2-gb-variant" class="nav-link" data-scroll-target="#memory-issues-especially-on-the-2-gb-variant">Memory Issues (Especially on the 2 GB Variant)</a></li>
+  <li><a href="#storage-cleanup" id="toc-storage-cleanup" class="nav-link" data-scroll-target="#storage-cleanup">Storage Cleanup</a></li>
+  <li><a href="#using-git-for-version-control" id="toc-using-git-for-version-control" class="nav-link" data-scroll-target="#using-git-for-version-control">Using Git for Version Control</a></li>
+  <li><a href="#alternative-file-transfer-rsync" id="toc-alternative-file-transfer-rsync" class="nav-link" data-scroll-target="#alternative-file-transfer-rsync">Alternative File Transfer: rsync</a></li>
+  </ul></li>
+  <li><a href="#going-further" id="toc-going-further" class="nav-link" data-scroll-target="#going-further">13. Going Further</a>
+  <ul class="collapse">
+  <li><a href="#edge-ai-on-the-uno-q" id="toc-edge-ai-on-the-uno-q" class="nav-link" data-scroll-target="#edge-ai-on-the-uno-q">Edge AI on the UNO Q</a></li>
+  <li><a href="#hardware-expansion" id="toc-hardware-expansion" class="nav-link" data-scroll-target="#hardware-expansion">Hardware Expansion</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">14. Conclusion</a>
+  <ul class="collapse">
+  <li><a href="#what-we-covered" id="toc-what-we-covered" class="nav-link" data-scroll-target="#what-we-covered">What We Covered</a></li>
+  <li><a href="#advantages-of-the-uno-q-approach" id="toc-advantages-of-the-uno-q-approach" class="nav-link" data-scroll-target="#advantages-of-the-uno-q-approach">Advantages of the UNO Q Approach</a></li>
+  <li><a href="#limitations-and-considerations" id="toc-limitations-and-considerations" class="nav-link" data-scroll-target="#limitations-and-considerations">Limitations and Considerations</a></li>
+  </ul></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">15. Resources</a>
+  <ul class="collapse">
+  <li><a href="#useful-resources" id="toc-useful-resources" class="nav-link" data-scroll-target="#useful-resources">Useful Resources</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/edit/main/content/setup/setup.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/blob/main/content/setup/setup.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Arduino UNO Q Setup</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><img src="./images/png/ChatGPT-Image.jpg" class="img-fluid"></p>
+<hr>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">1. Introduction</h2>
+<section id="what-this-tutorial-covers" class="level3">
+<h3 class="anchored" data-anchor-id="what-this-tutorial-covers">What This Tutorial Covers</h3>
+<p>This tutorial focuses on getting the UNO Q up and running using <strong>terminal tools</strong> (ADB and SSH). We deliberately skip Arduino App Lab’s graphical interface (where it is possible) and instead focus on a professional, command-line-driven development workflow. Once you’re comfortable here, the <a href="../../content/physicalai/physicalai.html#2-setting-up-vs-code-with-remote-ssh">VS Code Remote-SSH chapter</a> shows how to layer a full editor on top of this same setup.</p>
+<p><strong>Why this approach?</strong></p>
+<ul>
+<li>You gain full control over the board’s Debian Linux environment.</li>
+<li>Code lives on your host machine under Git, not locked inside the board.</li>
+<li>You learn transferable Linux/SSH/SCP skills used in real embedded and edge-AI deployments.</li>
+<li>Build and deployment can be scripted and automated.</li>
+<li>It works with any editor — VS Code, Vim, whatever you already use — since none of it depends on a specific tool.</li>
+</ul>
+<p>By the end of this tutorial, you will be able to connect to the UNO Q headlessly, configure its network, and transfer and run dual-brain projects (Python + Arduino sketch) over SSH.</p>
+<hr>
+</section>
+</section>
+<section id="what-is-the-arduino-uno-q" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-the-arduino-uno-q">2. What Is the Arduino UNO Q?</h2>
+<p><img src="./images/jpeg/uno-q.jpg" class="img-fluid"></p>
+<p>The Arduino UNO Q is a <strong>hybrid single-board computer</strong> that combines two processors on one UNO-form-factor board:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Component</th>
+<th>Role</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>MPU</strong> (Microprocessor Unit)</td>
+<td>High-level computing, AI, networking</td>
+<td>Qualcomm Dragonwing™ QRB2210 — quad-core Arm Cortex-A53 @ 2.0 GHz, Adreno 702 GPU, dual ISP. Runs <strong>Debian Linux</strong>.</td>
+</tr>
+<tr class="even">
+<td><strong>MCU</strong> (Microcontroller Unit)</td>
+<td>Real-time hardware control</td>
+<td>STMicroelectronics STM32U585 — Arm Cortex-M33 @ 160 MHz. Runs <strong>Arduino Core on Zephyr OS</strong>.</td>
+</tr>
+</tbody>
+</table>
+<p>The two processors communicate through <strong>Bridge</strong>, Arduino’s RPC (Remote Procedure Call) library, allowing Python code on the MPU to call functions running in Arduino sketches on the MCU, and vice versa.</p>
+<p><img src="./images/png/bridge.png" class="img-fluid"></p>
+<section id="available-variants" class="level3">
+<h3 class="anchored" data-anchor-id="available-variants">Available Variants</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variant</th>
+<th>RAM</th>
+<th>Storage (eMMC)</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>2 GB</strong></td>
+<td>2 GB LPDDR4X</td>
+<td>16 GB</td>
+<td>Headless/SSH development, lightweight edge AI, TinyML</td>
+</tr>
+<tr class="even">
+<td><strong>4 GB</strong></td>
+<td>4 GB LPDDR4X</td>
+<td>32 GB</td>
+<td>SBC mode with display, larger AI models, multitasking</td>
+</tr>
+</tbody>
+</table>
+<p>Both variants share the same processor, connectivity (dual-band Wi-Fi 5 + Bluetooth 5.1), USB-C port, UNO-compatible headers, Qwiic connector, 8×13 LED matrix, and 4 RGB LEDs.</p>
+</section>
+<section id="key-connectivity" class="level3">
+<h3 class="anchored" data-anchor-id="key-connectivity">Key Connectivity</h3>
+<ul>
+<li><strong>USB-C</strong>: Single multi-function port for power delivery, data (ADB), and DisplayPort video output.</li>
+<li><strong>Wi-Fi</strong>: Dual-band 802.11ac (2.4 GHz and 5 GHz).</li>
+<li><strong>Bluetooth</strong>: 5.1.</li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>Important</strong>: The UNO Q uses a single USB-C port for everything. Make sure you use a <strong>data-capable USB-C cable</strong> (not a charge-only cable). Some USB hubs and Apple USB-C adapters may not be recognized.</p>
+</blockquote>
+<p>For more details: <a href="https://docs.arduino.cc/resources/datasheets/ABX00162-datasheet.pdf">Arduino® UNO Q 1 User Manual</a></p>
+<hr>
+</section>
+</section>
+<section id="hardware-and-software-requirements" class="level2">
+<h2 class="anchored" data-anchor-id="hardware-and-software-requirements">3. Hardware and Software Requirements</h2>
+<section id="hardware" class="level3">
+<h3 class="anchored" data-anchor-id="hardware">Hardware</h3>
+<ul>
+<li>Arduino UNO Q (2 GB or 4 GB variant)</li>
+<li>USB-C data cable (verify it is not charge-only)</li>
+<li>Host computer (Linux, macOS, or Windows)</li>
+<li>Wi-Fi network (the UNO Q and your host must be on the same network for SSH)</li>
+</ul>
+</section>
+<section id="software-on-your-host-computer" class="level3">
+<h3 class="anchored" data-anchor-id="software-on-your-host-computer">Software (on your host computer)</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>ADB</strong> (Android Debug Bridge)</td>
+<td>Initial headless connection over USB-C</td>
+</tr>
+<tr class="even">
+<td><strong>SSH client</strong></td>
+<td>Remote access over Wi-Fi (built-in on Linux/macOS; available on Windows)</td>
+</tr>
+<tr class="odd">
+<td><strong>SCP</strong></td>
+<td>Secure file transfer to the board</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p>An editor is not required for this tutorial — everything here runs from a terminal. If you’d like a full IDE experience (IntelliSense, integrated terminal, Git), see the <a href="../../content/physicalai/physicalai.html#2-setting-up-vs-code-with-remote-ssh">VS Code Remote-SSH chapter</a> once you’re done here.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="installing-adb-on-your-host-computer" class="level2">
+<h2 class="anchored" data-anchor-id="installing-adb-on-your-host-computer">4. Installing ADB on Your Host Computer</h2>
+<p>ADB (Android Debug Bridge) lets you open a shell on the UNO Q over the USB-C cable — no network or monitor required. This is essential for initial setup.</p>
+<section id="linux-ubuntudebian" class="level3">
+<h3 class="anchored" data-anchor-id="linux-ubuntudebian">Linux (Ubuntu/Debian)</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install android-tools-adb</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="macos" class="level3">
+<h3 class="anchored" data-anchor-id="macos">macOS</h3>
+<p>Using <a href="https://brew.sh/">Homebrew</a>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install android-platform-tools</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="windows" class="level3">
+<h3 class="anchored" data-anchor-id="windows">Windows</h3>
+<ol type="1">
+<li>Download <strong>SDK Platform-Tools</strong> from:<br>
+https://developer.android.com/studio/releases/platform-tools</li>
+<li>Extract the ZIP to a folder (e.g., <code>C:\platform-tools</code>).</li>
+<li>Add that folder to your system <code>PATH</code> environment variable, or open a terminal (PowerShell or Command Prompt) in that folder.</li>
+</ol>
+<blockquote class="blockquote">
+<p><strong>Windows tip</strong>: For a more Unix-like experience (with native <code>ssh</code> and <code>scp</code> commands), consider installing <a href="https://learn.microsoft.com/en-us/windows/wsl/install">WSL (Windows Subsystem for Linux)</a>. Inside WSL you can install ADB the same way as on Ubuntu.</p>
+</blockquote>
+</section>
+<section id="verify-the-installation" class="level3">
+<h3 class="anchored" data-anchor-id="verify-the-installation">Verify the Installation</h3>
+<p>With the UNO Q <strong>disconnected</strong>, run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">adb</span> version</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You should see output like <code>Android Debug Bridge version X.X.X</code>. If not, revisit the installation steps.</p>
+<p><img src="./images/png/adb.png" class="img-fluid"></p>
+<hr>
+</section>
+</section>
+<section id="flashing-the-latest-linux-image-recommended" class="level2">
+<h2 class="anchored" data-anchor-id="flashing-the-latest-linux-image-recommended">5. Flashing the Latest Linux Image (Recommended)</h2>
+<blockquote class="blockquote">
+<p><strong>This step is optional but strongly recommended</strong>, especially for boards fresh out of the box. The first batches of UNO Q shipped with an older Debian image that can cause issues such as: random desktop/application restarts due to missing ZRAM memory compression, ADB defaulting to root (a security concern), and missing HDMI audio support. Flashing the latest image resolves all of these and ensures a consistent experience across your classroom boards.</p>
+<p><strong>If your board is already up to date</strong> (e.g., you purchased it recently and it boots correctly), you can skip this section and go directly to <a href="#6-first-connection-headless-setup-via-adb">Section 6</a>.</p>
+</blockquote>
+<p>The flashing process uses Arduino’s <code>arduino-flasher-cli</code> tool, which runs entirely from the terminal on your host computer. It downloads the latest Debian image (~1 GB) and writes it to the UNO Q’s eMMC storage.</p>
+<blockquote class="blockquote">
+<p><strong>Warning</strong>: Flashing erases everything on the board and restores it to factory state. If you have existing projects on the UNO Q, back them up first.</p>
+</blockquote>
+<section id="step-1-download-the-flasher-cli" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-download-the-flasher-cli">Step 1 — Download the Flasher CLI</h3>
+<p>Go to the <a href="https://www.arduino.cc/en/software/#:~:text=available%20here.-,Arduino,-Flasher%20CLI">Arduino Software Download page</a> or the <a href="https://github.com/arduino/arduino-flasher-cli/releases">Flasher CLI releases page</a> and download the version for your operating system.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>OS</th>
+<th>File to download</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Linux</strong></td>
+<td><code>arduino-flasher-cli_X.X.X_Linux_64bit.tar.gz</code></td>
+</tr>
+<tr class="even">
+<td><strong>macOS</strong></td>
+<td><code>arduino-flasher-cli_X.X.X_macOS_64bit.tar.gz</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Windows</strong></td>
+<td><code>arduino-flasher-cli_X.X.X_Windows_64bit.zip</code></td>
+</tr>
+</tbody>
+</table>
+<p>Extract the archive to a convenient location.</p>
+</section>
+<section id="step-2-put-the-board-into-flash-mode-edl-mode" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-put-the-board-into-flash-mode-edl-mode">Step 2 — Put the Board into Flash Mode (EDL Mode)</h3>
+<p>With the board <strong>powered off</strong> (USB cable disconnected):</p>
+<ol type="1">
+<li>Locate the <strong>JCTL</strong> header on the UNO Q board (a small 10-pin header).</li>
+<li>Using a jumper wire or shunt, <strong>short the two pins furthest from the USB-C connector</strong>.</li>
+<li>With the jumper in place, connect the USB-C cable to your computer.</li>
+</ol>
+<p>The board will boot into EDL (Emergency Download) mode — the LED matrix will continuously display the Arduino Logo.</p>
+<p><img src="./images/png/boot.jpg" class="img-fluid"></p>
+</section>
+<section id="step-3-flash-the-latest-image" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-flash-the-latest-image">Step 3 — Flash the Latest Image</h3>
+<p>Open a terminal on your host computer, navigate to the folder where you extracted the flasher CLI, and run:</p>
+<p><strong>Linux / macOS:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./arduino-flasher-cli</span> flash latest</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Windows (PowerShell):</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\arduino-flasher-cli<span class="op">.</span><span class="fu">exe</span> flash latest</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The tool will:</p>
+<ol type="1">
+<li>Ask if you want to download the latest Debian image — type <code>yes</code> and press Enter.</li>
+<li>Download the image (~2.3 GB); this may take several minutes.</li>
+<li>Extract the image.</li>
+<li>Flash it to the UNO Q’s eMMC.</li>
+</ol>
+<p><strong>Do not disconnect the USB cable or interrupt the process.</strong> Wait until you see a message confirming that the partition is now bootable.</p>
+<p><img src="./images/png/flash.png" class="img-fluid"></p>
+<blockquote class="blockquote">
+<p><strong>Linux users</strong>: If the flasher cannot access the device, you may need to run it with <code>sudo</code>, or add a udev rule for the Qualcomm EDL device.</p>
+</blockquote>
+</section>
+<section id="step-4-remove-the-jumper-and-reboot" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-remove-the-jumper-and-reboot">Step 4 — Remove the Jumper and Reboot</h3>
+<ol type="1">
+<li>Disconnect the USB cable.</li>
+<li><strong>Remove the jumper</strong> from the JCTL header.</li>
+<li>Reconnect the USB cable.</li>
+</ol>
+<p>The board will boot from the fresh image. You will see the Arduino logo animation on the LED matrix, which will end momentarily with a heart, indicating a successful flash (note that one of the blue LEDs will also be on). The board is now in a factory-fresh state and ready for setup.</p>
+<p><img src="./images/png/uno-q-ready.jpg" class="img-fluid"></p>
+</section>
+<section id="flashing-a-local-image-alternative" class="level3">
+<h3 class="anchored" data-anchor-id="flashing-a-local-image-alternative">Flashing a Local Image (Alternative)</h3>
+<p>If you have already downloaded the Debian image file, you can flash it directly without re-downloading:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./arduino-flasher-cli</span> flash path/to/downloaded/image</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p>This is useful in multiple settings where you can download the image once and distribute it via a shared drive or USB stick.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="first-connection-headless-setup-via-adb" class="level2">
+<h2 class="anchored" data-anchor-id="first-connection-headless-setup-via-adb">6. First Connection: Headless Setup via ADB</h2>
+<section id="step-1-connect-the-board" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-connect-the-board">Step 1 — Connect the Board</h3>
+<ol type="1">
+<li>Plug the USB-C data cable into the UNO Q and into your computer.</li>
+<li>Wait approximately 30 seconds for the board to boot. You will see the LED matrix display an animated Arduino logo, ending momentarily with a heart during startup, and with the QRB blue LED 2 on.</li>
+</ol>
+</section>
+<section id="step-2-verify-adb-sees-the-device" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-verify-adb-sees-the-device">Step 2 — Verify ADB Sees the Device</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">adb</span> devices</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Expected output:</p>
+<pre><code>List of devices attached
+XXXXXXXX    device</code></pre>
+<p><img src="./images/png/device-list.png" class="img-fluid"></p>
+<p>If the list is empty:</p>
+<ul>
+<li>Confirm that you are using a USB-C data cable.</li>
+<li>Try a different USB port (preferably a USB-C or USB 3.0 port directly on your computer, not through a hub).</li>
+<li>On Linux, you may need to configure udev rules for the device.</li>
+</ul>
+</section>
+<section id="step-3-open-a-shell-on-the-board" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-open-a-shell-on-the-board">Step 3 — Open a Shell on the Board</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">adb</span> shell</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You are now inside the UNO Q’s Debian Linux environment. The default credentials are:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Username</td>
+<td><code>arduino</code></td>
+</tr>
+<tr class="even">
+<td>Password</td>
+<td><code>arduino</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="step-4-change-the-default-password-recommended" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-change-the-default-password-recommended">Step 4 — Change the Default Password (Recommended)</h3>
+<p>For security, the default password <code>arduino</code> should be changed. If you do not change it, the system will remind you. It is mandatory.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> passwd arduino</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Enter and confirm your new password. <strong>Remember this password</strong> — you will need it for SSH.</p>
+</section>
+<section id="step-5-check-board-information" class="level3">
+<h3 class="anchored" data-anchor-id="step-5-check-board-information">Step 5 — Check Board Information</h3>
+<p>While in the ADB shell, you can inspect the system:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check OS version</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/os-release</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check available storage</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">df</span> <span class="at">-h</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Check RAM</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">free</span> <span class="at">-h</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Check CPU info</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="ex">lscpu</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p>To return to the host terminal, type <code>exit</code> to leave the ADB shell.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="configuring-wi-fi-from-the-terminal" class="level2">
+<h2 class="anchored" data-anchor-id="configuring-wi-fi-from-the-terminal">7. Configuring Wi-Fi from the Terminal</h2>
+<p>Wi-Fi is essential for SSH access. We will configure it entirely from the ADB shell.</p>
+<section id="step-1-enter-the-adb-shell" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-enter-the-adb-shell">Step 1 — Enter the ADB Shell</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">adb</span> shell</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="step-2-scan-for-available-networks" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-scan-for-available-networks">Step 2 — Scan for Available Networks</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> dev wifi list</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This will display all visible Wi-Fi networks with their SSID, signal strength, security type, etc.</p>
+</section>
+<section id="step-3-connect-to-your-wi-fi-network" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-connect-to-your-wi-fi-network">Step 3 — Connect to Your Wi-Fi Network</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> nmcli dev wifi connect <span class="st">"YOUR_WIFI_SSID"</span> password <span class="st">"YOUR_WIFI_PASSWORD"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Replace <code>YOUR_WIFI_SSID</code> and <code>YOUR_WIFI_PASSWORD</code> with your actual network credentials. If your SSID contains spaces, keep the quotes.</p>
+</section>
+<section id="step-4-verify-the-connection" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-verify-the-connection">Step 4 — Verify the Connection</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> device status</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="./images/png/image-20260312150255769.png" class="img-fluid"></p>
+<p>The <code>wlan0</code> interface should show <code>connected</code>. Now get the board’s IP address:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hostname</span> <span class="at">-I</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="./images/png/wifi-connection.png" class="img-fluid"></p>
+<p>or, for more detail:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ip</span> addr show wlan0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Look for the <code>inet</code> line — it will show something like <code>192.168.1.XXX/YY</code>. <strong>Write down this IP address</strong>; you will need it for SSH.</p>
+<blockquote class="blockquote">
+<p><strong>Tip</strong>: If your router supports it, assign a <strong>static IP</strong> to your UNO Q using its MAC address (visible in the output of <code>ip addr show wlan0</code> under <code>link/ether</code>). This prevents the IP from changing between reboots — especially useful in classroom setups with multiple boards.</p>
+</blockquote>
+</section>
+<section id="switching-networks-later" class="level3">
+<h3 class="anchored" data-anchor-id="switching-networks-later">Switching Networks Later</h3>
+<p>If you need to change Wi-Fi networks in the future (over SSH or ADB):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Disconnect from current network</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> device disconnect wlan0</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Connect to a different network</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> nmcli dev wifi connect <span class="st">"NEW_SSID"</span> password <span class="st">"NEW_PASSWORD"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="enabling-and-using-ssh" class="level2">
+<h2 class="anchored" data-anchor-id="enabling-and-using-ssh">8. Enabling and Using SSH</h2>
+<section id="step-1-enable-the-ssh-server" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-enable-the-ssh-server">Step 1 — Enable the SSH Server</h3>
+<p>During the first setup, Wi-Fi® credentials are entered, and the board will automatically enable SSH. But it also needs to be completed and activated manually.</p>
+<p>For that, run the command below in the board’s shell.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> system network-mode enable </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="./images/png/enable.png" class="img-fluid"></p>
+</section>
+<section id="step-2-exit-adb-and-connect-via-ssh" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-exit-adb-and-connect-via-ssh">Step 2 — Exit ADB and Connect via SSH</h3>
+<p>Exit the ADB shell:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="bu">exit</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now, from your host computer’s terminal, connect via SSH:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> arduino@<span class="op">&lt;</span>UNO_Q_IP_ADDRESS<span class="op">&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Replace <code>&lt;UNO_Q_IP_ADDRESS&gt;</code> with the IP you noted earlier (e.g., <code>192.168.1.42</code>).</p>
+<ul>
+<li>The first time you connect, you will be asked to accept the host fingerprint. Type <code>yes</code>.</li>
+<li>Enter the password you set earlier (or <code>arduino</code> if you did not change it).</li>
+</ul>
+<p>You should now have a remote Debian shell on the UNO Q over your Wi-Fi network.</p>
+</section>
+<section id="alternative-connect-using-hostname" class="level3">
+<h3 class="anchored" data-anchor-id="alternative-connect-using-hostname">Alternative: Connect Using Hostname</h3>
+<p>On some networks that support mDNS, you can also use:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> arduino@uno-q.local</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Or if you named your board during setup:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> arduino@<span class="op">&lt;</span>boardname<span class="op">&gt;</span>.local</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="./images/png/ssh.png" class="img-fluid"></p>
+</section>
+<section id="if-the-ssh-password-is-not-working" class="level3">
+<h3 class="anchored" data-anchor-id="if-the-ssh-password-is-not-working">If the SSH Password Is Not Working</h3>
+<p>If the default <code>arduino</code> password is rejected, use ADB to reset it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">adb</span> shell</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> passwd arduino</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Set a new password, exit, and try SSH again.</p>
+</section>
+<section id="step-3-check-the-cpu-and-memory-with-htop" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-check-the-cpu-and-memory-with-htop">Step 3 —Check the CPU and memory with htop</h3>
+<p>On the terminal, run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">htop</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>With the Arduni UNO-Q 2GB you see something like:</p>
+<p><img src="./images/png/htop.png" class="img-fluid"></p>
+<p>And with the 4GB version:</p>
+<p><img src="./images/png/htop-4GB.png" class="img-fluid"></p>
+<blockquote class="blockquote">
+<p>Note that both the RAM Memory size and the SWAP are doubled on the 4GB memory.</p>
+</blockquote>
+</section>
+<section id="step-4-updateupgrade-the-system" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-updateupgrade-the-system">Step 4 —Update/Upgrade the system</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt upgrade</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> reboot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="step-5-transfer-files-if-necessary" class="level3">
+<h3 class="anchored" data-anchor-id="step-5-transfer-files-if-necessary">Step 5 — Transfer Files (if necessary)</h3>
+<section id="a.-transferring-files-using-ftp-filezilla" class="level4">
+<h4 class="anchored" data-anchor-id="a.-transferring-files-using-ftp-filezilla">a. Transferring files using FTP (FileZilla)</h4>
+<p>Transferring files via FTP, such as <a href="https://filezilla-project.org/download.php?type=client">FileZilla FTP Client</a>, is also possible and much easier to use. Follow the instructions to install the program on your Desktop, then use the Uno-Q’s IP address as the <code>Host</code>. For example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sftp://192.168.5.85</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Enter your UNO-Q <code>username and password</code>. Pressing <code>Quickconnect</code> opens two windows, one for your host computer desktop (right) and another for the UNO-Q (left).</p>
+<p><img src="./images/png/filezila.png" class="img-fluid"></p>
+</section>
+<section id="b.-using-scp" class="level4">
+<h4 class="anchored" data-anchor-id="b.-using-scp">b. Using scp</h4>
+<p>From your host machine, navigate into the directory where you have files to transfer and for example, copy all files to the board:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="op">&lt;</span>folder<span class="op">&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">scp</span> <span class="at">-r</span> <span class="pp">*</span> arduino@<span class="op">&lt;</span>UNO_Q_IP_ADDRESS<span class="op">&gt;</span>:~/ArduinoApps/<span class="op">&lt;</span>folder<span class="op">&gt;</span>/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Enter your password when prompted. You should see the files being transferred.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="exploring-pre-installed-examples" class="level2">
+<h2 class="anchored" data-anchor-id="exploring-pre-installed-examples">9. Exploring Pre-Installed Examples</h2>
+<section id="step-1-exploring-the-pre-loaded-ai-models" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-exploring-the-pre-loaded-ai-models">Step 1 — Exploring the Pre-loaded AI models</h3>
+<p>The UNO Q ships with a rich set of pre-installed example applications that demonstrate everything from basic LED control to AI-powered computer vision. You can discover, run, study, and customize all of them entirely from an SSH terminal — no App Lab GUI required.</p>
+<blockquote class="blockquote">
+<p>To guarantee that you have the latest pre-loaded models you can updated the system with the command:</p>
+<p><code>arduino-app-cli system update</code></p>
+<p>Note that the update will take a long time.</p>
+</blockquote>
+<p>From an SSH terminal, run:</p>
+<p><code>arduino-app-cli app list</code>.</p>
+<p>This command will show all installed models, including the user created ones:</p>
+<p><img src="./images/png/app-examples.png" class="img-fluid"></p>
+<p>Note that the <code>examples:</code> apps listed by <code>arduino-app-cli</code> are <strong>not</strong> stored in <code>~/ArduinoApps/</code> — only your user-created apps (like <code>Blink</code>) live there. The examples are managed internally by the CLI on the filesystem and stored inside <code>~/.local/share/arduino-app-cli</code> on the board.</p>
+<p>So we have two classes of apps in the UNO-Q:</p>
+<ul>
+<li><strong><code>examples:\*</code></strong> → read-only, managed by the CLI at <code>/var/lib/arduino-app-cli</code></li>
+<li><strong><code>user:\*</code></strong> → your apps in <code>~/ArduinoApps/</code>, which is the only place you see with <code>ls</code></li>
+</ul>
+</section>
+<section id="step-2-running-an-example-via-terminal" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-running-an-example-via-terminal">Step 2 — Running an example via terminal</h3>
+<p>It is possible to run any of the examples directly on a terminal via SSH</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app start examples:blink</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="./images/png/blinl-inter.png" class="img-fluid"></p>
+<blockquote class="blockquote">
+<p><strong>Note</strong>: The first run may take several minutes as the system downloads and installs Arduino libraries and sets up the Python container.</p>
+</blockquote>
+<p>You should see the built-in LED on the UNO Q blinking on and off every second.</p>
+<p><img src="./images/png/blink-setup.jpg" class="img-fluid"></p>
+<p>To inspect the logs:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app logs examples:blink</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="./images/png/log-intern.png" class="img-fluid"></p>
+<p>And to stop it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app stop examples:blink</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="./images/png/stop-intern.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="the-arduino-app-cli-command-reference" class="level2">
+<h2 class="anchored" data-anchor-id="the-arduino-app-cli-command-reference">10. The arduino-app-cli Command Reference</h2>
+<p>The <code>arduino-app-cli</code> tool is pre-installed on the UNO Q and manages the full lifecycle of dual-brain applications.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>arduino-app-cli app start &lt;path&gt;</code></td>
+<td>Build (if needed) and start the application at the given path</td>
+</tr>
+<tr class="even">
+<td><code>arduino-app-cli app stop &lt;path&gt;</code></td>
+<td>Stop a running application</td>
+</tr>
+<tr class="odd">
+<td><code>arduino-app-cli app logs &lt;path&gt;</code></td>
+<td>View the Python-side log output</td>
+</tr>
+<tr class="even">
+<td><code>arduino-app-cli app list</code></td>
+<td>List installed/running applications</td>
+</tr>
+<tr class="odd">
+<td><code>arduino-app-cli app new "&lt;name&gt;"</code></td>
+<td>Create a new App</td>
+</tr>
+<tr class="even">
+<td><code>arduino-app-cli system cleanup</code></td>
+<td>Clean unused containers and images</td>
+</tr>
+<tr class="odd">
+<td><code>arduino-app-cli system update</code></td>
+<td>Update the CLI tool and board components</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p>For full documentation, see the <a href="https://github.com/arduino/arduino-app-cli">Arduino App CLI repo</a> and the <a href="https://docs.arduino.cc/software/app-lab/tutorials/cli/">official CLI tutorial</a>.</p>
+</blockquote>
+<hr>
+</section>
+<section id="essential-linux-commands-for-the-uno-q" class="level2">
+<h2 class="anchored" data-anchor-id="essential-linux-commands-for-the-uno-q">11. Essential Linux Commands for the UNO Q</h2>
+<p>Since the UNO Q runs Debian Linux, here are the commands you will use frequently:</p>
+<section id="system-information" class="level3">
+<h3 class="anchored" data-anchor-id="system-information">System Information</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># OS version</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/os-release</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># CPU information</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="ex">lscpu</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Memory usage</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="fu">free</span> <span class="at">-h</span></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Disk usage</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="fu">df</span> <span class="at">-h</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Running processes</span></span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="ex">htop</span>                  <span class="co"># (if necessary, install with: sudo apt install htop)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="network-management" class="level3">
+<h3 class="anchored" data-anchor-id="network-management">Network Management</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show network interfaces and IPs</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ip</span> addr show</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Show Wi-Fi connection status</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> device status</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Show current Wi-Fi connection details</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> connection show</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="co"># List available Wi-Fi networks</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> dev wifi list</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Connect to a Wi-Fi network</span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> nmcli dev wifi connect <span class="st">"SSID"</span> password <span class="st">"PASSWORD"</span></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Get board IP address (short form)</span></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a><span class="fu">hostname</span> <span class="at">-I</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="package-management" class="level3">
+<h3 class="anchored" data-anchor-id="package-management">Package Management</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Update package lists</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Upgrade installed packages</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt upgrade <span class="at">-y</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Install a package</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install <span class="op">&lt;</span>package-name<span class="op">&gt;</span> -y</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove a package</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt remove <span class="op">&lt;</span>package-name<span class="op">&gt;</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean up unused packages and cache</span></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt autoremove <span class="at">-y</span></span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt clean</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="file-operations" class="level3">
+<h3 class="anchored" data-anchor-id="file-operations">File Operations</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># List files (detailed)</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-la</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Navigate directories</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/ArduinoApps</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a directory</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> my_project/python my_project/sketch</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy files</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> source.txt destination.txt</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Move/rename files</span></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> old_name.py new_name.py</span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove a file</span></span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> filename.txt</span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove a directory and its contents</span></span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-rf</span> directory_name</span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a><span class="co"># View file contents</span></span>
+<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> filename.txt</span>
+<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Edit a file (nano is pre-installed)</span></span>
+<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> filename.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="service-management" class="level3">
+<h3 class="anchored" data-anchor-id="service-management">Service Management</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check SSH service status</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl status sshd</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Restart SSH</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl restart sshd</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Reboot the board</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> reboot</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Shut down the board</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> shutdown <span class="at">-h</span> now</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> halt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="tips-tricks-and-troubleshooting" class="level2">
+<h2 class="anchored" data-anchor-id="tips-tricks-and-troubleshooting">12. Tips, Tricks, and Troubleshooting</h2>
+<section id="adb-not-detecting-the-board" class="level3">
+<h3 class="anchored" data-anchor-id="adb-not-detecting-the-board">ADB Not Detecting the Board</h3>
+<ul>
+<li>Ensure you are using a <strong>data-capable</strong> USB-C cable (not a charge-only cable).</li>
+<li>Use a USB-C or USB 3.0 port <strong>directly</strong> on your computer. Avoid USB hubs when possible.</li>
+<li>Some <strong>Apple USB-C hubs</strong> are not compatible.</li>
+<li>The board takes about <strong>30 seconds to boot</strong> — wait before running <code>adb devices</code>.</li>
+<li>On Linux, you may need udev rules. Check the <a href="https://developer.android.com/studio/run/device">Android developer documentation</a> for guidance.</li>
+</ul>
+</section>
+<section id="ssh-connection-refused" class="level3">
+<h3 class="anchored" data-anchor-id="ssh-connection-refused">SSH Connection Refused</h3>
+<ul>
+<li><p>Verify the SSH server is running:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="ex">adb</span> shell</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl status sshd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>If it is not running:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install openssh-server <span class="at">-y</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable ssh</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ssh-keygen <span class="at">-A</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl start sshd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+</ul>
+</section>
+<section id="ssh-password-rejected" class="level3">
+<h3 class="anchored" data-anchor-id="ssh-password-rejected">SSH Password Rejected</h3>
+<p>Reset the password via ADB:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="ex">adb</span> shell</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> passwd arduino</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="wi-fi-not-connecting" class="level3">
+<h3 class="anchored" data-anchor-id="wi-fi-not-connecting">Wi-Fi Not Connecting</h3>
+<ul>
+<li>Verify the SSID and password are correct (case-sensitive).</li>
+<li>Try connecting to the 2.4 GHz band if 5 GHz fails (some access points have issues).</li>
+<li>Check that your router is not blocking new devices (MAC filtering).</li>
+</ul>
+</section>
+<section id="app.run-missing-error" class="level3">
+<h3 class="anchored" data-anchor-id="app.run-missing-error">“App.run() Missing” Error</h3>
+<p>If you see errors like <code>Stopped decode loop: EOF</code> when starting a project, make sure your Python code includes:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>App.run(user_loop<span class="op">=</span>loop)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This line is <strong>mandatory</strong> for the runtime to start the application properly.</p>
+</section>
+<section id="memory-issues-especially-on-the-2-gb-variant" class="level3">
+<h3 class="anchored" data-anchor-id="memory-issues-especially-on-the-2-gb-variant">Memory Issues (Especially on the 2 GB Variant)</h3>
+<ul>
+<li>Avoid running large AI models; use TinyML-optimized models.</li>
+<li>Monitor memory usage: <code>free -h</code> or <code>htop</code>.</li>
+<li>Close unused applications and services.</li>
+<li>If you’re using VS Code Remote-SSH (see the <a href="../../content/physicalai/physicalai.html#2-setting-up-vs-code-with-remote-ssh">dedicated chapter</a>), disable unnecessary extensions on the remote host — its server process adds its own RAM footprint.</li>
+</ul>
+</section>
+<section id="storage-cleanup" class="level3">
+<h3 class="anchored" data-anchor-id="storage-cleanup">Storage Cleanup</h3>
+<p>Over time, Docker images, logs, and cached packages can fill the eMMC:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check available space</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">df</span> <span class="at">-h</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean apt cache</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt clean</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt autoremove <span class="at">-y</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="co"># If using Docker</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> system prune <span class="at">-a</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="using-git-for-version-control" class="level3">
+<h3 class="anchored" data-anchor-id="using-git-for-version-control">Using Git for Version Control</h3>
+<p>Install Git on the UNO Q and use it to sync code instead of SCP:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install git <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You can then clone repositories directly on the board or push/pull from your host. This is especially useful for team projects and keeping your code backed up.</p>
+</section>
+<section id="alternative-file-transfer-rsync" class="level3">
+<h3 class="anchored" data-anchor-id="alternative-file-transfer-rsync">Alternative File Transfer: rsync</h3>
+<p>For iterative development, <code>rsync</code> is faster than <code>scp</code> because it only transfers changed files:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># On your host machine, from inside the project directory:</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avz</span> <span class="at">--progress</span> ./ arduino@<span class="op">&lt;</span>UNO_Q_IP_ADDRESS<span class="op">&gt;</span>:~/ArduinoApps/uno_q_blink/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Install <code>rsync</code> on the UNO Q if not present:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install rsync <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="going-further" class="level2">
+<h2 class="anchored" data-anchor-id="going-further">13. Going Further</h2>
+<p>Now that you have a working CLI/SSH development environment, here are some paths to explore:</p>
+<section id="edge-ai-on-the-uno-q" class="level3">
+<h3 class="anchored" data-anchor-id="edge-ai-on-the-uno-q">Edge AI on the UNO Q</h3>
+<ul>
+<li><p><strong>Pre-loaded AI models</strong>: The UNO Q comes with models for object detection, image classification, sound recognition, and keyword spotting. Explore them via <code>arduino-app-cli app list</code>.</p></li>
+<li><p><strong>Edge Impulse integration</strong>: Train and deploy custom ML models from Edge Impulse Studio to the UNO Q. See the <a href="https://docs.edgeimpulse.com/hardware/boards/arduino-uno-q">Edge Impulse Arduino UNO Q documentation</a>.</p></li>
+<li><p><strong>TinyML with Python</strong>: Use TensorFlow Lite or ONNX Runtime on the Linux side for inference tasks.</p></li>
+<li><p><strong>GenAI at the Edge</strong>: Use Llama.cpp to run generative models at the edge.</p></li>
+</ul>
+</section>
+<section id="hardware-expansion" class="level3">
+<h3 class="anchored" data-anchor-id="hardware-expansion">Hardware Expansion</h3>
+<ul>
+<li><strong>Camera modules</strong>: Connect a USB camera via USB Hub, or a MIPI-CSI camera for computer vision projects.</li>
+<li><strong>Modulino nodes</strong>: Use the Qwiic connector for plug-and-play sensors and actuators.</li>
+<li><strong>Arduino shields</strong>: Traditional UNO shields are compatible with the header layout.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">14. Conclusion</h2>
+<section id="what-we-covered" class="level3">
+<h3 class="anchored" data-anchor-id="what-we-covered">What We Covered</h3>
+<p>This tutorial walked through a complete terminal-first workflow for the Arduino UNO Q: from headless setup via ADB, through Wi-Fi and SSH configuration, to running dual-brain projects like Blink using the <code>arduino-app-cli</code>.</p>
+</section>
+<section id="advantages-of-the-uno-q-approach" class="level3">
+<h3 class="anchored" data-anchor-id="advantages-of-the-uno-q-approach">Advantages of the UNO Q Approach</h3>
+<p><strong>For teaching ML System Engineering:</strong></p>
+<ul>
+<li><strong>One board, two worlds</strong>: The dual-brain architecture naturally teaches students the boundary between high-level AI inference (Python/Linux) and real-time physical control (C++/RTOS) — a distinction that is central to real-world edge AI systems but hard to convey with a single-processor board.</li>
+<li><strong>Professional development workflow</strong>: Working over SSH, transferring files via SCP/rsync, and using CLI tools mirrors how edge AI systems are developed and maintained in industry — very different from the “click upload” experience of traditional Arduino. (Layer a full editor like VS Code on top with the <a href="../../content/physicalai/physicalai.html#2-setting-up-vs-code-with-remote-ssh">Remote-SSH chapter</a> once this workflow feels natural.)</li>
+<li><strong>Gradual complexity</strong>: Students can start with simple LED blink examples to understand the Bridge architecture, then progress to AI-powered projects (image classification, keyword spotting, object detection) without switching hardware.</li>
+<li><strong>Ecosystem continuity</strong>: Skills learned on the UNO Q (Linux administration, Python ML frameworks, Arduino sketches) transfer directly to both simpler MCU boards and more powerful SBCs, making it a natural stepping stone in the course progression.</li>
+</ul>
+<p><strong>Technical advantages:</strong></p>
+<ul>
+<li>The Adreno 702 GPU can accelerate some vision workloads through LiteRT (TensorFlow Lite) delegates, though actual gains depend heavily on the model and the runtime — and it is not a usable target for <code>llama.cpp</code>, so the language models in this book run entirely on the CPU.</li>
+<li>Pre-loaded Edge Impulse models provide instant hands-on experience with production-grade ML pipelines.</li>
+<li>The <code>arduino-app-cli</code> orchestrates the entire build-deploy-run cycle for both processors from a single command.</li>
+<li>Standard Debian Linux means full access to <code>pip</code>, <code>apt</code>, Docker, Git, and any Python ML library that fits in memory.</li>
+</ul>
+</section>
+<section id="limitations-and-considerations" class="level3">
+<h3 class="anchored" data-anchor-id="limitations-and-considerations">Limitations and Considerations</h3>
+<p>It is important to be realistic about the UNO Q’s constraints, particularly in comparison to the platforms we’ve used previously:</p>
+<ul>
+<li><strong>Compute power</strong>: The Cortex-A53 cores sit at roughly the Raspberry Pi 3 level of performance. Running large models (e.g., LLMs beyond 2B parameters) is impractical. For heavy inference tasks, a Raspberry Pi 5 or an accelerator (like MemryX MX3 or Google Coral) remains the better choice.</li>
+<li><strong>RAM limitations</strong>: The 2 GB variant can feel tight when running a remote editor server, a Python container, and an AI model simultaneously. The 4 GB variant is recommended for more demanding workloads, mainly GenAI.</li>
+<li><strong>Single USB-C port</strong>: All connectivity (power, data, video) goes through one port, requiring a hub for SBC mode. Cable compatibility issues are a recurring frustration.</li>
+<li><strong>Maturing software ecosystem</strong>: Arduino App Lab and the <code>arduino-app-cli</code> are still evolving (currently pre-1.0). Students may encounter rough edges, and documentation is still catching up. This is both a limitation and a learning opportunity — working with early-stage tooling is a reality of edge AI development.</li>
+<li><strong>No dedicated NPU</strong>: Unlike the upcoming Arduino VENTUNO Q (with 40 TOPS via the Dragonwing IQ8 NPU), the current UNO Q relies on CPU and GPU for inference. For compute-intensive models, this is a bottleneck.</li>
+<li><strong>Camera requires external hardware</strong>: Unlike the Nicla Vision or XIAO ESP32S3 Sense (which have built-in cameras), the UNO Q needs a USB webcam or a MIPI-CSI camera with a carrier board.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">15. Resources</h2>
+<section id="useful-resources" class="level3">
+<h3 class="anchored" data-anchor-id="useful-resources">Useful Resources</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Resource</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Arduino UNO Q Documentation</td>
+<td>https://docs.arduino.cc/hardware/uno-q</td>
+</tr>
+<tr class="even">
+<td>Arduino App CLI Tutorial</td>
+<td>https://docs.arduino.cc/software/app-lab/tutorials/cli</td>
+</tr>
+<tr class="odd">
+<td>Arduino App CLI (GitHub)</td>
+<td>https://github.com/arduino/arduino-app-cli</td>
+</tr>
+<tr class="even">
+<td>Bricks Documentation</td>
+<td>https://docs.arduino.cc/software/app-lab/tutorials/bricks</td>
+</tr>
+<tr class="odd">
+<td>Blink CLI Example (Shawn Hymel)</td>
+<td>https://github.com/ShawnHymel/arduino_uno_q_blink_cli</td>
+</tr>
+<tr class="even">
+<td>Edge Impulse — Arduino UNO Q</td>
+<td>https://docs.edgeimpulse.com/hardware/boards/arduino-uno-q</td>
+</tr>
+<tr class="odd">
+<td>UNO Q Datasheet (PDF)</td>
+<td>https://docs.arduino.cc/resources/datasheets/ABX00162-datasheet.pdf</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="references" class="level3">
+<h3 class="anchored" data-anchor-id="references">References</h3>
+<ol type="1">
+<li>Arduino, “Arduino UNO Q Product Page,” https://www.arduino.cc/product-uno-q/</li>
+<li>Arduino, “UNO Q Documentation,” https://docs.arduino.cc/hardware/uno-q</li>
+<li>Arduino, “Arduino App CLI — Manage Apps from the Command Line,” https://docs.arduino.cc/software/app-lab/tutorials/cli</li>
+<li>Shawn Hymel, “How to Use the Command Line (CLI) With the Arduino UNO Q,” https://shawnhymel.com/3074/how-to-use-the-command-line-cli-with-the-arduino-uno-q/</li>
+<li>Edge Impulse, “Arduino UNO Q,” https://docs.edgeimpulse.com/hardware/boards/arduino-uno-q</li>
+<li>Kevin McAleer, “How to Set Up WiFi on the Arduino Uno Q,” https://www.kevsrobots.com/blog/arduino-uno-q-wifi-setup.html</li>
+<li>Kevin McAleer, “5 Tips for Managing Your Arduino Uno Q,” https://www.kevsrobots.com/blog/uno-q-tips.html</li>
+<li>Foundries.io, “Arduino UNO Q Elf Detector Series — Part 0: Introduction,” https://www.foundries.io/insights/blog/arduino-uno-q-elf-detector/</li>
+</ol>
+<hr>
+<p><em>Tutorial created for IESTI05 — Edge AI Machine Learning System Engineering, UNIFEI. Licensed under GNU General Public License 3.0.</em></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../content/localinf/localinf.html" class="pagination-link" aria-label="SLMs at the Edge">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">SLMs at the Edge</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../content/genai/genai.html" class="pagination-link" aria-label="Generative AI at the Edge:">
+        <span class="nav-page-text">Generative AI at the Edge:</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Written and edited by Prof.&nbsp;Marcelo Rovai (UNIFEI University)</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/edit/main/content/setup/setup.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/blob/main/content/setup/setup.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

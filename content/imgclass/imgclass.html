@@ -1,0 +1,1974 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Image Classification on the Arduino UNO Q – Generative AI at the Edge</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../content/objdet/objdet.html" rel="next">
+<link href="../../content/agenticai/agenticai.html" rel="prev">
+<link href="../../images/cover.jpg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-daec65ff3ba034f51daec66ecad3ce27.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Generative AI at the Edge</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools tools-wide tools-end">
+    <a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="../../Generative-AI-at-the-Edge.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url=|url|" title="LinkedIn" class="quarto-navigation-tool px-1" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/imgclass/imgclass.html">Image Classification on the Arduino UNO Q</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Acknowledgments</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../about_book.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About this Book</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Classification_of_AI_Applications.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classification of AI Applications</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/foundations/foundations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">How Generative AI Works, and How It Gets Small</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Generative AI (Proactive)</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/localinf/localinf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SLMs at the Edge</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/setup/setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Arduino UNO Q Setup</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/genai/genai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Generative AI at the Edge:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/multimodai/multimodai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multimodal AI at the Edge:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/physicalai/physicalai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">GenAI Meets the Real World:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/agenticai/agenticai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Agentic AI at the Edge:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Fixed Function AI (Reactive)</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/imgclass/imgclass.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Image Classification on the Arduino UNO Q</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/objdet/objdet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Object Detection on the Arduino UNO Q</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">References &amp; Author</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../About_the_author.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About the author</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview">1. Overview</a>
+  <ul class="collapse">
+  <li><a href="#what-you-will-learn" id="toc-what-you-will-learn" class="nav-link" data-scroll-target="#what-you-will-learn">What You Will Learn</a></li>
+  </ul></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">2. Prerequisites</a>
+  <ul class="collapse">
+  <li><a href="#hardware" id="toc-hardware" class="nav-link" data-scroll-target="#hardware">Hardware</a></li>
+  <li><a href="#software" id="toc-software" class="nav-link" data-scroll-target="#software">Software</a></li>
+  </ul></li>
+  <li><a href="#computer-vision-and-image-classification" id="toc-computer-vision-and-image-classification" class="nav-link" data-scroll-target="#computer-vision-and-image-classification">3. Computer Vision and Image Classification</a>
+  <ul class="collapse">
+  <li><a href="#from-nicla-vision-to-uno-q" id="toc-from-nicla-vision-to-uno-q" class="nav-link" data-scroll-target="#from-nicla-vision-to-uno-q">From Nicla Vision to UNO Q</a></li>
+  </ul></li>
+  <li><a href="#part-1-running-the-pre-installed-image-classifier" id="toc-part-1-running-the-pre-installed-image-classifier" class="nav-link" data-scroll-target="#part-1-running-the-pre-installed-image-classifier">4. Part 1 — Running the Pre-Installed Image Classifier</a>
+  <ul class="collapse">
+  <li><a href="#understanding-the-architecture" id="toc-understanding-the-architecture" class="nav-link" data-scroll-target="#understanding-the-architecture">Understanding the Architecture</a></li>
+  <li><a href="#step-1-start-the-example" id="toc-step-1-start-the-example" class="nav-link" data-scroll-target="#step-1-start-the-example">Step 1 — Start the Example</a></li>
+  <li><a href="#step-2-open-the-web-ui" id="toc-step-2-open-the-web-ui" class="nav-link" data-scroll-target="#step-2-open-the-web-ui">Step 2 — Open the Web UI</a></li>
+  <li><a href="#step-3-classify-an-image" id="toc-step-3-classify-an-image" class="nav-link" data-scroll-target="#step-3-classify-an-image">Step 3 — Classify an Image</a></li>
+  <li><a href="#step-4-study-the-source-code" id="toc-step-4-study-the-source-code" class="nav-link" data-scroll-target="#step-4-study-the-source-code">Step 4 — Study the Source Code</a></li>
+  <li><a href="#step-5-stop-the-example" id="toc-step-5-stop-the-example" class="nav-link" data-scroll-target="#step-5-stop-the-example">Step 5 — Stop the Example</a></li>
+  <li><a href="#runing-an-example-from-arduino-app-lab" id="toc-runing-an-example-from-arduino-app-lab" class="nav-link" data-scroll-target="#runing-an-example-from-arduino-app-lab">Runing an Example from Arduino App Lab</a></li>
+  <li><a href="#what-we-learned-from-part-1" id="toc-what-we-learned-from-part-1" class="nav-link" data-scroll-target="#what-we-learned-from-part-1">What We Learned from Part 1</a></li>
+  </ul></li>
+  <li><a href="#part-2-building-a-custom-image-classifier" id="toc-part-2-building-a-custom-image-classifier" class="nav-link" data-scroll-target="#part-2-building-a-custom-image-classifier">5. Part 2 — Building a Custom Image Classifier</a>
+  <ul class="collapse">
+  <li><a href="#project-goal" id="toc-project-goal" class="nav-link" data-scroll-target="#project-goal">Project Goal</a></li>
+  </ul></li>
+  <li><a href="#data-collection" id="toc-data-collection" class="nav-link" data-scroll-target="#data-collection">6. Data Collection</a>
+  <ul class="collapse">
+  <li><a href="#option-a-using-edge-impulse-studio-with-a-smartphone-recommended" id="toc-option-a-using-edge-impulse-studio-with-a-smartphone-recommended" class="nav-link" data-scroll-target="#option-a-using-edge-impulse-studio-with-a-smartphone-recommended">Option A: Using Edge Impulse Studio with a Smartphone (Recommended)</a></li>
+  <li><a href="#option-b-capturing-images-on-the-uno-q" id="toc-option-b-capturing-images-on-the-uno-q" class="nav-link" data-scroll-target="#option-b-capturing-images-on-the-uno-q">Option B: Capturing Images on the UNO Q</a></li>
+  <li><a href="#option-c-reusing-images-from-the-nicla-vision-tutorial" id="toc-option-c-reusing-images-from-the-nicla-vision-tutorial" class="nav-link" data-scroll-target="#option-c-reusing-images-from-the-nicla-vision-tutorial">Option C: Reusing Images from the Nicla Vision Tutorial</a></li>
+  <li><a href="#dataset-guidelines" id="toc-dataset-guidelines" class="nav-link" data-scroll-target="#dataset-guidelines">Dataset Guidelines</a></li>
+  </ul></li>
+  <li><a href="#training-the-model-with-edge-impulse-studio" id="toc-training-the-model-with-edge-impulse-studio" class="nav-link" data-scroll-target="#training-the-model-with-edge-impulse-studio">7. Training the Model with Edge Impulse Studio</a>
+  <ul class="collapse">
+  <li><a href="#step-1-verify-the-dataset" id="toc-step-1-verify-the-dataset" class="nav-link" data-scroll-target="#step-1-verify-the-dataset">Step 1 — Verify the Dataset</a></li>
+  <li><a href="#step-2-create-the-impulse" id="toc-step-2-create-the-impulse" class="nav-link" data-scroll-target="#step-2-create-the-impulse">Step 2 — Create the Impulse</a></li>
+  <li><a href="#step-3-generate-features" id="toc-step-3-generate-features" class="nav-link" data-scroll-target="#step-3-generate-features">Step 3 — Generate Features</a></li>
+  <li><a href="#step-4-train-the-model" id="toc-step-4-train-the-model" class="nav-link" data-scroll-target="#step-4-train-the-model">Step 4 — Train the Model</a></li>
+  <li><a href="#step-5-test-the-model" id="toc-step-5-test-the-model" class="nav-link" data-scroll-target="#step-5-test-the-model">Step 5 — Test the Model</a></li>
+  </ul></li>
+  <li><a href="#deploying-to-the-uno-q-path-a-app-lab-bricks" id="toc-deploying-to-the-uno-q-path-a-app-lab-bricks" class="nav-link" data-scroll-target="#deploying-to-the-uno-q-path-a-app-lab-bricks">8. Deploying to the UNO Q — Path A: App Lab Bricks</a>
+  <ul class="collapse">
+  <li><a href="#step-1-copy-the-pre-installed-example" id="toc-step-1-copy-the-pre-installed-example" class="nav-link" data-scroll-target="#step-1-copy-the-pre-installed-example">Step 1 — Copy the Pre-Installed Example</a></li>
+  <li><a href="#step-2-export-the-model-from-edge-impulse-to-the-arduino-app-lab" id="toc-step-2-export-the-model-from-edge-impulse-to-the-arduino-app-lab" class="nav-link" data-scroll-target="#step-2-export-the-model-from-edge-impulse-to-the-arduino-app-lab">Step 2 — Export the Model from Edge Impulse to the Arduino App Lab</a></li>
+  <li><a href="#step-3-replace-the-model-on-the-uno-q" id="toc-step-3-replace-the-model-on-the-uno-q" class="nav-link" data-scroll-target="#step-3-replace-the-model-on-the-uno-q">Step 3 — Replace the Model on the Uno-Q</a></li>
+  <li><a href="#step-4-run-the-app" id="toc-step-4-run-the-app" class="nav-link" data-scroll-target="#step-4-run-the-app">Step 4 — Run the App</a></li>
+  </ul></li>
+  <li><a href="#deploying-to-the-uno-q-path-b-live-camera" id="toc-deploying-to-the-uno-q-path-b-live-camera" class="nav-link" data-scroll-target="#deploying-to-the-uno-q-path-b-live-camera">9. Deploying to the UNO Q — Path B: Live Camera</a>
+  <ul class="collapse">
+  <li><a href="#step-1-create-a-new-app-on-arduino-app-lab" id="toc-step-1-create-a-new-app-on-arduino-app-lab" class="nav-link" data-scroll-target="#step-1-create-a-new-app-on-arduino-app-lab">Step 1 — Create a new App on Arduino App Lab</a></li>
+  <li><a href="#step-2-import-a-brick-and-select-the-model" id="toc-step-2-import-a-brick-and-select-the-model" class="nav-link" data-scroll-target="#step-2-import-a-brick-and-select-the-model">Step 2 — Import a Brick and Select the Model</a></li>
+  <li><a href="#step-3-create-a-new-main.c-file" id="toc-step-3-create-a-new-main.c-file" class="nav-link" data-scroll-target="#step-3-create-a-new-main.c-file">Step 3 — Create a new main.c file</a></li>
+  </ul></li>
+  <li><a href="#post-processing-mcu-actuation-via-bridge" id="toc-post-processing-mcu-actuation-via-bridge" class="nav-link" data-scroll-target="#post-processing-mcu-actuation-via-bridge">10. Post-Processing: MCU Actuation via Bridge</a>
+  <ul class="collapse">
+  <li><a href="#architecture" id="toc-architecture" class="nav-link" data-scroll-target="#architecture">Architecture</a></li>
+  <li><a href="#step-1-add-a-sketch-to-the-project" id="toc-step-1-add-a-sketch-to-the-project" class="nav-link" data-scroll-target="#step-1-add-a-sketch-to-the-project">Step 1 — Add a Sketch to the Project</a></li>
+  <li><a href="#step-2-write-the-arduino-sketch" id="toc-step-2-write-the-arduino-sketch" class="nav-link" data-scroll-target="#step-2-write-the-arduino-sketch">Step 2 — Write the Arduino Sketch</a></li>
+  <li><a href="#step-3-update-the-python-script-to-call-bridge" id="toc-step-3-update-the-python-script-to-call-bridge" class="nav-link" data-scroll-target="#step-3-update-the-python-script-to-call-bridge">Step 3 — Update the Python Script to Call Bridge</a></li>
+  <li><a href="#step-4-verify-the-updated-project-structure" id="toc-step-4-verify-the-updated-project-structure" class="nav-link" data-scroll-target="#step-4-verify-the-updated-project-structure">Step 4 — Verify the Updated Project Structure</a></li>
+  <li><a href="#step-5-run-the-complete-system" id="toc-step-5-run-the-complete-system" class="nav-link" data-scroll-target="#step-5-run-the-complete-system">Step 5 — Run the Complete System</a></li>
+  <li><a href="#step-6-test-the-system" id="toc-step-6-test-the-system" class="nav-link" data-scroll-target="#step-6-test-the-system">Step 6 — Test the System</a></li>
+  <li><a href="#step-7-stop-the-app" id="toc-step-7-stop-the-app" class="nav-link" data-scroll-target="#step-7-stop-the-app">Step 7 — Stop the App</a></li>
+  <li><a href="#extending-the-mcu-actuation" id="toc-extending-the-mcu-actuation" class="nav-link" data-scroll-target="#extending-the-mcu-actuation">Extending the MCU Actuation</a></li>
+  </ul></li>
+  <li><a href="#performance-analysis" id="toc-performance-analysis" class="nav-link" data-scroll-target="#performance-analysis">11. Performance Analysis</a>
+  <ul class="collapse">
+  <li><a href="#inference-latency" id="toc-inference-latency" class="nav-link" data-scroll-target="#inference-latency">Inference Latency</a></li>
+  <li><a href="#model-size-vs.-speed-tradeoff" id="toc-model-size-vs.-speed-tradeoff" class="nav-link" data-scroll-target="#model-size-vs.-speed-tradeoff">Model Size vs.&nbsp;Speed Tradeoff</a></li>
+  <li><a href="#path-a-vs.-path-b-comparison" id="toc-path-a-vs.-path-b-comparison" class="nav-link" data-scroll-target="#path-a-vs.-path-b-comparison">Path A vs.&nbsp;Path B Comparison</a></li>
+  <li><a href="#comparison-with-nicla-vision" id="toc-comparison-with-nicla-vision" class="nav-link" data-scroll-target="#comparison-with-nicla-vision">Comparison with Nicla Vision</a></li>
+  </ul></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises">12. Exercises</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">13. Conclusion</a>
+  <ul class="collapse">
+  <li><a href="#key-takeaways" id="toc-key-takeaways" class="nav-link" data-scroll-target="#key-takeaways">Key Takeaways</a></li>
+  <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next">What’s Next</a></li>
+  </ul></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources">14. Resources</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/edit/main/content/imgclass/imgclass.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/blob/main/content/imgclass/imgclass.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Image Classification on the Arduino UNO Q</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><img src="./images/png/img_class_cover.jpg" class="img-fluid"></p>
+<hr>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">1. Overview</h2>
+<p>In the <a href="../../content/setup/setup.html">previous tutorial</a>, we set up the Arduino UNO Q for headless development using ADB and SSH. Now, we put that foundation to work with our first Edge AI application: <strong>Image Classification</strong>.</p>
+<p>Image classification is the “Hello World” of computer vision and machine learning — given an image, the model assigns it to one of several predefined categories. It is one of the most widely deployed ML tasks at the edge, powering applications from quality inspection in factories to wildlife monitoring in the field.</p>
+<p>In this tutorial, we will:</p>
+<ul>
+<li><strong>Part 1</strong>: Run the UNO Q’s pre-installed image classification example — a <strong>static image classifier</strong> where you upload a photo through a web browser and receive the classification result.</li>
+<li><strong>Part 2</strong>: Build a <strong>custom image classifier</strong> from scratch using Edge Impulse Studio — training it to distinguish between a toy robot and a small Brazilian parrot (Periquito) — and deploy it to the UNO Q using <strong>two different approaches</strong>: Using the App Lab Bricks for static images and live webcam inference.</li>
+</ul>
+<p>Along the way, we will use the UNO Q’s dual-brain architecture: <strong>Python on the MPU</strong> for AI inference and an <strong>Arduino sketch on the MCU</strong> for physical actuation (LEDs, LED matrix) — connected through Bridge RPC.</p>
+<p><img src="./images/jpeg/block.jpg" class="img-fluid"></p>
+<section id="what-you-will-learn" class="level3">
+<h3 class="anchored" data-anchor-id="what-you-will-learn">What You Will Learn</h3>
+<ul>
+<li>How the pre-installed image classification Brick works (static image → web UI)</li>
+<li>How to go from static classification to <strong>live webcam inference</strong></li>
+<li>How to collect image data and train a custom classifier with Edge Impulse Studio</li>
+<li>How to deploy models via <strong>App Lab Bricks</strong></li>
+<li>How to bridge inference results to the MCU for real-time physical feedback</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="prerequisites" class="level2">
+<h2 class="anchored" data-anchor-id="prerequisites">2. Prerequisites</h2>
+<blockquote class="blockquote">
+<p><strong>Before starting this tutorial, make sure you have:</strong></p>
+<ul>
+<li>Completed the <a href="../../content/setup/setup.html">Arduino UNO Q Setup Tutorial</a> — UNO Q connected via SSH</li>
+<li>An Edge Impulse account (free at <a href="https://edgeimpulse.com">edgeimpulse.com</a>)</li>
+<li>A USB webcam (most USB webcams work — e.g., Logitech C270 or similar)</li>
+<li>A USB hub with power delivery (to connect both the webcam and power to the UNO Q)</li>
+</ul>
+</blockquote>
+<p><img src="./images/png/hub.jpg" class="img-fluid"></p>
+<section id="hardware" class="level3">
+<h3 class="anchored" data-anchor-id="hardware">Hardware</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Arduino UNO Q (2 GB or 4 GB)</td>
+<td>Edge AI inference + MCU actuation</td>
+</tr>
+<tr class="even">
+<td>USB webcam</td>
+<td>Image capture (for Part 2 — live inference)</td>
+</tr>
+<tr class="odd">
+<td>USB hub with PD</td>
+<td>Connect webcam + power to the single USB-C port</td>
+</tr>
+<tr class="even">
+<td>(Optional) Toy robot + Periquito</td>
+<td>Classification targets for the custom model</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="software" class="level3">
+<h3 class="anchored" data-anchor-id="software">Software</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Edge Impulse Studio</td>
+<td>Browser: <a href="https://studio.edgeimpulse.com">studio.edgeimpulse.com</a></td>
+</tr>
+<tr class="even">
+<td>Edge Impulse Linux CLI + Python SDK</td>
+<td>Installed on the UNO Q (in Part 2)</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p>An editor is not required — every step here works from an SSH terminal. If you’d rather use a full IDE, see <a href="../../content/physicalai/physicalai.html#2-setting-up-vs-code-with-remote-ssh">VS Code Remote-SSH setup</a>.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="computer-vision-and-image-classification" class="level2">
+<h2 class="anchored" data-anchor-id="computer-vision-and-image-classification">3. Computer Vision and Image Classification</h2>
+<p>At its core, computer vision enables machines to interpret and make decisions based on visual data — essentially mimicking the capability of the human optical system. When we bring ML algorithms into computer vision projects, we supercharge the system’s ability to understand, interpret, and react to visual stimuli.</p>
+<p><img src="./images/png/cv_overview.png" class="img-fluid"></p>
+<p>When discussing computer vision applied to embedded devices, the most common applications are <strong>Image Classification</strong> and <strong>Object Detection</strong>:</p>
+<ul>
+<li><strong>Image Classification</strong>: Assigns a single label to the entire image (“This is a robot” or “This is a periquito”).</li>
+<li><strong>Object Detection</strong>: Locates objects in the image, drawing bounding boxes and assigning labels to each detected object.</li>
+</ul>
+<p>In this chapter, we cover <strong>Image Classification</strong>. Object Detection will be covered in the <a href="../../content/objdet/objdet.html">next tutorial</a>.</p>
+<section id="from-nicla-vision-to-uno-q" class="level3">
+<h3 class="anchored" data-anchor-id="from-nicla-vision-to-uno-q">From Nicla Vision to UNO Q</h3>
+<p>If you have worked through the <a href="https://mjrovai.github.io/TinyML_Made_Easy_NiclaV_eBook/">TinyML Made Easy</a> e-book, you have already built an image classifier on the Arduino Nicla Vision. Here is how the UNO Q approach differs:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aspect</th>
+<th>Nicla Vision</th>
+<th>Arduino UNO Q</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Camera</strong></td>
+<td>Built-in GC2145 (320x240)</td>
+<td>External USB webcam (up to 1080p)</td>
+</tr>
+<tr class="even">
+<td><strong>Data Collection</strong></td>
+<td>OpenMV IDE + built-in camera</td>
+<td>Edge Impulse Studio (smartphone, webcam, or upload)</td>
+</tr>
+<tr class="odd">
+<td><strong>Model size</strong></td>
+<td>MobileNetV2 0.05/0.1 (96x96, INT8)</td>
+<td>MobileNetV2 0.35 or larger (96x96 to 320x320)</td>
+</tr>
+<tr class="even">
+<td><strong>Inference engine</strong></td>
+<td>TF Lite for Microcontrollers (C++)</td>
+<td>Edge Impulse Linux SDK or App Lab Bricks (Python)</td>
+</tr>
+<tr class="odd">
+<td><strong>RAM for model</strong></td>
+<td>~256 KB SRAM</td>
+<td>2-4 GB LPDDR4X</td>
+</tr>
+<tr class="even">
+<td><strong>Actuation</strong></td>
+<td>Direct GPIO from MCU</td>
+<td>MCU via Bridge RPC</td>
+</tr>
+<tr class="odd">
+<td><strong>IDE</strong></td>
+<td>OpenMV IDE / Arduino IDE</td>
+<td>SSH terminal + <code>arduino-app-cli</code> (VS Code Remote-SSH optional)</td>
+</tr>
+</tbody>
+</table>
+<p>The UNO Q can handle <strong>larger, more accurate models</strong> and <strong>higher-resolution input</strong> because inference runs on the Linux MPU with gigabytes of RAM. But the Nicla wins on <strong>power consumption</strong> (milliwatts vs.&nbsp;watts) and <strong>latency</strong> for very small models.</p>
+<hr>
+</section>
+</section>
+<section id="part-1-running-the-pre-installed-image-classifier" class="level2">
+<h2 class="anchored" data-anchor-id="part-1-running-the-pre-installed-image-classifier">4. Part 1 — Running the Pre-Installed Image Classifier</h2>
+<p>The UNO Q ships with a pre-installed image classification example. This example uses an <strong>ImageClassification Brick</strong> and a <strong>WebUI Brick</strong> to provide a browser-based interface for uploading an image and receiving classification results.</p>
+<blockquote class="blockquote">
+<p><strong>No webcam is needed for this step.</strong></p>
+</blockquote>
+<section id="understanding-the-architecture" class="level3">
+<h3 class="anchored" data-anchor-id="understanding-the-architecture">Understanding the Architecture</h3>
+<p>The pre-installed <code>examples:image-classification</code> app works as follows:</p>
+<pre><code>Browser (your PC)                          UNO Q (MPU / Python)
++-------------------+                     +-------------------------+
+|                   |   Upload image      |                         |
+|  Web UI (port     | ------------------&gt; |  ImageClassification    |
+|  7000)            |   (base64 via       |  Brick                  |
+|                   |    WebSocket)       |                         |
+|  Shows results    | &lt;------------------ |  Returns labels +       |
+|  (labels +        |   Classification    |  confidence scores      |
+|  confidence)      |   result            |                         |
++-------------------+                     +-------------------------+</code></pre>
+<p>Key points:</p>
+<ul>
+<li>The classification runs on <strong>static images</strong> that you upload through the browser — there is no live camera feed.</li>
+<li>Results are displayed in the browser, not in the terminal logs.</li>
+<li>There is no Bridge communication to the MCU in this example.</li>
+<li>The ImageClassification Brick handles model loading, image preprocessing, and inference internally.</li>
+</ul>
+</section>
+<section id="step-1-start-the-example" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-start-the-example">Step 1 — Start the Example</h3>
+<p>SSH into the UNO Q (or use the VS Code integrated terminal) and run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app start examples:image-classification</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Wait for the app to build and start.</p>
+<p><img src="./images/png/run_img_class_example.png" class="img-fluid"></p>
+</section>
+<section id="step-2-open-the-web-ui" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-open-the-web-ui">Step 2 — Open the Web UI</h3>
+<p>On your host computer, open a web browser and navigate to:</p>
+<pre><code>http://&lt;UNO_Q_IP_ADDRESS&gt;:7000</code></pre>
+<p>You should see a web interface with an <strong>upload button</strong> that lets you select an image file from your computer.</p>
+<p><img src="./images/png/web-gui.png" class="img-fluid"></p>
+</section>
+<section id="step-3-classify-an-image" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-classify-an-image">Step 3 — Classify an Image</h3>
+<ol type="1">
+<li>Click the upload button and select a photo from your computer (e.g., a picture of an animal, a car, a household object).</li>
+<li>The image is sent to the UNO Q, where the ImageClassification Brick processes it.</li>
+<li>After a moment, the classification result appears in the browser — showing the detected label(s), and the confidence scores..</li>
+</ol>
+<p><img src="./images/png/python.png" class="img-fluid"></p>
+<p>Try uploading different images and observe how the model classifies them.</p>
+<blockquote class="blockquote">
+<p><strong>Note</strong>: The terminal logs (<code>arduino-app-cli app logs examples:image-classification</code>) will show the app startup messages but <strong>will not show the classification results</strong> — those are sent directly to the browser via WebSocket.</p>
+</blockquote>
+<p><img src="./images/png/log.png" class="img-fluid"></p>
+</section>
+<section id="step-4-study-the-source-code" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-study-the-source-code">Step 4 — Study the Source Code</h3>
+<p>Read through the example’s source to understand how it works. From an SSH terminal:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /var/lib/arduino-app-cli/examples/image-classification/python/main.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Or, if you’re using VS Code Remote-SSH (see <a href="../../content/physicalai/physicalai.html#2-setting-up-vs-code-with-remote-ssh">chapter 4 §2</a> for setup), open the folder and browse <code>python/main.py</code> directly:</p>
+<ol type="1">
+<li><strong>File &gt; Open Folder…</strong></li>
+<li>Navigate to <code>/var/lib/arduino-app-cli/examples/image-classification/</code></li>
+<li>Open <code>python/main.py</code>.</li>
+</ol>
+<p>The key components:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The Bricks handle all the heavy lifting</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> arduino.app_bricks.web_ui <span class="im">import</span> WebUI</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> arduino.app_bricks.image_classification <span class="im">import</span> ImageClassification</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize the classification brick (loads the model internally)</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>image_classification <span class="op">=</span> ImageClassification()</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Callback: when the browser sends an image, classify it and return the result</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> on_classify_image(client_id, data):</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    image_data <span class="op">=</span> data.get(<span class="st">'image'</span>)              <span class="co"># Base64-encoded image from browser</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    image_bytes <span class="op">=</span> base64.b64decode(image_data)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    pil_image <span class="op">=</span> Image.<span class="bu">open</span>(io.BytesIO(image_bytes))</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    results <span class="op">=</span> image_classification.classify(pil_image)   <span class="co"># Run inference</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    ui.send_message(<span class="st">'classification_result'</span>, response)   <span class="co"># Send back to browser</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up the WebUI and register the callback</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>ui <span class="op">=</span> WebUI()</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>ui.on_message(<span class="st">'classify_image'</span>, on_classify_image)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>App.run()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Notice that:</p>
+<ul>
+<li><code>ImageClassification()</code> is a <strong>Brick</strong>—a prebuilt module that encapsulates the model and inference logic.</li>
+<li><code>WebUI()</code> provides the web server and WebSocket communication.</li>
+<li><code>App.run()</code> starts the app <strong>without a <code>user_loop</code></strong> — it is event-driven (triggered by browser uploads).</li>
+<li>There is <strong>no <code>Bridge.call()</code></strong> — the MCU is not involved.</li>
+</ul>
+</section>
+<section id="step-5-stop-the-example" class="level3">
+<h3 class="anchored" data-anchor-id="step-5-stop-the-example">Step 5 — Stop the Example</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app stop examples:image-classification</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="runing-an-example-from-arduino-app-lab" class="level3">
+<h3 class="anchored" data-anchor-id="runing-an-example-from-arduino-app-lab">Runing an Example from Arduino App Lab</h3>
+<p>We will not go into more detail here because there is plenty of documentation on it. But the main steps are:</p>
+<ol type="1">
+<li>Open the Arduino App Lab on your main computer and connect your Arduino UnoQ via WiFi</li>
+<li>Enter your password (8 digits)</li>
+<li>On <code>Examples</code>, go to <code>Classify Images</code></li>
+</ol>
+<p><img src="./images/png/applab-clas-imgs.png" class="img-fluid"></p>
+<ol start="4" type="1">
+<li>Run it. The Web GUI will be opened automatically, as we saw before.</li>
+</ol>
+</section>
+<section id="what-we-learned-from-part-1" class="level3">
+<h3 class="anchored" data-anchor-id="what-we-learned-from-part-1">What We Learned from Part 1</h3>
+<p>The pre-installed example demonstrates the <strong>Brick-based approach</strong>: high-level components that abstract away model loading, image processing, and web communication. This is convenient for quick demos, but it has limitations:</p>
+<ul>
+<li>Static images only (no live camera feed)</li>
+<li>Results stay in the browser (no MCU actuation)</li>
+<li>Limited control over the inference pipeline</li>
+</ul>
+<p>In Part 2, we will build our own classifier that overcomes all of these limitations.</p>
+<hr>
+</section>
+</section>
+<section id="part-2-building-a-custom-image-classifier" class="level2">
+<h2 class="anchored" data-anchor-id="part-2-building-a-custom-image-classifier">5. Part 2 — Building a Custom Image Classifier</h2>
+<p>Now we build a custom classifier from scratch. Following the same project used in the <a href="https://mjrovai.github.io/TinyML_Made_Easy_NiclaV_eBook/content/image_classification/image_classification.html">TinyML Made Easy</a> e-book, we will train a model to classify three categories:</p>
+<ul>
+<li><strong>Robot</strong> — a small toy robot</li>
+<li><strong>Periquito</strong> — a small Brazilian parrot toy</li>
+<li><strong>Background</strong> — no object present</li>
+</ul>
+<p><img src="./images/png/project-goal.jpg" class="img-fluid"></p>
+<section id="project-goal" class="level3">
+<h3 class="anchored" data-anchor-id="project-goal">Project Goal</h3>
+<p>Build a system that <strong>continuously</strong> captures frames from a USB webcam, classifies what it sees, and provides physical feedback through the MCU:</p>
+<pre><code>USB Webcam -&gt; Python (MPU) -&gt; EI model -&gt; "robot" / "periquito" / "background"
+                                               |
+                                   Bridge.call("show_result", label, confidence)
+                                               |
+                                       MCU (Arduino sketch)
+                                       -&gt; RGB LEDs (color per class)
+                                       -&gt; LED matrix (icon per class)</code></pre>
+<p>This is fundamentally different from Part 1: <strong>live inference</strong> (not static uploads), <strong>MCU actuation</strong> (not just browser display), and a <strong>custom model</strong> (not a generic pre-trained one).</p>
+<p>We show <strong>two deployment paths</strong> — you can choose one or try both:</p>
+<ul>
+<li><strong>Path A (Section 8)</strong>: Deploy via <strong>App Lab Bricks</strong> — uses the same Brick architecture as the pre-installed example, but with your custom Edge Impulse model. Quick to set up, but limited to static uploads.</li>
+<li><strong>Path B (Section 9)</strong>: Deploy via the <strong>Edge Impulse Linux Python SDK</strong> — gives you full control over the inference pipeline, live camera capture, and Bridge communication. <strong>Recommended for real projects.</strong></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="data-collection" class="level2">
+<h2 class="anchored" data-anchor-id="data-collection">6. Data Collection</h2>
+<p>The most crucial step in any ML project is collecting a high-quality dataset.</p>
+<section id="option-a-using-edge-impulse-studio-with-a-smartphone-recommended" class="level3">
+<h3 class="anchored" data-anchor-id="option-a-using-edge-impulse-studio-with-a-smartphone-recommended">Option A: Using Edge Impulse Studio with a Smartphone (Recommended)</h3>
+<ol type="1">
+<li>Go to <a href="https://studio.edgeimpulse.com">Edge Impulse Studio</a> and create a new project (e.g., “<a href="https://studio.edgeimpulse.com/studio/947334">UNO-Q Image Classification</a>”).</li>
+<li>Go to <strong>Devices</strong> and click <strong>Connect a new device</strong>.</li>
+<li>Select <strong>Use your mobile phone</strong> — a QR code will appear.</li>
+<li>Scan the QR code with your smartphone.</li>
+<li>Once connected, go to <strong>Data acquisition</strong>.</li>
+<li>Set the <strong>Label</strong> (e.g., “periquito”), select <strong>Camera</strong>, and click <strong>Start sampling</strong>.</li>
+<li>Capture <strong>~50-60 images</strong> from different angles, distances, and lighting conditions.</li>
+<li>Repeat for “robot” and “background”.</li>
+</ol>
+<p><img src="./images/png/ei_smartphone_collection.png" class="img-fluid"></p>
+</section>
+<section id="option-b-capturing-images-on-the-uno-q" class="level3">
+<h3 class="anchored" data-anchor-id="option-b-capturing-images-on-the-uno-q">Option B: Capturing Images on the UNO Q</h3>
+<p>You can capture images directly from the USB webcam on the UNO Q. For that, create a script, for example: <code>capture_images.py</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cv2</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>label <span class="op">=</span> <span class="st">"robot"</span>  <span class="co"># Change for each class</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>output_dir <span class="op">=</span> <span class="ss">f"/home/arduino/dataset/</span><span class="sc">{</span>label<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>os.makedirs(output_dir, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>cap <span class="op">=</span> cv2.VideoCapture(<span class="dv">0</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>cap.<span class="bu">set</span>(cv2.CAP_PROP_FRAME_WIDTH, <span class="dv">320</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>cap.<span class="bu">set</span>(cv2.CAP_PROP_FRAME_HEIGHT, <span class="dv">240</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Capturing images for class '</span><span class="sc">{</span>label<span class="sc">}</span><span class="ss">'. Press Ctrl+C to stop."</span>)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> count <span class="op">&lt;</span> <span class="dv">60</span>:</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>        ret, frame <span class="op">=</span> cap.read()</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> ret:</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>            filename <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>output_dir<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>label<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>count<span class="sc">:03d}</span><span class="ss">.jpg"</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>            cv2.imwrite(filename, frame)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"Saved: </span><span class="sc">{</span>filename<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>            count <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>            time.sleep(<span class="fl">0.5</span>)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">KeyboardInterrupt</span>:</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>cap.release()</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Captured </span><span class="sc">{</span>count<span class="sc">}</span><span class="ss"> images for '</span><span class="sc">{</span>label<span class="sc">}</span><span class="ss">'."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Install OpenCV if needed:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># On Debian/Ubuntu systems, you need to install the python3-venv package using the following command.</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install python3.13-venv</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) criar o env (ainda NÃO existe a pasta cv2-env)</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="ex">python3.13</span> <span class="at">-m</span> venv ~/envs/cv2-env</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) ativar o env</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/envs/cv2-env/bin/activate</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 3) instalar OpenCV (melhor a versão headless)</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">--upgrade</span> pip</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install opencv-python-headless</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 4) run the script:</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> capture_images.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p>The images will be stored on the Uno-Q (dataset/robot, periquito, etc.). Copy them to your computer with <code>scp</code> (<code>scp -r arduino@&lt;UNO_Q_IP&gt;:~/path/to/dataset ./dataset</code>) or by dragging them in VS Code’s file explorer, then upload them to Edge Impulse Studio via <strong>Data acquisition &gt; Upload data</strong>.</p>
+</blockquote>
+</section>
+<section id="option-c-reusing-images-from-the-nicla-vision-tutorial" class="level3">
+<h3 class="anchored" data-anchor-id="option-c-reusing-images-from-the-nicla-vision-tutorial">Option C: Reusing Images from the Nicla Vision Tutorial</h3>
+<p>If you already have images from the TinyML Made Easy e-book, upload them to Edge Impulse Studio via <strong>Data acquisition &gt; Upload data</strong>, selecting the correct label for each batch.</p>
+</section>
+<section id="dataset-guidelines" class="level3">
+<h3 class="anchored" data-anchor-id="dataset-guidelines">Dataset Guidelines</h3>
+<ul>
+<li><strong>~50-60 images per class</strong> (minimum)</li>
+<li><strong>Varied angles, lighting, and backgrounds</strong></li>
+<li><strong>Include a “background” class</strong> (images with no target objects)</li>
+</ul>
+<blockquote class="blockquote">
+<p><strong>Tip</strong>: More diverse training data produces more robust models.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="training-the-model-with-edge-impulse-studio" class="level2">
+<h2 class="anchored" data-anchor-id="training-the-model-with-edge-impulse-studio">7. Training the Model with Edge Impulse Studio</h2>
+<section id="step-1-verify-the-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-verify-the-dataset">Step 1 — Verify the Dataset</h3>
+<p>In Edge Impulse Studio, go to <strong>Data acquisition</strong> and verify your data is correctly labeled and balanced.</p>
+<p><img src="./images/png/ei-dataset.png" class="img-fluid"></p>
+<blockquote class="blockquote">
+<p>You can clone a similar project: <a href="https://studio.edgeimpulse.com/public/273858/latest">NICLA-Vision_Image_Classification</a></p>
+</blockquote>
+</section>
+<section id="step-2-create-the-impulse" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-create-the-impulse">Step 2 — Create the Impulse</h3>
+<ol type="1">
+<li>Go to <strong>Create impulse</strong>.</li>
+<li>Set input size: <strong>160x160</strong> for higher accuracy on UNO Q.</li>
+<li>Add <strong>Image</strong> as the processing block.</li>
+<li>Add <strong>Transfer Learning (Images)</strong> as the learning block.</li>
+<li>Set output features: <code>robot</code>, <code>periquito</code>, <code>background</code>.</li>
+<li>Click <strong>Save Impulse</strong>.</li>
+</ol>
+<p><img src="./images/png/ei-create_impulse.png" class="img-fluid"></p>
+</section>
+<section id="step-3-generate-features" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-generate-features">Step 3 — Generate Features</h3>
+<ol type="1">
+<li>Go to the <strong>Image</strong> tab.</li>
+<li>Set color depth to <strong>RGB</strong>.</li>
+<li>Click <strong>Save parameters</strong>, then <strong>Generate features</strong>.</li>
+</ol>
+</section>
+<section id="step-4-train-the-model" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-train-the-model">Step 4 — Train the Model</h3>
+<ol type="1">
+<li>Go to the <strong>Transfer Learning</strong> tab.</li>
+<li>Select <strong>MobileNetV2 160x160 1.0</strong> (recommended for UNO Q).</li>
+<li>Set training cycles to <strong>20</strong>.</li>
+<li>Enable <strong>Data augmentation</strong>.</li>
+<li>Click <strong>Start training</strong>.</li>
+</ol>
+<p>Review the accuracy, confusion matrix, and on-device performance.</p>
+<p><img src="./images/png/ei-results.png" class="img-fluid"></p>
+<p>On Training, the model reached a high accuraccy (with a estimated latency of 100ms). With models with smaller alphas (0.35, for example), we can get faster inferences with similar accuraccy. you should test the better parameters for you project.</p>
+</section>
+<section id="step-5-test-the-model" class="level3">
+<h3 class="anchored" data-anchor-id="step-5-test-the-model">Step 5 — Test the Model</h3>
+<p>Go to <strong>Model testing</strong>. On settings, <strong>enable Int8</strong> and click <strong>Classify all</strong> to validate on the test dataset.</p>
+<p><img src="./images/png/ei-test.png" class="img-fluid"></p>
+<hr>
+</section>
+</section>
+<section id="deploying-to-the-uno-q-path-a-app-lab-bricks" class="level2">
+<h2 class="anchored" data-anchor-id="deploying-to-the-uno-q-path-a-app-lab-bricks">8. Deploying to the UNO Q — Path A: App Lab Bricks</h2>
+<p>This path uses the Brick architecture with your custom model. Quick to set up, but limited to <strong>static image uploads</strong> via the browser.</p>
+<section id="step-1-copy-the-pre-installed-example" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-copy-the-pre-installed-example">Step 1 — Copy the Pre-Installed Example</h3>
+<p>We can copy an example using CLI as below</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> /var/lib/arduino-app-cli/examples/image-classification/ ~/ArduinoApps/my-classifier-bricks</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Or directly on the Arduino App Lab, giving it a new name. The project will be copied to <code>My Apps</code> area.</p>
+<p><img src="./images/png/copy_exemple.png" class="img-fluid"></p>
+</section>
+<section id="step-2-export-the-model-from-edge-impulse-to-the-arduino-app-lab" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-export-the-model-from-edge-impulse-to-the-arduino-app-lab">Step 2 — Export the Model from Edge Impulse to the Arduino App Lab</h3>
+<ol type="1">
+<li>In the copied example, stored on the <code>My Apps</code> area, go to the <code>Bricks/Image Classification</code>, select <code>AI models</code> and <code>Train new AI model</code></li>
+</ol>
+<p><img src="./images/png/new_model.png" class="img-fluid"></p>
+<ol start="2" type="1">
+<li>An window will ask you to log in the Arduino/Edge Impulse account. Do it and you will be direct your Edge Impulse Studio project list. Enter in your project (in my case: <a href="https://studio.edgeimpulse.com/studio/947334">UNO-Q Image Classification</a>)</li>
+<li>In the project, go to <strong>Deployment</strong>.</li>
+<li>Select <strong>Arduino UNO Q</strong> as the target (or <strong>Linux AARCH64</strong>).</li>
+<li>Click <strong>Build</strong> and download the model file.</li>
+</ol>
+<p><img src="./images/png/ei-deploy.png" class="img-fluid"></p>
+<p>When the project is built, the .eim file will be downloded directly to your computer and a Pop-up window will appear, with a button <code>Go to Arduino</code>. When you do it, the model will be sent to App Lab.</p>
+<p><img src="./images/png/build.png" class="img-fluid"></p>
+<blockquote class="blockquote">
+<p>Note that you can test your model, downloading it to your mobile of PC, using the Bar code availabel on the deploy page.</p>
+</blockquote>
+</section>
+<section id="step-3-replace-the-model-on-the-uno-q" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-replace-the-model-on-the-uno-q">Step 3 — Replace the Model on the Uno-Q</h3>
+<p>At the <code>AI Models</code> area of your project, the model will be available, download it to the Uno-Q and after that select it.</p>
+<p><img src="./images/png/new-model.png" class="img-fluid"></p>
+<p>On the project folder (<code>~/ArduinoApps/my-classifier-bricks</code>) , the Brick configuration in <code>app.yaml</code> is automatically updated to point to your custom model.:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>name: My Classifier (Custom Images)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>description: Custom Image classification <span class="kw">in</span> the browser using a web<span class="op">-</span>based interface.</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>ports: []</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>bricks:</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> arduino:image_classification:</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    model: ei<span class="op">-</span>model<span class="op">-</span><span class="dv">947334</span><span class="op">-</span><span class="dv">1</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> arduino:web_ui: {}</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>icon: 📊</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The model (<code>model.eim</code>), will be saved on <code>/home/arduino/.arduino-bricks/models/custom-ei/ei-model-947334-1</code></p>
+</section>
+<section id="step-4-run-the-app" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-run-the-app">Step 4 — Run the App</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/ArduinoApps/my-classifier-bricks</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app start .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Open <code>http://&lt;UNO_Q_IP&gt;:7000</code> in your browser. Upload images of your robot, periquito, or background — the classifier now uses <strong>your custom model</strong>.</p>
+<p><img src="./images/png/custom-img-class-result.png" class="img-fluid"></p>
+<blockquote class="blockquote">
+<p><strong>Limitation</strong>: This approach still uses <strong>static image uploads</strong> via the browser. For <strong>live webcam inference</strong> with MCU actuation, proceed to Path B.</p>
+</blockquote>
+<p>But, before it, let’s change the <code>main.c</code> file to show the info about our new model and to print the inference result.</p>
+<p>First, stop the app:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app stop .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>On the <code>main.c</code> file, enter with the code:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> arduino.app_utils <span class="im">import</span> App</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> arduino.app_bricks.web_ui <span class="im">import</span> WebUI</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> arduino.app_bricks.image_classification <span class="im">import</span> ImageClassification</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> PIL <span class="im">import</span> Image</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> io</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> base64</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>image_classification <span class="op">=</span> ImageClassification()</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_model_info(image_classification):</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    info <span class="op">=</span> image_classification.get_model_info()</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> info <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Model info:"</span>)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> attr <span class="kw">in</span> <span class="bu">dir</span>(info):</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="kw">not</span> attr.startswith(<span class="st">"_"</span>) <span class="kw">and</span> <span class="kw">not</span> <span class="bu">callable</span>(<span class="bu">getattr</span>(info, attr)):</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>attr<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span><span class="bu">getattr</span>(info, attr)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Failed to retrieve model info."</span>)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> on_classify_image(client_id, data):</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Callback function to handle image classification requests."""</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>        image_data <span class="op">=</span> data.get(<span class="st">'image'</span>)</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>        image_type_raw <span class="op">=</span> data.get(<span class="st">'image_type'</span>)</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> image_type_raw:</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>            image_type <span class="op">=</span> image_type_raw.split(<span class="st">'/'</span>)[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>            image_type <span class="op">=</span> <span class="st">'jpeg'</span></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>        confidence <span class="op">=</span> data.get(<span class="st">'confidence'</span>, <span class="fl">0.25</span>)</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> image_data:</span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>            ui.send_message(<span class="st">'classification_error'</span>, {<span class="st">'error'</span>: <span class="st">'No image data'</span>})</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span></span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>        image_bytes <span class="op">=</span> base64.b64decode(image_data)</span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>        pil_image <span class="op">=</span> Image.<span class="bu">open</span>(io.BytesIO(image_bytes))</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>        start_time <span class="op">=</span> time.time() <span class="op">*</span> <span class="dv">1000</span></span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>        results <span class="op">=</span> image_classification.classify(pil_image, image_type<span class="op">=</span>image_type, <span class="op">\</span></span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>                                                confidence<span class="op">=</span>confidence)</span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Inference: </span><span class="sc">{</span>results<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>        diff <span class="op">=</span> time.time() <span class="op">*</span> <span class="dv">1000</span> <span class="op">-</span> start_time</span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Latency: </span><span class="sc">{</span>diff<span class="sc">:.2f}</span><span class="ss"> ms"</span>)</span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> results <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>            ui.send_message(<span class="st">'classification_error'</span>, {<span class="st">'error'</span>: <span class="st">'No results returned'</span>})</span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span></span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>        response <span class="op">=</span> {</span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a>            <span class="st">'success'</span>: <span class="va">True</span>,</span>
+<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a>            <span class="st">'results'</span>: results,</span>
+<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a>            <span class="st">'processing_time'</span>: <span class="ss">f"</span><span class="sc">{</span>diff<span class="sc">:.2f}</span><span class="ss"> ms"</span></span>
+<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a>        ui.send_message(<span class="st">'classification_result'</span>, response)</span>
+<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a>        ui.send_message(<span class="st">'classification_error'</span>, {<span class="st">'error'</span>: <span class="bu">str</span>(e)})</span>
+<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a>print_model_info(image_classification)</span>
+<span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a>ui <span class="op">=</span> WebUI()</span>
+<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a>ui.on_message(<span class="st">'classify_image'</span>, on_classify_image)</span>
+<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a>App.run()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Run the app:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app start .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Open a second terminal, go to the project folder and run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/ArduinoApps/my-classifier-bricks</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app logs . <span class="at">--follow</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="./images/png/inference_custon-model.png" class="img-fluid"></p>
+<p>We can see that our custom classification model receives images of 160x160 and that our labels are:</p>
+<p><code>labels: ['background', 'periquito', 'robot']</code></p>
+<p>The latency of this model is around 444 ms, or a little over 2 FPS.</p>
+<blockquote class="blockquote">
+<p>If we need a faster model, we can train a new model using a small image (as 96x96) or a reduced model, with an Alpha as 0.35 for example.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="deploying-to-the-uno-q-path-b-live-camera" class="level2">
+<h2 class="anchored" data-anchor-id="deploying-to-the-uno-q-path-b-live-camera">9. Deploying to the UNO Q — Path B: Live Camera</h2>
+<p>This path gives you full control: live webcam capture, continuous classification, and Bridge communication to the MCU.</p>
+<section id="step-1-create-a-new-app-on-arduino-app-lab" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-create-a-new-app-on-arduino-app-lab">Step 1 — Create a new App on Arduino App Lab</h3>
+<p>On The Arduino App Lab <code>My Apps</code>, click on the upper righ button <code>Create new app</code></p>
+<p><img src="./images/png/new-project.png" class="img-fluid"></p>
+<p>And name it, for example: <code>Image Classification on Camera</code>.</p>
+</section>
+<section id="step-2-import-a-brick-and-select-the-model" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-import-a-brick-and-select-the-model">Step 2 — Import a Brick and Select the Model</h3>
+<p>Go to <code>Bricks</code> and click on <code>Add Brick</code>.</p>
+<p><img src="./images/png/new-bric.png" class="img-fluid"></p>
+<p>A list of available Bricks will appear, Scroll down untill <code>Video Image Classification</code> and <code>Add brick</code>.</p>
+<p><img src="./images/png/video-class-brick.png" class="img-fluid"></p>
+<p>As you did on the previous section, once the brick is installed, go to the <code>AI Models</code> tab and select <code>Uno-Q Image. Classification</code>, deployed on the last section.</p>
+<p><img src="./images/png/new-img-class-model.png" class="img-fluid"></p>
+<p>Note that the <code>app. yaml</code> is automatically created when the model is selected, pointing to the customized model:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>name: Image Classification on Camera</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>description: <span class="st">""</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>ports: []</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>bricks:</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="op">-</span> arduino:video_image_classification:</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    model: ei<span class="op">-</span>model<span class="op">-</span><span class="dv">947334</span><span class="op">-</span><span class="dv">1</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>icon: 😀</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="step-3-create-a-new-main.c-file" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-create-a-new-main.c-file">Step 3 — Create a new main.c file</h3>
+<p>The file main.c is a generic file on which should be defined for our model.</p>
+<p>The most important part of the code is the <code>VideoImageClassification</code> class</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> VideoImageClassification(camera: BaseCamera <span class="op">|</span> <span class="va">None</span>, </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                               confidence: <span class="bu">float</span>, </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                               debounce_sec: <span class="bu">float</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is a module for image classification on a <strong>live video stream</strong> using a specified machine learning model. It provides a way to react to detected classes over a video stream, invoking registered actions in real-time.</p>
+<section id="parameters" class="level4">
+<h4 class="anchored" data-anchor-id="parameters">Parameters</h4>
+<ul>
+<li><strong>camera</strong> (<em>BaseCamera</em>): The camera instance used to capture video. If None, a default camera will be initialized.</li>
+<li><strong>confidence</strong> (<em>float</em>): The minimum confidence level for a classification to be considered valid. Default is 0.3.</li>
+<li><strong>debounce_sec</strong> (<em>float</em>): The minimum time in seconds between consecutive detections of the same object to avoid multiple triggers. Default is 0 seconds.</li>
+</ul>
+<p>Here is the complete code:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> arduino.app_utils <span class="im">import</span> App</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> arduino.app_bricks.video_imageclassification <span class="im">import</span> VideoImageClassification</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a classification stream with default confidence threshold (0.5)</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>classification_stream <span class="op">=</span> VideoImageClassification(confidence<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Callback when "periquito" is detected</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> periquito_detected():</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Detected periquito!"</span>)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Callback when "robot" is detected</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> robot_detected():</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Detected robot!"</span>)</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Subscribe to your specific labels</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>classification_stream.on_detect(<span class="st">"periquito"</span>, periquito_detected)</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>classification_stream.on_detect(<span class="st">"robot"</span>, robot_detected)</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Optional: callback for all classifications (useful for debugging)</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> all_detected(results):</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># results is a list of dicts like {"label": "periquito", "confidence": 0.85}</span></span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Classification results:"</span>, results)</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>classification_stream.on_detect_all(all_detected)</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the app</span></span>
+<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>App.run()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Run the app:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/ArduinoApps/image-classification-on-camera</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app start .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Open a second terminal, go to the project folder and run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/ArduinoApps/image-classification-on-camera</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app logs . <span class="at">--follow</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="./images/png/infer-custon-img-class.png" class="img-fluid"></p>
+<hr>
+</section>
+</section>
+</section>
+<section id="post-processing-mcu-actuation-via-bridge" class="level2">
+<h2 class="anchored" data-anchor-id="post-processing-mcu-actuation-via-bridge">10. Post-Processing: MCU Actuation via Bridge</h2>
+<p>In the previous section, we got live image classification running via the <code>VideoImageClassification</code> Brick, with detection callbacks printing results to the log. Now, we add the <strong>MCU side</strong> — using Bridge RPC to drive the LED matrix, based on what the camera sees.</p>
+<section id="architecture" class="level3">
+<h3 class="anchored" data-anchor-id="architecture">Architecture</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">USB</span> Webcam <span class="at">-</span><span class="op">&gt;</span> VideoImageClassification Brick <span class="at">-</span><span class="op">&gt;</span> on_detect<span class="er">(</span><span class="st">"robot"</span><span class="ex">,</span> callback<span class="kw">)</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                                               <span class="ex">-</span><span class="op">&gt;</span> on_detect<span class="er">(</span><span class="st">"periquito"</span><span class="ex">,</span> callback<span class="kw">)</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                                                        <span class="kw">|</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                                            <span class="ex">Bridge.call</span><span class="er">(</span><span class="st">"show_result"</span><span class="ex">,</span> label<span class="kw">)</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>                                                        <span class="kw">|</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>                                               <span class="ex">MCU</span> <span class="er">(</span><span class="ex">Arduino</span> sketch<span class="kw">)</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>                                               <span class="ex">-</span><span class="op">&gt;</span> LED Matrix<span class="kw">;</span> <span class="st">"simple face"</span> = robot</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>                                               <span class="ex">-</span><span class="op">&gt;</span> LED Matrix: <span class="st">"bird"</span> = periquito</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>                                               <span class="ex">-</span><span class="op">&gt;</span> LED Matrix: <span class="st">"empty"</span> = background/unknown</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="step-1-add-a-sketch-to-the-project" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-add-a-sketch-to-the-project">Step 1 — Add a Sketch to the Project</h3>
+<p>Our project from Section 9 (<code>image-classification-on-camera</code>) currently has no <code>sketch/</code> folder — the MCU is not involved. We need to add one.</p>
+<p>In VS Code (or via terminal), create the sketch directory (if it does not alheady exist) :</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/ArduinoApps/image-classification-on-camera</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> sketch</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="step-2-write-the-arduino-sketch" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-write-the-arduino-sketch">Step 2 — Write the Arduino Sketch</h3>
+<p>Here, we use <code>matrix.renderBitmap(frame, 8, 13)</code> to render an 8×13 matrix, and we include the <code>Arduino_LED_Matrix.h</code> library in <code>sketch.ino</code>. The patterns are simple pixel art — you can refine them later using the <a href="https://ledmatrix-editor.arduino.cc/">Arduino LED Matrix Editor</a> (adjusting for 13 columns instead of 12).</p>
+<p>Create (or modify) <code>sketch/sketch.ino</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">"Arduino_RouterBridge.h"</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">"Arduino_LED_Matrix.h"</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>ArduinoLEDMatrix matrix<span class="op">;</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">// 8x13 patterns for each class</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">// Robot icon (simple face)</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="dt">uint8_t</span> robot_frame<span class="op">[</span><span class="dv">8</span><span class="op">][</span><span class="dv">13</span><span class="op">]</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">},</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">},</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">},</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">},</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">},</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">},</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">},</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">}</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a><span class="co">// Bird icon (simple periquito)</span></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a><span class="dt">uint8_t</span> bird_frame<span class="op">[</span><span class="dv">8</span><span class="op">][</span><span class="dv">13</span><span class="op">]</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">},</span></span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">},</span></span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">},</span></span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">},</span></span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">},</span></span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">},</span></span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">},</span></span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">1</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">}</span></span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a><span class="co">// Empty frame (background / nothing detected)</span></span>
+<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a><span class="dt">uint8_t</span> empty_frame<span class="op">[</span><span class="dv">8</span><span class="op">][</span><span class="dv">13</span><span class="op">]</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">},</span></span>
+<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">},</span></span>
+<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">},</span></span>
+<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">},</span></span>
+<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">},</span></span>
+<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">},</span></span>
+<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">},</span></span>
+<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">,</span><span class="dv">0</span><span class="op">}</span></span>
+<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span>
+<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> setup<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a>    matrix<span class="op">.</span>begin<span class="op">();</span></span>
+<span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a>    matrix<span class="op">.</span>renderBitmap<span class="op">(</span>empty_frame<span class="op">,</span> <span class="dv">8</span><span class="op">,</span> <span class="dv">13</span><span class="op">);</span></span>
+<span id="cb24-46"><a href="#cb24-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-47"><a href="#cb24-47" aria-hidden="true" tabindex="-1"></a>    Bridge<span class="op">.</span>begin<span class="op">();</span></span>
+<span id="cb24-48"><a href="#cb24-48" aria-hidden="true" tabindex="-1"></a>    Bridge<span class="op">.</span>provide<span class="op">(</span><span class="st">"show_result"</span><span class="op">,</span> show_result<span class="op">);</span></span>
+<span id="cb24-49"><a href="#cb24-49" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb24-50"><a href="#cb24-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-51"><a href="#cb24-51" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> loop<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb24-52"><a href="#cb24-52" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb24-53"><a href="#cb24-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-54"><a href="#cb24-54" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> show_result<span class="op">(</span>String label<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb24-55"><a href="#cb24-55" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>label <span class="op">==</span> <span class="st">"robot"</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb24-56"><a href="#cb24-56" aria-hidden="true" tabindex="-1"></a>        matrix<span class="op">.</span>renderBitmap<span class="op">(</span>robot_frame<span class="op">,</span> <span class="dv">8</span><span class="op">,</span> <span class="dv">13</span><span class="op">);</span></span>
+<span id="cb24-57"><a href="#cb24-57" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>label <span class="op">==</span> <span class="st">"periquito"</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb24-58"><a href="#cb24-58" aria-hidden="true" tabindex="-1"></a>        matrix<span class="op">.</span>renderBitmap<span class="op">(</span>bird_frame<span class="op">,</span> <span class="dv">8</span><span class="op">,</span> <span class="dv">13</span><span class="op">);</span></span>
+<span id="cb24-59"><a href="#cb24-59" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb24-60"><a href="#cb24-60" aria-hidden="true" tabindex="-1"></a>        matrix<span class="op">.</span>renderBitmap<span class="op">(</span>empty_frame<span class="op">,</span> <span class="dv">8</span><span class="op">,</span> <span class="dv">13</span><span class="op">);</span></span>
+<span id="cb24-61"><a href="#cb24-61" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb24-62"><a href="#cb24-62" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Create (or modify) <code>sketch/sketch.yaml</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">profiles</span><span class="kw">:</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">default</span><span class="kw">:</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">platforms</span><span class="kw">:</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">platform</span><span class="kw">:</span><span class="at"> arduino:zephyr</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">libraries</span><span class="kw">:</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> Arduino_RouterBridge (0.3.0)</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">dependency</span><span class="kw">:</span><span class="at"> Arduino_RPClite (0.2.1)</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">dependency</span><span class="kw">:</span><span class="at"> ArxContainer (0.7.0)</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">dependency</span><span class="kw">:</span><span class="at"> ArxTypeTraits (0.3.2)</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">dependency</span><span class="kw">:</span><span class="at"> DebugLog (0.8.4)</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">dependency</span><span class="kw">:</span><span class="at"> MsgPack (0.4.2)</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="fu">default_profile</span><span class="kw">:</span><span class="at"> default</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="step-3-update-the-python-script-to-call-bridge" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-update-the-python-script-to-call-bridge">Step 3 — Update the Python Script to Call Bridge</h3>
+<p>Modify <code>python/main.py</code> to send classification results to the MCU via Bridge. In the previous example, we created abd use separate <code>on_detect</code> callbacks. Here we will use <strong>only</strong> <code>on_detect_all</code> and pick the highest-confidence result from there. This removes the individual <code>on_detect("periquito", ...)</code> / <code>on_detect("robot", ...)</code> callbacks entirely and relies on a single <code>on_detect_all</code> that always picks the top class. The <code>current_label</code> check ensures we only send a Bridge call when the result actually changes.</p>
+<p>Also lowered the confidence to <code>0.3</code> so that “background” detections (which sometimes have lower confidence) still come through. You can tune this after testing.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> arduino.app_utils <span class="im">import</span> App, Bridge</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> arduino.app_bricks.video_imageclassification <span class="im">import</span> VideoImageClassification</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>classification_stream <span class="op">=</span> VideoImageClassification(confidence<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>current_label <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Priority order: robot and periquito take precedence over background</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>PRIORITY <span class="op">=</span> {<span class="st">"robot"</span>: <span class="dv">2</span>, <span class="st">"periquito"</span>: <span class="dv">1</span>, <span class="st">"background"</span>: <span class="dv">0</span>}</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> all_detected(results):</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> current_label</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Raw results: </span><span class="sc">{</span>results<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> results:</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Pick the highest-priority label from the results</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>        label <span class="op">=</span> <span class="bu">max</span>(results, key<span class="op">=</span><span class="kw">lambda</span> r: PRIORITY.get(r, <span class="op">-</span><span class="dv">1</span>))</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>        label <span class="op">=</span> <span class="st">"background"</span></span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> label <span class="op">!=</span> current_label:</span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>        current_label <span class="op">=</span> label</span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>        Bridge.call(<span class="st">"show_result"</span>, label)</span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"==&gt; </span><span class="sc">{</span>label<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>classification_stream.on_detect_all(all_detected)</span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>App.run()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p><strong>Note</strong>: We use a <code>current_label</code> variable to avoid sending redundant Bridge calls every frame. The LED Matrix only changes when the detected class actually changes.</p>
+</blockquote>
+</section>
+<section id="step-4-verify-the-updated-project-structure" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-verify-the-updated-project-structure">Step 4 — Verify the Updated Project Structure</h3>
+<p>Your project should now look like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">image-classification-on-camera/</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> app.yaml</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="ex">├──</span> python/</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="ex">│</span>   └── main.py</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="ex">└──</span> sketch/</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">├──</span> sketch.ino</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">└──</span> sketch.yaml</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The <code>app.yaml</code> should already point to your custom model from Section 9:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Image Classification on Camera</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">""</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ports</span><span class="kw">:</span><span class="at"> </span><span class="kw">[]</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">bricks</span><span class="kw">:</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> arduino</span><span class="fu">:video_image_classification</span><span class="kw">:</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">model</span><span class="kw">:</span><span class="at"> ei-model-947334-1</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="fu">icon</span><span class="kw">:</span><span class="at"> 😀</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="step-5-run-the-complete-system" class="level3">
+<h3 class="anchored" data-anchor-id="step-5-run-the-complete-system">Step 5 — Run the Complete System</h3>
+<p>Stop any running app first:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app stop .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Start the updated project:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app start .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p><strong>Note</strong>: The first run after adding the sketch will take longer, as the system compiles the Arduino code for the MCU.</p>
+</blockquote>
+</section>
+<section id="step-6-test-the-system" class="level3">
+<h3 class="anchored" data-anchor-id="step-6-test-the-system">Step 6 — Test the System</h3>
+<p>Monitor the logs:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app logs . <span class="at">--follow</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now place objects in front of the camera and observe:</p>
+<ul>
+<li><strong>Robot</strong> in front of the webcam → <strong>A face</strong> lights up + log shows “raw results: {‘robot’: 1}”</li>
+<li><strong>Periquito</strong> in front of the webcam → <strong>A bird</strong> lights up + log shows “Raw results: {‘periquito’: 1}”</li>
+<li><strong>No object</strong> (or unknown object) → <strong>empty</strong> lights up + “Raw results: {‘background’: 1}”</li>
+</ul>
+<p><img src="./images/png/infer-matrix.jpg" class="img-fluid"></p>
+</section>
+<section id="step-7-stop-the-app" class="level3">
+<h3 class="anchored" data-anchor-id="step-7-stop-the-app">Step 7 — Stop the App</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app stop .</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="extending-the-mcu-actuation" class="level3">
+<h3 class="anchored" data-anchor-id="extending-the-mcu-actuation">Extending the MCU Actuation</h3>
+<p>The Arduino sketch can be extended with additional feedback:</p>
+<p><strong>External LEDs:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">"Arduino_RouterBridge.h"</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co">// Use digital pins for external LEDs (or replace with correct RGB LED macros)</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MY_LED_BLUE   </span><span class="dv">2</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MY_LED_GREEN  </span><span class="dv">3</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="pp">#define MY_LED_RED    </span><span class="dv">4</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> setup<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    pinMode<span class="op">(</span>MY_LED_RED<span class="op">,</span> OUTPUT<span class="op">);</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    pinMode<span class="op">(</span>MY_LED_GREEN<span class="op">,</span> OUTPUT<span class="op">);</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    pinMode<span class="op">(</span>MY_LED_BLUE<span class="op">,</span> OUTPUT<span class="op">);</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>    pinMode<span class="op">(</span>LED_BUILTIN<span class="op">,</span> OUTPUT<span class="op">);</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>    digitalWrite<span class="op">(</span>MY_LED_RED<span class="op">,</span> LOW<span class="op">);</span></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>    digitalWrite<span class="op">(</span>MY_LED_GREEN<span class="op">,</span> LOW<span class="op">);</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>    digitalWrite<span class="op">(</span>MY_LED_BLUE<span class="op">,</span> LOW<span class="op">);</span></span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>    digitalWrite<span class="op">(</span>LED_BUILTIN<span class="op">,</span> HIGH<span class="op">);</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>    Bridge<span class="op">.</span>begin<span class="op">();</span></span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>    Bridge<span class="op">.</span>provide<span class="op">(</span><span class="st">"show_result"</span><span class="op">,</span> show_result<span class="op">);</span></span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> loop<span class="op">()</span> <span class="op">{}</span></span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> show_result<span class="op">(</span>String label<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>    digitalWrite<span class="op">(</span>MY_LED_RED<span class="op">,</span> LOW<span class="op">);</span></span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>    digitalWrite<span class="op">(</span>MY_LED_GREEN<span class="op">,</span> LOW<span class="op">);</span></span>
+<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>    digitalWrite<span class="op">(</span>MY_LED_BLUE<span class="op">,</span> LOW<span class="op">);</span></span>
+<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>label <span class="op">==</span> <span class="st">"robot"</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a>        digitalWrite<span class="op">(</span>MY_LED_BLUE<span class="op">,</span> HIGH<span class="op">);</span></span>
+<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>label <span class="op">==</span> <span class="st">"periquito"</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a>        digitalWrite<span class="op">(</span>MY_LED_GREEN<span class="op">,</span> HIGH<span class="op">);</span></span>
+<span id="cb33-34"><a href="#cb33-34" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb33-35"><a href="#cb33-35" aria-hidden="true" tabindex="-1"></a>        digitalWrite<span class="op">(</span>MY_LED_RED<span class="op">,</span> HIGH<span class="op">);</span></span>
+<span id="cb33-36"><a href="#cb33-36" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb33-37"><a href="#cb33-37" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Buzzer Feedback:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#define BUZZER_PIN </span><span class="dv">3</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> show_result<span class="op">(</span>String label<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">// LEDs as before...</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>label <span class="op">==</span> <span class="st">"robot"</span><span class="op">)</span>     tone<span class="op">(</span>BUZZER_PIN<span class="op">,</span> <span class="dv">1000</span><span class="op">,</span> <span class="dv">200</span><span class="op">);</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>label <span class="op">==</span> <span class="st">"periquito"</span><span class="op">)</span> tone<span class="op">(</span>BUZZER_PIN<span class="op">,</span> <span class="dv">2000</span><span class="op">,</span> <span class="dv">200</span><span class="op">);</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Servo Motor:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;Servo.h&gt;</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>Servo myServo<span class="op">;</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> show_result<span class="op">(</span>String label<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>label <span class="op">==</span> <span class="st">"robot"</span><span class="op">)</span>          myServo<span class="op">.</span>write<span class="op">(</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>label <span class="op">==</span> <span class="st">"periquito"</span><span class="op">)</span> myServo<span class="op">.</span>write<span class="op">(</span><span class="dv">180</span><span class="op">);</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>                           myServo<span class="op">.</span>write<span class="op">(</span><span class="dv">90</span><span class="op">);</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<hr>
+</section>
+</section>
+<section id="performance-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="performance-analysis">11. Performance Analysis</h2>
+<section id="inference-latency" class="level3">
+<h3 class="anchored" data-anchor-id="inference-latency">Inference Latency</h3>
+<p>From the logs captured in the previous sections, we can observe the inference performance:</p>
+<ul>
+<li><strong>Path A</strong> (Static Image Classification Brick, 160×160, MobileNetV2 1.0): ~444 ms per image (~2 FPS)</li>
+<li><strong>Path B</strong> (Video Image Classification Brick, live camera): depends on the model, typically faster due to continuous pipeline optimization</li>
+</ul>
+</section>
+<section id="model-size-vs.-speed-tradeoff" class="level3">
+<h3 class="anchored" data-anchor-id="model-size-vs.-speed-tradeoff">Model Size vs.&nbsp;Speed Tradeoff</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Input Size</th>
+<th>Inference (approx.)</th>
+<th>Accuracy</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>MobileNetV2 0.1</td>
+<td>96×96</td>
+<td>~30–50 ms</td>
+<td>Good</td>
+</tr>
+<tr class="even">
+<td>MobileNetV2 0.35</td>
+<td>96×96</td>
+<td>~60–100 ms</td>
+<td>Better</td>
+</tr>
+<tr class="odd">
+<td>MobileNetV2 0.35</td>
+<td>160×160</td>
+<td>~100–200 ms</td>
+<td>Very Good</td>
+</tr>
+<tr class="even">
+<td>MobileNetV2 1.0</td>
+<td>160×160</td>
+<td>~400–500 ms</td>
+<td>Best</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p>If you need faster inference (e.g., for responsive LED feedback), retrain with a smaller model (MobileNetV2 0.35 at 96×96). You should test different configurations to find the best balance for your project.</p>
+</blockquote>
+</section>
+<section id="path-a-vs.-path-b-comparison" class="level3">
+<h3 class="anchored" data-anchor-id="path-a-vs.-path-b-comparison">Path A vs.&nbsp;Path B Comparison</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 37%">
+<col style="width: 44%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aspect</th>
+<th>Path A (Image Classification Brick)</th>
+<th>Path B (Video Image Classification Brick)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Input</strong></td>
+<td>Static images (browser upload)</td>
+<td>Live webcam (continuous)</td>
+</tr>
+<tr class="even">
+<td><strong>Latency</strong></td>
+<td>Per-upload (user-triggered)</td>
+<td>Continuous (model-dependent FPS)</td>
+</tr>
+<tr class="odd">
+<td><strong>MCU actuation</strong></td>
+<td>Not included (browser only)</td>
+<td>Yes, via Bridge RPC</td>
+</tr>
+<tr class="even">
+<td><strong>Web UI</strong></td>
+<td>Built-in (upload + results)</td>
+<td>No built-in UI (add separately)</td>
+</tr>
+<tr class="odd">
+<td><strong>Best for</strong></td>
+<td>Quick testing, demos</td>
+<td>Real-time applications</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="comparison-with-nicla-vision" class="level3">
+<h3 class="anchored" data-anchor-id="comparison-with-nicla-vision">Comparison with Nicla Vision</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 32%">
+<col style="width: 42%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Metric</th>
+<th>Nicla Vision (MCU)</th>
+<th>UNO Q (MPU)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Model</td>
+<td>MobileNetV2 0.05 (96×96, INT8)</td>
+<td>MobileNetV2 0.35–1.0 (96×96 to 160×160)</td>
+</tr>
+<tr class="even">
+<td>Inference time</td>
+<td>~100–200 ms</td>
+<td>~50–500 ms (model-dependent)</td>
+</tr>
+<tr class="odd">
+<td>Accuracy (3 classes)</td>
+<td>~85–90%</td>
+<td>~90–97%</td>
+</tr>
+<tr class="even">
+<td>Power during inference</td>
+<td>~100 mW</td>
+<td>~3–6 W (*)</td>
+</tr>
+<tr class="odd">
+<td>Framework</td>
+<td>TF Lite Micro (C++)</td>
+<td>App Lab Bricks (Python)</td>
+</tr>
+<tr class="even">
+<td>Camera</td>
+<td>Built-in</td>
+<td>External USB webcam</td>
+</tr>
+<tr class="odd">
+<td>MCU actuation</td>
+<td>Direct GPIO</td>
+<td>Bridge RPC</td>
+</tr>
+</tbody>
+</table>
+<p>**(*) Practical total estimate** Under live image classification (using the USB camera and USB hub), a realistic total power consumption profile is: • Board (Uno‑Q): ~2–3.5 W when CPU/NPU is busy. • USB camera: ~0.5–1.25 W. • Powered hub: ~0.5–1 W. → Total: ~3–6 W from the wall (5 V, ~0.6–1.2 A) for a typical one‑camera, one‑hub setup.</p>
+<blockquote class="blockquote">
+<p>The UNO Q can run larger, more accurate models but uses significantly more power. The Nicla Vision is ideal for battery-powered, always-on applications; the UNO Q excels when accuracy matters and you need the AI result to drive real-time hardware actions.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="exercises" class="level2">
+<h2 class="anchored" data-anchor-id="exercises">12. Exercises</h2>
+<ol type="1">
+<li><p><strong>Add a fourth class</strong>: Collect images of a new object, retrain the model in Edge Impulse, redeploy to the UNO Q, and update the Python callbacks and Arduino sketch. How does adding more classes affect accuracy?</p></li>
+<li><p><strong>Experiment with model size</strong>: Train the same dataset with MobileNetV2 0.1 (96×96) and MobileNetV2 1.0 (160×160). Deploy both to the UNO Q and compare inference time, accuracy, and LED responsiveness. Create a table with your results.</p></li>
+<li><p><strong>Log to CSV</strong>: Modify <code>main.py</code> to log each detection event (timestamp, label) to a CSV file on the UNO Q. After running for 5 minutes, download the CSV and plot detection frequency per class.</p></li>
+<li><p><strong>LED Matrix icons</strong>: Design custom 8×13 LED matrix patterns for each class (robot, periquito, background) and display them on the UNO Q’s built-in LED matrix via the Arduino sketch.</p></li>
+<li><p><strong>Cross-platform comparison</strong>: If you have a Nicla Vision, deploy a 96×96 MobileNetV2 0.1 model to both platforms. Compare inference time, accuracy, power consumption, and development workflow.</p></li>
+<li><p><strong>Debounce tuning</strong>: Experiment with the <code>debounce_sec</code> parameter in <code>VideoImageClassification(confidence=0.5, debounce_sec=1.0)</code>. How does increasing the debounce time affect the responsiveness vs.&nbsp;stability of the LED feedback?</p></li>
+</ol>
+<hr>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">13. Conclusion</h2>
+<p>In this tutorial, we progressed through three levels of image classification on the Arduino UNO Q:</p>
+<ol type="1">
+<li><strong>Part 1</strong> — The pre-installed static image classifier (Image Classification Brick + WebUI), where we uploaded images through a browser and saw results in the web interface.</li>
+<li><strong>Path A</strong> — Our custom model deployed via the same Brick, still with static uploads, but now classifying our own robot/periquito/background classes.</li>
+<li><strong>Path B</strong> — Live camera classification using the Video Image Classification Brick, with real-time detection callbacks driving MCU actuation (RGB LEDs) via Bridge RPC.</li>
+</ol>
+<section id="key-takeaways" class="level3">
+<h3 class="anchored" data-anchor-id="key-takeaways">Key Takeaways</h3>
+<ul>
+<li><strong>The Edge Impulse → App Lab → UNO Q pipeline works</strong>: Collect data, train in EI Studio, deploy to App Lab, and run — all guided through the UI.</li>
+<li><strong>Two Bricks, two modes</strong>: The <code>ImageClassification</code> Brick handles static images (great for testing); the <code>VideoImageClassification</code> Brick handles live camera streams (essential for real applications).</li>
+<li><strong>The dual-brain architecture adds value</strong>: Python handles camera + ML inference on the MPU, while the Arduino sketch on the MCU provides real-time LED/servo/buzzer control. Bridge RPC makes this seamless.</li>
+<li><strong>Model selection matters</strong>: The UNO Q can run larger, more accurate models than any MCU, but there is always a tradeoff between accuracy and inference speed. Test different configurations to find the best balance for your project.</li>
+</ul>
+</section>
+<section id="whats-next" class="level3">
+<h3 class="anchored" data-anchor-id="whats-next">What’s Next</h3>
+<p>In the <a href="../../content/objdet/objdet.html">next tutorial</a>, we will extend our computer vision skills to <strong>Object Detection</strong> — using FOMO and YOLO to detect not just <em>what</em> is in the image, but also <em>where</em> it is. This opens the door to applications in tracking, counting, and spatial awareness.</p>
+<hr>
+</section>
+</section>
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">14. Resources</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Resource</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Edge Impulse Studio</td>
+<td>https://studio.edgeimpulse.com</td>
+</tr>
+<tr class="even">
+<td>EI Arduino UNO Q Docs</td>
+<td>https://docs.edgeimpulse.com/hardware/boards/arduino-uno-q</td>
+</tr>
+<tr class="odd">
+<td>EI App Lab Deployment</td>
+<td>https://docs.edgeimpulse.com/hardware/deployments/run-arduino-app-lab</td>
+</tr>
+<tr class="even">
+<td>App Lab Bricks Documentation</td>
+<td>https://docs.arduino.cc/software/app-lab/tutorials/bricks</td>
+</tr>
+<tr class="odd">
+<td>TinyML Made Easy (Nicla Vision)</td>
+<td>https://mjrovai.github.io/TinyML_Made_Easy_NiclaV_eBook/</td>
+</tr>
+<tr class="even">
+<td>Arduino App Lab CLI</td>
+<td>https://docs.arduino.cc/software/app-lab/tutorials/cli</td>
+</tr>
+<tr class="odd">
+<td>UNO Q Setup Tutorial</td>
+<td><a href="../../content/setup/setup.html">Previous chapter</a></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p><em>Tutorial created for IESTI05 — Edge AI ML System Engineering, UNIFEI. Licensed under CC-BY-SA 4.0.</em></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../content/agenticai/agenticai.html" class="pagination-link" aria-label="Agentic AI at the Edge:">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Agentic AI at the Edge:</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../content/objdet/objdet.html" class="pagination-link" aria-label="Object Detection on the Arduino UNO Q">
+        <span class="nav-page-text">Object Detection on the Arduino UNO Q</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Written and edited by Prof.&nbsp;Marcelo Rovai (UNIFEI University)</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/edit/main/content/imgclass/imgclass.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/blob/main/content/imgclass/imgclass.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>How Generative AI Works, and How It Gets Small – Generative AI at the Edge</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../Classification_of_AI_Applications.html" rel="prev">
+<link href="../../images/cover.jpg" rel="icon" type="image/jpeg">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-daec65ff3ba034f51daec66ecad3ce27.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Generative AI at the Edge</span>
+    </a>
+  </div>
+        <div class="quarto-navbar-tools tools-wide tools-end">
+    <a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="../../Generative-AI-at-the-Edge.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url=|url|" title="LinkedIn" class="quarto-navigation-tool px-1" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+          <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/foundations/foundations.html">How Generative AI Works, and How It Gets Small</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Acknowledgments</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../about_book.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About this Book</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Classification_of_AI_Applications.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Classification of AI Applications</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/foundations/foundations.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">How Generative AI Works, and How It Gets Small</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Generative AI (Proactive)</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/localinf/localinf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">SLMs at the Edge</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/setup/setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Arduino UNO Q Setup</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/genai/genai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Generative AI at the Edge:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/multimodai/multimodai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Multimodal AI at the Edge:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/physicalai/physicalai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">GenAI Meets the Real World:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/agenticai/agenticai.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Agentic AI at the Edge:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Fixed Function AI (Reactive)</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/imgclass/imgclass.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Image Classification on the Arduino UNO Q</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../content/objdet/objdet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Object Detection on the Arduino UNO Q</span></a>
+  </div>
+</li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">References &amp; Author</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../About_the_author.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About the author</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#what-makes-a-model-generative" id="toc-what-makes-a-model-generative" class="nav-link active" data-scroll-target="#what-makes-a-model-generative">1. What Makes a Model “Generative”</a></li>
+  <li><a href="#what-at-the-edge-adds" id="toc-what-at-the-edge-adds" class="nav-link" data-scroll-target="#what-at-the-edge-adds">2. What “at the Edge” Adds</a>
+  <ul class="collapse">
+  <li><a href="#the-energy-argument" id="toc-the-energy-argument" class="nav-link" data-scroll-target="#the-energy-argument">The energy argument</a></li>
+  </ul></li>
+  <li><a href="#one-field-many-scales" id="toc-one-field-many-scales" class="nav-link" data-scroll-target="#one-field-many-scales">3. One Field, Many Scales</a>
+  <ul class="collapse">
+  <li><a href="#the-three-pillars" id="toc-the-three-pillars" class="nav-link" data-scroll-target="#the-three-pillars">The three pillars</a></li>
+  <li><a href="#which-architecture-does-what" id="toc-which-architecture-does-what" class="nav-link" data-scroll-target="#which-architecture-does-what">Which architecture does what</a></li>
+  <li><a href="#complexity-against-hardware" id="toc-complexity-against-hardware" class="nav-link" data-scroll-target="#complexity-against-hardware">Complexity against hardware</a></li>
+  </ul></li>
+  <li><a href="#language-models-llms-and-slms" id="toc-language-models-llms-and-slms" class="nav-link" data-scroll-target="#language-models-llms-and-slms">4. Language Models: LLMs and SLMs</a>
+  <ul class="collapse">
+  <li><a href="#tokens-come-first" id="toc-tokens-come-first" class="nav-link" data-scroll-target="#tokens-come-first">Tokens come first</a></li>
+  <li><a href="#embeddings-turn-tokens-into-meaning" id="toc-embeddings-turn-tokens-into-meaning" class="nav-link" data-scroll-target="#embeddings-turn-tokens-into-meaning">Embeddings turn tokens into meaning</a></li>
+  <li><a href="#how-these-models-are-trained" id="toc-how-these-models-are-trained" class="nav-link" data-scroll-target="#how-these-models-are-trained">How these models are trained</a></li>
+  </ul></li>
+  <li><a href="#how-big-models-become-small" id="toc-how-big-models-become-small" class="nav-link" data-scroll-target="#how-big-models-become-small">5. How Big Models Become Small</a>
+  <ul class="collapse">
+  <li><a href="#pruning" id="toc-pruning" class="nav-link" data-scroll-target="#pruning">Pruning</a></li>
+  <li><a href="#knowledge-distillation" id="toc-knowledge-distillation" class="nav-link" data-scroll-target="#knowledge-distillation">Knowledge distillation</a></li>
+  <li><a href="#quantization" id="toc-quantization" class="nav-link" data-scroll-target="#quantization">Quantization</a></li>
+  </ul></li>
+  <li><a href="#from-assistant-to-agent" id="toc-from-assistant-to-agent" class="nav-link" data-scroll-target="#from-assistant-to-agent">6. From Assistant to Agent</a></li>
+  <li><a href="#four-ways-to-run-an-slm-at-the-edge" id="toc-four-ways-to-run-an-slm-at-the-edge" class="nav-link" data-scroll-target="#four-ways-to-run-an-slm-at-the-edge">7. Four Ways to Run an SLM at the Edge</a></li>
+  <li><a href="#where-this-goes" id="toc-where-this-goes" class="nav-link" data-scroll-target="#where-this-goes">8. Where This Goes</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/edit/main/content/foundations/foundations.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/blob/main/content/foundations/foundations.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">How Generative AI Works, and How It Gets Small</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>The ideas behind the projects in this book</p>
+<p><img src="./images/png/ch-ini.png" class="img-fluid"></p>
+<hr>
+<section id="what-makes-a-model-generative" class="level2">
+<h2 class="anchored" data-anchor-id="what-makes-a-model-generative">1. What Makes a Model “Generative”</h2>
+<p>A generative model is one that creates new content rather than sorting existing content into boxes. It learns patterns from a large body of data — text, images, audio, video — and then produces outputs that did not exist before.</p>
+<p>That distinction is the whole basis for how this book is organized. The classifier in Part 2 looks at a photograph and answers “robot” or “periquito.” It picks from a fixed list it was trained on. The language model in Part 1 is asked about a mosquito breeding site and writes a sentence that nobody has written before. Same board, same Linux, completely different kind of machine.</p>
+<p>The model families you have heard of are all generative in this sense, and they differ mostly in size and modality:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Where they run</th>
+<th>Text</th>
+<th>Vision + language</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Data center</td>
+<td>GPT, Claude, Gemini, Grok, Kimi</td>
+<td>Gemini, GPT</td>
+</tr>
+<tr class="even">
+<td>Edge devices</td>
+<td>Gemma, Phi, Llama, Qwen, SmolLM</td>
+<td>Moondream, PaliGemma, Florence, Qwen-VL</td>
+</tr>
+</tbody>
+</table>
+<p>Hold on to that second row. Those are the ones that will actually run on the hardware in this book.</p>
+</section>
+<section id="what-at-the-edge-adds" class="level2">
+<h2 class="anchored" data-anchor-id="what-at-the-edge-adds">2. What “at the Edge” Adds</h2>
+<blockquote class="blockquote">
+<p><strong>GenAI at the edge means the model lives on the device — not in a data center.</strong></p>
+</blockquote>
+<p>Large language models generally need cloud infrastructure: racks of GPUs, a network connection, and someone’s bill. But compact <strong>Small Language Models (SLMs)</strong> and small <strong>Vision-Language Models (VLMs)</strong> run directly on edge devices, and they have become good enough to be genuinely useful.</p>
+<p>The trend is worth naming. As of 2026, models in the sub-10B range are increasingly competitive with much larger generalists on <em>specific</em> tasks — programming, medical triage, structured extraction — because a focused model trained well on a narrow domain does not need the breadth of a frontier model. This is a moving target, and the specific claims here will age faster than the rest of the book, but the direction has held for several years now: smaller, more specialized, and local keeps getting more viable.</p>
+<p><img src="./images/png/devices.png" class="img-fluid"></p>
+<section id="the-energy-argument" class="level3">
+<h3 class="anchored" data-anchor-id="the-energy-argument">The energy argument</h3>
+<p>There is a second reason to care, and it is not about convenience.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Where inference happens</th>
+<th>Rough power draw</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Microcontroller (TinyML)</td>
+<td>~0.5 W</td>
+</tr>
+<tr class="even">
+<td>Edge SBC — UNO Q, Raspberry Pi</td>
+<td>~5–20 W</td>
+</tr>
+<tr class="odd">
+<td>Cloud GPU (server side, per query)</td>
+<td>100 W+</td>
+</tr>
+</tbody>
+</table>
+<p>An edge device doing comparable work can be <strong>on the order of 100× more energy-efficient than a cloud query</strong>. Multiply that across billions of inferences a day and sustainability stops being a footnote — it becomes an engineering and economic argument for pushing intelligence outward.</p>
+<p>For a project in a developing country, there is a third argument that follows directly: a device that runs offline, draws a few watts, and costs nothing per token is usable in places where a cloud subscription and reliable connectivity are not assumptions you get to make.</p>
+</section>
+</section>
+<section id="one-field-many-scales" class="level2">
+<h2 class="anchored" data-anchor-id="one-field-many-scales">3. One Field, Many Scales</h2>
+<p>Machine learning lives on a spectrum defined by <em>where the computation happens</em>.</p>
+<ul>
+<li><strong>CloudML</strong> — massive models in data centers. Effectively unlimited compute, at the cost of latency, connectivity, and privacy.</li>
+<li><strong>EdgeML</strong> — capable devices running models locally: phones, single-board computers, the Arduino UNO Q.</li>
+<li><strong>TinyML</strong> — machine learning on microcontrollers, drawing milliwatts, with kilobytes of RAM and no operating system.</li>
+</ul>
+<p><img src="./images/png/tiny-cloud.png" class="img-fluid"></p>
+<p>These are not competing camps. They are on a continuum, and the engineering skill lies in matching the right tier to the problem, latency requirement, and the power budget. The UNO Q is interesting precisely because it straddles two of them at once — see <a href="../../intro.html">the introduction</a> for why that matters.</p>
+<section id="the-three-pillars" class="level3">
+<h3 class="anchored" data-anchor-id="the-three-pillars">The three pillars</h3>
+<p>Whatever tier you target, the deployment pipeline has the same shape: <strong>data → model → device</strong>. You collect and prepare data, you train and optimize a model, and you deploy it onto hardware. Nearly every engineering decision at the edge is a trade-off among those three.</p>
+<p><img src="./images/png/data-model-device.png" class="img-fluid"></p>
+<p>Most of the interesting data at the edge is <strong>unstructured</strong> — sound, images, vibration, raw text. It does not arrive in neat rows and columns. That is exactly why neural networks matter here: they find patterns in messy, high-dimensional, real-world signals that rule-based code cannot keep up with.</p>
+<p><img src="./images/png/data-unstruct.png" class="img-fluid"></p>
+</section>
+<section id="which-architecture-does-what" class="level3">
+<h3 class="anchored" data-anchor-id="which-architecture-does-what">Which architecture does what</h3>
+<p>Different problems have historically been solved by different network architectures:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Application</th>
+<th>Architecture</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Vibration analysis, simple classification</td>
+<td>MLP — deep neural network</td>
+</tr>
+<tr class="even">
+<td>Image classification</td>
+<td>CNN — convolutional neural network</td>
+</tr>
+<tr class="odd">
+<td>Sequence and time-series tasks</td>
+<td>RNN — GRU / LSTM</td>
+</tr>
+<tr class="even">
+<td>Image generation</td>
+<td>GAN — generative adversarial network</td>
+</tr>
+<tr class="odd">
+<td><strong>Text generation, LLMs</strong></td>
+<td><strong>Transformer (attention)</strong></td>
+</tr>
+</tbody>
+</table>
+<p><img src="./images/png/models.png" class="img-fluid"></p>
+<p>Language models sit at the top of that complexity ladder. That is exactly why running them on small hardware is hard, and why the rest of this chapter is mostly about making them smaller.</p>
+</section>
+<section id="complexity-against-hardware" class="level3">
+<h3 class="anchored" data-anchor-id="complexity-against-hardware">Complexity against hardware</h3>
+<p><img src="./images/png/complexity-hw.png" class="img-fluid"></p>
+<p>As application complexity rises, so do the demands on CPU, memory, and power. An ESP32 or a Seeed XIAO handles classic TinyML. Above that sit boards like the UNO Q, then Raspberry Pis and phones. The region beginning around <strong>1 GB of memory</strong> is where SLMs and small VLMs become feasible at all.</p>
+<p>The goal is never to run the biggest model the board will tolerate. It is to land on the smallest, cheapest device that still does the job well.</p>
+</section>
+</section>
+<section id="language-models-llms-and-slms" class="level2">
+<h2 class="anchored" data-anchor-id="language-models-llms-and-slms">4. Language Models: LLMs and SLMs</h2>
+<p>LLMs and SLMs are neural networks built on the <strong>Transformer</strong> architecture, and they are very good at understanding and generating human language.</p>
+<p>They were a genuine leap past earlier sequence models like RNNs for two reasons: they handle long-range dependencies far better, and they process tokens <strong>in parallel</strong> rather than strictly one after another. That parallelism is a large part of why these models could scale the way they did — you can throw far more hardware at training them.</p>
+<p>The architecture was published in 2017, and it did not produce one model — it set off an explosion of them. The landscape as of 2026 splits roughly four ways:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Group</th>
+<th>Models</th>
+<th>Weights</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Open — China</strong></td>
+<td>GLM, Kimi, Qwen, DeepSeek</td>
+<td>Downloadable</td>
+</tr>
+<tr class="even">
+<td><strong>Open</strong></td>
+<td>Phi (Microsoft), Gemma (Google), Llama/Muse (Meta)</td>
+<td>Downloadable</td>
+</tr>
+<tr class="odd">
+<td><strong>Closed</strong></td>
+<td>Gemini (Google), GPT (OpenAI), Claude (Anthropic), Grok (xAI)</td>
+<td>API only</td>
+</tr>
+</tbody>
+</table>
+<p>That first column matters more than it might appear. <strong>Qwen — a Chinese open-weights model — is what every generative project in this book actually runs.</strong> The closed models in the third row are excellent and irrelevant here: you cannot download them, so you cannot run them on a board with no network connection. Local inference is only possible because a large part of the frontier chose to release weights, and a striking share of that openness currently comes out of China.</p>
+<p>One caution, because the two tables in this chapter cut the same models along different axes: <strong>open does not mean small.</strong> Kimi K3 is open-weights and Chinese, and it is also a terabyte-scale model that needs a data centre to run — which is why it sits under “Data center” in the first table and under “Open — China” in this one. <em>Downloadable</em> and <em>runnable on your hardware</em> are separate questions, and a model has to satisfy both before it is a candidate for anything in this book.</p>
+<p><img src="./images/png/llm-evol.png" class="img-fluid"></p>
+<section id="tokens-come-first" class="level3">
+<h3 class="anchored" data-anchor-id="tokens-come-first">Tokens come first</h3>
+<p>Before a model can process text, it breaks that text into <strong>tokens</strong> — sub-word pieces, not words. “Understanding” might become two or three tokens; a rare technical term might become five.</p>
+<p><img src="./images/png/tokens.png" class="img-fluid"></p>
+<p>This matters more at the edge than anywhere else, because your <strong>context window, and therefore your memory budget, is measured in tokens</strong>. When <a href="../../content/localinf/localinf.html">SLMs at the Edge</a> work out a RAM budget, and when the UNO Q chapters tell you to keep context at 512–1024 tokens, this is why.</p>
+<blockquote class="blockquote">
+<p><strong>Try it:</strong> OpenAI’s tokenizer at <a href="https://platform.openai.com/tokenizer" class="uri">https://platform.openai.com/tokenizer</a> — type a sentence and watch it split. Five minutes here is worth more than any explanation I can write.</p>
+</blockquote>
+</section>
+<section id="embeddings-turn-tokens-into-meaning" class="level3">
+<h3 class="anchored" data-anchor-id="embeddings-turn-tokens-into-meaning">Embeddings turn tokens into meaning</h3>
+<p>Each token is converted into an <strong>embedding</strong>: a numerical vector positioned in a high-dimensional space so that its location encodes meaning. Words with similar meanings sit near each other. Embeddings are the bridge between human language and the pure arithmetic the model actually performs.</p>
+<blockquote class="blockquote">
+<p><strong>Try it:</strong> TensorFlow’s Embedding Projector at <a href="https://projector.tensorflow.org/" class="uri">https://projector.tensorflow.org/</a> lets you rotate through that space and watch related words cluster. And the Transformer Explainer from Georgia Tech’s Polo Club — <a href="https://poloclub.github.io/transformer-explainer/" class="uri">https://poloclub.github.io/transformer-explainer/</a> — walks you through the attention layer by layer on a live model in your browser.</p>
+</blockquote>
+<p>These two tools build more intuition than a static diagram can. If you are teaching from this book, it is worth ten minutes of class time.</p>
+</section>
+<section id="how-these-models-are-trained" class="level3">
+<h3 class="anchored" data-anchor-id="how-these-models-are-trained">How these models are trained</h3>
+<p>Training happens in two broad phases, and knowing them explains a lot of model behavior:</p>
+<ol type="1">
+<li><strong>Pretraining</strong> — the model digests an enormous amount of text and learns language structure and world knowledge. Expensive, done once, by organizations with large budgets.</li>
+<li><strong>Post-training</strong> — in two parts. <em>Supervised fine-tuning</em> teaches it to follow instructions, and <em>reinforcement learning</em> from human feedback shapes it toward being helpful and aligned.</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/png/train.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:45.0%"></p>
+</figure>
+</div>
+<p>Pretraining is what makes a model <em>knowledgeable</em>; post-training is what makes it <em>usable</em>. The <code>-Instruct</code> or <code>-it</code> suffix on the model files you will download in later chapters means you are getting a post-trained version — the raw pretrained base model would not hold a conversation.</p>
+<blockquote class="blockquote">
+<p>Andrej Karpathy’s “<a href="https://www.youtube.com/watch?v=7xTGNNLPyMI">Deep Dive into LLMs like ChatGPT</a>” is the best long-form treatment of this if you want to go further.</p>
+</blockquote>
+</section>
+</section>
+<section id="how-big-models-become-small" class="level2">
+<h2 class="anchored" data-anchor-id="how-big-models-become-small">5. How Big Models Become Small</h2>
+<p>This is the part that makes edge deployment possible at all. Three techniques take something like Llama 70B down to a 1B–3B model that fits on modest hardware, while keeping as much capability as possible.</p>
+<p><img src="./images/png/reduce.png" class="img-fluid"></p>
+<section id="pruning" class="level3">
+<h3 class="anchored" data-anchor-id="pruning">Pruning</h3>
+<p>A trained network carries many weights that contribute almost nothing to its output. Pruning finds and removes them, shrinking the model and speeding up inference. Done carefully, you can cut a substantial fraction of the parameters for a small accuracy cost — and the leaner model occasionally generalizes slightly better, since some of what you removed was memorization.</p>
+<p><img src="./images/png/pruning.png" class="img-fluid"></p>
+</section>
+<section id="knowledge-distillation" class="level3">
+<h3 class="anchored" data-anchor-id="knowledge-distillation">Knowledge distillation</h3>
+<p>A large, capable <strong>teacher</strong> model trains a much smaller <strong>student</strong>. The key idea is that the student does not learn only from the raw labels — it learns from the teacher’s full output <em>distribution</em>, the soft probabilities across all possible answers. That distribution carries far richer information than a single correct label: it shows what the teacher considered and how confident it was.</p>
+<p><img src="./images/png/kd.png" class="img-fluid"></p>
+<p>The result is a compact model that punches well above its parameter count. Most of the reason a 1B model in 2026 outperforms a 7B model from 2023 is better training data and distillation from stronger teachers.</p>
+<blockquote class="blockquote">
+<p>A hands-on introduction to distillation is in the companion volume: <a href="https://mjrovai.github.io/EdgeML_Made_Ease_ebook/raspi/kd_intro/kd_intro.html">KD Intro</a>.</p>
+</blockquote>
+</section>
+<section id="quantization" class="level3">
+<h3 class="anchored" data-anchor-id="quantization">Quantization</h3>
+<p>Quantization reduces the numerical <strong>precision</strong> of the weights — storing them as 8-bit or 4-bit integers instead of 16-bit floats. A model at 4-bit takes roughly a quarter of the memory of the same model at 16-bit, and it runs faster, because moving less data through memory is most of what inference costs on a CPU.</p>
+<p>The trade-off is accuracy, and it is not linear. Larger models tolerate aggressive quantization well; very small models do not, because they have less redundancy to spare. That specific problem — and what it means for choosing Q4 versus Q8 on a sub-1B model — is worked through with real measurements in <a href="../../content/genai/genai.html">Generative AI at the Edge</a>.</p>
+<p>For the practical side of all three techniques — file formats, the RAM budget arithmetic, and which quantization to actually download — see the next chapter, <a href="../../content/localinf/localinf.html">SLMs at the Edge</a>.</p>
+</section>
+</section>
+<section id="from-assistant-to-agent" class="level2">
+<h2 class="anchored" data-anchor-id="from-assistant-to-agent">6. From Assistant to Agent</h2>
+<p>It is worth stepping back to see how fast the shape of these systems has changed.</p>
+<p>Early systems were <strong>assistants</strong>. They augmented human knowledge: you asked, they answered, the interaction ended. Today’s systems work through <strong>tool-calling APIs</strong>. They reach into the world, use its infrastructure, and take actions with consequences.</p>
+<p>The software around the model that makes this possible is the <strong>harness</strong>: the layer that lets a model call functions, use tools, and operate in a loop rather than simply emitting text. When you run an SLM at the edge, the harness is what turns a text generator into something useful — it reads a sensor, decides, and triggers an action.</p>
+<p><img src="./images/png/harness-agent.png" class="img-fluid"></p>
+<p>That word will come back. The <a href="../../content/agenticai/agenticai.html">Agentic AI</a> chapter is entirely about building one, and <a href="../../content/physicalai/physicalai.html">GenAI Meets the Real World</a> is a miniature harness: a model’s verdict becomes a number that lights an LED.</p>
+</section>
+<section id="four-ways-to-run-an-slm-at-the-edge" class="level2">
+<h2 class="anchored" data-anchor-id="four-ways-to-run-an-slm-at-the-edge">7. Four Ways to Run an SLM at the Edge</h2>
+<p>Which tool you choose depends mostly on your hardware.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>What it is</th>
+<th>Where it fits</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Ollama</strong></td>
+<td>Open-source framework with a model registry and REST API</td>
+<td>The easiest entry point. Excellent on Raspberry Pi. Does not run easily on the UNO Q</td>
+</tr>
+<tr class="even">
+<td><strong>llama.cpp</strong></td>
+<td>Lightweight C++ inference engine for quantized models</td>
+<td>Tested successfully on the UNO Q. Preferred for control, compact size, and low memory use. Also efficient on the Pi</td>
+</tr>
+<tr class="odd">
+<td><strong>HF Transformers</strong></td>
+<td>Python library with the broadest model and task coverage</td>
+<td>Well supported on Raspberry Pi; heavy for very constrained boards</td>
+</tr>
+<tr class="even">
+<td><strong>LiteRT-LM</strong></td>
+<td>Google AI Edge solution aimed at production</td>
+<td>Optimized for efficient deployment across edge devices</td>
+</tr>
+</tbody>
+</table>
+<p>For the constrained UNO Q work in this book, <strong>llama.cpp is the tool of choice</strong> — it is the one that fits, the one that gives the most control over memory, and the one with a server mode we build several projects on. You will meet Ollama and LM Studio in the next chapter, on your own computer, where the constraints are looser and the comparison is instructive.</p>
+</section>
+<section id="where-this-goes" class="level2">
+<h2 class="anchored" data-anchor-id="where-this-goes">8. Where This Goes</h2>
+<p>You now have the vocabulary: tokens, embeddings, attention, pretraining and post-training, pruning, distillation, quantization, and the harness. Everything from here is practice.</p>
+<p>The next chapter runs a model on the computer you already own, so the concepts land before any board is involved. After that, the UNO Q — first setting it up, then compiling <code>llama.cpp</code> on it, then giving the model vision, sensors, and tools.</p>
+<p>Nothing that follows requires you to remember the details of attention mathematics. It does require you to remember <em>why</em> a 0.8B model at 4-bit behaves differently from the same model at 8-bit, and why context length costs memory. Those two ideas come up in every chapter of Part 1.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../Classification_of_AI_Applications.html" class="pagination-link" aria-label="Classification of AI Applications">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Classification of AI Applications</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Written and edited by Prof.&nbsp;Marcelo Rovai (UNIFEI University)</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/edit/main/content/foundations/foundations.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li><li><a href="https://github.com/Mjrovai/ARDUINO-UNO-Q/tree/main/blob/main/content/foundations/foundations.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

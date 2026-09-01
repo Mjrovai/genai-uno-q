@@ -106,6 +106,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -467,11 +470,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>The runtime, OS, and your application.</li>
 </ol>
 <p>How a fixed RAM budget gets divided, using the smallest target as the example:</p>
-<pre class="mermaid"><code>flowchart LR
-    subgraph RAM["UNO Q example — 4 GB RAM total"]
+<div class="cell" data-fig-width="6" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    subgraph RAM["UNO Q, 4 GB RAM"]
         direction LR
         OS["OS + services&lt;br&gt;~1–1.5 GB"] --- W["model weights&lt;br&gt;0.8B @ Q8 ≈ 1 GB"] --- KV["KV cache + buffers&lt;br&gt;grows with context"] --- APP["headroom for&lt;br&gt;your application"]
-    end</code></pre>
+    end
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 <p>A worked example for the Arduino UNO Q (4 GB): Debian plus desktop services eat 1–1.5 GB. A Qwen3.5 2B at UD-Q4_K_XL needs ~1.3 GB for weights plus a few hundred MB of cache and buffers at modest context. Total under 2 GB for inference — tight but workable. A standard 3B at Q4 needs 2+ GB for weights alone, and now you’re one browser tab away from the OOM (Out-Of-Memory) killer. This is why the model tables later in this tutorial look the way they do.</p>
 <blockquote class="blockquote">
 <p>Rule of thumb: <strong>usable model size ≈ (total RAM − OS and apps) × 0.7</strong>, with the remainder going to the KV cache and buffers.</p>
@@ -489,7 +503,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="the-three-tools" class="level2">
 <h2 class="anchored" data-anchor-id="the-three-tools">3. The three tools</h2>
 <p>All three tools in this tutorial run the same GGUF models and, underneath, share the same inference engine. They differ in packaging:</p>
-<pre class="mermaid"><code>flowchart TB
+<div class="cell" data-fig-width="6" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TB
     APP["your application&lt;br&gt;(Python / Node / curl — OpenAI-compatible client)"]
     subgraph PKG["packaging layer"]
         OL["Ollama&lt;br&gt;registry + REST API :11434"]
@@ -504,7 +523,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     OL --&gt; ENG
     LMS --&gt; ENG
     LSV --&gt; ENG
-    ENG --&gt; GGUF</code></pre>
+    ENG --&gt; GGUF
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 <section id="llama.cpp-the-engine" class="level3">
 <h3 class="anchored" data-anchor-id="llama.cpp-the-engine">llama.cpp — the engine</h3>
 <p><img src="./images/png/llamacpp.png" class="img-fluid"></p>
@@ -605,33 +630,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="ollama" class="level3">
 <h3 class="anchored" data-anchor-id="ollama">4.1 Ollama</h3>
 <p>Linux:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://ollama.com/install.sh <span class="kw">|</span> <span class="fu">sh</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://ollama.com/install.sh <span class="kw">|</span> <span class="fu">sh</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>macOS and Windows: download the installer from <a href="https://ollama.com">ollama.com</a>. Then:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> run llama3.2:3b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> run llama3.2:3b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>First run downloads ~2 GB; after that, you’re at a chat prompt. Useful commands:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> list                      <span class="co"># installed models</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> ps                        <span class="co"># what's loaded, CPU or GPU</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull qwen3.5:2b           <span class="co"># download without running</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> run llama3.2:3b <span class="at">--verbose</span> <span class="co"># prints tokens/s after each reply</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># pull a specific GGUF straight from Hugging Face:</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> run hf.co/unsloth/Qwen3.5-2B-GGUF:UD-Q4_K_XL</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> list                      <span class="co"># installed models</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> ps                        <span class="co"># what's loaded, CPU or GPU</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull qwen3.5:2b           <span class="co"># download without running</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> run llama3.2:3b <span class="at">--verbose</span> <span class="co"># prints tokens/s after each reply</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># pull a specific GGUF straight from Hugging Face:</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> run hf.co/unsloth/Qwen3.5-2B-GGUF:UD-Q4_K_XL</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Every model also becomes an API:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> http://localhost:11434/api/generate <span class="at">-d</span> <span class="st">'{</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="st">  "model": "llama3.2:3b",</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="st">  "prompt": "Explain quantization in two sentences.",</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="st">  "stream": false</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="st">}'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> http://localhost:11434/api/generate <span class="at">-d</span> <span class="st">'{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="st">  "model": "llama3.2:3b",</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">  "prompt": "Explain quantization in two sentences.",</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">  "stream": false</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="st">}'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>And because the API is OpenAI-compatible, the standard <code>openai</code> Python client works unchanged:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI(base_url<span class="op">=</span><span class="st">"http://localhost:11434/v1"</span>, api_key<span class="op">=</span><span class="st">"ollama"</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>resp <span class="op">=</span> client.chat.completions.create(</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"llama3.2:3b"</span>,</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    messages<span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"Write a haiku about GPIO pins."</span>}],</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(resp.choices[<span class="dv">0</span>].message.content)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI(base_url<span class="op">=</span><span class="st">"http://localhost:11434/v1"</span>, api_key<span class="op">=</span><span class="st">"ollama"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>resp <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">"llama3.2:3b"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    messages<span class="op">=</span>[{<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"Write a haiku about GPIO pins."</span>}],</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(resp.choices[<span class="dv">0</span>].message.content)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <blockquote class="blockquote">
 <p>Swap the <code>base_url</code>, and this same script talks to LM Studio (port 1234) or llama-server (port 8080). Code you write against one tool runs against all three — worth internalizing, because it means your application doesn’t care which runtime is behind it.</p>
 </blockquote>
@@ -640,29 +665,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="lm-studio">4.2 LM Studio</h3>
 <p>Download from <a href="https://lmstudio.ai">lmstudio.ai</a>, open the app, and use the search tab to grab a model — it shows which quantizations fit your RAM before you download, which is a genuinely useful guardrail. Chat in the GUI, then enable the local server (Developer tab) to get the same OpenAI-compatible API on port 1234.</p>
 <p>The CLI mirrors most of it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">lms</span> get gemma-4-12b-it-qat   <span class="co"># download</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">lms</span> load gemma-4-12b-it-qat  <span class="co"># load into memory</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">lms</span> server start             <span class="co"># API on :1234</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">lms</span> get gemma-4-12b-it-qat   <span class="co"># download</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">lms</span> load gemma-4-12b-it-qat  <span class="co"># load into memory</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">lms</span> server start             <span class="co"># API on :1234</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Spend some time in the model settings: temperature, top-p, context length, system prompt. Watching how a 2B model’s output changes between temperatures 0.2 and 1.2 teaches you more about sampling than any blog post.</p>
 </section>
 <section id="llama.cpp" class="level3">
 <h3 class="anchored" data-anchor-id="llama.cpp">4.3 llama.cpp</h3>
 <p>Prebuilt binaries exist on the <a href="https://github.com/ggml-org/llama.cpp/releases">GitHub releases page</a>, or build from source (2–5 minutes on a modern PC):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/ggml-org/llama.cpp</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> llama.cpp</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">-B</span> build</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">--build</span> build <span class="at">--config</span> Release <span class="at">-j</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/ggml-org/llama.cpp</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> llama.cpp</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">-B</span> build</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">--build</span> build <span class="at">--config</span> Release <span class="at">-j</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Download a GGUF and run it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># llama.cpp can pull directly from Hugging Face:</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-cli</span> <span class="at">-hf</span> unsloth/Qwen3.5-2B-GGUF:UD-Q4_K_XL <span class="at">-p</span> <span class="st">"What is a KV cache?"</span> <span class="at">-n</span> 200</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># or with a local file, interactive chat:</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-cli</span> <span class="at">-m</span> models/qwen3.5-0.8b-q8_0.gguf <span class="at">-cnv</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># llama.cpp can pull directly from Hugging Face:</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-cli</span> <span class="at">-hf</span> unsloth/Qwen3.5-2B-GGUF:UD-Q4_K_XL <span class="at">-p</span> <span class="st">"What is a KV cache?"</span> <span class="at">-n</span> 200</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># or with a local file, interactive chat:</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-cli</span> <span class="at">-m</span> models/qwen3.5-0.8b-q8_0.gguf <span class="at">-cnv</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The flags you’ll actually use: <code>-c 4096</code> sets context length (bigger = more RAM), <code>-t 4</code> sets CPU threads (match your physical core count), <code>-ngl 99</code> offloads all layers to GPU if you built with CUDA/Metal/Vulkan support, and <code>-n</code> caps the number of generated tokens.</p>
 <p>For serving:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-server</span> <span class="at">-m</span> models/gemma-4-E4B-it-qat-Q4_0.gguf <span class="at">--port</span> 8080</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-server</span> <span class="at">-m</span> models/gemma-4-E4B-it-qat-Q4_0.gguf <span class="at">--port</span> 8080</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>And for honest numbers, <code>llama-bench</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-bench</span> <span class="at">-m</span> models/qwen3.5-2b-UD-Q4_K_XL.gguf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-bench</span> <span class="at">-m</span> models/qwen3.5-2b-UD-Q4_K_XL.gguf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>It reports <code>pp</code> (prompt processing) and <code>tg</code> (token generation) rates separately.</p>
 <blockquote class="blockquote">
 <p>Generation speed is what you feel in chat; prompt speed is what you feel when you paste a long document.</p>
@@ -681,8 +706,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="ollama-on-the-pi" class="level3">
 <h3 class="anchored" data-anchor-id="ollama-on-the-pi">5.1 Ollama on the Pi</h3>
 <p>Same one-liner as the PC — Ollama ships ARM64 builds:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://ollama.com/install.sh <span class="kw">|</span> <span class="fu">sh</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> run llama3.2:1b <span class="at">--verbose</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://ollama.com/install.sh <span class="kw">|</span> <span class="fu">sh</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> run llama3.2:1b <span class="at">--verbose</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>That’s the whole setup. What to expect, CPU-only, short context (speed figures compiled from published Pi 5 benchmarks; your exact numbers will vary with cooling, RAM speed, and context length):</p>
 <table class="caption-top table">
 <colgroup>
@@ -766,10 +791,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="llama.cpp-on-the-pi" class="level3">
 <h3 class="anchored" data-anchor-id="llama.cpp-on-the-pi">5.2 llama.cpp on the Pi</h3>
 <p>Build exactly as on the PC (the ARM NEON optimizations are detected automatically; add <code>-j4</code> and expect ~10 minutes):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/ggml-org/llama.cpp</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> llama.cpp</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">-B</span> build <span class="kw">&amp;&amp;</span> <span class="fu">cmake</span> <span class="at">--build</span> build <span class="at">--config</span> Release <span class="at">-j4</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-cli</span> <span class="at">-hf</span> unsloth/Qwen3.5-0.8B-GGUF:Q8_0 <span class="at">-cnv</span> <span class="at">-t</span> 4</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/ggml-org/llama.cpp</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> llama.cpp</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">-B</span> build <span class="kw">&amp;&amp;</span> <span class="fu">cmake</span> <span class="at">--build</span> build <span class="at">--config</span> Release <span class="at">-j4</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-cli</span> <span class="at">-hf</span> unsloth/Qwen3.5-0.8B-GGUF:Q8_0 <span class="at">-cnv</span> <span class="at">-t</span> 4</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Head-to-head tests on the Pi 5 consistently show llama.cpp to be a touch faster than Ollama (one published TinyLlama-1.1B comparison: 14.4 vs 13.8 tok/s) and lighter on RAM, at the cost of managing model files yourself. On an 8 GB Pi, the difference rarely matters; on a 4 GB device, it does.</p>
 <p>Two Pi-specific notes. First, if you need more headroom, zram swap compresses memory pages and postpones the OOM killer, though once weights actually swap to disk, performance is dead anyway. Second, the AI HAT+ 2 accelerator (Hailo-10H, 40 TOPS, released January 2026) can offload LLM inference from the CPU; it’s a $130 add-on with its own toolchain, and it’s beyond the scope here, but it’s worth knowing it exists if the CPU numbers above aren’t enough. Do not expect a model to run faster. What you get with the hat is only offloaded LLM inference from the CPU, not speed.</p>
 <blockquote class="blockquote">
@@ -863,19 +888,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="llama.cpp-on-the-uno-q-recommended-path" class="level3">
 <h3 class="anchored" data-anchor-id="llama.cpp-on-the-uno-q-recommended-path">6.2 llama.cpp on the UNO Q (recommended path)</h3>
 <p>SSH into the board and build as usual — expect 15–20 minutes on the A53:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt install <span class="at">-y</span> git cmake build-essential</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/ggml-org/llama.cpp</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> llama.cpp</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">-B</span> build <span class="kw">&amp;&amp;</span> <span class="fu">cmake</span> <span class="at">--build</span> build <span class="at">--config</span> Release <span class="at">-j4</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt install <span class="at">-y</span> git cmake build-essential</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/ggml-org/llama.cpp</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> llama.cpp</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">-B</span> build <span class="kw">&amp;&amp;</span> <span class="fu">cmake</span> <span class="at">--build</span> build <span class="at">--config</span> Release <span class="at">-j4</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Pull a small model and test:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-cli</span> <span class="at">-hf</span> unsloth/Qwen3.5-0.8B-GGUF:Q8_0 <span class="dt">\</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">-t</span> 4 <span class="at">-c</span> 1024 <span class="at">-cnv</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-cli</span> <span class="at">-hf</span> unsloth/Qwen3.5-0.8B-GGUF:Q8_0 <span class="dt">\</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">-t</span> 4 <span class="at">-c</span> 1024 <span class="at">-cnv</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>(Q8_0 is the right call at this size: the file is still under 1 GB, and sub-1B models suffer most from aggressive quantization. For the smarter option, swap in <code>unsloth/Qwen3.5-2B-GGUF:UD-Q4_K_XL</code> — and close everything else first.)</p>
 <p>Then make it a service your project can call:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-server</span> <span class="at">-m</span> qwen3.5-0.8b-q8_0.gguf <span class="dt">\</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">-t</span> 4 <span class="at">-c</span> 1024 <span class="at">--host</span> 127.0.0.1 <span class="at">--port</span> 8080</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-server</span> <span class="at">-m</span> qwen3.5-0.8b-q8_0.gguf <span class="dt">\</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">-t</span> 4 <span class="at">-c</span> 1024 <span class="at">--host</span> 127.0.0.1 <span class="at">--port</span> 8080</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now the Python side of an App Lab sketch can send local data to <code>http://127.0.0.1:8080/v1/chat/completions</code> — same OpenAI-style API as everywhere else in this tutorial — and forward the result to the STM32 side. A concrete example loop: the MCU streams temperature and vibration readings; a Python script accumulates them; every 10 minutes it asks the model for a one-line plain-English status; the MCU scrolls that line on a display. Deterministic control stays on the microcontroller; the model is an occasional reasoning layer, which is exactly how Arduino’s own guidance frames it.</p>
-<pre class="mermaid"><code>flowchart LR
+<div class="cell" data-fig-width="6" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
     subgraph MCU["STM32U585 — real-time side"]
         SEN["sensors&lt;br&gt;(temp, vibration, ...)"] --&gt; SK["Arduino sketch"]
         SK --&gt; ACT["display / actuators"]
@@ -885,23 +915,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         LS --&gt;|"one-line status"| PY
     end
     SK -- "readings (bridge)" --&gt; PY
-    PY -- "summary text" --&gt; SK</code></pre>
+    PY -- "summary text" --&gt; SK
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 <p>If you’d rather work in Go, the <code>yzma</code> wrapper (<a href="https://projecthub.arduino.cc/marc-edgeimpulse/running-local-llms-and-vlms-on-the-arduino-uno-q-with-yzma-74e288">by Ron Evans</a>) rides on llama.cpp and has a documented UNO Q workflow using SmolLM2-135M — including vision models, via LLaVA-style VLMs.</p>
 <p>For more examples: <a href="../../content/genai/genai.html">Generative AI at the Edge</a>, later in this book</p>
 </section>
 <section id="ollama-on-the-uno-q-with-a-workaround" class="level3">
 <h3 class="anchored" data-anchor-id="ollama-on-the-uno-q-with-a-workaround">6.3 Ollama on the UNO Q (with a workaround)</h3>
 <p>The standard installer fails on this board: Ollama’s install script unpacks a multi-hundred-MB bundle into <code>/usr</code>, and the UNO Q’s root partition doesn’t have the space. The fix is to install the tarball onto the larger data partition and symlink it, then point model storage there too:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install location with space (adjust to your partition layout)</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mkdir <span class="at">-p</span> /home/arduino/ollama</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-L</span> https://ollama.com/download/ollama-linux-arm64.tgz <span class="kw">|</span> <span class="dt">\</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sudo</span> tar <span class="at">-xz</span> <span class="at">-C</span> /home/arduino/ollama</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ln <span class="at">-s</span> /home/arduino/ollama/bin/ollama /usr/local/bin/ollama</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># keep models off the root partition as well</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">OLLAMA_MODELS</span><span class="op">=</span>/home/arduino/ollama/models</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> serve <span class="kw">&amp;</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> run qwen3.5:0.8b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install location with space (adjust to your partition layout)</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mkdir <span class="at">-p</span> /home/arduino/ollama</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-L</span> https://ollama.com/download/ollama-linux-arm64.tgz <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sudo</span> tar <span class="at">-xz</span> <span class="at">-C</span> /home/arduino/ollama</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ln <span class="at">-s</span> /home/arduino/ollama/bin/ollama /usr/local/bin/ollama</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># keep models off the root partition as well</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">OLLAMA_MODELS</span><span class="op">=</span>/home/arduino/ollama/models</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> serve <span class="kw">&amp;</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> run qwen3.5:0.8b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Alessandro Tinivelli’s write-up “<a href="https://blog.tinivelli.com/installing-ollama-on-arduino-uno-q/">Installing Ollama on Arduino Uno Q</a>” (linked below) walks through this in detail, including systemd setup. Once running, you get the same registry convenience and API as on any other machine. It costs a few hundred MB more RAM than bare llama.cpp, which is why llama.cpp remains the recommendation when you’re pushing the 2B ceiling.</p>
 </section>
 <section id="lm-studio-on-the-uno-q" class="level3">
@@ -1016,7 +1052,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Build your app against the OpenAI-compatible endpoint so you can swap runtimes and hardware later without touching application code.</li>
 </ol>
 <p>The same checklist as a decision flow:</p>
-<pre class="mermaid"><code>flowchart TD
+<div class="cell" data-fig-width="6" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
     START{"Where will it run?"} --&gt;|PC| PCQ{"Exploring models,&lt;br&gt;or building an app?"}
     PCQ --&gt;|exploring| LMS["LM Studio"]
     PCQ --&gt;|building| OLPC["Ollama"]
@@ -1024,7 +1065,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     START --&gt;|"UNO Q (4 GB)"| UQ["llama.cpp&lt;br&gt;(or Ollama + partition workaround)"]
     LMS &amp; OLPC --&gt; MPC["model: 4–12B Q4 tier&lt;br&gt;(Gemma4 E4B/12B QAT, Qwen3.5 4B/9B, Ornith 9B)"]
     PI --&gt; MPI["model: 0.8–3B tier&lt;br&gt;(Qwen3.5 0.8B Q8, LFM2.5-1.2B Q5, Gemma4 E2B QAT)"]
-    UQ --&gt; MUQ["model: ≤2B, short context&lt;br&gt;(Qwen3.5 0.8B Q8 default, 2B UD ceiling)"]</code></pre>
+    UQ --&gt; MUQ["model: ≤2B, short context&lt;br&gt;(Qwen3.5 0.8B Q8 default, 2B UD ceiling)"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 <p>The pattern behind all three targets is the same one driving edge AI generally: the model comes to the data, not the other way around. Once a $59 board with an ARM core can turn sensor logs into sentences offline, “do I really need the cloud for this?” becomes a question worth asking about every language task in your project.</p>
 </section>
 <section id="quick-comparison-summary" class="level2">

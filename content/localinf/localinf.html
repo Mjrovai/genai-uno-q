@@ -901,18 +901,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-server</span> <span class="at">-m</span> qwen3.5-0.8b-q8_0.gguf <span class="dt">\</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">-t</span> 4 <span class="at">-c</span> 1024 <span class="at">--host</span> 127.0.0.1 <span class="at">--port</span> 8080</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now the Python side of an App Lab sketch can send local data to <code>http://127.0.0.1:8080/v1/chat/completions</code> — same OpenAI-style API as everywhere else in this tutorial — and forward the result to the STM32 side. A concrete example loop: the MCU streams temperature and vibration readings; a Python script accumulates them; every 10 minutes it asks the model for a one-line plain-English status; the MCU scrolls that line on a display. Deterministic control stays on the microcontroller; the model is an occasional reasoning layer, which is exactly how Arduino’s own guidance frames it.</p>
-<div class="cell" data-fig-width="6" data-layout-align="default">
+<div class="cell" data-fig-width="5.5" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
-<pre class="mermaid mermaid-js">flowchart LR
-    subgraph MCU["STM32U585 — real-time side"]
-        SEN["sensors&lt;br&gt;(temp, vibration, ...)"] --&gt; SK["Arduino sketch"]
+<pre class="mermaid mermaid-js">flowchart TB
+    subgraph MCU["STM32U585 (real-time)"]
+        SEN["sensors&lt;br&gt;temp, vibration, ..."] --&gt; SK["Arduino sketch"]
         SK --&gt; ACT["display / actuators"]
     end
-    subgraph MPU["Dragonwing QRB2210 — Debian Linux side"]
-        PY["Python app&lt;br&gt;(accumulates readings)"] --&gt;|"POST /v1/chat/completions"| LS["llama-server :8080&lt;br&gt;Qwen3.5 0.8B Q8"]
+    subgraph MPU["QRB2210 (Linux)"]
+        PY["Python app&lt;br&gt;accumulates readings"] --&gt;|"POST /v1/chat/completions"| LS["llama-server :8080&lt;br&gt;Qwen3.5 0.8B Q8"]
         LS --&gt;|"one-line status"| PY
     end
     SK -- "readings (bridge)" --&gt; PY

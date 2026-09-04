@@ -32,6 +32,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./weekly_labs.html" rel="next">
 <link href="./about_book.html" rel="prev">
 <link href="./images/cover.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
@@ -166,6 +167,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Course Materials</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./weekly_labs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Weekly Labs</span></a>
+  </div>
+</li>
         <li class="px-0"><hr class="sidebar-divider hi "></li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
@@ -264,7 +271,7 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#what-maps-to-what" id="toc-what-maps-to-what" class="nav-link active" data-scroll-target="#what-maps-to-what">What Maps to What</a></li>
-  <li><a href="#using-this-in-your-own-course" id="toc-using-this-in-your-own-course" class="nav-link" data-scroll-target="#using-this-in-your-own-course">Using This in Your Own Course</a></li>
+  <li><a href="#how-the-course-runs" id="toc-how-the-course-runs" class="nav-link" data-scroll-target="#how-the-course-runs">How the Course Runs</a></li>
   </ul>
 </nav>
     </div>
@@ -295,6 +302,7 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li><strong>Slide decks (PDF):</strong> <a href="https://github.com/Mjrovai/UNIFEI-IESTI05-EDGE_AI/tree/main/00_Curso_Folder/4-Generative_AI-UNO-Q">github.com/Mjrovai/UNIFEI-IESTI05-EDGE_AI</a></li>
 <li><strong>Video playlist:</strong> <a href="https://www.youtube.com/playlist?list=PLesj_E3B3AQQ">Generative AI with Arduino UNO Q</a></li>
+<li><strong>Weekly labs:</strong> <a href="./weekly_labs.html">one lab per class</a>, with objectives, instructions, and a deliverable</li>
 </ul>
 <section id="what-maps-to-what" class="level2">
 <h2 class="anchored" data-anchor-id="what-maps-to-what">What Maps to What</h2>
@@ -358,9 +366,9 @@ ul.task-list li input[type="checkbox"] {
 <p>Three chapters have no lecture yet. <em>SLMs at the Edge</em> runs entirely on a student’s own computer and works well as pre-class reading; the two Part 2 chapters cover the App Lab and Edge Impulse workflow, which is easier to demonstrate live than to record.</p>
 <p>Total running time of the six recorded lectures is about 1 hour 38 minutes.</p>
 </section>
-<section id="using-this-in-your-own-course" class="level2">
-<h2 class="anchored" data-anchor-id="using-this-in-your-own-course">Using This in Your Own Course</h2>
-<p>The material is built around roughly two hours of lecture plus lab time per chapter. A workable shape for a short course or workshop:</p>
+<section id="how-the-course-runs" class="level2">
+<h2 class="anchored" data-anchor-id="how-the-course-runs">How the Course Runs</h2>
+<p>In IESTI05 this material occupies <strong>thirteen one-hour classes</strong>, numbered 16 to 28 in the course. An hour is enough to introduce a topic and start the lab, not to finish it, so students work through the corresponding chapter themselves between sessions, and the longer chapters are split across more than one class.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -369,40 +377,77 @@ ul.task-list li input[type="checkbox"] {
 </colgroup>
 <thead>
 <tr class="header">
-<th>Session</th>
-<th>Book</th>
-<th>Lecture</th>
+<th>Class</th>
+<th>Topic</th>
+<th>Chapter</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>1</td>
-<td>Foundations, then SLMs at the Edge as a lab on students’ laptops</td>
-<td>Ch0</td>
+<td>16</td>
+<td>How generative AI works — SLMs</td>
+<td>How Generative AI Works</td>
 </tr>
 <tr class="even">
-<td>2</td>
-<td>UNO Q setup, boards handed out</td>
-<td>Ch1</td>
+<td>17</td>
+<td>SLMs at the edge, on the student’s own machine</td>
+<td>SLMs at the Edge</td>
 </tr>
 <tr class="odd">
-<td>3</td>
-<td>Generative AI at the Edge — building <code>llama.cpp</code>, first tokens</td>
-<td>Ch2</td>
+<td>18</td>
+<td>UNO Q setup walkthrough</td>
+<td>Arduino UNO Q Setup</td>
 </tr>
 <tr class="even">
-<td>4</td>
-<td>Multimodal, then GenAI Meets the Real World</td>
-<td>Ch3, Ch4</td>
+<td>19</td>
+<td>Running SLMs on the UNO Q</td>
+<td>Generative AI at the Edge</td>
 </tr>
 <tr class="odd">
-<td>5</td>
-<td>Agentic AI, then project work</td>
-<td>Ch5</td>
+<td>20</td>
+<td>Benchmarking and model selection</td>
+<td>Generative AI at the Edge, §7</td>
+</tr>
+<tr class="even">
+<td>21</td>
+<td>Talking to the model from Python</td>
+<td>Generative AI at the Edge, §9</td>
+</tr>
+<tr class="odd">
+<td>22</td>
+<td>Multimodal AI at the edge</td>
+<td>Multimodal AI at the Edge</td>
+</tr>
+<tr class="even">
+<td>23</td>
+<td>SLM optimization — agentic AI</td>
+<td>Agentic AI at the Edge</td>
+</tr>
+<tr class="odd">
+<td>24</td>
+<td>Building an agent on the UNO Q</td>
+<td>Agentic AI at the Edge, §5</td>
+</tr>
+<tr class="even">
+<td>25</td>
+<td>Physical AI and Bridge RPC (MPU to MCU)</td>
+<td>GenAI Meets the Real World</td>
+</tr>
+<tr class="odd">
+<td>26</td>
+<td>Physical AI project</td>
+<td>GenAI Meets the Real World, §6</td>
+</tr>
+<tr class="even">
+<td>27–28</td>
+<td>RAG at the edge</td>
+<td><em>in development</em></td>
 </tr>
 </tbody>
 </table>
-<p>Two practical notes for anyone running this. Get the <strong>4 GB</strong> UNO Q; the 2 GB board will not hold the models used from Chapter 2 onward. And have students work through <em>SLMs at the Edge</em> on their own machines before the boards arrive, so nobody is idle waiting on hardware.</p>
+<p>The live plan, which is more current than this table, is in the course repository: <a href="https://github.com/Mjrovai/UNIFEI-IESTI05-EDGE_AI#arduino-uno-q">IESTI05 — Arduino UNO Q</a>. It also carries a parallel Raspberry Pi track drawn from the companion volume.</p>
+<p>Note that the course takes the agentic chapter <strong>before</strong> the physical-AI one, reversing the book’s order. That works because Agentic AI at the Edge depends only on the setup and <code>llama.cpp</code> chapters — it says so explicitly in its own prerequisites, and it deliberately avoids sensors and vision so it can be taught early.</p>
+<p>Two things worth copying if you run this yourself. Get the <strong>4 GB</strong> UNO Q; the 2 GB board will not hold the models used from Class 19 onward. And put <em>SLMs at the Edge</em> before the boards are handed out, as Class 17 does, so nobody is idle waiting on hardware.</p>
 <p>If you teach with this material, I would like to hear about it — corrections and contributions are welcome in either repository.</p>
 
 
@@ -823,6 +868,9 @@ ul.task-list li input[type="checkbox"] {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./weekly_labs.html" class="pagination-link" aria-label="Weekly Labs">
+        <span class="nav-page-text">Weekly Labs</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

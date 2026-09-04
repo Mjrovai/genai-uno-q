@@ -190,13 +190,153 @@
     ]
   },
   {
-    "objectID": "course_materials.html#using-this-in-your-own-course",
-    "href": "course_materials.html#using-this-in-your-own-course",
+    "objectID": "course_materials.html#how-the-course-runs",
+    "href": "course_materials.html#how-the-course-runs",
     "title": "Course Materials",
-    "section": "Using This in Your Own Course",
-    "text": "Using This in Your Own Course\nThe material is built around roughly two hours of lecture plus lab time per chapter. A workable shape for a short course or workshop:\n\n\n\n\n\n\n\n\nSession\nBook\nLecture\n\n\n\n\n1\nFoundations, then SLMs at the Edge as a lab on students’ laptops\nCh0\n\n\n2\nUNO Q setup, boards handed out\nCh1\n\n\n3\nGenerative AI at the Edge — building llama.cpp, first tokens\nCh2\n\n\n4\nMultimodal, then GenAI Meets the Real World\nCh3, Ch4\n\n\n5\nAgentic AI, then project work\nCh5\n\n\n\nTwo practical notes for anyone running this. Get the 4 GB UNO Q; the 2 GB board will not hold the models used from Chapter 2 onward. And have students work through SLMs at the Edge on their own machines before the boards arrive, so nobody is idle waiting on hardware.\nIf you teach with this material, I would like to hear about it — corrections and contributions are welcome in either repository.",
+    "section": "How the Course Runs",
+    "text": "How the Course Runs\nIn IESTI05 this material occupies thirteen one-hour classes, numbered 16 to 28 in the course. An hour is enough to introduce a topic and start the lab, not to finish it, so students work through the corresponding chapter themselves between sessions, and the longer chapters are split across more than one class.\n\n\n\n\n\n\n\n\nClass\nTopic\nChapter\n\n\n\n\n16\nHow generative AI works — SLMs\nHow Generative AI Works\n\n\n17\nSLMs at the edge, on the student’s own machine\nSLMs at the Edge\n\n\n18\nUNO Q setup walkthrough\nArduino UNO Q Setup\n\n\n19\nRunning SLMs on the UNO Q\nGenerative AI at the Edge\n\n\n20\nBenchmarking and model selection\nGenerative AI at the Edge, §7\n\n\n21\nTalking to the model from Python\nGenerative AI at the Edge, §9\n\n\n22\nMultimodal AI at the edge\nMultimodal AI at the Edge\n\n\n23\nSLM optimization — agentic AI\nAgentic AI at the Edge\n\n\n24\nBuilding an agent on the UNO Q\nAgentic AI at the Edge, §5\n\n\n25\nPhysical AI and Bridge RPC (MPU to MCU)\nGenAI Meets the Real World\n\n\n26\nPhysical AI project\nGenAI Meets the Real World, §6\n\n\n27–28\nRAG at the edge\nin development\n\n\n\nThe live plan, which is more current than this table, is in the course repository: IESTI05 — Arduino UNO Q. It also carries a parallel Raspberry Pi track drawn from the companion volume.\nNote that the course takes the agentic chapter before the physical-AI one, reversing the book’s order. That works because Agentic AI at the Edge depends only on the setup and llama.cpp chapters — it says so explicitly in its own prerequisites, and it deliberately avoids sensors and vision so it can be taught early.\nTwo things worth copying if you run this yourself. Get the 4 GB UNO Q; the 2 GB board will not hold the models used from Class 19 onward. And put SLMs at the Edge before the boards are handed out, as Class 17 does, so nobody is idle waiting on hardware.\nIf you teach with this material, I would like to hear about it — corrections and contributions are welcome in either repository.",
     "crumbs": [
       "Course Materials"
+    ]
+  },
+  {
+    "objectID": "weekly_labs.html",
+    "href": "weekly_labs.html",
+    "title": "Weekly Labs",
+    "section": "",
+    "text": "Before Class 16: the Fixed-Function Half\nOne lab per class, for the Arduino UNO Q half of IESTI05\nEach class in this part of the course is one hour, which is enough to introduce a topic and start working, not to finish. These labs are what students carry out of the room: a concrete task tied to one chapter, with a deliverable to hand in before the next class.\nClasses are numbered 16 to 28, continuing the course sequence. The chapter links go to the relevant part of this book.\nThese labs pick up where the course’s first part leaves off. Classes 1 to 15 cover reactive AI — Linux and Python setup, image classification with LiteRT and Edge Impulse, object detection with Edge Impulse and YOLO, a bee-counting project, and text generation with an RNN.\nThat material was written around the Raspberry Pi, and the companion volume EdgeML Made Easy documents it. It also runs on the Arduino UNO Q with modest adaptation: the models, the training workflow in Edge Impulse, and the concepts are identical, and the Linux side is Debian in both cases.\nWhat genuinely differs is deployment. On the UNO Q you package a model, a web interface, and an MCU sketch as one App Lab application and drive it with arduino-app-cli, rather than running a Python script on the Pi. Part 2 of this book — Image Classification and Object Detection — covers exactly that path, so a student who did Classes 5 to 12 on a Pi can redo them on the UNO Q without relearning the task, only the toolchain.\nIf you are teaching the whole course on UNO Q hardware, the practical consequence is that students already know Linux, SSH, and Edge Impulse by Class 16. Class 18 is then a shorter session than it looks.",
+    "crumbs": [
+      "Weekly Labs"
+    ]
+  },
+  {
+    "objectID": "weekly_labs.html#class-16-how-generative-ai-works",
+    "href": "weekly_labs.html#class-16-how-generative-ai-works",
+    "title": "Weekly Labs",
+    "section": "Class 16 — How Generative AI Works",
+    "text": "Class 16 — How Generative AI Works\nChapter: How Generative AI Works, and How It Gets Small\nObjectives:\n\nBuild working vocabulary: tokens, embeddings, pretraining, quantization, distillation\nSee why a model’s context window is measured in tokens, not words\nApply the RAM budget rule to a real board\n\nInstructions:\n\nRead the chapter, paying attention to sections 4 and 5.\nOpen the OpenAI tokenizer. Paste one paragraph in English and the same paragraph in Portuguese. Record the token count for each.\nOpen the TensorFlow Embedding Projector. Search for a word from your field and inspect its nearest neighbours.\nWork through the Transformer Explainer one layer at a time.\nUsing the rule of thumb from the SLMs chapter — usable model size ≈ (total RAM − OS and apps) × 0.7 — estimate the largest model that fits on a 4 GB UNO Q.\n\nDeliverable: A half-page note with the two token counts and an explanation of why they differ, plus your RAM estimate and the arithmetic behind it.",
+    "crumbs": [
+      "Weekly Labs"
+    ]
+  },
+  {
+    "objectID": "weekly_labs.html#class-17-slms-on-your-own-machine",
+    "href": "weekly_labs.html#class-17-slms-on-your-own-machine",
+    "title": "Weekly Labs",
+    "section": "Class 17 — SLMs on Your Own Machine",
+    "text": "Class 17 — SLMs on Your Own Machine\nChapter: SLMs at the Edge\nObjectives:\n\nRun a language model locally, with no cloud account\nMeasure tokens per second on hardware you own\nCompare two quantizations of the same model\n\nInstructions:\n\nInstall one runtime on your own computer: Ollama, LM Studio, or llama.cpp. Section 4 covers all three.\nPull a model in the 0.5B–2B range and run a first prompt.\nRecord tokens per second and peak RAM.\nDownload a second quantization of the same model — Q4 against Q8 — and run the identical prompt.\nNote where the answers differ, not only how fast they are.\n\nDeliverable: A table with model, quantization, file size, tokens per second, and peak RAM for both runs, plus two sentences on any quality difference you noticed.",
+    "crumbs": [
+      "Weekly Labs"
+    ]
+  },
+  {
+    "objectID": "weekly_labs.html#class-18-arduino-uno-q-setup",
+    "href": "weekly_labs.html#class-18-arduino-uno-q-setup",
+    "title": "Weekly Labs",
+    "section": "Class 18 — Arduino UNO Q Setup",
+    "text": "Class 18 — Arduino UNO Q Setup\nChapter: Arduino UNO Q Setup\nObjectives:\n\nBring up a UNO Q headless, with no monitor or keyboard\nReach the board over SSH from your own machine\nRun one of the pre-installed example applications\n\nInstructions:\n\nInstall ADB on your host computer and confirm adb devices sees the board.\nFlash the latest Linux image.\nOpen an ADB shell and change the default password.\nConfigure Wi-Fi from the terminal, then enable SSH and connect over the network.\nList the pre-installed examples and run one with arduino-app-cli.\n\nDeliverable: A screenshot of an SSH session on the board showing the output of arduino-app-cli and the result of a running example.",
+    "crumbs": [
+      "Weekly Labs"
+    ]
+  },
+  {
+    "objectID": "weekly_labs.html#class-19-running-slms-on-the-uno-q",
+    "href": "weekly_labs.html#class-19-running-slms-on-the-uno-q",
+    "title": "Weekly Labs",
+    "section": "Class 19 — Running SLMs on the UNO Q",
+    "text": "Class 19 — Running SLMs on the UNO Q\nChapter: Generative AI at the Edge\nObjectives:\n\nBuild llama.cpp from source on the board\nDownload a GGUF model and generate the first tokens on-device\nMeasure real throughput on four Cortex-A53 cores\n\nInstructions:\n\nVerify swap is present and install the build tools (chapter sections 4 and 5).\nClone llama.cpp and build it. Expect this to take a while on the board.\nConfirm llama-cli and llama-server exist.\nCreate ~/models and download Qwen3.5-0.8B at Q8_0.\nRun a first prompt with llama-cli and record the reported tokens per second.\n\nDeliverable: Terminal output of your first on-board generation, with the tokens-per-second figure highlighted. Compare it to the number you measured on your laptop in Class 17.",
+    "crumbs": [
+      "Weekly Labs"
+    ]
+  },
+  {
+    "objectID": "weekly_labs.html#class-20-benchmarking-and-model-selection",
+    "href": "weekly_labs.html#class-20-benchmarking-and-model-selection",
+    "title": "Weekly Labs",
+    "section": "Class 20 — Benchmarking and Model Selection",
+    "text": "Class 20 — Benchmarking and Model Selection\nChapter: Generative AI at the Edge, section 7\nObjectives:\n\nQuantify the cost of quantization on a sub-1B model\nDecide which model to use for a stated task, with evidence\n\nInstructions:\n\nDownload Qwen3.5-0.8B at Q4_K_M alongside the Q8_0 you already have.\nRun the same three prompts through both, one of which must require structured output such as JSON.\nRecord tokens per second, memory use, and whether the structured output parsed.\nRepeat with SmolLM2-360M to see the floor of what is usable.\nIf you have a 4 GB board and time, try Qwen3.5-2B at UD-Q4_K_XL.\n\nDeliverable: A comparison table across all models tested, ending with one paragraph recommending a model for a battery-powered sensor node that must return valid JSON. Justify it with your own numbers.",
+    "crumbs": [
+      "Weekly Labs"
+    ]
+  },
+  {
+    "objectID": "weekly_labs.html#class-21-talking-to-the-model-from-python",
+    "href": "weekly_labs.html#class-21-talking-to-the-model-from-python",
+    "title": "Weekly Labs",
+    "section": "Class 21 — Talking to the Model from Python",
+    "text": "Class 21 — Talking to the Model from Python\nChapter: Generative AI at the Edge, section 9\nObjectives:\n\nRun llama-server and call it from code\nGet reliable structured output from a small model\n\nInstructions:\n\nStart llama-server and confirm it responds to a curl request.\nCreate a Python virtual environment and install the openai client.\nWrite a script that sends a prompt and prints the reply.\nChange it to request JSON, using a system prompt and a few-shot example.\nRun it ten times on the same input and count how often the JSON parses.\n\nDeliverable: Your script, plus the pass rate out of ten runs and a note on what you changed to improve reliability.",
+    "crumbs": [
+      "Weekly Labs"
+    ]
+  },
+  {
+    "objectID": "weekly_labs.html#class-22-multimodal-ai-at-the-edge",
+    "href": "weekly_labs.html#class-22-multimodal-ai-at-the-edge",
+    "title": "Weekly Labs",
+    "section": "Class 22 — Multimodal AI at the Edge",
+    "text": "Class 22 — Multimodal AI at the Edge\nChapter: Multimodal AI at the Edge\nObjectives:\n\nGive the same model vision by loading a projector\nJudge honestly what a sub-1B vision model gets right and wrong\n\nInstructions:\n\nDownload the mmproj projector matching your model. Do not mix a 0.8B projector with a 2B model.\nStart the vision server and send it an image.\nDescribe three photographs you took yourself, at least one cluttered or poorly lit.\nTest on a potential mosquito breeding site, as in the VisText-Mosquito section.\nNote where the model hallucinates detail that is not in the image.\n\nDeliverable: The three images with the model’s descriptions, and a short assessment of each: correct, partly correct, or invented.",
+    "crumbs": [
+      "Weekly Labs"
+    ]
+  },
+  {
+    "objectID": "weekly_labs.html#class-23-agentic-ai-tools-and-the-webui",
+    "href": "weekly_labs.html#class-23-agentic-ai-tools-and-the-webui",
+    "title": "Weekly Labs",
+    "section": "Class 23 — Agentic AI: Tools and the WebUI",
+    "text": "Class 23 — Agentic AI: Tools and the WebUI\nChapter: Agentic AI at the Edge\nObjectives:\n\nUnderstand what separates an agent from a chatbot\nWatch a model choose tools and observe when it chooses badly\n\nInstructions:\n\nConfirm your llama.cpp build supports the tools API.\nStart the server with read-only tools only.\nOpen the built-in WebUI and read the tools panel.\nSet the agentic limits, then give it a task needing two tools in sequence.\nAdd a writing tool deliberately, and read the safety note before you do.\n\nDeliverable: A transcript of one interaction where the model called at least two tools, annotated with where its reasoning went wrong or right.",
+    "crumbs": [
+      "Weekly Labs"
+    ]
+  },
+  {
+    "objectID": "weekly_labs.html#class-24-building-an-agent-on-the-uno-q",
+    "href": "weekly_labs.html#class-24-building-an-agent-on-the-uno-q",
+    "title": "Weekly Labs",
+    "section": "Class 24 — Building an Agent on the UNO Q",
+    "text": "Class 24 — Building an Agent on the UNO Q\nChapter: Agentic AI at the Edge, sections 5 to 8\nObjectives:\n\nDesign a tool set with a deliberately small attack surface\nImplement the agent loop and drive hardware from a tool call\n\nInstructions:\n\nCreate the app and seed its workspace.\nImplement the Python-side tools.\nWrite the MCU sketch driving the built-in LED and LED matrix, and check the matrix orientation on the board.\nDefine the tool schemas and dispatch table, then build the loop.\nAdd the HTTP interface and exercise it end to end.\n\nDeliverable: A short screen recording of your agent answering a request that requires at least two tool calls, one of which changes something physical on the board.",
+    "crumbs": [
+      "Weekly Labs"
+    ]
+  },
+  {
+    "objectID": "weekly_labs.html#class-25-physical-ai-and-bridge-rpc",
+    "href": "weekly_labs.html#class-25-physical-ai-and-bridge-rpc",
+    "title": "Weekly Labs",
+    "section": "Class 25 — Physical AI and Bridge RPC",
+    "text": "Class 25 — Physical AI and Bridge RPC\nChapter: GenAI Meets the Real World, sections 4 and 5\nObjectives:\n\nRun llama-server as a service that survives reboot\nExplain the dual-brain split in your own words\n\nInstructions:\n\nOptionally set up VS Code Remote-SSH; everything also works from a plain terminal.\nCreate the llama-server systemd unit file.\nEnable and start the service, then check its status.\nReboot the board and confirm the model is serving without you touching it.\nRead section 5 and trace one request from the MCU to the model and back.\n\nDeliverable: Output of systemctl status taken after a reboot, plus a diagram you draw yourself of the path a sensor reading takes to become an LED colour.",
+    "crumbs": [
+      "Weekly Labs"
+    ]
+  },
+  {
+    "objectID": "weekly_labs.html#class-26-physical-ai-project",
+    "href": "weekly_labs.html#class-26-physical-ai-project",
+    "title": "Weekly Labs",
+    "section": "Class 26 — Physical AI Project",
+    "text": "Class 26 — Physical AI Project\nChapter: GenAI Meets the Real World, sections 6 to 9\nObjectives:\n\nBuild a complete dual-brain application\nConnect a model’s verdict to a physical output\n\nInstructions:\n\nCreate the app skeleton and edit app.yaml.\nWrite python/requirements.txt and python/main.py.\nWire the hardware and write sketch/sketch.ino and sketch/sketch.yaml.\nRun the full application and confirm the MCU responds to the model’s classification.\nTest the Flask endpoint from another machine on the network.\n\nDeliverable: A demonstration video showing a changed sensor reading producing a different model verdict and a different physical output, plus your project repository.",
+    "crumbs": [
+      "Weekly Labs"
+    ]
+  },
+  {
+    "objectID": "weekly_labs.html#classes-27-and-28-rag-at-the-edge",
+    "href": "weekly_labs.html#classes-27-and-28-rag-at-the-edge",
+    "title": "Weekly Labs",
+    "section": "Classes 27 and 28 — RAG at the Edge",
+    "text": "Classes 27 and 28 — RAG at the Edge\nIn development. These classes will cover retrieval-augmented generation on the UNO Q. Until the material exists, the Advancing Edge AI chapter of the companion Raspberry Pi volume covers the same ground, and the approach carries over using the llama-server setup from Class 21.",
+    "crumbs": [
+      "Weekly Labs"
+    ]
+  },
+  {
+    "objectID": "weekly_labs.html#notes-for-instructors",
+    "href": "weekly_labs.html#notes-for-instructors",
+    "title": "Weekly Labs",
+    "section": "Notes for Instructors",
+    "text": "Notes for Instructors\nThe labs assume students have their own UNO Q from Class 18 onward, and a 4 GB board from Class 19 — the 2 GB variant will not hold the models used after that point.\nClasses 16 and 17 need no board at all. That is deliberate: it lets the course start while hardware is still in transit, and it gives every student a laptop baseline to compare the board against in Class 19.\nDeliverables are sized for one week between classes, not for the hour itself.",
+    "crumbs": [
+      "Weekly Labs"
     ]
   },
   {

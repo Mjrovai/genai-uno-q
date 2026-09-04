@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Object Detection on the Arduino UNO Q – Generative AI at the Edge</title>
+<title>Weekly Labs – Generative AI at the Edge</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,24 +26,24 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<link href="../../content/imgclass/imgclass.html" rel="prev">
-<link href="../../images/cover.jpg" rel="icon" type="image/jpeg">
-<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-daec65ff3ba034f51daec66ecad3ce27.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./course_materials.html" rel="prev">
+<link href="./images/cover.jpg" rel="icon" type="image/jpeg">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-daec65ff3ba034f51daec66ecad3ce27.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -73,7 +73,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-sidebar floating nav-fixed quarto-light">
@@ -83,7 +83,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../../index.html">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Generative AI at the Edge</span>
     </a>
   </div>
@@ -116,7 +116,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/objdet/objdet.html">Object Detection on the Arduino UNO Q</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./weekly_labs.html">Weekly Labs</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -138,50 +138,50 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../Acknowledgements.html" class="sidebar-item-text sidebar-link">
+  <a href="./Acknowledgements.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Acknowledgments</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../intro.html" class="sidebar-item-text sidebar-link">
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Introduction</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../about_book.html" class="sidebar-item-text sidebar-link">
+  <a href="./about_book.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">About this Book</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../course_materials.html" class="sidebar-item-text sidebar-link">
+  <a href="./course_materials.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Course Materials</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../weekly_labs.html" class="sidebar-item-text sidebar-link">
+  <a href="./weekly_labs.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Weekly Labs</span></a>
   </div>
 </li>
         <li class="px-0"><hr class="sidebar-divider hi "></li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../Classification_of_AI_Applications.html" class="sidebar-item-text sidebar-link">
+  <a href="./Classification_of_AI_Applications.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Classification of AI Applications</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/foundations/foundations.html" class="sidebar-item-text sidebar-link">
+  <a href="./content/foundations/foundations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">How Generative AI Works, and How It Gets Small</span></a>
   </div>
 </li>
@@ -192,37 +192,37 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/localinf/localinf.html" class="sidebar-item-text sidebar-link">
+  <a href="./content/localinf/localinf.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">SLMs at the Edge</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/setup/setup.html" class="sidebar-item-text sidebar-link">
+  <a href="./content/setup/setup.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Arduino UNO Q Setup</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/genai/genai.html" class="sidebar-item-text sidebar-link">
+  <a href="./content/genai/genai.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Generative AI at the Edge:</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/multimodai/multimodai.html" class="sidebar-item-text sidebar-link">
+  <a href="./content/multimodai/multimodai.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Multimodal AI at the Edge:</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/physicalai/physicalai.html" class="sidebar-item-text sidebar-link">
+  <a href="./content/physicalai/physicalai.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">GenAI Meets the Real World:</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/agenticai/agenticai.html" class="sidebar-item-text sidebar-link">
+  <a href="./content/agenticai/agenticai.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Agentic AI at the Edge:</span></a>
   </div>
 </li>
@@ -232,13 +232,13 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/imgclass/imgclass.html" class="sidebar-item-text sidebar-link">
+  <a href="./content/imgclass/imgclass.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Image Classification on the Arduino UNO Q</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/objdet/objdet.html" class="sidebar-item-text sidebar-link active">
+  <a href="./content/objdet/objdet.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Object Detection on the Arduino UNO Q</span></a>
   </div>
 </li>
@@ -249,13 +249,13 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../references.html" class="sidebar-item-text sidebar-link">
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../About_the_author.html" class="sidebar-item-text sidebar-link">
+  <a href="./About_the_author.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">About the author</span></a>
   </div>
 </li>
@@ -264,15 +264,34 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#before-class-16-the-fixed-function-half" id="toc-before-class-16-the-fixed-function-half" class="nav-link active" data-scroll-target="#before-class-16-the-fixed-function-half">Before Class 16: the Fixed-Function Half</a></li>
+  <li><a href="#class-16-how-generative-ai-works" id="toc-class-16-how-generative-ai-works" class="nav-link" data-scroll-target="#class-16-how-generative-ai-works">Class 16 — How Generative AI Works</a></li>
+  <li><a href="#class-17-slms-on-your-own-machine" id="toc-class-17-slms-on-your-own-machine" class="nav-link" data-scroll-target="#class-17-slms-on-your-own-machine">Class 17 — SLMs on Your Own Machine</a></li>
+  <li><a href="#class-18-arduino-uno-q-setup" id="toc-class-18-arduino-uno-q-setup" class="nav-link" data-scroll-target="#class-18-arduino-uno-q-setup">Class 18 — Arduino UNO Q Setup</a></li>
+  <li><a href="#class-19-running-slms-on-the-uno-q" id="toc-class-19-running-slms-on-the-uno-q" class="nav-link" data-scroll-target="#class-19-running-slms-on-the-uno-q">Class 19 — Running SLMs on the UNO Q</a></li>
+  <li><a href="#class-20-benchmarking-and-model-selection" id="toc-class-20-benchmarking-and-model-selection" class="nav-link" data-scroll-target="#class-20-benchmarking-and-model-selection">Class 20 — Benchmarking and Model Selection</a></li>
+  <li><a href="#class-21-talking-to-the-model-from-python" id="toc-class-21-talking-to-the-model-from-python" class="nav-link" data-scroll-target="#class-21-talking-to-the-model-from-python">Class 21 — Talking to the Model from Python</a></li>
+  <li><a href="#class-22-multimodal-ai-at-the-edge" id="toc-class-22-multimodal-ai-at-the-edge" class="nav-link" data-scroll-target="#class-22-multimodal-ai-at-the-edge">Class 22 — Multimodal AI at the Edge</a></li>
+  <li><a href="#class-23-agentic-ai-tools-and-the-webui" id="toc-class-23-agentic-ai-tools-and-the-webui" class="nav-link" data-scroll-target="#class-23-agentic-ai-tools-and-the-webui">Class 23 — Agentic AI: Tools and the WebUI</a></li>
+  <li><a href="#class-24-building-an-agent-on-the-uno-q" id="toc-class-24-building-an-agent-on-the-uno-q" class="nav-link" data-scroll-target="#class-24-building-an-agent-on-the-uno-q">Class 24 — Building an Agent on the UNO Q</a></li>
+  <li><a href="#class-25-physical-ai-and-bridge-rpc" id="toc-class-25-physical-ai-and-bridge-rpc" class="nav-link" data-scroll-target="#class-25-physical-ai-and-bridge-rpc">Class 25 — Physical AI and Bridge RPC</a></li>
+  <li><a href="#class-26-physical-ai-project" id="toc-class-26-physical-ai-project" class="nav-link" data-scroll-target="#class-26-physical-ai-project">Class 26 — Physical AI Project</a></li>
+  <li><a href="#classes-27-and-28-rag-at-the-edge" id="toc-classes-27-and-28-rag-at-the-edge" class="nav-link" data-scroll-target="#classes-27-and-28-rag-at-the-edge">Classes 27 and 28 — RAG at the Edge</a></li>
+  <li><a href="#notes-for-instructors" id="toc-notes-for-instructors" class="nav-link" data-scroll-target="#notes-for-instructors">Notes for Instructors</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Object Detection on the Arduino UNO Q</h1>
+<h1 class="title">Weekly Labs</h1>
 </div>
 
 
@@ -289,10 +308,243 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p><em>Coming soon.</em></p>
-<p>This chapter will cover training and deploying a custom object-detection model (YOLO-based) to the UNO Q with Edge Impulse Studio, following the same structure as <a href="../../content/imgclass/imgclass.html">Image Classification</a>: pre-installed model first, then a custom-trained one, deployed both to static images and a live camera feed, with detections driving MCU-side actuation over Bridge.</p>
+<p>One lab per class, for the Arduino UNO Q half of IESTI05</p>
+<p>Each class in this part of the course is one hour, which is enough to introduce a topic and start working, not to finish. These labs are what students carry out of the room: a concrete task tied to one chapter, with a deliverable to hand in before the next class.</p>
+<p>Classes are numbered 16 to 28, continuing the course sequence. The chapter links go to the relevant part of this book.</p>
+<section id="before-class-16-the-fixed-function-half" class="level2">
+<h2 class="anchored" data-anchor-id="before-class-16-the-fixed-function-half">Before Class 16: the Fixed-Function Half</h2>
+<p>These labs pick up where the course’s first part leaves off. <a href="https://github.com/Mjrovai/UNIFEI-IESTI05-EDGE_AI#part-1-fixed-function-ai-reactive">Classes 1 to 15</a> cover reactive AI — Linux and Python setup, image classification with LiteRT and Edge Impulse, object detection with Edge Impulse and YOLO, a bee-counting project, and text generation with an RNN.</p>
+<p>That material was written around the <strong>Raspberry Pi</strong>, and the companion volume <a href="https://mjrovai.github.io/EdgeML_Made_Ease_ebook/"><em>EdgeML Made Easy</em></a> documents it. It also runs on the <strong>Arduino UNO Q</strong> with modest adaptation: the models, the training workflow in Edge Impulse, and the concepts are identical, and the Linux side is Debian in both cases.</p>
+<p>What genuinely differs is deployment. On the UNO Q you package a model, a web interface, and an MCU sketch as one App Lab application and drive it with <code>arduino-app-cli</code>, rather than running a Python script on the Pi. Part 2 of this book — <a href="./content/imgclass/imgclass.html">Image Classification</a> and <a href="./content/objdet/objdet.html">Object Detection</a> — covers exactly that path, so a student who did Classes 5 to 12 on a Pi can redo them on the UNO Q without relearning the task, only the toolchain.</p>
+<p>If you are teaching the whole course on UNO Q hardware, the practical consequence is that students already know Linux, SSH, and Edge Impulse by Class 16. Class 18 is then a shorter session than it looks.</p>
+<hr>
+</section>
+<section id="class-16-how-generative-ai-works" class="level2">
+<h2 class="anchored" data-anchor-id="class-16-how-generative-ai-works">Class 16 — How Generative AI Works</h2>
+<p>Chapter: <a href="./content/foundations/foundations.html">How Generative AI Works, and How It Gets Small</a></p>
+<p><strong>Objectives:</strong></p>
+<ul>
+<li>Build working vocabulary: tokens, embeddings, pretraining, quantization, distillation</li>
+<li>See why a model’s context window is measured in tokens, not words</li>
+<li>Apply the RAM budget rule to a real board</li>
+</ul>
+<p><strong>Instructions:</strong></p>
+<ol type="1">
+<li>Read the chapter, paying attention to sections 4 and 5.</li>
+<li>Open the <a href="https://platform.openai.com/tokenizer">OpenAI tokenizer</a>. Paste one paragraph in English and the same paragraph in Portuguese. Record the token count for each.</li>
+<li>Open the <a href="https://projector.tensorflow.org/">TensorFlow Embedding Projector</a>. Search for a word from your field and inspect its nearest neighbours.</li>
+<li>Work through the <a href="https://poloclub.github.io/transformer-explainer/">Transformer Explainer</a> one layer at a time.</li>
+<li>Using the rule of thumb from the SLMs chapter — usable model size ≈ (total RAM − OS and apps) × 0.7 — estimate the largest model that fits on a 4 GB UNO Q.</li>
+</ol>
+<p><strong>Deliverable:</strong> A half-page note with the two token counts and an explanation of why they differ, plus your RAM estimate and the arithmetic behind it.</p>
+<hr>
+</section>
+<section id="class-17-slms-on-your-own-machine" class="level2">
+<h2 class="anchored" data-anchor-id="class-17-slms-on-your-own-machine">Class 17 — SLMs on Your Own Machine</h2>
+<p>Chapter: <a href="./content/localinf/localinf.html">SLMs at the Edge</a></p>
+<p><strong>Objectives:</strong></p>
+<ul>
+<li>Run a language model locally, with no cloud account</li>
+<li>Measure tokens per second on hardware you own</li>
+<li>Compare two quantizations of the same model</li>
+</ul>
+<p><strong>Instructions:</strong></p>
+<ol type="1">
+<li>Install one runtime on your own computer: Ollama, LM Studio, or <code>llama.cpp</code>. Section 4 covers all three.</li>
+<li>Pull a model in the 0.5B–2B range and run a first prompt.</li>
+<li>Record tokens per second and peak RAM.</li>
+<li>Download a second quantization of the same model — Q4 against Q8 — and run the identical prompt.</li>
+<li>Note where the answers differ, not only how fast they are.</li>
+</ol>
+<p><strong>Deliverable:</strong> A table with model, quantization, file size, tokens per second, and peak RAM for both runs, plus two sentences on any quality difference you noticed.</p>
+<hr>
+</section>
+<section id="class-18-arduino-uno-q-setup" class="level2">
+<h2 class="anchored" data-anchor-id="class-18-arduino-uno-q-setup">Class 18 — Arduino UNO Q Setup</h2>
+<p>Chapter: <a href="./content/setup/setup.html">Arduino UNO Q Setup</a></p>
+<p><strong>Objectives:</strong></p>
+<ul>
+<li>Bring up a UNO Q headless, with no monitor or keyboard</li>
+<li>Reach the board over SSH from your own machine</li>
+<li>Run one of the pre-installed example applications</li>
+</ul>
+<p><strong>Instructions:</strong></p>
+<ol type="1">
+<li>Install ADB on your host computer and confirm <code>adb devices</code> sees the board.</li>
+<li>Flash the latest Linux image.</li>
+<li>Open an ADB shell and change the default password.</li>
+<li>Configure Wi-Fi from the terminal, then enable SSH and connect over the network.</li>
+<li>List the pre-installed examples and run one with <code>arduino-app-cli</code>.</li>
+</ol>
+<p><strong>Deliverable:</strong> A screenshot of an SSH session on the board showing the output of <code>arduino-app-cli</code> and the result of a running example.</p>
+<hr>
+</section>
+<section id="class-19-running-slms-on-the-uno-q" class="level2">
+<h2 class="anchored" data-anchor-id="class-19-running-slms-on-the-uno-q">Class 19 — Running SLMs on the UNO Q</h2>
+<p>Chapter: <a href="./content/genai/genai.html">Generative AI at the Edge</a></p>
+<p><strong>Objectives:</strong></p>
+<ul>
+<li>Build <code>llama.cpp</code> from source on the board</li>
+<li>Download a GGUF model and generate the first tokens on-device</li>
+<li>Measure real throughput on four Cortex-A53 cores</li>
+</ul>
+<p><strong>Instructions:</strong></p>
+<ol type="1">
+<li>Verify swap is present and install the build tools (chapter sections 4 and 5).</li>
+<li>Clone <code>llama.cpp</code> and build it. Expect this to take a while on the board.</li>
+<li>Confirm <code>llama-cli</code> and <code>llama-server</code> exist.</li>
+<li>Create <code>~/models</code> and download Qwen3.5-0.8B at Q8_0.</li>
+<li>Run a first prompt with <code>llama-cli</code> and record the reported tokens per second.</li>
+</ol>
+<p><strong>Deliverable:</strong> Terminal output of your first on-board generation, with the tokens-per-second figure highlighted. Compare it to the number you measured on your laptop in Class 17.</p>
+<hr>
+</section>
+<section id="class-20-benchmarking-and-model-selection" class="level2">
+<h2 class="anchored" data-anchor-id="class-20-benchmarking-and-model-selection">Class 20 — Benchmarking and Model Selection</h2>
+<p>Chapter: <a href="./content/genai/genai.html">Generative AI at the Edge, section 7</a></p>
+<p><strong>Objectives:</strong></p>
+<ul>
+<li>Quantify the cost of quantization on a sub-1B model</li>
+<li>Decide which model to use for a stated task, with evidence</li>
+</ul>
+<p><strong>Instructions:</strong></p>
+<ol type="1">
+<li>Download Qwen3.5-0.8B at Q4_K_M alongside the Q8_0 you already have.</li>
+<li>Run the same three prompts through both, one of which must require structured output such as JSON.</li>
+<li>Record tokens per second, memory use, and whether the structured output parsed.</li>
+<li>Repeat with SmolLM2-360M to see the floor of what is usable.</li>
+<li>If you have a 4 GB board and time, try Qwen3.5-2B at UD-Q4_K_XL.</li>
+</ol>
+<p><strong>Deliverable:</strong> A comparison table across all models tested, ending with one paragraph recommending a model for a battery-powered sensor node that must return valid JSON. Justify it with your own numbers.</p>
+<hr>
+</section>
+<section id="class-21-talking-to-the-model-from-python" class="level2">
+<h2 class="anchored" data-anchor-id="class-21-talking-to-the-model-from-python">Class 21 — Talking to the Model from Python</h2>
+<p>Chapter: <a href="./content/genai/genai.html">Generative AI at the Edge, section 9</a></p>
+<p><strong>Objectives:</strong></p>
+<ul>
+<li>Run <code>llama-server</code> and call it from code</li>
+<li>Get reliable structured output from a small model</li>
+</ul>
+<p><strong>Instructions:</strong></p>
+<ol type="1">
+<li>Start <code>llama-server</code> and confirm it responds to a <code>curl</code> request.</li>
+<li>Create a Python virtual environment and install the <code>openai</code> client.</li>
+<li>Write a script that sends a prompt and prints the reply.</li>
+<li>Change it to request JSON, using a system prompt and a few-shot example.</li>
+<li>Run it ten times on the same input and count how often the JSON parses.</li>
+</ol>
+<p><strong>Deliverable:</strong> Your script, plus the pass rate out of ten runs and a note on what you changed to improve reliability.</p>
+<hr>
+</section>
+<section id="class-22-multimodal-ai-at-the-edge" class="level2">
+<h2 class="anchored" data-anchor-id="class-22-multimodal-ai-at-the-edge">Class 22 — Multimodal AI at the Edge</h2>
+<p>Chapter: <a href="./content/multimodai/multimodai.html">Multimodal AI at the Edge</a></p>
+<p><strong>Objectives:</strong></p>
+<ul>
+<li>Give the same model vision by loading a projector</li>
+<li>Judge honestly what a sub-1B vision model gets right and wrong</li>
+</ul>
+<p><strong>Instructions:</strong></p>
+<ol type="1">
+<li>Download the <code>mmproj</code> projector matching your model. Do not mix a 0.8B projector with a 2B model.</li>
+<li>Start the vision server and send it an image.</li>
+<li>Describe three photographs you took yourself, at least one cluttered or poorly lit.</li>
+<li>Test on a potential mosquito breeding site, as in the VisText-Mosquito section.</li>
+<li>Note where the model hallucinates detail that is not in the image.</li>
+</ol>
+<p><strong>Deliverable:</strong> The three images with the model’s descriptions, and a short assessment of each: correct, partly correct, or invented.</p>
+<hr>
+</section>
+<section id="class-23-agentic-ai-tools-and-the-webui" class="level2">
+<h2 class="anchored" data-anchor-id="class-23-agentic-ai-tools-and-the-webui">Class 23 — Agentic AI: Tools and the WebUI</h2>
+<p>Chapter: <a href="./content/agenticai/agenticai.html">Agentic AI at the Edge</a></p>
+<p><strong>Objectives:</strong></p>
+<ul>
+<li>Understand what separates an agent from a chatbot</li>
+<li>Watch a model choose tools and observe when it chooses badly</li>
+</ul>
+<p><strong>Instructions:</strong></p>
+<ol type="1">
+<li>Confirm your <code>llama.cpp</code> build supports the tools API.</li>
+<li>Start the server with read-only tools only.</li>
+<li>Open the built-in WebUI and read the tools panel.</li>
+<li>Set the agentic limits, then give it a task needing two tools in sequence.</li>
+<li>Add a writing tool deliberately, and read the safety note before you do.</li>
+</ol>
+<p><strong>Deliverable:</strong> A transcript of one interaction where the model called at least two tools, annotated with where its reasoning went wrong or right.</p>
+<hr>
+</section>
+<section id="class-24-building-an-agent-on-the-uno-q" class="level2">
+<h2 class="anchored" data-anchor-id="class-24-building-an-agent-on-the-uno-q">Class 24 — Building an Agent on the UNO Q</h2>
+<p>Chapter: <a href="./content/agenticai/agenticai.html">Agentic AI at the Edge, sections 5 to 8</a></p>
+<p><strong>Objectives:</strong></p>
+<ul>
+<li>Design a tool set with a deliberately small attack surface</li>
+<li>Implement the agent loop and drive hardware from a tool call</li>
+</ul>
+<p><strong>Instructions:</strong></p>
+<ol type="1">
+<li>Create the app and seed its workspace.</li>
+<li>Implement the Python-side tools.</li>
+<li>Write the MCU sketch driving the built-in LED and LED matrix, and check the matrix orientation on the board.</li>
+<li>Define the tool schemas and dispatch table, then build the loop.</li>
+<li>Add the HTTP interface and exercise it end to end.</li>
+</ol>
+<p><strong>Deliverable:</strong> A short screen recording of your agent answering a request that requires at least two tool calls, one of which changes something physical on the board.</p>
+<hr>
+</section>
+<section id="class-25-physical-ai-and-bridge-rpc" class="level2">
+<h2 class="anchored" data-anchor-id="class-25-physical-ai-and-bridge-rpc">Class 25 — Physical AI and Bridge RPC</h2>
+<p>Chapter: <a href="./content/physicalai/physicalai.html">GenAI Meets the Real World, sections 4 and 5</a></p>
+<p><strong>Objectives:</strong></p>
+<ul>
+<li>Run <code>llama-server</code> as a service that survives reboot</li>
+<li>Explain the dual-brain split in your own words</li>
+</ul>
+<p><strong>Instructions:</strong></p>
+<ol type="1">
+<li>Optionally set up VS Code Remote-SSH; everything also works from a plain terminal.</li>
+<li>Create the <code>llama-server</code> systemd unit file.</li>
+<li>Enable and start the service, then check its status.</li>
+<li>Reboot the board and confirm the model is serving without you touching it.</li>
+<li>Read section 5 and trace one request from the MCU to the model and back.</li>
+</ol>
+<p><strong>Deliverable:</strong> Output of <code>systemctl status</code> taken after a reboot, plus a diagram you draw yourself of the path a sensor reading takes to become an LED colour.</p>
+<hr>
+</section>
+<section id="class-26-physical-ai-project" class="level2">
+<h2 class="anchored" data-anchor-id="class-26-physical-ai-project">Class 26 — Physical AI Project</h2>
+<p>Chapter: <a href="./content/physicalai/physicalai.html">GenAI Meets the Real World, sections 6 to 9</a></p>
+<p><strong>Objectives:</strong></p>
+<ul>
+<li>Build a complete dual-brain application</li>
+<li>Connect a model’s verdict to a physical output</li>
+</ul>
+<p><strong>Instructions:</strong></p>
+<ol type="1">
+<li>Create the app skeleton and edit <code>app.yaml</code>.</li>
+<li>Write <code>python/requirements.txt</code> and <code>python/main.py</code>.</li>
+<li>Wire the hardware and write <code>sketch/sketch.ino</code> and <code>sketch/sketch.yaml</code>.</li>
+<li>Run the full application and confirm the MCU responds to the model’s classification.</li>
+<li>Test the Flask endpoint from another machine on the network.</li>
+</ol>
+<p><strong>Deliverable:</strong> A demonstration video showing a changed sensor reading producing a different model verdict and a different physical output, plus your project repository.</p>
+<hr>
+</section>
+<section id="classes-27-and-28-rag-at-the-edge" class="level2">
+<h2 class="anchored" data-anchor-id="classes-27-and-28-rag-at-the-edge">Classes 27 and 28 — RAG at the Edge</h2>
+<p><em>In development.</em> These classes will cover retrieval-augmented generation on the UNO Q. Until the material exists, the <a href="https://mjrovai.github.io/EdgeML_Made_Ease_ebook/raspi/advancing_adgeai/adv_edgeai.html">Advancing Edge AI</a> chapter of the companion Raspberry Pi volume covers the same ground, and the approach carries over using the <code>llama-server</code> setup from Class 21.</p>
+<hr>
+</section>
+<section id="notes-for-instructors" class="level2">
+<h2 class="anchored" data-anchor-id="notes-for-instructors">Notes for Instructors</h2>
+<p>The labs assume students have their own UNO Q from Class 18 onward, and a <strong>4 GB</strong> board from Class 19 — the 2 GB variant will not hold the models used after that point.</p>
+<p>Classes 16 and 17 need no board at all. That is deliberate: it lets the course start while hardware is still in transit, and it gives every student a laptop baseline to compare the board against in Class 19.</p>
+<p>Deliverables are sized for one week between classes, not for the hour itself.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -704,8 +956,8 @@ ul.task-list li input[type="checkbox"] {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../content/imgclass/imgclass.html" class="pagination-link" aria-label="Image Classification on the Arduino UNO Q">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Image Classification on the Arduino UNO Q</span>
+      <a href="./course_materials.html" class="pagination-link" aria-label="Course Materials">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Course Materials</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

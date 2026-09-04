@@ -24,7 +24,7 @@
     "href": "intro.html",
     "title": "Introduction",
     "section": "",
-    "text": "Generative AI Leaves the Data Center\nFor most of its short history, generative AI has been something that happens somewhere else. You type into a browser, a request travels to a data center, a rack of GPUs does the work, and an answer comes back. The intelligence is real, but it is rented, metered, and always one network outage away from being unavailable.\nThat assumption is now breaking down. Models have become dramatically smaller without becoming useless, quantization has made them fit in a few hundred megabytes, and inference runtimes like llama.cpp have been optimized to the point where a language model will run on a board that costs less than a textbook. What used to require a server now runs on a device you can hold in one hand and power from a USB-C port.\nThis book is about that shift, and about one board in particular.",
+    "text": "Generative AI Leaves the Data Center\nFor most of its short history, generative AI has been something that happens somewhere else. You type into a browser, a request travels to a data center, a rack of GPUs does the work, and an answer comes back. The intelligence is real, but it is rented, metered, and always one network outage away from being unavailable.\nThat assumption is now breaking down. Models have become dramatically smaller without becoming useless; quantization has made them fit in a few hundred megabytes, and inference runtimes like llama.cpp have been optimized to the point where a language model will run on a board that costs less than a textbook. What used to require a server now runs on a device you can hold in one hand and power from a USB-C port.\nThis book is about that shift, and about one board in particular.",
     "crumbs": [
       "Introduction"
     ]
@@ -167,6 +167,36 @@
     "text": "License and Use\nThese materials were created for IESTI05 — Edge AI Machine Learning System Engineering at UNIFEI and are released under the GNU General Public License 3.0. You are free to use, adapt, and redistribute them, including for teaching, provided derivative work carries the same license. If you adopt this book in a course, I would genuinely like to hear about it.",
     "crumbs": [
       "About this Book"
+    ]
+  },
+  {
+    "objectID": "course_materials.html",
+    "href": "course_materials.html",
+    "title": "Course Materials",
+    "section": "",
+    "text": "What Maps to What\nSlides and video walkthroughs to accompany the book\nThis book is the written half of a course. The other half is a set of lecture slides and recorded walkthroughs, made for IESTI05 — Edge AI Engineering at UNIFEI and used in AIEng4D workshops. Everything is open and free to reuse under the same licence as the book.\nThe lecture numbering is its own sequence and does not line up with the book’s chapter order, so use this table rather than the numbers. Lecture 1 is the UNO Q setup, which is the second chapter of Part 1 in the book.\nThree chapters have no lecture yet. SLMs at the Edge runs entirely on a student’s own computer and works well as pre-class reading; the two Part 2 chapters cover the App Lab and Edge Impulse workflow, which is easier to demonstrate live than to record.\nTotal running time of the six recorded lectures is about 1 hour 38 minutes.",
+    "crumbs": [
+      "Course Materials"
+    ]
+  },
+  {
+    "objectID": "course_materials.html#what-maps-to-what",
+    "href": "course_materials.html#what-maps-to-what",
+    "title": "Course Materials",
+    "section": "",
+    "text": "Book chapter\nSlide deck\nVideo\n\n\n\n\nHow Generative AI Works, and How It Gets Small\nCh0 — Foundations\nFoundations, 11:56\n\n\nSLMs at the Edge\n—\n—\n\n\nArduino UNO Q Setup\nCh1 — Setup\nUNO Q Setup, 13:29\n\n\nGenerative AI at the Edge\nCh2 — Generative AI at the Edge\nGenerative AI at the Edge, 21:19\n\n\nMultimodal AI at the Edge\nCh3 — Multimodal AI\nMultimodal AI at the Edge, 18:11\n\n\nGenAI Meets the Real World\nCh4 — GenAI Meets the Real World\nGenAI Meets the Real World, 13:32\n\n\nAgentic AI at the Edge\nCh5 — Agentic AI\nAgentic AI at the Edge, 19:34\n\n\nImage Classification\n—\n—\n\n\nObject Detection\n—\n—",
+    "crumbs": [
+      "Course Materials"
+    ]
+  },
+  {
+    "objectID": "course_materials.html#using-this-in-your-own-course",
+    "href": "course_materials.html#using-this-in-your-own-course",
+    "title": "Course Materials",
+    "section": "Using This in Your Own Course",
+    "text": "Using This in Your Own Course\nThe material is built around roughly two hours of lecture plus lab time per chapter. A workable shape for a short course or workshop:\n\n\n\n\n\n\n\n\nSession\nBook\nLecture\n\n\n\n\n1\nFoundations, then SLMs at the Edge as a lab on students’ laptops\nCh0\n\n\n2\nUNO Q setup, boards handed out\nCh1\n\n\n3\nGenerative AI at the Edge — building llama.cpp, first tokens\nCh2\n\n\n4\nMultimodal, then GenAI Meets the Real World\nCh3, Ch4\n\n\n5\nAgentic AI, then project work\nCh5\n\n\n\nTwo practical notes for anyone running this. Get the 4 GB UNO Q; the 2 GB board will not hold the models used from Chapter 2 onward. And have students work through SLMs at the Edge on their own machines before the boards arrive, so nobody is idle waiting on hardware.\nIf you teach with this material, I would like to hear about it — corrections and contributions are welcome in either repository.",
+    "crumbs": [
+      "Course Materials"
     ]
   },
   {
@@ -494,7 +524,7 @@
     "href": "content/setup/setup.html#exploring-pre-installed-examples",
     "title": "Arduino UNO Q Setup",
     "section": "9. Exploring Pre-Installed Examples",
-    "text": "9. Exploring Pre-Installed Examples\n\nStep 1 — Exploring the Pre-loaded AI models\nThe UNO Q ships with a rich set of pre-installed example applications that demonstrate everything from basic LED control to AI-powered computer vision. You can discover, run, study, and customize all of them entirely from an SSH terminal — no App Lab GUI required.\n\nTo guarantee that you have the latest pre-loaded models you can updated the system with the command:\narduino-app-cli system update\nNote that the update will take a long time.\n\nFrom an SSH terminal, run:\narduino-app-cli app list.\nThis command will show all installed models, including the user created ones:\n\nNote that the examples: apps listed by arduino-app-cli are not stored in ~/ArduinoApps/ — only your user-created apps (like Blink) live there. The examples are managed internally by the CLI on the filesystem and stored inside ~/.local/share/arduino-app-cli on the board.\nSo we have two classes of apps in the UNO-Q:\n\nexamples:\\* → read-only, managed by the CLI at /var/lib/arduino-app-cli\nuser:\\* → your apps in ~/ArduinoApps/, which is the only place you see with ls\n\n\n\nStep 2 — Running an example via terminal\nIt is possible to run any of the examples directly on a terminal via SSH\narduino-app-cli app start examples:blink\n\n\nNote: The first run may take several minutes as the system downloads and installs Arduino libraries and sets up the Python container.\n\nYou should see the built-in LED on the UNO Q blinking on and off every second.\n\nTo inspect the logs:\narduino-app-cli app logs examples:blink\n\nAnd to stop it:\narduino-app-cli app stop examples:blink",
+    "text": "9. Exploring Pre-Installed Examples\n\nStep 1 — Exploring the Pre-loaded AI models\nThe UNO Q ships with a rich set of pre-installed example applications that demonstrate everything from basic LED control to AI-powered computer vision. You can discover, run, study, and customize all of them entirely from an SSH terminal — no App Lab GUI required.\n\nTo guarantee that you have the latest pre-loaded models, you can update the system with the command:\narduino-app-cli system update\nNote that the update will take a long time.\n\nFrom an SSH terminal, run:\narduino-app-cli app list.\nThis command will show all installed models, including the user created ones:\n\nNote that the examples: apps listed by arduino-app-cli are not stored in ~/ArduinoApps/ — only your user-created apps (like Blink) live there. The examples are managed internally by the CLI on the filesystem and stored inside ~/.local/share/arduino-app-cli on the board.\nSo we have two classes of apps in the UNO-Q:\n\nexamples:\\* → read-only, managed by the CLI at /var/lib/arduino-app-cli\nuser:\\* → your apps in ~/ArduinoApps/, which is the only place you see with ls\n\nNOTE: In the latest arduino-app-cli version, new examples were added with a new organization:\n\n\n\nStep 2 — Running an example via terminal\nIt is possible to run any of the examples directly in a terminal via SSH\narduino-app-cli app start examples:blink\nor in the new version:\n arduino-app-cli app start examples:inspirational/blink\n\nCheck your device first and adapt the commands as needed.\n\n\n\nNote: The first run may take several minutes as the system downloads and installs Arduino libraries and sets up the Python container.\n\nYou should see the built-in LED on the UNO Q blinking on and off every second.\n\nTo inspect the logs:\narduino-app-cli app logs examples:blink\n\nAnd to stop it:\narduino-app-cli app stop examples:blink",
     "crumbs": [
       "Arduino UNO Q Setup"
     ]

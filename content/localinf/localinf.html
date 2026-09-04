@@ -199,6 +199,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">About this Book</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../course_materials.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course Materials</span></a>
+  </div>
+</li>
         <li class="px-0"><hr class="sidebar-divider hi "></li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
@@ -821,7 +827,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="target-3-arduino-uno-q-4-gb" class="level2">
 <h2 class="anchored" data-anchor-id="target-3-arduino-uno-q-4-gb">6. Target 3: Arduino UNO Q (4 GB)</h2>
-<p><img src="./images/png/unoq.jpg" class="img-fluid"></p>
+<p><img src="./images/png/unoq.png" class="img-fluid"></p>
 <p>The UNO Q is a different animal: a “dual brain” board in the classic UNO form factor. One brain is a Qualcomm Dragonwing QRB2210 (quad Cortex-A53 @ 2.0 GHz) running Debian Linux from 4 GB RAM / 32 GB eMMC; the other is an STM32U585 microcontroller handling real-time I/O. The Linux side runs your language model; the MCU side blinks, senses, and actuates. Arduino’s App Lab environment ties the two together, and boards typically ship ready to use — you work on it via App Lab, SSH, or a USB-C monitor/keyboard setup.</p>
 <p>Set expectations first. The A53 is an efficiency core, but still behind the Pi 5’s A76, and 4 GB is shared with the whole OS. UNO Q experiments put a 0.8B model at roughly 5–6 tok/s — a “slow reader” pace. But the point of an LLM here isn’t speed; it’s that language understanding and hardware control live on the same $59 board with no network dependency. Think “summarize the last hour of sensor logs into one status sentence,” not “chatbot.”</p>
 <section id="what-fits-in-4-gb" class="level3">

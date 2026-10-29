@@ -366,6 +366,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#performance-what-to-actually-expect" id="toc-performance-what-to-actually-expect" class="nav-link" data-scroll-target="#performance-what-to-actually-expect">10. Performance: What to Actually Expect</a>
   <ul class="collapse">
+  <li><a href="#what-a-token-costs-in-energy" id="toc-what-a-token-costs-in-energy" class="nav-link" data-scroll-target="#what-a-token-costs-in-energy">What a Token Costs in Energy</a></li>
   <li><a href="#mtp-uno-q" id="toc-mtp-uno-q" class="nav-link" data-scroll-target="#mtp-uno-q">MTP Speculative Decoding: Not on the UNO Q</a></li>
   </ul></li>
   <li><a href="#tips-tricks-and-troubleshooting" id="toc-tips-tricks-and-troubleshooting" class="nav-link" data-scroll-target="#tips-tricks-and-troubleshooting">11. Tips, Tricks, and Troubleshooting</a>
@@ -854,7 +855,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="./images/png/temp-cpu-use.png" class="img-fluid"></p>
 <p>The UNO Q handles SLMs well. The inferences were done without any heatsink or fan. Internal temperature increased by about 20 °C (from ~30 °C to ~50 °C). For long answers, the temperature reached ~60 °C, which is lower than a Raspberry Pi 5 with an active cooler.</p>
 <blockquote class="blockquote">
-<p>Check session 8. Using llama-server / Step 4 — Thermal Monitoring for creating a scriot to measure the temperature</p>
+<p>Check session 8. Using llama-server / Step 4 — Thermal Monitoring to create a script to measure the temperature</p>
 </blockquote>
 </section>
 <section id="create-a-helper-script" class="level3">
@@ -1319,7 +1320,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td>Power consumption (max.)</td>
 <td>3.1 W</td>
-<td>not measured</td>
+<td>3.5 W peak, ~2.7 W while generating</td>
 </tr>
 </tbody>
 </table>
@@ -1336,6 +1337,76 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Token throughput vs.&nbsp;wall-clock latency</strong></p>
 <p>People often optimize for tokens/second when wall-clock latency is what actually matters. A 30-token answer at 10 tok/s (3 s) feels twice as responsive as a 100-token answer at 10 tok/s (10 s). Cap <code>max_tokens</code> aggressively and design prompts to keep responses short.</p>
 </blockquote>
+<section id="what-a-token-costs-in-energy" class="level3">
+<h3 class="anchored" data-anchor-id="what-a-token-costs-in-energy">What a Token Costs in Energy</h3>
+<p>Speed is half the story on a board that may run from a battery. In October 2026, I measured the whole UNO Q with a FNIRSI FNB58 USB meter between the charger and the board’s USB-C port, logging 100 samples per second while <code>llama-server</code> answered requests (no streaming, thinking off, CPU cooled below 45 °C before each request). Chapter 3 describes the setup in detail and adds the vision numbers. For text, each model answered a short prompt (256 tokens out) and a long one (1,641 tokens in), twice each:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Qwen3.5-0.8B Q8_0</th>
+<th>Qwen3.5-2B UD-Q4_K_XL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Idle board (no request)</td>
+<td>0.5 W</td>
+<td>0.5 W</td>
+</tr>
+<tr class="even">
+<td>Power while reading the prompt</td>
+<td>1.9 W</td>
+<td>1.9 W</td>
+</tr>
+<tr class="odd">
+<td>Power while generating</td>
+<td>2.7 W</td>
+<td>2.4 W</td>
+</tr>
+<tr class="even">
+<td>Generation speed</td>
+<td>5.7 tok/s</td>
+<td>2.5 tok/s</td>
+</tr>
+<tr class="odd">
+<td><strong>Energy per generated token</strong></td>
+<td><strong>0.47 J</strong> (0.38 J above idle)</td>
+<td><strong>0.97 J</strong> (0.76 J above idle)</td>
+</tr>
+<tr class="even">
+<td>Short prompt, 256-token answer</td>
+<td>47 s · 125 J</td>
+<td>108 s · 259 J</td>
+</tr>
+<tr class="odd">
+<td>Reading a 1,641-token prompt</td>
+<td>149 s · 290 J</td>
+<td>368 s · 700 J</td>
+</tr>
+</tbody>
+</table>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/png/unoq-energy-per-token.png" class="img-fluid figure-img"></p>
+<figcaption>Energy per generated token on the UNO Q, text and vision, for both models</figcaption>
+</figure>
+</div>
+<p>Three things to take from it:</p>
+<ul>
+<li><strong>The 2B costs twice the energy per token</strong>, and it isn’t because it draws more power (it draws slightly less). It generates at half the speed, so the same four cores run twice as long for every token.</li>
+<li><strong>Long prompts are expensive.</strong> Reading 1,641 tokens costs the 0.8B more than writing 600 tokens would. On the 2B, it takes six minutes. Keep system prompts and retrieved context short, especially on the 2B.</li>
+<li><strong>The whole board sips power.</strong> Even flat out, it stays under 3.5 W, and idle is 0.5 W. A 10 Wh power bank (36,000 J) covers about 290 short answers with the 0.8B, or about 140 with the 2B, if the board did nothing else.</li>
+</ul>
+<blockquote class="blockquote">
+<p>These runs used Bartowski’s <code>Qwen_Qwen3.5-0.8B-Q8_0.gguf</code> with a 4096-token context, so the speed differs slightly from the table above (5.7 vs.&nbsp;5.6 tok/s). The energy figures include everything on the board, not just the CPU.</p>
+</blockquote>
+</section>
 <section id="mtp-uno-q" class="level3">
 <h3 class="anchored" data-anchor-id="mtp-uno-q">MTP Speculative Decoding: Not on the UNO Q</h3>
 <p>Qwen3.5 models were trained with a <strong>multi-token prediction (MTP)</strong> head: a small extra layer that guesses the next few tokens in one step. llama.cpp can use it for speculative decoding. The MTP head drafts several tokens, the main model checks them all in a single pass, and every accepted draft token is a token the main model did not have to generate one by one. Unsloth publishes MTP versions of the GGUFs (for example, <a href="https://huggingface.co/unsloth/Qwen3.5-0.8B-MTP-GGUF">unsloth/Qwen3.5-0.8B-MTP-GGUF</a>) and reports roughly 1.5–2× faster generation. They are enabled like this:</p>

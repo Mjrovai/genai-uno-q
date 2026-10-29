@@ -325,7 +325,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#the-speed-levers-in-order-of-payoff" id="toc-the-speed-levers-in-order-of-payoff" class="nav-link" data-scroll-target="#the-speed-levers-in-order-of-payoff">The speed levers, in order of payoff</a></li>
   </ul></li>
-  <li><a href="#which-model-0.8b-or-2b" id="toc-which-model-0.8b-or-2b" class="nav-link" data-scroll-target="#which-model-0.8b-or-2b">7. Which Model: 0.8B or 2B?</a></li>
+  <li><a href="#which-model-0.8b-or-2b" id="toc-which-model-0.8b-or-2b" class="nav-link" data-scroll-target="#which-model-0.8b-or-2b">7. Which Model: 0.8B or 2B?</a>
+  <ul class="collapse">
+  <li><a href="#what-a-description-costs-time-and-energy" id="toc-what-a-description-costs-time-and-energy" class="nav-link" data-scroll-target="#what-a-description-costs-time-and-energy">What a Description Costs: Time and Energy</a></li>
+  </ul></li>
   <li><a href="#swapping-models-0.8b-for-speed-2b-for-depth" id="toc-swapping-models-0.8b-for-speed-2b-for-depth" class="nav-link" data-scroll-target="#swapping-models-0.8b-for-speed-2b-for-depth">8. Swapping Models: 0.8B for Speed, 2B for Depth</a>
   <ul class="collapse">
   <li><a href="#get-the-2b-model-and-its-projector" id="toc-get-the-2b-model-and-its-projector" class="nav-link" data-scroll-target="#get-the-2b-model-and-its-projector">Get the 2B model and its projector</a></li>
@@ -598,9 +601,9 @@ Swap:          1.8Gi        20Mi       1.8Gi</code></pre>
 <p>I ran both on the same 640×640 image, so the comparison is real and not a guess.</p>
 <table class="caption-top table">
 <colgroup>
+<col style="width: 41%">
 <col style="width: 30%">
-<col style="width: 37%">
-<col style="width: 32%">
+<col style="width: 27%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -612,23 +615,33 @@ Swap:          1.8Gi        20Mi       1.8Gi</code></pre>
 <tbody>
 <tr class="odd">
 <td>Projector (F16)</td>
-<td>~220 MB</td>
+<td>~205–220 MB</td>
 <td>668 MB</td>
 </tr>
 <tr class="even">
-<td>Decode speed</td>
-<td>5.42 tok/s</td>
-<td>2.44 tok/s</td>
+<td>Time to first token (image + prompt)</td>
+<td>~66 s</td>
+<td>~254 s</td>
 </tr>
 <tr class="odd">
-<td>Time for one describe</td>
-<td>~1 min</td>
-<td>~4 min</td>
+<td>Decode speed</td>
+<td>5.4 tok/s</td>
+<td>2.5 tok/s</td>
 </tr>
 <tr class="even">
-<td>Peak RAM (mmap incl.)</td>
-<td>well under the ceiling</td>
-<td>~3 GB, fits, swap ~0</td>
+<td>Full 256-token description</td>
+<td>~1.9 min</td>
+<td>~6 min</td>
+</tr>
+<tr class="odd">
+<td>Peak RAM (<code>llama-server</code> RSS)</td>
+<td>~1.4 GB</td>
+<td>~2.3 GB, swap ~0</td>
+</tr>
+<tr class="even">
+<td>Energy per image (total)</td>
+<td>~240 J</td>
+<td>~674 J</td>
 </tr>
 <tr class="odd">
 <td>Description quality</td>
@@ -637,8 +650,86 @@ Swap:          1.8Gi        20Mi       1.8Gi</code></pre>
 </tr>
 </tbody>
 </table>
+<p>The timing, RAM, and energy rows were measured in October 2026 with <code>--image-max-tokens 256</code>; the next subsection shows how.</p>
 <p>The bigger projector isn’t optional, by the way. If you go 2B, you use its 668 MB projector, because the small one won’t match. The file is 3× larger because the vision encoder inside it is bigger, which is also why the encoding is slower: every patch passes through a heavier tower.</p>
-<p>So it’s a real trade, not a free upgrade. The 2B writes clearer answers and stays within the RAM budget, but five minutes per image rules out anything interactive. My take: treat them as two tiers. The 0.8B is the fast screen for when you need an answer in roughly a minute. The 2B is the quality pass for when correctness matters more than latency, and the device can sit and think. <code>--image-max-tokens</code> is the dial between them, and tuning it on the 2B is the most useful experiment you can run.</p>
+<p>So it’s a real trade, not a free upgrade. The 2B writes clearer answers and stays within the RAM budget, but four minutes before the first word, and six for a full description, rules out anything interactive. My take: treat them as two tiers. The 0.8B is the fast screen for when you need an answer in roughly a minute. The 2B is the quality pass for when correctness matters more than latency, and the device can sit and think. <code>--image-max-tokens</code> is the dial between them, and tuning it on the 2B is the most useful experiment you can run.</p>
+<section id="what-a-description-costs-time-and-energy" class="level3">
+<h3 class="anchored" data-anchor-id="what-a-description-costs-time-and-energy">What a Description Costs: Time and Energy</h3>
+<p>To put real numbers on that trade, I measured the whole board while it worked. A <a href="https://www.fnirsi.com/products/fnb58">FNIRSI FNB58</a> USB meter sat between the charger and the UNO Q’s USB-C port, logging voltage and current 100 times per second to a Mac. On the board, a script started <code>llama-server</code> with the same flags as in Section 4, waited for the CPU to cool below 45 °C, recorded 15 seconds of idle, then sent each request and wrote down when it was sent, when the first token came, and when the answer ended. Lining up the two clocks gives the power in every phase. Each model described two 640×640 images (the bucket and the tire from this chapter) twice, with a warm-up request first that was not counted. The board used Wi-Fi only, with no display and nothing on its USB port except the meter; a Modulino Thermo and an idle expansion carrier were attached and are part of the idle power.</p>
+<p>The same session also ran text-only prompts on both models (Chapter 2 has those numbers), so the whole battery is in one picture:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/png/unoq-session-overview.png" class="img-fluid figure-img"></p>
+<figcaption>The full battery, about 75 minutes: power at the USB-C input (top) and CPU temperature (bottom). Blue is the 0.8B, orange the 2B.</figcaption>
+</figure>
+</div>
+<p>Two things stand out before looking at any single request. The board never draws more than about 3.5 W, and idle is only 0.5 W. And the CPU peaked at 68.7 °C with no heatsink and no fan, while the clock stayed at 2.0 GHz on every core for the whole run: no thermal throttling, even on six-minute requests.</p>
+<p>Zooming in on one description per model shows where the time and energy go:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/png/unoq-vision-trace.png" class="img-fluid figure-img"></p>
+<figcaption>One description of a 640×640 image, from sending the request to the last token. The shaded area above idle is the energy spent.</figcaption>
+</figure>
+</div>
+<p>Each request has three phases, and you can read them off the power line:</p>
+<ol type="1">
+<li><strong>The image encoder</strong> (spiky line, about 1.5–1.9 W). The vision tower in the projector turns the picture into 256 image tokens. The power jumps up and down because the encoder does not keep all four cores busy. <code>llama-server</code> doesn’t report this phase separately, so its length here is estimated: the time to first token minus the time the language model needs to read the same number of tokens as text. That puts it at about 41 s on the 0.8B and about 193 s on the 2B, the heavier tower the previous section warned about.</li>
+<li><strong>The language model reads the prompt</strong> (flat line, about 1.9 W). The 274 tokens (256 from the image, the rest from the text and the chat template) go through the model in batches, about 25 s on the 0.8B and 61 s on the 2B.</li>
+<li><strong>The answer</strong> (flat line, about 2.4–2.7 W). One token at a time, 47 s for 256 tokens on the 0.8B and 103 s on the 2B.</li>
+</ol>
+<p>Writing is the phase with the highest power, but not the most expensive one. The energy per request, split into reading and writing:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./images/png/unoq-energy-per-request.png" class="img-fluid figure-img"></p>
+<figcaption>Energy per request at the USB-C input, split into reading the input and writing the answer, for both models.</figcaption>
+</figure>
+</div>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Per image, averaged over 4 runs</th>
+<th>Qwen3.5-0.8B</th>
+<th>Qwen3.5-2B</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Image + prompt (time to first token)</td>
+<td>66 s · 115 J</td>
+<td>254 s · 424 J</td>
+</tr>
+<tr class="even">
+<td>Answer (256 tokens)</td>
+<td>47 s · 125 J</td>
+<td>103 s · 250 J</td>
+</tr>
+<tr class="odd">
+<td>Whole request</td>
+<td><strong>~1.9 min · 240 J</strong></td>
+<td><strong>~6 min · 674 J</strong></td>
+</tr>
+<tr class="even">
+<td>Mean power while answering</td>
+<td>2.7 W</td>
+<td>2.4 W</td>
+</tr>
+<tr class="odd">
+<td>Energy per generated token</td>
+<td>0.49 J</td>
+<td>0.98 J</td>
+</tr>
+</tbody>
+</table>
+<p>The four runs of each case agreed within 1%. What the numbers say:</p>
+<ul>
+<li><strong>Reading the image is half the bill.</strong> On the 0.8B, getting to the first word costs about as much as writing 256 words. On the 2B it costs more. Shorter answers save less than you’d think; fewer image tokens (<code>--image-max-tokens</code>) or a smaller input image save more.</li>
+<li><strong>The 2B costs about 2.8 times the energy per image</strong>, while drawing slightly <em>less</em> power. It is not hungrier, just slower: four cores working for six minutes instead of two.</li>
+<li><strong>In battery terms</strong>, a 10 Wh power bank holds 36,000 J. That is about 150 descriptions with the 0.8B, or about 50 with the 2B, if the board did nothing else. Between requests, the idle 0.5 W adds up too: about 30 J per minute of waiting.</li>
+</ul>
+<blockquote class="blockquote">
+<p>The total in the table includes the board’s idle power. Subtracting idle (0.5 W) gives the extra energy the inference itself costs: about 180 J per image on the 0.8B and about 490 J on the 2B.</p>
+</blockquote>
+</section>
 </section>
 <section id="swapping-models-0.8b-for-speed-2b-for-depth" class="level2">
 <h2 class="anchored" data-anchor-id="swapping-models-0.8b-for-speed-2b-for-depth">8. Swapping Models: 0.8B for Speed, 2B for Depth</h2>

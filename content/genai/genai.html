@@ -731,11 +731,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="step-2-download-qwen3.5-0.8b" class="level3">
 <h3 class="anchored" data-anchor-id="step-2-download-qwen3.5-0.8b">Step 2 — Download Qwen3.5-0.8B</h3>
 <p>Two of the best quantizations are from <a href="https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF/tree/main">Bartowski</a> and <a href="https://huggingface.co/unsloth/Qwen3.5-0.8B-GGUF/tree/main">Unsloth.</a></p>
-<p>This tutorial uses the <a href="https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF/blob/main/Qwen_Qwen3.5-0.8B-Q8_0.gguf">Q8_0 version</a> from Bartowski (about 797 MB). The filename below is the one used in all later chapters:</p>
+<p>This tutorial uses the <a href="https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF/blob/main/Qwen_Qwen3.5-0.8B-Q8_0.gguf">Q8_0 version</a> from Bartowski (about 835 MB). The filename below is the one used in all later chapters:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/models</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF/resolve/main/<span class="dt">\</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>Qwen_Qwen3.5-0.8B-Q8_0.gguf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Unsloth’s <a href="https://huggingface.co/unsloth/Qwen3.5-0.8B-GGUF/blob/main/Qwen3.5-0.8B-Q8_0.gguf">Q8_0</a> (812 MB) is an equivalent choice. Q8_0 is a fixed format, so both run at the same speed. The measurements in Section 10 were taken with the Unsloth file. If you use it, adjust the model path in the commands below:</p>
+<p>Unsloth’s <a href="https://huggingface.co/unsloth/Qwen3.5-0.8B-GGUF/blob/main/Qwen3.5-0.8B-Q8_0.gguf">Q8_0</a> (812 MB) is an equivalent choice. In an October 2026 test on the UNO Q, the Unsloth file was about 2% faster (5.6 vs.&nbsp;5.5 tokens/s generation), a difference you will not notice. The measurements in Section 10 were taken with the Unsloth file. If you use it, adjust the model path in the commands below:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="at">-c</span> https://huggingface.co/unsloth/Qwen3.5-0.8B-GGUF/resolve/main/<span class="dt">\</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>Qwen3.5-0.8B-Q8_0.gguf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>For 4-bit quantization (about 553 MB), if storage is tight:</p>
@@ -748,7 +748,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>For the larger model, use the Unsloth Dynamic 4-bit quant (1.34 GB):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="at">-c</span> https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/main/<span class="dt">\</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>Qwen3.5-2B-UD-Q4_K_XL.gguf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>See <a href="#alt-2b">Alternative Model (Qwen 3.5 2B)</a> in Section 12 for how it compares with the 0.8B.</p>
+<p>See <a href="#alt-2b">Alternative Model (Qwen 3.5 2B)</a> in Section 12 for a comparison with the 0.8B.</p>
 <blockquote class="blockquote">
 <p><strong>What about the <code>-MTP</code> repos?</strong> Unsloth also publishes <code>Qwen3.5-0.8B-MTP-GGUF</code> and <code>Qwen3.5-2B-MTP-GGUF</code>, which include an extra multi-token prediction head for speculative decoding. They don’t help on the UNO Q. See <a href="#mtp-uno-q">MTP Speculative Decoding</a> in Section 10.</p>
 </blockquote>

@@ -1330,7 +1330,7 @@ Button: one leg → D3
 </section>
 <section id="performance-what-to-actually-expect" class="level2">
 <h2 class="anchored" data-anchor-id="performance-what-to-actually-expect">11. Performance: What to Actually Expect</h2>
-<p>Chapter 2 measured raw <code>llama-server</code> throughput in isolation. These numbers are for the full application — Bridge RPC, JSON parsing, and prompt-building overhead included — measured on a UNO Q 4 GB with the factory image, Qwen3.5-0.8B Q8_0, no heatsink, no fan:</p>
+<p>Chapter 2 measured raw <code>llama-server</code> throughput in isolation. These numbers are for the full application — Bridge RPC, JSON parsing, and prompt-building overhead included — measured on a UNO Q 4 GB with the factory image, Qwen3.5-0.8B Q8_0, no heatsink, no fan. The model rows were re-measured in October 2026 with a current llama.cpp build; the end-to-end latency and power rows are from the original tests:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -1341,23 +1341,23 @@ Button: one leg → D3
 <tbody>
 <tr class="odd">
 <td>Cold model load (boot of llama-server)</td>
-<td>~4 s</td>
+<td>~4.5 s</td>
 </tr>
 <tr class="even">
-<td>Idle RAM (llama-server + app running)</td>
-<td>~700–800 MB</td>
+<td>Idle RAM (llama-server running)</td>
+<td>~950 MB (process RSS)</td>
 </tr>
 <tr class="odd">
 <td>Model + context memory usage</td>
-<td>~1,122 MiB</td>
+<td>~1.0–1.05 GB (process RSS)</td>
 </tr>
 <tr class="even">
 <td>Prompt processing throughput</td>
-<td>~9.9 tokens/s</td>
+<td>~11 tokens/s</td>
 </tr>
 <tr class="odd">
 <td>Generation throughput</td>
-<td>~4.75 tokens/s</td>
+<td>~5.6 tokens/s</td>
 </tr>
 <tr class="even">
 <td>End-to-end <code>classify()</code> latency</td>
@@ -1369,29 +1369,29 @@ Button: one leg → D3
 </tr>
 <tr class="even">
 <td>Idle board temperature (no inference)</td>
-<td>~34 °C</td>
+<td>~45 °C</td>
 </tr>
 <tr class="odd">
 <td>Temperature during normal inference</td>
-<td>~54 °C</td>
+<td>~55 °C</td>
 </tr>
 <tr class="even">
 <td>Temperature during sustained long answers</td>
-<td>~62 °C</td>
+<td>~59–62 °C</td>
 </tr>
 <tr class="odd">
 <td>Thermal throttle threshold</td>
 <td>70–80 °C (never reached)</td>
 </tr>
 <tr class="even">
-<td>Power consuption (Max.)</td>
+<td>Power consumption (max.)</td>
 <td>3.1 W</td>
 </tr>
 </tbody>
 </table>
 <p>Honest takeaways:</p>
 <ul>
-<li><strong>Usable but not desktop-class.</strong> Prompt processing at ~9.9 tok/s and generation at ~4.75 tok/s make the setup workable for periodic classification calls, but responses take 6–12 seconds depending on length. The ~1122 MiB memory footprint (model + context) leaves about 2.5 GB for the OS, App Lab container, and your Python app. Tight but viable on the 4 GB board.</li>
+<li><strong>Usable but not desktop-class.</strong> Prompt processing at ~11 tok/s and generation at ~5.6 tok/s make the setup workable for periodic classification calls, but responses take 6–12 seconds depending on length. The ~1 GB memory footprint (model + context) leaves about 2.5 GB for the OS, App Lab container, and your Python app. Tight but viable on the 4 GB board.</li>
 <li><strong>Q4 quantization shows quality tradeoffs.</strong> At 0.8B parameters, the model has less redundancy than a 7B model, so Q4 compression removes information that matters. Strong few-shot prompting and <code>presence_penalty=1.5</code> compensate for most of it, but some responses are weaker than a 1B+ model would produce. <strong>Use Q8_0</strong> or the Unsloth Dynamic quant if storage allows.</li>
 <li><strong>Thermal behavior is not a concern.</strong> The +20 °C rise from idle to inference is modest, and even sustained workloads only reach ~62 °C, well under the 70–80 °C throttle threshold. The UNO Q runs cooler than a Raspberry Pi 5 under comparable loads. No heatsink is required for normal lab use.</li>
 <li><strong>Thinking mode kills the board.</strong> With thinking enabled, the model spends 30–60 seconds generating internal reasoning chains before producing any output, and often loops without reaching a conclusion. Always run Qwen3.5 Small with <code>--reasoning off --reasoning-budget 0</code>.</li>
@@ -1495,23 +1495,23 @@ Button: one leg → D3
 <tbody>
 <tr class="odd">
 <td>Model file size</td>
-<td>~880 MB</td>
-<td>~1.25 GB</td>
+<td>~800 MB</td>
+<td>~1.34 GB</td>
 </tr>
 <tr class="even">
-<td>RAM footprint (model + 1024 ctx)</td>
-<td>~1.1 GB</td>
-<td>~1.9–2.0 GB</td>
+<td>RAM footprint (process RSS, generating)</td>
+<td>~1.0 GB</td>
+<td>~1.5 GB</td>
 </tr>
 <tr class="odd">
 <td>Free RAM after load (out of ~3 GB usable)</td>
-<td>~1.7 GB</td>
-<td>~0.8 GB</td>
+<td>~2.0 GB</td>
+<td>~1.5 GB</td>
 </tr>
 <tr class="even">
-<td>Generation speed (measured / estimated)</td>
-<td>~4.75 tok/s</td>
-<td>~1.8–2.5 tok/s</td>
+<td>Generation speed</td>
+<td>~5.6 tok/s</td>
+<td>~2.5 tok/s</td>
 </tr>
 <tr class="odd">
 <td>End-to-end <code>classify()</code> latency</td>
@@ -1543,8 +1543,8 @@ Button: one leg → D3
 <p>What this means in practice:</p>
 <ul>
 <li><strong>For the dengue classifier (a Bridge call every 30 s):</strong> the 2B Q4 wins on quality, and the extra ~10 s latency is invisible inside a 30 s polling window. The structured JSON path becomes more reliable — fewer parse-and-retry rounds, better adherence to the few-shot pattern, less reliance on <code>presence_penalty</code> tricks.</li>
-<li><strong>For the WebUI / chat demos:</strong> the 0.8B Q8 stays responsive. At ~2 tok/s, a 100-token answer on the 2B takes 50 seconds, which feels broken in a chat context even if the answer is better.</li>
-<li><strong>For headroom:</strong> 0.8B Q8 leaves ~1.7 GB free. 2B Q4 leaves ~0.8 GB. Tight but workable, as long as nothing else on the board spikes (browsers, App Lab build, large Flask request bursts). If you ever want to run two models, or expand context beyond 1024, the 0.8B is the safer foundation.</li>
+<li><strong>For the WebUI / chat demos:</strong> the 0.8B Q8 stays responsive. At ~2.5 tok/s, a 100-token answer on the 2B takes 40 seconds, which feels broken in a chat context even if the answer is better.</li>
+<li><strong>For headroom:</strong> 0.8B Q8 leaves ~2.0 GB free. 2B Q4 leaves ~1.5 GB. Tight but workable, as long as nothing else on the board spikes (browsers, App Lab build, large Flask request bursts). If you ever want to run two models, or expand context beyond 1024, the 0.8B is the safer foundation.</li>
 </ul>
 <p>Two things worth trying before committing:</p>
 <ol type="1">

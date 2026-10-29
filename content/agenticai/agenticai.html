@@ -581,6 +581,9 @@ There's 14 GB free, well over 1 GB, so I've shown a checkmark on the matrix.</co
 <section id="server-flags-that-matter-here" class="level3">
 <h3 class="anchored" data-anchor-id="server-flags-that-matter-here">Server Flags That Matter Here</h3>
 <p>Start <code>llama-server</code> the way chapter 2 taught, with the flags this chapter depends on:</p>
+<blockquote class="blockquote">
+<p><strong>Model path.</strong> The commands in this chapter point at <code>~/models/Qwen3.5-0.8B-GGUF/Qwen3.5-0.8B-Q8_0.gguf</code> (Unsloth’s Q8_0 in its own folder). If you downloaded Bartowski’s file in chapter 2, use <code>~/models/Qwen_Qwen3.5-0.8B-Q8_0.gguf</code> instead. Either Q8_0 works; only the path changes.</p>
+</blockquote>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">~/llama.cpp/build/bin/llama-server</span> <span class="dt">\</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> ~/models/Qwen3.5-0.8B-GGUF/Qwen3.5-0.8B-Q8_0.gguf <span class="dt">\</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--host</span> 0.0.0.0 <span class="at">--port</span> 8081 <span class="dt">\</span></span>

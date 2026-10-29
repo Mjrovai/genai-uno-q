@@ -365,7 +365,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#step-1-exploring-the-pre-loaded-ai-models" id="toc-step-1-exploring-the-pre-loaded-ai-models" class="nav-link" data-scroll-target="#step-1-exploring-the-pre-loaded-ai-models">Step 1 — Exploring the Pre-loaded AI models</a></li>
   <li><a href="#step-2-running-an-example-via-terminal" id="toc-step-2-running-an-example-via-terminal" class="nav-link" data-scroll-target="#step-2-running-an-example-via-terminal">Step 2 — Running an example via terminal</a></li>
   </ul></li>
-  <li><a href="#the-arduino-app-cli-command-reference" id="toc-the-arduino-app-cli-command-reference" class="nav-link" data-scroll-target="#the-arduino-app-cli-command-reference">10. The arduino-app-cli Command Reference</a></li>
+  <li><a href="#the-arduino-app-cli-command-reference" id="toc-the-arduino-app-cli-command-reference" class="nav-link" data-scroll-target="#the-arduino-app-cli-command-reference">10. The arduino-app-cli Command Reference</a>
+  <ul class="collapse">
+  <li><a href="#managing-apps" id="toc-managing-apps" class="nav-link" data-scroll-target="#managing-apps">Managing Apps</a></li>
+  <li><a href="#bricks-and-ai-models" id="toc-bricks-and-ai-models" class="nav-link" data-scroll-target="#bricks-and-ai-models">Bricks and AI Models</a></li>
+  <li><a href="#system-and-board" id="toc-system-and-board" class="nav-link" data-scroll-target="#system-and-board">System and Board</a></li>
+  </ul></li>
   <li><a href="#essential-linux-commands-for-the-uno-q" id="toc-essential-linux-commands-for-the-uno-q" class="nav-link" data-scroll-target="#essential-linux-commands-for-the-uno-q">11. Essential Linux Commands for the UNO Q</a>
   <ul class="collapse">
   <li><a href="#system-information" id="toc-system-information" class="nav-link" data-scroll-target="#system-information">System Information</a></li>
@@ -663,6 +668,9 @@ https://developer.android.com/studio/releases/platform-tools</li>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./arduino-flasher-cli</span> flash latest</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Windows (PowerShell):</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\arduino-flasher-cli<span class="op">.</span><span class="fu">exe</span> flash latest</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p>“latest” is deprecated and will be removed; in the future, use: “unoq”</p>
+</blockquote>
 <p>The tool will:</p>
 <ol type="1">
 <li>Ask if you want to download the latest Debian image — type <code>yes</code> and press Enter.</li>
@@ -895,24 +903,21 @@ XXXXXXXX    device</code></pre>
 <p>Note that the update will take a long time.</p>
 </blockquote>
 <p>From an SSH terminal, run:</p>
-<p><code>arduino-app-cli app list</code>.</p>
-<p>This command will show all installed models, including the user created ones:</p>
-<p><img src="./images/png/app-examples.png" class="img-fluid"></p>
-<p>Note that the <code>examples:</code> apps listed by <code>arduino-app-cli</code> are <strong>not</strong> stored in <code>~/ArduinoApps/</code> — only your user-created apps (like <code>Blink</code>) live there. The examples are managed internally by the CLI on the filesystem and stored inside <code>~/.local/share/arduino-app-cli</code> on the board.</p>
+<p><code>arduino-app-cli app list --examples</code>.</p>
+<p>This command will show all installed models, including the user-created ones:</p>
+<p><img src="./images/png/new-examples.png" class="img-fluid"></p>
+<p>Note that the <code>examples:</code> apps listed by <code>arduino-app-cli app list --examples</code> are <strong>not</strong> stored in <code>~/ArduinoApps/</code> — only your user-created apps (like <code>Blink</code>) live there. The examples are managed internally by the CLI on the filesystem on the board.</p>
 <p>So we have two classes of apps in the UNO-Q:</p>
 <ul>
-<li><strong><code>examples:\*</code></strong> → read-only, managed by the CLI at <code>/var/lib/arduino-app-cli</code></li>
+<li><strong><code>examples:\*</code></strong> → read-only, managed by the CLI</li>
 <li><strong><code>user:\*</code></strong> → your apps in <code>~/ArduinoApps/</code>, which is the only place you see with <code>ls</code></li>
 </ul>
-<p>NOTE: In the latest <code>arduino-app-cli</code> version, new examples were added with a new organization:</p>
 <p><img src="./images/png/new-examples.png" class="img-fluid"></p>
 </section>
 <section id="step-2-running-an-example-via-terminal" class="level3">
 <h3 class="anchored" data-anchor-id="step-2-running-an-example-via-terminal">Step 2 — Running an example via terminal</h3>
 <p>It is possible to run any of the examples directly in a terminal via SSH</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app start examples:blink</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>or in the new version:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a> <span class="ex">arduino-app-cli</span> app start examples:inspirational/blink</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a> <span class="ex">arduino-app-cli</span> app start examples:inspirational/blink</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <blockquote class="blockquote">
 <p>Check your device first and adapt the commands as needed.</p>
 </blockquote>
@@ -920,19 +925,29 @@ XXXXXXXX    device</code></pre>
 <blockquote class="blockquote">
 <p><strong>Note</strong>: The first run may take several minutes as the system downloads and installs Arduino libraries and sets up the Python container.</p>
 </blockquote>
-<p>You should see the built-in LED on the UNO Q blinking on and off every second.</p>
+<p>At the end, you will get:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Progress[]:</span> 100%</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="ex">✓</span> App <span class="st">"Blink LED from Python"</span> started successfully</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>And at the board, you should see the built-in LED on the UNO Q blinking on and off every second.</p>
 <p><img src="./images/png/blink-setup.jpg" class="img-fluid"></p>
 <p>To inspect the logs:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app logs examples:blink</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app logs examples:inspirational/blink</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><img src="./images/png/log-intern.png" class="img-fluid"></p>
 <p>And to stop it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app stop examples:blink</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app stop examples:inspirational/blink</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><img src="./images/png/stop-intern.png" class="img-fluid"></p>
 </section>
 </section>
 <section id="the-arduino-app-cli-command-reference" class="level2">
 <h2 class="anchored" data-anchor-id="the-arduino-app-cli-command-reference">10. The arduino-app-cli Command Reference</h2>
-<p>The <code>arduino-app-cli</code> tool is pre-installed on the UNO Q and manages the full lifecycle of dual-brain applications.</p>
+<p>The <code>arduino-app-cli</code> tool is pre-installed on the UNO Q and manages the full lifecycle of dual-brain applications: Apps, Bricks, AI models, and system settings. The tables below cover the commands used most often in this book, based on Arduino App CLI 0.14. Check the version on your board with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> version</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For the complete list of commands and options, see the <a href="https://docs.arduino.cc/software/app-lab/cli/commands/">Arduino App CLI Command Reference</a>.</p>
+<blockquote class="blockquote">
+<p><strong>App paths and App IDs.</strong> Every command that takes an <code>&lt;app_path&gt;</code> also accepts an App ID, such as <code>user:my-app</code> for your own Apps or <code>examples:inspirational/blink</code> for the built-in examples.</p>
+</blockquote>
+<section id="managing-apps" class="level3">
+<h3 class="anchored" data-anchor-id="managing-apps">Managing Apps</h3>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -946,141 +961,258 @@ XXXXXXXX    device</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>arduino-app-cli app start &lt;path&gt;</code></td>
-<td>Build (if needed) and start the application at the given path</td>
-</tr>
-<tr class="even">
-<td><code>arduino-app-cli app stop &lt;path&gt;</code></td>
-<td>Stop a running application</td>
-</tr>
-<tr class="odd">
-<td><code>arduino-app-cli app logs &lt;path&gt;</code></td>
-<td>View the Python-side log output</td>
+<td><code>arduino-app-cli app new &lt;name&gt;</code></td>
+<td>Create a new App (<code>--from-app</code> copies an existing App or example; <code>-b</code> adds Bricks)</td>
 </tr>
 <tr class="even">
 <td><code>arduino-app-cli app list</code></td>
-<td>List installed/running applications</td>
+<td>List your Apps; add <code>--examples</code> for the examples or <code>--all</code> for everything</td>
 </tr>
 <tr class="odd">
-<td><code>arduino-app-cli app new "&lt;name&gt;"</code></td>
-<td>Create a new App</td>
+<td><code>arduino-app-cli app ps</code></td>
+<td>Show the live status of Apps that are starting, running, stopping, or failed (<code>--all</code> includes stopped ones)</td>
 </tr>
 <tr class="even">
-<td><code>arduino-app-cli system cleanup</code></td>
-<td>Clean unused containers and images</td>
+<td><code>arduino-app-cli app details &lt;app_path&gt;</code></td>
+<td>Show an App’s details</td>
 </tr>
 <tr class="odd">
-<td><code>arduino-app-cli system update</code></td>
-<td>Update the CLI tool and board components</td>
+<td><code>arduino-app-cli app start &lt;app_path&gt;</code></td>
+<td>Start an App (<code>-v</code> for verbose output)</td>
+</tr>
+<tr class="even">
+<td><code>arduino-app-cli app stop &lt;app_path&gt;</code></td>
+<td>Stop a running App</td>
+</tr>
+<tr class="odd">
+<td><code>arduino-app-cli app restart &lt;app_path&gt;</code></td>
+<td>Restart an App, or start it if it is stopped</td>
+</tr>
+<tr class="even">
+<td><code>arduino-app-cli app logs &lt;app_path&gt;</code></td>
+<td>Show the Python-side logs (<code>--follow</code> to stream, <code>--tail N</code> for the last N lines)</td>
+</tr>
+<tr class="odd">
+<td><code>arduino-app-cli app ports &lt;app_path&gt;</code></td>
+<td>Show the network ports an App and its Bricks expose</td>
+</tr>
+<tr class="even">
+<td><code>arduino-app-cli app export &lt;app_path&gt; [file.zip]</code></td>
+<td>Export an App to a zip file</td>
+</tr>
+<tr class="odd">
+<td><code>arduino-app-cli app import &lt;file.zip&gt;</code></td>
+<td>Import an App from a zip file</td>
+</tr>
+<tr class="even">
+<td><code>arduino-app-cli app destroy &lt;app_path&gt;</code></td>
+<td>Delete an App</td>
 </tr>
 </tbody>
 </table>
-<blockquote class="blockquote">
-<p>For full documentation, see the <a href="https://github.com/arduino/arduino-app-cli">Arduino App CLI repo</a> and the <a href="https://docs.arduino.cc/software/app-lab/tutorials/cli/">official CLI tutorial</a>.</p>
-</blockquote>
+<p>Note that <code>app list</code> shows the catalog, not what is running. To see which Apps are active on the board, use <code>app ps</code>.</p>
+</section>
+<section id="bricks-and-ai-models" class="level3">
+<h3 class="anchored" data-anchor-id="bricks-and-ai-models">Bricks and AI Models</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>arduino-app-cli brick list</code></td>
+<td>List all available Bricks</td>
+</tr>
+<tr class="even">
+<td><code>arduino-app-cli brick details &lt;brick_id&gt;</code></td>
+<td>Show the details of a Brick</td>
+</tr>
+<tr class="odd">
+<td><code>arduino-app-cli app brick config &lt;app_path&gt; &lt;brick_id&gt; name=value</code></td>
+<td>Set a Brick variable in an App (<code>--model</code> selects the AI model the Brick runs)</td>
+</tr>
+<tr class="even">
+<td><code>arduino-app-cli model list</code></td>
+<td>List the installed models (<code>--exclude-builtin</code> hides Arduino’s own)</td>
+</tr>
+<tr class="odd">
+<td><code>arduino-app-cli model install &lt;model&gt;</code></td>
+<td>Install a model from the catalog, from Hugging Face, or from a URL</td>
+</tr>
+<tr class="even">
+<td><code>arduino-app-cli model delete &lt;model_id&gt;</code></td>
+<td>Delete a custom model</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>model install</code> command accepts a llama.cpp Hugging Face ID in the form <code>llamacpp:owner/repo:quant</code>, for example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> model install llamacpp:unsloth/Qwen3.5-0.8B-GGUF:Q4_K_M</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In version 0.14, the quantization is required: <code>llamacpp:owner/repo</code> alone fails. For vision models, <code>--mmproj-url</code> points to the companion projector file.</p>
+</section>
+<section id="system-and-board" class="level3">
+<h3 class="anchored" data-anchor-id="system-and-board">System and Board</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>arduino-app-cli system check</code></td>
+<td>Verify that the board provides what the Apps need</td>
+</tr>
+<tr class="even">
+<td><code>arduino-app-cli system update</code></td>
+<td>Update the upgradable system packages (<code>--only-arduino</code> limits it to Arduino packages; <code>--yes</code> skips the prompts)</td>
+</tr>
+<tr class="odd">
+<td><code>arduino-app-cli system cleanup</code></td>
+<td>Remove unused and obsolete App images to free disk space</td>
+</tr>
+<tr class="even">
+<td><code>arduino-app-cli system set-name &lt;name&gt;</code></td>
+<td>Set a custom name for the board</td>
+</tr>
+<tr class="odd">
+<td><code>arduino-app-cli system keyboard [layout]</code></td>
+<td>Show or change the keyboard layout</td>
+</tr>
+<tr class="even">
+<td><code>arduino-app-cli system network-mode &lt;enable\|disable\|status&gt;</code></td>
+<td>Manage the board’s network mode</td>
+</tr>
+<tr class="odd">
+<td><code>arduino-app-cli properties set default &lt;app_path&gt;</code></td>
+<td>Set the App that starts at boot (<code>none</code> unsets it)</td>
+</tr>
+<tr class="even">
+<td><code>arduino-app-cli properties get default</code></td>
+<td>Show the default App</td>
+</tr>
+<tr class="odd">
+<td><code>arduino-app-cli monitor</code></td>
+<td>Attach to the microcontroller’s serial monitor</td>
+</tr>
+</tbody>
+</table>
+<p>All commands accept <code>--format json</code> for machine-readable output and <code>--log-level debug</code> for troubleshooting.</p>
 <hr>
+</section>
 </section>
 <section id="essential-linux-commands-for-the-uno-q" class="level2">
 <h2 class="anchored" data-anchor-id="essential-linux-commands-for-the-uno-q">11. Essential Linux Commands for the UNO Q</h2>
 <p>Since the UNO Q runs Debian Linux, here are the commands you will use frequently:</p>
 <section id="system-information" class="level3">
 <h3 class="anchored" data-anchor-id="system-information">System Information</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># OS version</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/os-release</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># CPU information</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="ex">lscpu</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Memory usage</span></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="fu">free</span> <span class="at">-h</span></span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Disk usage</span></span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="fu">df</span> <span class="at">-h</span></span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Running processes</span></span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a><span class="ex">htop</span>                  <span class="co"># (if necessary, install with: sudo apt install htop)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># OS version</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /etc/os-release</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># CPU information</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="ex">lscpu</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Memory usage</span></span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="fu">free</span> <span class="at">-h</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Disk usage</span></span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="fu">df</span> <span class="at">-h</span></span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Running processes</span></span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="ex">htop</span>                  <span class="co"># (if necessary, install with: sudo apt install htop)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="network-management" class="level3">
 <h3 class="anchored" data-anchor-id="network-management">Network Management</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show network interfaces and IPs</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ip</span> addr show</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Show Wi-Fi connection status</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> device status</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Show current Wi-Fi connection details</span></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> connection show</span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="co"># List available Wi-Fi networks</span></span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> dev wifi list</span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Connect to a Wi-Fi network</span></span>
-<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> nmcli dev wifi connect <span class="st">"SSID"</span> password <span class="st">"PASSWORD"</span></span>
-<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Get board IP address (short form)</span></span>
-<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a><span class="fu">hostname</span> <span class="at">-I</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show network interfaces and IPs</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ip</span> addr show</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Show Wi-Fi connection status</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> device status</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Show current Wi-Fi connection details</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> connection show</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="co"># List available Wi-Fi networks</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="ex">nmcli</span> dev wifi list</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Connect to a Wi-Fi network</span></span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> nmcli dev wifi connect <span class="st">"SSID"</span> password <span class="st">"PASSWORD"</span></span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Get board IP address (short form)</span></span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a><span class="fu">hostname</span> <span class="at">-I</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="package-management" class="level3">
 <h3 class="anchored" data-anchor-id="package-management">Package Management</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Update package lists</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Upgrade installed packages</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt upgrade <span class="at">-y</span></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Install a package</span></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install <span class="op">&lt;</span>package-name<span class="op">&gt;</span> -y</span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove a package</span></span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt remove <span class="op">&lt;</span>package-name<span class="op">&gt;</span></span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean up unused packages and cache</span></span>
-<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt autoremove <span class="at">-y</span></span>
-<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt clean</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Update package lists</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Upgrade installed packages</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt upgrade <span class="at">-y</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Install a package</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install <span class="op">&lt;</span>package-name<span class="op">&gt;</span> -y</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove a package</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt remove <span class="op">&lt;</span>package-name<span class="op">&gt;</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean up unused packages and cache</span></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt autoremove <span class="at">-y</span></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt clean</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="file-operations" class="level3">
 <h3 class="anchored" data-anchor-id="file-operations">File Operations</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># List files (detailed)</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-la</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Navigate directories</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/ArduinoApps</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a directory</span></span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> my_project/python my_project/sketch</span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy files</span></span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> source.txt destination.txt</span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Move/rename files</span></span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> old_name.py new_name.py</span>
-<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove a file</span></span>
-<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> filename.txt</span>
-<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove a directory and its contents</span></span>
-<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-rf</span> directory_name</span>
-<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a><span class="co"># View file contents</span></span>
-<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> filename.txt</span>
-<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Edit a file (nano is pre-installed)</span></span>
-<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> filename.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># List files (detailed)</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-la</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Navigate directories</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/ArduinoApps</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a directory</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> my_project/python my_project/sketch</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy files</span></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> source.txt destination.txt</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Move/rename files</span></span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> old_name.py new_name.py</span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove a file</span></span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> filename.txt</span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove a directory and its contents</span></span>
+<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-rf</span> directory_name</span>
+<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a><span class="co"># View file contents</span></span>
+<span id="cb38-23"><a href="#cb38-23" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> filename.txt</span>
+<span id="cb38-24"><a href="#cb38-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-25"><a href="#cb38-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Edit a file (nano is pre-installed)</span></span>
+<span id="cb38-26"><a href="#cb38-26" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> filename.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="service-management" class="level3">
 <h3 class="anchored" data-anchor-id="service-management">Service Management</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check SSH service status</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl status sshd</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Restart SSH</span></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl restart sshd</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Reboot the board</span></span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> reboot</span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Shut down the board</span></span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> shutdown <span class="at">-h</span> now</span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> halt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check SSH service status</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl status sshd</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Restart SSH</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl restart sshd</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Reboot the board</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> reboot</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Shut down the board</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> shutdown <span class="at">-h</span> now</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> halt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 </section>
@@ -1100,20 +1232,20 @@ XXXXXXXX    device</code></pre>
 <h3 class="anchored" data-anchor-id="ssh-connection-refused">SSH Connection Refused</h3>
 <ul>
 <li><p>Verify the SSH server is running:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">adb</span> shell</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl status sshd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">adb</span> shell</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl status sshd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If it is not running:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install openssh-server <span class="at">-y</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable ssh</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ssh-keygen <span class="at">-A</span></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl start sshd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install openssh-server <span class="at">-y</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl enable ssh</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ssh-keygen <span class="at">-A</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl start sshd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 </ul>
 </section>
 <section id="ssh-password-rejected" class="level3">
 <h3 class="anchored" data-anchor-id="ssh-password-rejected">SSH Password Rejected</h3>
 <p>Reset the password via ADB:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">adb</span> shell</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> passwd arduino</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="ex">adb</span> shell</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> passwd arduino</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="wi-fi-not-connecting" class="level3">
 <h3 class="anchored" data-anchor-id="wi-fi-not-connecting">Wi-Fi Not Connecting</h3>
@@ -1126,7 +1258,7 @@ XXXXXXXX    device</code></pre>
 <section id="app.run-missing-error" class="level3">
 <h3 class="anchored" data-anchor-id="app.run-missing-error">“App.run() Missing” Error</h3>
 <p>If you see errors like <code>Stopped decode loop: EOF</code> when starting a project, make sure your Python code includes:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>App.run(user_loop<span class="op">=</span>loop)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>App.run(user_loop<span class="op">=</span>loop)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This line is <strong>mandatory</strong> for the runtime to start the application properly.</p>
 </section>
 <section id="memory-issues-especially-on-the-2-gb-variant" class="level3">
@@ -1141,29 +1273,29 @@ XXXXXXXX    device</code></pre>
 <section id="storage-cleanup" class="level3">
 <h3 class="anchored" data-anchor-id="storage-cleanup">Storage Cleanup</h3>
 <p>Over time, Docker images, logs, and cached packages can fill the eMMC:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check available space</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">df</span> <span class="at">-h</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean apt cache</span></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt clean</span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt autoremove <span class="at">-y</span></span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="co"># If using Docker</span></span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> system prune <span class="at">-a</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check available space</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">df</span> <span class="at">-h</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean apt cache</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt clean</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt autoremove <span class="at">-y</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="co"># If using Docker</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> system prune <span class="at">-a</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="using-git-for-version-control" class="level3">
 <h3 class="anchored" data-anchor-id="using-git-for-version-control">Using Git for Version Control</h3>
 <p>Install Git on the UNO Q and use it to sync code instead of SCP:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install git <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install git <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You can then clone repositories directly on the board or push/pull from your host. This is especially useful for team projects and keeping your code backed up.</p>
 </section>
 <section id="alternative-file-transfer-rsync" class="level3">
 <h3 class="anchored" data-anchor-id="alternative-file-transfer-rsync">Alternative File Transfer: rsync</h3>
 <p>For iterative development, <code>rsync</code> is faster than <code>scp</code> because it only transfers changed files:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># On your host machine, from inside the project directory:</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avz</span> <span class="at">--progress</span> ./ arduino@<span class="op">&lt;</span>UNO_Q_IP_ADDRESS<span class="op">&gt;</span>:~/ArduinoApps/uno_q_blink/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># On your host machine, from inside the project directory:</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rsync</span> <span class="at">-avz</span> <span class="at">--progress</span> ./ arduino@<span class="op">&lt;</span>UNO_Q_IP_ADDRESS<span class="op">&gt;</span>:~/ArduinoApps/uno_q_blink/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Install <code>rsync</code> on the UNO Q if not present:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install rsync <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install rsync <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 </section>
@@ -1173,7 +1305,7 @@ XXXXXXXX    device</code></pre>
 <section id="edge-ai-on-the-uno-q" class="level3">
 <h3 class="anchored" data-anchor-id="edge-ai-on-the-uno-q">Edge AI on the UNO Q</h3>
 <ul>
-<li><p><strong>Pre-loaded AI models</strong>: The UNO Q comes with models for object detection, image classification, sound recognition, and keyword spotting. Explore them via <code>arduino-app-cli app list</code>.</p></li>
+<li><p><strong>Pre-loaded AI models</strong>: The UNO Q comes with models for object detection, image classification, sound recognition, and keyword spotting. Explore them via <code>arduino-app-cli model list</code> and the example Apps that use them via <code>arduino-app-cli app list --examples</code>.</p></li>
 <li><p><strong>Edge Impulse integration</strong>: Train and deploy custom ML models from Edge Impulse Studio to the UNO Q. See the <a href="https://docs.edgeimpulse.com/hardware/boards/arduino-uno-q">Edge Impulse Arduino UNO Q documentation</a>.</p></li>
 <li><p><strong>TinyML with Python</strong>: Use TensorFlow Lite or ONNX Runtime on the Linux side for inference tasks.</p></li>
 <li><p><strong>GenAI at the Edge</strong>: Use Llama.cpp to run generative models at the edge.</p></li>

@@ -341,6 +341,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#step-1-create-the-models-directory" id="toc-step-1-create-the-models-directory" class="nav-link" data-scroll-target="#step-1-create-the-models-directory">Step 1 — Create the Models Directory</a></li>
   <li><a href="#step-2-download-qwen3.5-0.8b" id="toc-step-2-download-qwen3.5-0.8b" class="nav-link" data-scroll-target="#step-2-download-qwen3.5-0.8b">Step 2 — Download Qwen3.5-0.8B</a></li>
+  <li><a href="#step-3-download-qwen3.5-2b-optional" id="toc-step-3-download-qwen3.5-2b-optional" class="nav-link" data-scroll-target="#step-3-download-qwen3.5-2b-optional">Step 3 — Download Qwen3.5-2B (Optional)</a></li>
   <li><a href="#a-note-on-quantization-quality-for-sub-1b-models" id="toc-a-note-on-quantization-quality-for-sub-1b-models" class="nav-link" data-scroll-target="#a-note-on-quantization-quality-for-sub-1b-models">A Note on Quantization Quality for Sub-1B Models</a></li>
   </ul></li>
   <li><a href="#using-llama-cli" id="toc-using-llama-cli" class="nav-link" data-scroll-target="#using-llama-cli">7. Using llama-cli</a>
@@ -363,7 +364,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#alternative-raw-http-with-requests" id="toc-alternative-raw-http-with-requests" class="nav-link" data-scroll-target="#alternative-raw-http-with-requests">9.2 Alternative: Raw HTTP With <code>requests</code></a></li>
   <li><a href="#library-vs.-direct-http-when-to-use-which" id="toc-library-vs.-direct-http-when-to-use-which" class="nav-link" data-scroll-target="#library-vs.-direct-http-when-to-use-which">9.3 Library vs.&nbsp;Direct HTTP: When to Use Which</a></li>
   </ul></li>
-  <li><a href="#performance-what-to-actually-expect" id="toc-performance-what-to-actually-expect" class="nav-link" data-scroll-target="#performance-what-to-actually-expect">10. Performance: What to Actually Expect</a></li>
+  <li><a href="#performance-what-to-actually-expect" id="toc-performance-what-to-actually-expect" class="nav-link" data-scroll-target="#performance-what-to-actually-expect">10. Performance: What to Actually Expect</a>
+  <ul class="collapse">
+  <li><a href="#mtp-uno-q" id="toc-mtp-uno-q" class="nav-link" data-scroll-target="#mtp-uno-q">MTP Speculative Decoding: Not on the UNO Q</a></li>
+  </ul></li>
   <li><a href="#tips-tricks-and-troubleshooting" id="toc-tips-tricks-and-troubleshooting" class="nav-link" data-scroll-target="#tips-tricks-and-troubleshooting">11. Tips, Tricks, and Troubleshooting</a>
   <ul class="collapse">
   <li><a href="#model-loops-or-produces-very-long-responses" id="toc-model-loops-or-produces-very-long-responses" class="nav-link" data-scroll-target="#model-loops-or-produces-very-long-responses">Model Loops or Produces Very Long Responses</a></li>
@@ -374,7 +378,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#going-further" id="toc-going-further" class="nav-link" data-scroll-target="#going-further">12. Going Further</a>
   <ul class="collapse">
-  <li><a href="#alternative-model-qwen-3.5-2b" id="toc-alternative-model-qwen-3.5-2b" class="nav-link" data-scroll-target="#alternative-model-qwen-3.5-2b">Alternative Model (Qwen 3.5 2B)</a></li>
+  <li><a href="#alt-2b" id="toc-alt-2b" class="nav-link" data-scroll-target="#alt-2b">Alternative Model (Qwen 3.5 2B)</a></li>
   <li><a href="#alternative-slm-backends" id="toc-alternative-slm-backends" class="nav-link" data-scroll-target="#alternative-slm-backends">Alternative SLM Backends</a></li>
   <li><a href="#function-calling-and-multimodal-models" id="toc-function-calling-and-multimodal-models" class="nav-link" data-scroll-target="#function-calling-and-multimodal-models">Function Calling and Multimodal Models</a></li>
   <li><a href="#agentic-ai-assistant" id="toc-agentic-ai-assistant" class="nav-link" data-scroll-target="#agentic-ai-assistant">Agentic AI Assistant</a></li>
@@ -525,16 +529,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Balanced. Recommended fallback if 0.8B is too tight on space.</td>
 </tr>
 <tr class="odd">
-<td><code>Qwen3.5-0.8B Q8.0</code></td>
+<td><code>Qwen3.5-0.8B Q8_0</code></td>
 <td>800 M</td>
-<td>~880 MB</td>
+<td>~800 MB</td>
 <td><strong>Our primary choice.</strong> Best quality-per-parameter for edge.</td>
 </tr>
 <tr class="even">
-<td><code>Qwen3.5-2B (Q4-Q8)</code></td>
+<td><code>Qwen3.5-2B UD-Q4_K_XL</code></td>
 <td>2B</td>
-<td>1.25 to 2 GB</td>
-<td>Excellent, but a little slower.</td>
+<td>~1.34 GB</td>
+<td>Excellent, but about half the speed of the 0.8B.</td>
 </tr>
 </tbody>
 </table>
@@ -548,13 +552,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </blockquote>
 <p>Recommendations:</p>
 <ul>
-<li><strong>Start with Q4_K_M</strong> (~550 MB for Qwen3.5-0.8B) to verify the workflow fits on your board.</li>
-<li><strong>Try Unsloth Dynamic quants</strong> (<code>UD-Q4_K_XL</code>). These upcast critical layers to 8 or 16 bits while keeping overall size close to Q4. Available from the <a href="https://huggingface.co/unsloth/Qwen3.5-0.8B-GGUF">unsloth/Qwen3.5-0.8B-GGUF</a> repo.</li>
-<li><strong>Try Q8_0</strong> if you have space (~850 MB). Quality is meaningfully better, but leaves very little headroom on the current factory image. (This is the choice for this tutorial.)</li>
-<li><strong>For production use, combine Q4 with strong few-shot prompting</strong> and <code>response_format: json_object</code> to compensate for quantization noise.</li>
+<li><strong>Use Q8_0 for the 0.8B</strong> (~800 MB). Quality is meaningfully better than Q4, and on the newer images with a separate 18 GB <code>/home</code> partition, space is no longer a concern. (This is the choice for this tutorial.)</li>
+<li><strong>Use Q4 for the 2B</strong>, preferably the Unsloth Dynamic quant (<code>UD-Q4_K_XL</code>), which upcasts critical layers to 8 or 16 bits while keeping the overall size close to Q4.</li>
+<li><strong>For production use with Q4, combine it with strong few-shot prompting</strong> and <code>response_format: json_object</code> to compensate for quantization noise.</li>
 </ul>
 <blockquote class="blockquote">
-<p><a href="https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/blob/main/Qwen3.5-2B-UD-Q4_K_XL.gguf">unsloth/Qwen3.5-2B-GGUF (UD-Q4_K_XL)</a> is a great model when latency is not an issue. The 2B model with Unlosh Dynamic quants (<code>UD-Q4_K_XL</code>) should have double the latency of the 0.8B/8_0 model, but it has superior performance.</p>
+<p><strong>Unsloth Dynamic 8-bit for the 0.8B?</strong> Unsloth also publishes a <code>UD-Q8_K_XL</code> of the 0.8B (1.19 GB, about 50% larger than Q8_0). On the UNO Q it was <em>slower</em> than plain Q8_0 (4.75 vs.&nbsp;5.6 tokens/s) and used about 360 MB more RAM, with no visible quality difference on short prompts. At 8 bits, plain Q8_0 is the better trade-off on this board.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><a href="https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/blob/main/Qwen3.5-2B-UD-Q4_K_XL.gguf">unsloth/Qwen3.5-2B-GGUF (UD-Q4_K_XL)</a> is a great model when latency is not an issue. It generates at about half the speed of the 0.8B Q8_0 (2.5 vs.&nbsp;5.6 tokens/s), but its answers are noticeably better.</p>
 </blockquote>
 </section>
 </section>
@@ -612,8 +618,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Build llama.cpp from source</td>
 </tr>
 <tr class="even">
-<td><code>libcurl4-openssl-dev</code></td>
-<td>Enables in-binary model downloads</td>
+<td><code>libssl-dev</code></td>
+<td>Enables HTTPS model downloads inside the binaries</td>
 </tr>
 <tr class="odd">
 <td><code>openai</code>, <code>requests</code> (Python)</td>
@@ -649,7 +655,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="step-2-install-build-tools">Step 2 — Install Build Tools</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install <span class="at">-y</span> build-essential cmake git pkg-config <span class="dt">\</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                    libcurl4-openssl-dev</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                    libssl-dev</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p>Older tutorials (including earlier versions of this one) install <code>libcurl4-openssl-dev</code>. Current llama.cpp no longer uses libcurl: downloads go through OpenSSL instead, so <code>libssl-dev</code> is the package you need.</p>
+</blockquote>
 </section>
 </section>
 <section id="building-llama.cpp-from-source" class="level2">
@@ -661,22 +670,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /home/arduino</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone <span class="at">--depth</span> 1 https://github.com/ggml-org/llama.cpp</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> llama.cpp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This brings the clone down from ~550 MB to roughly 80–100 MB.</p>
+<p>The shallow clone takes about 220 MB on disk (October 2026).</p>
 </section>
 <section id="step-2-configure-and-build" class="level3">
 <h3 class="anchored" data-anchor-id="step-2-configure-and-build">Step 2 — Configure and Build</h3>
 <p>From the llama.cpp folder, run:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">-B</span> build <span class="dt">\</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-DLLAMA_CURL</span><span class="op">=</span>ON <span class="dt">\</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-DGGML_NATIVE</span><span class="op">=</span>ON <span class="dt">\</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-DCMAKE_BUILD_TYPE</span><span class="op">=</span>Release</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">--build</span> build <span class="at">--config</span> Release <span class="at">-j4</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-DGGML_NATIVE</span><span class="op">=</span>ON <span class="dt">\</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-DCMAKE_BUILD_TYPE</span><span class="op">=</span>Release</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cmake</span> <span class="at">--build</span> build <span class="at">--config</span> Release <span class="at">-j4</span> <span class="dt">\</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--target</span> llama-cli llama-server</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The flags:</p>
 <ul>
-<li><code>LLAMA_CURL=ON</code> enables model downloads directly inside <code>llama-server</code> and <code>llama-cli</code>.</li>
 <li><code>GGML_NATIVE=ON</code> detects the A53’s NEON SIMD capabilities and emits the right CPU intrinsics.</li>
-<li><code>-j4</code> uses all four cores. The build takes 20–25 minutes on the UNO Q.</li>
+<li><code>--target llama-cli llama-server</code> builds only the two tools this book uses. Without it, CMake compiles more than 100 binaries, including all the test programs. On the UNO Q, the targeted build took <strong>29 minutes</strong>; a full build took 46 minutes.</li>
+<li><code>-j4</code> uses all four cores.</li>
 </ul>
+<blockquote class="blockquote">
+<p><strong><code>-DLLAMA_CURL=ON</code> is deprecated.</strong> Older recipes pass it to enable model downloads. Current builds print a deprecation warning and use OpenSSL instead (<code>LLAMA_OPENSSL</code>, on by default), so the flag can be dropped.</p>
+</blockquote>
 <blockquote class="blockquote">
 <p><strong>If the build runs out of memory</strong> (the board freezes or the build dies), drop to <code>-j2</code>. The build takes longer but stays under the OOM threshold. With the factory swap in place, <code>-j4</code> normally works.</p>
 </blockquote>
@@ -689,7 +701,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="step-4-reclaim-disk-space-optional" class="level3">
 <h3 class="anchored" data-anchor-id="step-4-reclaim-disk-space-optional">Step 4 — Reclaim Disk Space (Optional)</h3>
-<p>The build tree adds about 142 MB of intermediate files. On a board with limited storage, copy the runtime binaries to a slim directory and delete the rest:</p>
+<p>The build tree adds about 120 MB of intermediate files, while the two binaries and their shared libraries need only about 22 MB. On a board with limited storage, copy the runtime files to a slim directory and delete the rest:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /home/arduino</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> llama-runtime</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> llama.cpp/build/bin/llama-server llama-runtime/</span>
@@ -700,12 +712,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> llama-runtime</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="va">LD_LIBRARY_PATH</span><span class="op">=</span>. <span class="ex">./llama-cli</span> <span class="at">--version</span></span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete the source + build tree (saves ~690 MB)</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete the source + build tree (saves ~340 MB)</span></span>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-rf</span> /home/arduino/llama.cpp</span>
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="fu">df</span> <span class="at">-h</span> /</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>After cleanup, you should have roughly 1.5 GB free — enough for the model and normal system operation.</p>
 <blockquote class="blockquote">
-<p><strong>Alternative: Use pre-built binaries.</strong> llama.cpp publishes pre-built aarch64 Linux binaries on its <a href="https://github.com/ggml-org/llama.cpp/releases">GitHub Releases page</a>. Download the tarball, extract <code>llama-server</code> and <code>llama-cli</code>, and skip the whole build step. This turns this section into a 2-minute download instead of a 25-minute build, which is useful for classroom setups where you don’t need to teach the build process.</p>
+<p><strong>Alternative: Use pre-built binaries.</strong> llama.cpp publishes pre-built aarch64 Linux binaries on its <a href="https://github.com/ggml-org/llama.cpp/releases">GitHub Releases page</a>. Download the tarball, extract <code>llama-server</code> and <code>llama-cli</code>, and skip the whole build step. This turns this section into a 2-minute download instead of a 30-minute build, which is useful for classroom setups where you don’t need to teach the build process.</p>
 </blockquote>
 </section>
 </section>
@@ -719,26 +731,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="step-2-download-qwen3.5-0.8b" class="level3">
 <h3 class="anchored" data-anchor-id="step-2-download-qwen3.5-0.8b">Step 2 — Download Qwen3.5-0.8B</h3>
 <p>Two of the best quantizations are from <a href="https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF/tree/main">Bartowski</a> and <a href="https://huggingface.co/unsloth/Qwen3.5-0.8B-GGUF/tree/main">Unsloth.</a></p>
-<p>For the first part of this tutorial, the test was with 4-bit and 8-bit Bartowski quantization. The best result was with the <a href="https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF/blob/main/Qwen_Qwen3.5-0.8B-Q8_0.gguf">Q8_0 version</a> (about 797 MB).</p>
+<p>This tutorial uses the <a href="https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF/blob/main/Qwen_Qwen3.5-0.8B-Q8_0.gguf">Q8_0 version</a> from Bartowski (about 797 MB). The filename below is the one used in all later chapters:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/models</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF/resolve/main/<span class="dt">\</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>Qwen_Qwen3.5-0.8B-Q8_0.gguf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>For 4-bit quantization (about 553 MB):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF/resolve/main/<span class="dt">\</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>Qwen_Qwen3.5-0.8B-Q4_K_M.gguf</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> Qwen_Qwen3.5-0.8B-Q4_K_M.gguf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>I also make tests with Unsloth. The Unsloth Dynamic quant, which upcasts critical model layers to 16 bits while keeping the overall file size close to Q8:</p>
+<p>Unsloth’s <a href="https://huggingface.co/unsloth/Qwen3.5-0.8B-GGUF/blob/main/Qwen3.5-0.8B-Q8_0.gguf">Q8_0</a> (812 MB) is an equivalent choice. Q8_0 is a fixed format, so both run at the same speed. The measurements in Section 10 were taken with the Unsloth file. If you use it, adjust the model path in the commands below:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="at">-c</span> https://huggingface.co/unsloth/Qwen3.5-0.8B-GGUF/resolve/main/<span class="dt">\</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>Qwen3.5-0.8B-Q8_0.gguf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For 4-bit quantization (about 553 MB), if storage is tight:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://huggingface.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF/resolve/main/<span class="dt">\</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>Qwen_Qwen3.5-0.8B-Q4_K_M.gguf</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-lh</span> Qwen_Qwen3.5-0.8B-Q4_K_M.gguf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="step-3-download-qwen3.5-2b-optional" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-download-qwen3.5-2b-optional">Step 3 — Download Qwen3.5-2B (Optional)</h3>
+<p>For the larger model, use the Unsloth Dynamic 4-bit quant (1.34 GB):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="at">-c</span> https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/main/<span class="dt">\</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>Qwen3.5-2B-UD-Q4_K_XL.gguf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>See <a href="#alt-2b">Alternative Model (Qwen 3.5 2B)</a> in Section 12 for how it compares with the 0.8B.</p>
 <blockquote class="blockquote">
-<p>The best is to put the models inside a directory to not make confusion</p>
+<p><strong>What about the <code>-MTP</code> repos?</strong> Unsloth also publishes <code>Qwen3.5-0.8B-MTP-GGUF</code> and <code>Qwen3.5-2B-MTP-GGUF</code>, which include an extra multi-token prediction head for speculative decoding. They don’t help on the UNO Q. See <a href="#mtp-uno-q">MTP Speculative Decoding</a> in Section 10.</p>
 </blockquote>
-<pre><code>mkdir -p ~/models/Qwen3.5-0.8B-GGUF
-cd ~/models/Qwen3.5-0.8B-GGUF
-
-wget -c "https://huggingface.co/unsloth/Qwen3.5-0.8B-GGUF/resolve/main/\
-Qwen3.5-0.8B-Q8_0.gguf"</code></pre>
 <p><strong>For the 2 GB UNO Q or extremely tight storage:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://huggingface.co/bartowski/SmolLM2-360M-Instruct-GGUF/resolve/main/<span class="dt">\</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>SmolLM2-360M-Instruct-Q4_K_M.gguf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://huggingface.co/bartowski/SmolLM2-360M-Instruct-GGUF/resolve/main/<span class="dt">\</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>SmolLM2-360M-Instruct-Q4_K_M.gguf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <blockquote class="blockquote">
 <p>Adjust the model path in the sections below accordingly.</p>
 </blockquote>
@@ -762,6 +778,9 @@ Qwen3.5-0.8B-Q8_0.gguf"</code></pre>
 <section id="qwen-3.5-and-thinking-mode" class="level3">
 <h3 class="anchored" data-anchor-id="qwen-3.5-and-thinking-mode">Qwen 3.5 and Thinking Mode</h3>
 <p>Qwen3.5 is a hybrid reasoning model, and by default the models are in “thinking mode.” For edge use, disable it. <code>llama-cli</code> needs to be told this explicitly via the <code>--reasoning</code> flags. Without them, the model may enter thinking mode, producing long internal reasoning chains that burn minutes of CPU time and often loop without reaching a conclusion.</p>
+<blockquote class="blockquote">
+<p>Some model cards say the small Qwen3.5 models start in non-thinking mode. With llama.cpp, that is not what happens: in a test without the flags, the 0.8B spent its entire 400-token budget reasoning about “What is the capital of Brazil?” and never produced an answer. It took 88 seconds and pushed the board to 70 °C.</p>
+</blockquote>
 <p>In current llama.cpp builds, use <code>--reasoning off</code> and <code>--reasoning-budget 0</code> on the command line. The older <code>--chat-template-kwargs '{"enable_thinking":false}'</code> flag is <strong>deprecated</strong> and produces a warning. If you see it in other tutorials, replace it with the newer flags.</p>
 <p>Recommended inference parameters for non-thinking mode (from the <a href="https://unsloth.ai/docs/models/qwen3.5">Unsloth Qwen3.5 guide</a>):</p>
 <table class="caption-top table">
@@ -811,26 +830,26 @@ Qwen3.5-0.8B-Q8_0.gguf"</code></pre>
 </tbody>
 </table>
 <p>Call <code>llama-cli</code> with those settings:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/llama.cpp</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-cli</span> <span class="dt">\</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> ~/models/Qwen_Qwen3.5-0.8B-Q8_0.gguf <span class="dt">\</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--threads</span> 4 <span class="dt">\</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--ctx-size</span> 1024 <span class="dt">\</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--temperature</span> 0.7 <span class="dt">\</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--top-p</span> 0.8 <span class="dt">\</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--top-k</span> 20 <span class="dt">\</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--min-p</span> 0.0 <span class="dt">\</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--presence-penalty</span> 1.5 <span class="dt">\</span></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--repeat-penalty</span> 1.0 <span class="dt">\</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning</span> off <span class="dt">\</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning-budget</span> 0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/llama.cpp</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-cli</span> <span class="dt">\</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> ~/models/Qwen_Qwen3.5-0.8B-Q8_0.gguf <span class="dt">\</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--threads</span> 4 <span class="dt">\</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--ctx-size</span> 1024 <span class="dt">\</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--temperature</span> 0.7 <span class="dt">\</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--top-p</span> 0.8 <span class="dt">\</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--top-k</span> 20 <span class="dt">\</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--min-p</span> 0.0 <span class="dt">\</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--presence-penalty</span> 1.5 <span class="dt">\</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--repeat-penalty</span> 1.0 <span class="dt">\</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning</span> off <span class="dt">\</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning-budget</span> 0</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>At the prompt <code>&gt;</code>, type a question, for example:</p>
 <blockquote class="blockquote">
 <p><code>&gt; What is the capital of Brazil. Answer with one word.</code></p>
 </blockquote>
 <p><img src="./images/png/llama-cli-test.png" class="img-fluid"></p>
-<p>Latency in tokens/s is acceptable and usable, in the 5–10 tokens/s range.</p>
+<p>Latency in tokens/s is acceptable and usable: about 11 tokens/s for prompt processing and 5.7 tokens/s for generation with the October 2026 build.</p>
 <p>While inference runs, monitor CPU use and temperature:</p>
 <p><img src="./images/png/temp-cpu-use.png" class="img-fluid"></p>
 <p>The UNO Q handles SLMs well. The inferences were done without any heatsink or fan. Internal temperature increased by about 20 °C (from ~30 °C to ~50 °C). For long answers, the temperature reached ~60 °C, which is lower than a Raspberry Pi 5 with an active cooler.</p>
@@ -842,29 +861,33 @@ Qwen3.5-0.8B-Q8_0.gguf"</code></pre>
 <h3 class="anchored" data-anchor-id="create-a-helper-script">Create a Helper Script</h3>
 <p>You can wrap the full <code>llama-cli</code> command in a small shell script and run it instead of typing all the flags every time.</p>
 <p>On the UNO Q:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> ~/qwen_cli_llama.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> ~/qwen_cli_llama.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Paste:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Simple Qwen3.5 0.8B 8-bit CLI on UNO-Q without thinking</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="va">MODEL</span><span class="op">=</span>~/models/Qwen_Qwen3.5-0.8B-Q8_0.gguf</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="va">LLAMA</span><span class="op">=</span>~/llama.cpp/build/bin/llama-cli</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="st">"</span><span class="va">$LLAMA</span><span class="st">"</span> <span class="dt">\</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> <span class="st">"</span><span class="va">$MODEL</span><span class="st">"</span> <span class="dt">\</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--threads</span> 4 <span class="dt">\</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--ctx-size</span> 1024 <span class="dt">\</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--temperature</span> 0.7 <span class="dt">\</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--top-p</span> 0.8 <span class="dt">\</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--top-k</span> 20 <span class="dt">\</span></span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">--min-p</span> 0.0 <span class="dt">\</span></span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">--presence-penalty</span> 1.5 <span class="dt">\</span></span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">--repeat-penalty</span> 1.0 <span class="dt">\</span></span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning</span> off <span class="dt">\</span></span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning-budget</span> 0 <span class="dt">\</span></span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">-p</span> <span class="st">"</span><span class="va">$*</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Simple Qwen3.5 0.8B 8-bit CLI on UNO-Q without thinking</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="va">MODEL</span><span class="op">=</span>~/models/Qwen_Qwen3.5-0.8B-Q8_0.gguf</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="va">LLAMA</span><span class="op">=</span>~/llama.cpp/build/bin/llama-cli</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="st">"</span><span class="va">$LLAMA</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> <span class="st">"</span><span class="va">$MODEL</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--threads</span> 4 <span class="dt">\</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--ctx-size</span> 1024 <span class="dt">\</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--temperature</span> 0.7 <span class="dt">\</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--top-p</span> 0.8 <span class="dt">\</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--top-k</span> 20 <span class="dt">\</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">--min-p</span> 0.0 <span class="dt">\</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">--presence-penalty</span> 1.5 <span class="dt">\</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">--repeat-penalty</span> 1.0 <span class="dt">\</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning</span> off <span class="dt">\</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning-budget</span> 0 <span class="dt">\</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">--single-turn</span> <span class="dt">\</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">-p</span> <span class="st">"</span><span class="va">$*</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p><strong><code>--single-turn</code> (<code>-st</code>) makes the script exit after one answer.</strong> Current <code>llama-cli</code> is conversational: with <code>-p</code> alone, it answers the prompt and then waits at <code>&gt;</code> for the next message.</p>
+</blockquote>
 <p>Save and make it executable:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x ~/qwen_cli_llama.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x ~/qwen_cli_llama.sh</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <blockquote class="blockquote">
 <p>Optionally, add <code>~/</code> to your <code>PATH</code> in <code>~/.bashrc</code> or <code>~/.profile</code> so you can call it without the full path.</p>
 </blockquote>
@@ -872,10 +895,10 @@ Qwen3.5-0.8B-Q8_0.gguf"</code></pre>
 <section id="use-it-with-a-simple-command" class="level3">
 <h3 class="anchored" data-anchor-id="use-it-with-a-simple-command">Use It With a Simple Command</h3>
 <p>Now run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">~/qwen_cli_llama.sh</span> <span class="st">"Explain edge AI in two sentences."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">~/qwen_cli_llama.sh</span> <span class="st">"Explain edge AI in two sentences."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><img src="./images/png/llama-cpp-example.png" class="img-fluid"></p>
 <p>or, after adding <code>~/</code> to <code>PATH</code> and reloading the shell:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">qwen_cli_llama.sh</span> <span class="st">"Explain edge AI in two sentences."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">qwen_cli_llama.sh</span> <span class="st">"Explain edge AI in two sentences."</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
 <section id="using-llama-server" class="level2">
@@ -890,16 +913,16 @@ Qwen3.5-0.8B-Q8_0.gguf"</code></pre>
 <section id="step-1-start-llama-server-terminal-1" class="level3">
 <h3 class="anchored" data-anchor-id="step-1-start-llama-server-terminal-1">Step 1 — Start llama-server (Terminal 1)</h3>
 <p>In your first terminal:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/llama.cpp</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-server</span> <span class="dt">\</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> ~/models/Qwen_Qwen3.5-0.8B-Q8_0.gguf <span class="dt">\</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--threads</span> 4 <span class="dt">\</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--ctx-size</span> 1024 <span class="dt">\</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--port</span> 8081 <span class="dt">\</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning</span> off <span class="dt">\</span></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning-budget</span> 0 <span class="dt">\</span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--alias</span> qwen3.5-0.8b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/llama.cpp</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-server</span> <span class="dt">\</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> ~/models/Qwen_Qwen3.5-0.8B-Q8_0.gguf <span class="dt">\</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--threads</span> 4 <span class="dt">\</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--ctx-size</span> 1024 <span class="dt">\</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--port</span> 8081 <span class="dt">\</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning</span> off <span class="dt">\</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning-budget</span> 0 <span class="dt">\</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--alias</span> qwen3.5-0.8b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <blockquote class="blockquote">
 <p><strong><code>--alias</code> gives the server a stable name to answer to</strong>, independent of the GGUF filename. Client code (curl, Python, the WebUI) can always ask for <code>"model": "qwen3.5-0.8b"</code> no matter which actual file is loaded behind it — which matters the moment you start swapping models (see the multimodal chapter for a worked example). Use it from here on, every time you start <code>llama-server</code>.</p>
 </blockquote>
@@ -911,7 +934,7 @@ Qwen3.5-0.8B-Q8_0.gguf"</code></pre>
 </ul>
 <p><img src="./images/png/server-running.png" class="img-fluid"></p>
 <p>If port 8081 is busy, try another port:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ss <span class="at">-ltnp</span> <span class="kw">|</span> <span class="fu">grep</span> 8081</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ss <span class="at">-ltnp</span> <span class="kw">|</span> <span class="fu">grep</span> 8081</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <blockquote class="blockquote">
 <p><strong>Do not close this terminal.</strong> The server runs as long as this process is alive. When you’re done testing, press <code>Ctrl+C</code> to stop it.</p>
 </blockquote>
@@ -919,32 +942,32 @@ Qwen3.5-0.8B-Q8_0.gguf"</code></pre>
 <section id="step-2-quick-test-with-curl-terminal-2" class="level3">
 <h3 class="anchored" data-anchor-id="step-2-quick-test-with-curl-terminal-2">Step 2 — Quick Test With curl (Terminal 2)</h3>
 <p>Open a second SSH session to the UNO Q. First, verify the server is alive:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> http://127.0.0.1:8081/health <span class="kw">|</span> <span class="ex">python3</span> <span class="at">-m</span> json.tool</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-s</span> http://127.0.0.1:8081/health <span class="kw">|</span> <span class="ex">python3</span> <span class="at">-m</span> json.tool</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><img src="./images/png/server-test.png" class="img-fluid"></p>
 <p>You should see <code>"status": "ok"</code>. Now send a prompt using the <code>/completion</code> endpoint:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> http://127.0.0.1:8081/completion <span class="dt">\</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">"Content-Type: application/json"</span> <span class="dt">\</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-d</span> <span class="st">'{</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="st">    "prompt": "In 2 sentences, what is the Olympic Games?",</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="st">    "n_predict": 128</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="st">  }'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> http://127.0.0.1:8081/completion <span class="dt">\</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">"Content-Type: application/json"</span> <span class="dt">\</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-d</span> <span class="st">'{</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="st">    "prompt": "In 2 sentences, what is the Olympic Games?",</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="st">    "n_predict": 128</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="st">  }'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><img src="./images/png/raw-answer.png" class="img-fluid"></p>
 <p>Switch back to <strong>Terminal 1</strong> while it processes. You’ll see the server log each token as it generates, plus timing information. That’s the main advantage of running in the foreground: you see exactly what the model is doing.</p>
 <p><img src="./images/png/server-data.png" class="img-fluid"></p>
 <p>Now try the OpenAI-compatible <code>/v1/chat/completions</code> endpoint, which is what the Python clients in Section 9 use:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> http://127.0.0.1:8081/v1/chat/completions <span class="dt">\</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">"Content-Type: application/json"</span> <span class="dt">\</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-d</span> <span class="st">'{</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="st">    "model": "qwen3.5-0.8b",</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="st">    "messages": [</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="st">      {"role": "system", "content": "You are concise. Answer in one sentence."},</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="st">      {"role": "user", "content": "What is TinyML?"}</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="st">    ],</span></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="st">    "max_tokens": 80,</span></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="st">    "temperature": 0.7,</span></span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="st">    "top_p": 0.8,</span></span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="st">    "presence_penalty": 1.5</span></span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="st">  }'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> http://127.0.0.1:8081/v1/chat/completions <span class="dt">\</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">-H</span> <span class="st">"Content-Type: application/json"</span> <span class="dt">\</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-d</span> <span class="st">'{</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="st">    "model": "qwen3.5-0.8b",</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="st">    "messages": [</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="st">      {"role": "system", "content": "You are concise. Answer in one sentence."},</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="st">      {"role": "user", "content": "What is TinyML?"}</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="st">    ],</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="st">    "max_tokens": 80,</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="st">    "temperature": 0.7,</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="st">    "top_p": 0.8,</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="st">    "presence_penalty": 1.5</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="st">  }'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The response arrives as a JSON object. The model’s answer is in <code>choices[0].message.content</code>.</p>
 <p><img src="./images/png/curl-test-server.png" class="img-fluid"></p>
 </section>
@@ -955,36 +978,36 @@ Qwen3.5-0.8B-Q8_0.gguf"</code></pre>
 <section id="step-4-thermal-monitoring-optional" class="level3">
 <h3 class="anchored" data-anchor-id="step-4-thermal-monitoring-optional">Step 4 — Thermal Monitoring (Optional)</h3>
 <p>The UNO Q exposes Qualcomm thermal data through Linux thermal and hwmon interfaces. To monitor the MPU temperature in real time during inference:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check thermal zone type</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /sys/class/thermal/thermal_zone0/type</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Read current temperature (in millidegrees Celsius)</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /sys/class/thermal/thermal_zone0/temp</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Live monitor (updates every second)</span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="ex">watch</span> <span class="at">-n</span> 1 <span class="st">"cat /sys/class/hwmon/hwmon0/temp1_input"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check thermal zone type</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /sys/class/thermal/thermal_zone0/type</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Read current temperature (in millidegrees Celsius)</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /sys/class/thermal/thermal_zone0/temp</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Live monitor (updates every second)</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="ex">watch</span> <span class="at">-n</span> 1 <span class="st">"cat /sys/class/hwmon/hwmon0/temp1_input"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>For a friendlier readout, drop a small Python script in <code>~/q_temp_monitor.py</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env python3</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># The mapss_thermal zone exposes the QRB2210 SoC temperature</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>TEMP_PATH <span class="op">=</span> Path(<span class="st">"/sys/class/hwmon/hwmon0/temp1_input"</span>)</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_temp_c():</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    raw <span class="op">=</span> <span class="bu">int</span>(TEMP_PATH.read_text().strip())</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> raw <span class="op">/</span> <span class="fl">1000.0</span></span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="va">True</span>:</span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>read_temp_c()<span class="sc">:.1f}</span><span class="ss"> °C"</span>)</span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>            time.sleep(<span class="fl">1.0</span>)</span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">KeyboardInterrupt</span>:</span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env python3</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co"># The mapss_thermal zone exposes the QRB2210 SoC temperature</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>TEMP_PATH <span class="op">=</span> Path(<span class="st">"/sys/class/hwmon/hwmon0/temp1_input"</span>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_temp_c():</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    raw <span class="op">=</span> <span class="bu">int</span>(TEMP_PATH.read_text().strip())</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> raw <span class="op">/</span> <span class="fl">1000.0</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>read_temp_c()<span class="sc">:.1f}</span><span class="ss"> °C"</span>)</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>            time.sleep(<span class="fl">1.0</span>)</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">KeyboardInterrupt</span>:</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Make it executable and run it in a side terminal while the SLM works:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x ~/q_temp_monitor.py</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="ex">~/q_temp_monitor.py</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x ~/q_temp_monitor.py</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="ex">~/q_temp_monitor.py</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><img src="./images/png/temp.png" class="img-fluid"></p>
 <p>You should see the reading climb from ~32 °C at idle to whatever your workload pushes it to during inference.</p>
 <section id="thermal-behavior-measured" class="level4">
@@ -1018,19 +1041,22 @@ Qwen3.5-0.8B-Q8_0.gguf"</code></pre>
 <section id="step-5-the-built-in-webui-optional" class="level3">
 <h3 class="anchored" data-anchor-id="step-5-the-built-in-webui-optional">Step 5 — The Built-In WebUI (Optional)</h3>
 <p>Recent llama.cpp builds ship a SvelteKit-based chat interface embedded directly into the <code>llama-server</code> binary. No extra install, no extra flag. If the build from Section 5 is recent enough, the UI is already running on the same port as the API.</p>
+<blockquote class="blockquote">
+<p>During the build you may see <code>UI: download dist.tar.gz.sha256 ... failed</code>. It is harmless: the UI built into the binary is still served. Testing it with plain <code>curl http://127.0.0.1:8081/</code> returns <code>Error: gzip is not supported by this browser</code>, because the page is stored compressed; <code>curl --compressed</code> or any web browser gets the page normally.</p>
+</blockquote>
 <p>From the UNO Q itself, use <code>http://127.0.0.1:8081/</code>, or tunnel from your laptop with <code>ssh -L 8081:127.0.0.1:8081 arduino@&lt;UNO_Q_IP&gt;</code> and open <code>http://localhost:8081/</code> in the host browser.</p>
-<p>Alternatively, adding <code>--host 0.0.0.0</code> to llama. cpp.cpp command, the WebUI can be opened from your desktop browser using the UNO Q IP Address:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/llama.cpp</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-server</span> <span class="dt">\</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> ~/models/Qwen_Qwen3.5-0.8B-Q8_0.gguf <span class="dt">\</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--threads</span> 4 <span class="dt">\</span></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--ctx-size</span> 1024 <span class="dt">\</span></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--port</span> 8081 <span class="dt">\</span></span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--host</span> 0.0.0.0 <span class="dt">\</span></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning</span> off <span class="dt">\</span></span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning-budget</span> 0 <span class="dt">\</span></span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--alias</span> qwen3.5-0.8b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Alternatively, adding <code>--host 0.0.0.0</code> to the <code>llama-server</code> command, the WebUI can be opened from your desktop browser using the UNO Q IP Address:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/llama.cpp</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-server</span> <span class="dt">\</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> ~/models/Qwen_Qwen3.5-0.8B-Q8_0.gguf <span class="dt">\</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--threads</span> 4 <span class="dt">\</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--ctx-size</span> 1024 <span class="dt">\</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--port</span> 8081 <span class="dt">\</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--host</span> 0.0.0.0 <span class="dt">\</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning</span> off <span class="dt">\</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning-budget</span> 0 <span class="dt">\</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">--alias</span> qwen3.5-0.8b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>And so, from any device on the same Wi-Fi, open:</p>
 <p><strong>http://<uno_q_ip>:8081/</uno_q_ip></strong> (for example, in my case: http://192.168.5.114:8081/)</p>
 <p><img src="./images/png/llama-ui.png" class="img-fluid"></p>
@@ -1058,83 +1084,83 @@ Qwen3.5-0.8B-Q8_0.gguf"</code></pre>
 <section id="using-the-openai-client-library" class="level3">
 <h3 class="anchored" data-anchor-id="using-the-openai-client-library">9.1 Using the <code>openai</code> Client Library</h3>
 <p>Install it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">--user</span> openai</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">--user</span> openai</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Create <code>~/qwen_client.py</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> ~/qwen_client.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> ~/qwen_client.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Paste:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env python3</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="co">Chat with the local Qwen3.5 SLM served by llama-server,</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co">using the standard OpenAI-compatible client library.</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co">Run llama-server in another terminal first, then call this script.</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="co"># llama-server doesn't check the API key, but the client requires one.</span></span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI(base_url<span class="op">=</span><span class="st">"http://127.0.0.1:8081/v1"</span>, api_key<span class="op">=</span><span class="st">"not-needed"</span>)</span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>MODEL <span class="op">=</span> <span class="st">"qwen3.5-0.8b"</span></span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> strip_think(text):</span>
-<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Remove residual &lt;think&gt;...&lt;/think&gt; tags from Qwen3.5 output."""</span></span>
-<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> re.sub(<span class="vs">r"&lt;think&gt;</span><span class="dv">.</span><span class="op">*?</span><span class="vs">&lt;/think&gt;"</span>, <span class="st">""</span>, text, flags<span class="op">=</span>re.DOTALL).strip()</span>
-<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ask(messages, max_tokens<span class="op">=</span><span class="dv">128</span>, stream<span class="op">=</span><span class="va">True</span>):</span>
-<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Send a chat completion request and return the cleaned response."""</span></span>
-<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> client.chat.completions.create(</span>
-<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>        model<span class="op">=</span>MODEL,</span>
-<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a>        messages<span class="op">=</span>messages,</span>
-<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>        max_tokens<span class="op">=</span>max_tokens,</span>
-<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>        temperature<span class="op">=</span><span class="fl">0.7</span>,</span>
-<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>        top_p<span class="op">=</span><span class="fl">0.8</span>,</span>
-<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>        presence_penalty<span class="op">=</span><span class="fl">1.5</span>,</span>
-<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>        stream<span class="op">=</span>stream,</span>
-<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> stream:</span>
-<span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> strip_think(response.choices[<span class="dv">0</span>].message.content)</span>
-<span id="cb32-33"><a href="#cb32-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-34"><a href="#cb32-34" aria-hidden="true" tabindex="-1"></a>    chunks <span class="op">=</span> []</span>
-<span id="cb32-35"><a href="#cb32-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> chunk <span class="kw">in</span> response:</span>
-<span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a>        delta <span class="op">=</span> chunk.choices[<span class="dv">0</span>].delta.content <span class="kw">or</span> <span class="st">""</span></span>
-<span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(delta, end<span class="op">=</span><span class="st">""</span>, flush<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb32-38"><a href="#cb32-38" aria-hidden="true" tabindex="-1"></a>        chunks.append(delta)</span>
-<span id="cb32-39"><a href="#cb32-39" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>()</span>
-<span id="cb32-40"><a href="#cb32-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> strip_think(<span class="st">""</span>.join(chunks))</span>
-<span id="cb32-41"><a href="#cb32-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-42"><a href="#cb32-42" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
-<span id="cb32-43"><a href="#cb32-43" aria-hidden="true" tabindex="-1"></a>    system <span class="op">=</span> <span class="st">"You are concise."</span></span>
-<span id="cb32-44"><a href="#cb32-44" aria-hidden="true" tabindex="-1"></a>    history <span class="op">=</span> [{<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: system}]</span>
-<span id="cb32-45"><a href="#cb32-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-46"><a href="#cb32-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(sys.argv) <span class="op">&gt;</span> <span class="dv">1</span>:</span>
-<span id="cb32-47"><a href="#cb32-47" aria-hidden="true" tabindex="-1"></a>        <span class="co"># One-shot mode: pass the prompt as arguments</span></span>
-<span id="cb32-48"><a href="#cb32-48" aria-hidden="true" tabindex="-1"></a>        prompt <span class="op">=</span> <span class="st">" "</span>.join(sys.argv[<span class="dv">1</span>:])</span>
-<span id="cb32-49"><a href="#cb32-49" aria-hidden="true" tabindex="-1"></a>        history.append({<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: prompt})</span>
-<span id="cb32-50"><a href="#cb32-50" aria-hidden="true" tabindex="-1"></a>        ask(history)</span>
-<span id="cb32-51"><a href="#cb32-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb32-52"><a href="#cb32-52" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Interactive REPL with conversation memory</span></span>
-<span id="cb32-53"><a href="#cb32-53" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Qwen3.5 on UNO Q (via llama-server + openai). Ctrl+C to exit.</span><span class="ch">\n</span><span class="st">"</span>)</span>
-<span id="cb32-54"><a href="#cb32-54" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
-<span id="cb32-55"><a href="#cb32-55" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span> <span class="va">True</span>:</span>
-<span id="cb32-56"><a href="#cb32-56" aria-hidden="true" tabindex="-1"></a>                prompt <span class="op">=</span> <span class="bu">input</span>(<span class="st">"&gt; "</span>).strip()</span>
-<span id="cb32-57"><a href="#cb32-57" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="kw">not</span> prompt:</span>
-<span id="cb32-58"><a href="#cb32-58" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">continue</span></span>
-<span id="cb32-59"><a href="#cb32-59" aria-hidden="true" tabindex="-1"></a>                history.append({<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: prompt})</span>
-<span id="cb32-60"><a href="#cb32-60" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>()</span>
-<span id="cb32-61"><a href="#cb32-61" aria-hidden="true" tabindex="-1"></a>                reply <span class="op">=</span> ask(history)</span>
-<span id="cb32-62"><a href="#cb32-62" aria-hidden="true" tabindex="-1"></a>                history.append({<span class="st">"role"</span>: <span class="st">"assistant"</span>, <span class="st">"content"</span>: reply})</span>
-<span id="cb32-63"><a href="#cb32-63" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>()</span>
-<span id="cb32-64"><a href="#cb32-64" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> (<span class="pp">KeyboardInterrupt</span>, <span class="pp">EOFError</span>):</span>
-<span id="cb32-65"><a href="#cb32-65" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Bye!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env python3</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co">Chat with the local Qwen3.5 SLM served by llama-server,</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co">using the standard OpenAI-compatible client library.</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co">Run llama-server in another terminal first, then call this script.</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="co"># llama-server doesn't check the API key, but the client requires one.</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> OpenAI(base_url<span class="op">=</span><span class="st">"http://127.0.0.1:8081/v1"</span>, api_key<span class="op">=</span><span class="st">"not-needed"</span>)</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>MODEL <span class="op">=</span> <span class="st">"qwen3.5-0.8b"</span></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> strip_think(text):</span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Remove residual &lt;think&gt;...&lt;/think&gt; tags from Qwen3.5 output."""</span></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> re.sub(<span class="vs">r"&lt;think&gt;</span><span class="dv">.</span><span class="op">*?</span><span class="vs">&lt;/think&gt;"</span>, <span class="st">""</span>, text, flags<span class="op">=</span>re.DOTALL).strip()</span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ask(messages, max_tokens<span class="op">=</span><span class="dv">128</span>, stream<span class="op">=</span><span class="va">True</span>):</span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Send a chat completion request and return the cleaned response."""</span></span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>    response <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>        model<span class="op">=</span>MODEL,</span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>        messages<span class="op">=</span>messages,</span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>        max_tokens<span class="op">=</span>max_tokens,</span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>        temperature<span class="op">=</span><span class="fl">0.7</span>,</span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>        top_p<span class="op">=</span><span class="fl">0.8</span>,</span>
+<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>        presence_penalty<span class="op">=</span><span class="fl">1.5</span>,</span>
+<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a>        stream<span class="op">=</span>stream,</span>
+<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> stream:</span>
+<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> strip_think(response.choices[<span class="dv">0</span>].message.content)</span>
+<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-34"><a href="#cb33-34" aria-hidden="true" tabindex="-1"></a>    chunks <span class="op">=</span> []</span>
+<span id="cb33-35"><a href="#cb33-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> chunk <span class="kw">in</span> response:</span>
+<span id="cb33-36"><a href="#cb33-36" aria-hidden="true" tabindex="-1"></a>        delta <span class="op">=</span> chunk.choices[<span class="dv">0</span>].delta.content <span class="kw">or</span> <span class="st">""</span></span>
+<span id="cb33-37"><a href="#cb33-37" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(delta, end<span class="op">=</span><span class="st">""</span>, flush<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb33-38"><a href="#cb33-38" aria-hidden="true" tabindex="-1"></a>        chunks.append(delta)</span>
+<span id="cb33-39"><a href="#cb33-39" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>()</span>
+<span id="cb33-40"><a href="#cb33-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> strip_think(<span class="st">""</span>.join(chunks))</span>
+<span id="cb33-41"><a href="#cb33-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-42"><a href="#cb33-42" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">"__main__"</span>:</span>
+<span id="cb33-43"><a href="#cb33-43" aria-hidden="true" tabindex="-1"></a>    system <span class="op">=</span> <span class="st">"You are concise."</span></span>
+<span id="cb33-44"><a href="#cb33-44" aria-hidden="true" tabindex="-1"></a>    history <span class="op">=</span> [{<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: system}]</span>
+<span id="cb33-45"><a href="#cb33-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-46"><a href="#cb33-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(sys.argv) <span class="op">&gt;</span> <span class="dv">1</span>:</span>
+<span id="cb33-47"><a href="#cb33-47" aria-hidden="true" tabindex="-1"></a>        <span class="co"># One-shot mode: pass the prompt as arguments</span></span>
+<span id="cb33-48"><a href="#cb33-48" aria-hidden="true" tabindex="-1"></a>        prompt <span class="op">=</span> <span class="st">" "</span>.join(sys.argv[<span class="dv">1</span>:])</span>
+<span id="cb33-49"><a href="#cb33-49" aria-hidden="true" tabindex="-1"></a>        history.append({<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: prompt})</span>
+<span id="cb33-50"><a href="#cb33-50" aria-hidden="true" tabindex="-1"></a>        ask(history)</span>
+<span id="cb33-51"><a href="#cb33-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb33-52"><a href="#cb33-52" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Interactive REPL with conversation memory</span></span>
+<span id="cb33-53"><a href="#cb33-53" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Qwen3.5 on UNO Q (via llama-server + openai). Ctrl+C to exit.</span><span class="ch">\n</span><span class="st">"</span>)</span>
+<span id="cb33-54"><a href="#cb33-54" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb33-55"><a href="#cb33-55" aria-hidden="true" tabindex="-1"></a>            <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb33-56"><a href="#cb33-56" aria-hidden="true" tabindex="-1"></a>                prompt <span class="op">=</span> <span class="bu">input</span>(<span class="st">"&gt; "</span>).strip()</span>
+<span id="cb33-57"><a href="#cb33-57" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> <span class="kw">not</span> prompt:</span>
+<span id="cb33-58"><a href="#cb33-58" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">continue</span></span>
+<span id="cb33-59"><a href="#cb33-59" aria-hidden="true" tabindex="-1"></a>                history.append({<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: prompt})</span>
+<span id="cb33-60"><a href="#cb33-60" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>()</span>
+<span id="cb33-61"><a href="#cb33-61" aria-hidden="true" tabindex="-1"></a>                reply <span class="op">=</span> ask(history)</span>
+<span id="cb33-62"><a href="#cb33-62" aria-hidden="true" tabindex="-1"></a>                history.append({<span class="st">"role"</span>: <span class="st">"assistant"</span>, <span class="st">"content"</span>: reply})</span>
+<span id="cb33-63"><a href="#cb33-63" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>()</span>
+<span id="cb33-64"><a href="#cb33-64" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> (<span class="pp">KeyboardInterrupt</span>, <span class="pp">EOFError</span>):</span>
+<span id="cb33-65"><a href="#cb33-65" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Bye!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Make it executable and test:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x ~/qwen_client.py</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co"># One-shot test</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="ex">~/qwen_client.py</span> <span class="st">"In one sentence, what causes dengue fever?"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x ~/qwen_client.py</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># One-shot test</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="ex">~/qwen_client.py</span> <span class="st">"In one sentence, what causes dengue fever?"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><img src="./images/png/server-on-shot-test.png" class="img-fluid"></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Interactive REPL, with memory across turns</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="ex">~/qwen_client.py</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Interactive REPL, with memory across turns</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="ex">~/qwen_client.py</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><img src="./images/png/python-tests.png" class="img-fluid"></p>
 <p>Two things worth noticing in this script:</p>
 <ul>
@@ -1144,7 +1170,7 @@ Qwen3.5-0.8B-Q8_0.gguf"</code></pre>
 <section id="structured-json-output" class="level4">
 <h4 class="anchored" data-anchor-id="structured-json-output">Structured JSON output</h4>
 <p>The same client works for structured tasks, not just chat. Ask the model to produce JSON:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">~/qwen_client.py</span> <span class="st">"Given: temp=30.2C, humidity=85%, standing water=yes. Classify dengue risk as low/medium/high. Reply ONLY with JSON: {</span><span class="dt">\"</span><span class="st">risk</span><span class="dt">\"</span><span class="st">:</span><span class="dt">\"</span><span class="st">...</span><span class="dt">\"</span><span class="st">, </span><span class="dt">\"</span><span class="st">reason</span><span class="dt">\"</span><span class="st">:</span><span class="dt">\"</span><span class="st">...</span><span class="dt">\"</span><span class="st">}"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="ex">~/qwen_client.py</span> <span class="st">"Given: temp=30.2C, humidity=85%, standing water=yes. Classify dengue risk as low/medium/high. Reply ONLY with JSON: {</span><span class="dt">\"</span><span class="st">risk</span><span class="dt">\"</span><span class="st">:</span><span class="dt">\"</span><span class="st">...</span><span class="dt">\"</span><span class="st">, </span><span class="dt">\"</span><span class="st">reason</span><span class="dt">\"</span><span class="st">:</span><span class="dt">\"</span><span class="st">...</span><span class="dt">\"</span><span class="st">}"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><img src="./images/png/json-return.png" class="img-fluid"></p>
 <p>The model returns valid JSON most of the time at Q8 quantization. This pattern — sensor-like input in, structured verdict out — is exactly what a real application built on this chapter would use; see <a href="#12-going-further">Going Further</a>.</p>
 </section>
@@ -1152,25 +1178,25 @@ Qwen3.5-0.8B-Q8_0.gguf"</code></pre>
 <section id="alternative-raw-http-with-requests" class="level3">
 <h3 class="anchored" data-anchor-id="alternative-raw-http-with-requests">9.2 Alternative: Raw HTTP With <code>requests</code></h3>
 <p>Sometimes you don’t want the <code>openai</code> dependency — an embedded script, a minimal container image, or just wanting to see the wire format directly. <code>llama-server</code>’s HTTP API is plain JSON over HTTP, so <code>requests</code> works fine too:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>resp <span class="op">=</span> requests.post(</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"http://127.0.0.1:8081/v1/chat/completions"</span>,</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    json<span class="op">=</span>{</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model"</span>: <span class="st">"qwen3.5-0.8b"</span>,</span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"messages"</span>: [</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>            {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: <span class="st">"You are concise."</span>},</span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>            {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"What is TinyML?"</span>},</span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>        ],</span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"max_tokens"</span>: <span class="dv">80</span>,</span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"temperature"</span>: <span class="fl">0.7</span>,</span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"top_p"</span>: <span class="fl">0.8</span>,</span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"presence_penalty"</span>: <span class="fl">1.5</span>,</span>
-<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>    },</span>
-<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>    timeout<span class="op">=</span><span class="dv">120</span>,</span>
-<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>resp.raise_for_status()</span>
-<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(resp.json()[<span class="st">"choices"</span>][<span class="dv">0</span>][<span class="st">"message"</span>][<span class="st">"content"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>resp <span class="op">=</span> requests.post(</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"http://127.0.0.1:8081/v1/chat/completions"</span>,</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    json<span class="op">=</span>{</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"model"</span>: <span class="st">"qwen3.5-0.8b"</span>,</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"messages"</span>: [</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>            {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: <span class="st">"You are concise."</span>},</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>            {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"What is TinyML?"</span>},</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>        ],</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"max_tokens"</span>: <span class="dv">80</span>,</span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"temperature"</span>: <span class="fl">0.7</span>,</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"top_p"</span>: <span class="fl">0.8</span>,</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"presence_penalty"</span>: <span class="fl">1.5</span>,</span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>    timeout<span class="op">=</span><span class="dv">120</span>,</span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>resp.raise_for_status()</span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(resp.json()[<span class="st">"choices"</span>][<span class="dv">0</span>][<span class="st">"message"</span>][<span class="st">"content"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="library-vs.-direct-http-when-to-use-which" class="level3">
 <h3 class="anchored" data-anchor-id="library-vs.-direct-http-when-to-use-which">9.3 Library vs.&nbsp;Direct HTTP: When to Use Which</h3>
@@ -1225,73 +1251,139 @@ Qwen3.5-0.8B-Q8_0.gguf"</code></pre>
 </section>
 <section id="performance-what-to-actually-expect" class="level2">
 <h2 class="anchored" data-anchor-id="performance-what-to-actually-expect">10. Performance: What to Actually Expect</h2>
-<p>Measured on a UNO Q 4 GB with the factory image, Qwen3.5-0.8B Q8_0, no heatsink, no fan:</p>
+<p>Measured on a UNO Q 4 GB with the factory image, Qwen3.5-0.8B Q8_0, 4 threads, no heatsink, no fan. The first column is from the original tests (early 2026 llama.cpp build); the second was measured in October 2026 with llama.cpp commit <code>5220213</code> and a 2048-token context:</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Metric</th>
-<th>Value</th>
+<th>Early 2026 build</th>
+<th>October 2026 build</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Cold model load (boot of llama-server)</td>
 <td>~4 s</td>
+<td>~4.5 s</td>
 </tr>
 <tr class="even">
 <td>Idle RAM (llama-server running)</td>
 <td>~700–800 MB</td>
+<td>~950 MB (process RSS)</td>
 </tr>
 <tr class="odd">
 <td>Model + context memory usage</td>
 <td>~1,122 MiB</td>
+<td>~1.0–1.05 GB (process RSS)</td>
 </tr>
 <tr class="even">
 <td>Prompt processing throughput</td>
 <td>~9.9 tokens/s</td>
+<td><strong>~11.1 tokens/s</strong></td>
 </tr>
 <tr class="odd">
 <td>Generation throughput</td>
 <td>~4.75 tokens/s</td>
+<td><strong>~5.6 tokens/s</strong></td>
 </tr>
 <tr class="even">
 <td>CPU usage during decode</td>
+<td>4 cores @ 100%</td>
 <td>4 cores @ 100%</td>
 </tr>
 <tr class="odd">
 <td>Idle board temperature (no inference)</td>
 <td>~34 °C</td>
+<td>~45 °C (<code>thermal_zone0</code>)</td>
 </tr>
 <tr class="even">
 <td>Temperature during normal inference</td>
 <td>~54 °C</td>
+<td>~55 °C</td>
 </tr>
 <tr class="odd">
 <td>Temperature during sustained long answers</td>
 <td>~62 °C</td>
+<td>~59–61 °C</td>
 </tr>
 <tr class="even">
 <td>Thermal throttle threshold</td>
 <td>70–80 °C (never reached)</td>
+<td>not reached</td>
 </tr>
 <tr class="odd">
 <td>Power consumption (max.)</td>
 <td>3.1 W</td>
+<td>not measured</td>
 </tr>
 </tbody>
 </table>
+<p>The newer build is about 15–20% faster on the same model and board, with no change to the command line. Keeping llama.cpp up to date is worth it.</p>
 <p>Takeaways:</p>
 <ul>
-<li><strong>Usable but not desktop-class.</strong> Prompt processing at ~9.9 tok/s and generation at ~4.75 tok/s make the setup workable for periodic queries, but responses take a few seconds depending on length. The ~1,122 MiB memory footprint (model + context) leaves about 2.5 GB for the OS and your application. Tight but viable on the 4 GB board.</li>
+<li><strong>Usable but not desktop-class.</strong> Prompt processing at ~11 tok/s and generation at ~5.6 tok/s make the setup workable for periodic queries, but responses take a few seconds depending on length. The ~1 GB memory footprint (model + context) leaves about 2.5 GB for the OS and your application. Tight but viable on the 4 GB board.</li>
 <li><strong>Q4 quantization shows quality tradeoffs.</strong> At 0.8B parameters, the model has less redundancy than a 7B model, so Q4 compression removes information that matters. Strong few-shot prompting and <code>presence_penalty=1.5</code> compensate for most of it. <strong>Use Q8_0</strong> or the Unsloth Dynamic quant if storage allows.</li>
 <li><strong>Thermal behavior is not a concern.</strong> The +20 °C rise from idle to inference is modest, and even sustained workloads only reach ~62 °C, well under the 70–80 °C throttle threshold. No heatsink is required for normal lab use.</li>
-<li><strong>Thinking mode kills the board.</strong> With thinking enabled, the model spends 30–60 seconds generating internal reasoning chains before producing any output, and often loops without reaching a conclusion. Always run Qwen3.5 Small with <code>--reasoning off --reasoning-budget 0</code>.</li>
+<li><strong>Thinking mode kills the board.</strong> With thinking enabled, the model spends 30–60 seconds or more generating internal reasoning chains before producing any output, and often loops without reaching a conclusion. In the October 2026 test, all three prompts used up a 400-token budget on reasoning alone (about 88 s each) with no answer, and the board reached 70 °C. Always run Qwen3.5 Small with <code>--reasoning off --reasoning-budget 0</code>.</li>
 <li><strong>Repetition loops.</strong> Without <code>presence_penalty=1.5</code>, the model tends to repeat phrases or produce circular responses. A known behavior of small Qwen3.5 variants, well-documented in the Unsloth guide.</li>
 </ul>
 <blockquote class="blockquote">
 <p><strong>Token throughput vs.&nbsp;wall-clock latency</strong></p>
 <p>People often optimize for tokens/second when wall-clock latency is what actually matters. A 30-token answer at 10 tok/s (3 s) feels twice as responsive as a 100-token answer at 10 tok/s (10 s). Cap <code>max_tokens</code> aggressively and design prompts to keep responses short.</p>
 </blockquote>
+<section id="mtp-uno-q" class="level3">
+<h3 class="anchored" data-anchor-id="mtp-uno-q">MTP Speculative Decoding: Not on the UNO Q</h3>
+<p>Qwen3.5 models were trained with a <strong>multi-token prediction (MTP)</strong> head: a small extra layer that guesses the next few tokens in one step. llama.cpp can use it for speculative decoding. The MTP head drafts several tokens, the main model checks them all in a single pass, and every accepted draft token is a token the main model did not have to generate one by one. Unsloth publishes MTP versions of the GGUFs (for example, <a href="https://huggingface.co/unsloth/Qwen3.5-0.8B-MTP-GGUF">unsloth/Qwen3.5-0.8B-MTP-GGUF</a>) and reports roughly 1.5–2× faster generation. They are enabled like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./build/bin/llama-server</span> <span class="dt">\</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> ~/models/Qwen3.5-0.8B-UD-Q8_K_XL-MTP.gguf <span class="dt">\</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--spec-type</span> draft-mtp <span class="at">--spec-draft-n-max</span> 6 <span class="dt">\</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">-np</span> 1 <span class="dt">\</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  ...</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>On the UNO Q, MTP made generation <strong>slower</strong> in every configuration tested:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>No MTP</th>
+<th>MTP, 6-token drafts</th>
+<th>MTP, 2-token drafts</th>
+<th>MTP, 1-token drafts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.8B UD-Q8_K_XL</td>
+<td>4.75 tok/s</td>
+<td>1.0–1.3 tok/s</td>
+<td>2.1–2.6 tok/s</td>
+<td>2.7–3.3 tok/s</td>
+</tr>
+<tr class="even">
+<td>2B UD-Q4_K_XL</td>
+<td>2.47 tok/s</td>
+<td>0.7 tok/s</td>
+<td>1.2–1.4 tok/s</td>
+<td>1.6 tok/s</td>
+</tr>
+</tbody>
+</table>
+<p>With 6-token drafts, only 9–22% of the drafted tokens were accepted; shorter drafts raised that to 20–58%, but never enough to beat plain decoding. The MTP models also used 100–200 MB more RAM. The speedup depends on checking several draft tokens almost as cheaply as one, which holds on a GPU. On the four Cortex-A53 cores, there is no spare compute: verifying the drafts costs more than the tokens they save.</p>
+<blockquote class="blockquote">
+<p>Keep the regular (non-MTP) GGUFs on the UNO Q. An MTP file loaded <em>without</em> <code>--spec-type</code> runs at the same speed as the regular one, so a downloaded MTP model is not wasted, but it gains nothing.</p>
+</blockquote>
+</section>
 </section>
 <section id="tips-tricks-and-troubleshooting" class="level2">
 <h2 class="anchored" data-anchor-id="tips-tricks-and-troubleshooting">11. Tips, Tricks, and Troubleshooting</h2>
@@ -1316,28 +1408,28 @@ Qwen3.5-0.8B-Q8_0.gguf"</code></pre>
 <section id="json-parse-failures-from-the-model" class="level3">
 <h3 class="anchored" data-anchor-id="json-parse-failures-from-the-model">JSON Parse Failures From the Model</h3>
 <p>Even when asking for JSON explicitly, occasional responses include stray text. A simple, robust pattern:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> parse_verdict(content):</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> json.loads(content)</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> json.JSONDecodeError:</span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>        cleaned <span class="op">=</span> content.strip().strip(<span class="st">"`"</span>)</span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> cleaned.startswith(<span class="st">"json"</span>):</span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>            cleaned <span class="op">=</span> cleaned[<span class="dv">4</span>:].lstrip()</span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> json.loads(cleaned)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> parse_verdict(content):</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> json.loads(content)</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> json.JSONDecodeError:</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>        cleaned <span class="op">=</span> content.strip().strip(<span class="st">"`"</span>)</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> cleaned.startswith(<span class="st">"json"</span>):</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>            cleaned <span class="op">=</span> cleaned[<span class="dv">4</span>:].lstrip()</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> json.loads(cleaned)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If failures persist, strengthen the system prompt (<code>"Output MUST start with { and end with }"</code>), or look into llama.cpp’s grammar-based decoding (GBNF) for a hard constraint instead of a prompt hint.</p>
 </section>
 <section id="disk-space-running-low" class="level3">
 <h3 class="anchored" data-anchor-id="disk-space-running-low">Disk Space Running Low</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df</span> <span class="at">-h</span> /</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df</span> <span class="at">-h</span> /</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The root partition is ~9.8 GB total on older images. If you’re running low:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check what is using space</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> du <span class="at">-sh</span> /home/arduino/<span class="pp">*</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-h</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean apt cache</span></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt clean</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt autoremove <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check what is using space</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> du <span class="at">-sh</span> /home/arduino/<span class="pp">*</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-h</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean apt cache</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt clean</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt autoremove <span class="at">-y</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If you deleted the llama.cpp source tree and still need to rebuild later, use a shallow clone: <code>git clone --depth 1 https://github.com/ggml-org/llama.cpp</code></p>
 </section>
 </section>
@@ -1348,10 +1440,10 @@ Qwen3.5-0.8B-Q8_0.gguf"</code></pre>
 <li><strong>A vision-language project</strong> — giving a small model eyes: loading a multimodal SLM and its projector, running a vision server, and reasoning about camera input.</li>
 <li><strong>A dual-brain generative AI project</strong> — wrapping <code>llama-server</code> as a systemd service, connecting it to an Arduino sketch over Bridge RPC, and exposing it to other devices over Flask: a complete sensor-in, SLM-reasoning, actuator-out application.</li>
 </ul>
-<section id="alternative-model-qwen-3.5-2b" class="level3">
-<h3 class="anchored" data-anchor-id="alternative-model-qwen-3.5-2b">Alternative Model (Qwen 3.5 2B)</h3>
+<section id="alt-2b" class="level3">
+<h3 class="anchored" data-anchor-id="alt-2b">Alternative Model (Qwen 3.5 2B)</h3>
 <p>The general rule from the empirical Qwen3.5 work is that parameter count beats quantization. A 4-bit version of a larger Qwen3.5 model can still be substantially stronger than a smaller one at higher precision, using nearly the same amount of memory. The jump from 0.8B to 2B is the largest for agent tasks and long contexts.</p>
-<p>On the UNO Q specifically:</p>
+<p>On the UNO Q specifically (measured in October 2026, 2048-token context; quality rows are from the original tests):</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 45%">
@@ -1368,23 +1460,33 @@ Qwen3.5-0.8B-Q8_0.gguf"</code></pre>
 <tbody>
 <tr class="odd">
 <td>Model file size</td>
-<td>~880 MB</td>
-<td>~1.25 GB</td>
+<td>~800 MB</td>
+<td>~1.34 GB</td>
 </tr>
 <tr class="even">
-<td>RAM footprint (model + 1024 ctx)</td>
-<td>~1.1 GB</td>
-<td>~1.9–2.0 GB</td>
+<td>Model load time</td>
+<td>~4.5–7 s</td>
+<td>~13 s</td>
 </tr>
 <tr class="odd">
-<td>Free RAM after load (out of ~3 GB usable)</td>
-<td>~1.7 GB</td>
-<td>~0.8 GB</td>
+<td>RAM footprint (process RSS, generating)</td>
+<td>~1.0 GB</td>
+<td>~1.5 GB</td>
 </tr>
 <tr class="even">
-<td>Generation speed (measured / estimated)</td>
-<td>~4.75 tok/s</td>
-<td>~1.8–2.5 tok/s</td>
+<td>Free RAM after load (out of ~3 GB usable)</td>
+<td>~2.0 GB</td>
+<td>~1.5 GB</td>
+</tr>
+<tr class="odd">
+<td>Prompt processing</td>
+<td>~11 tok/s</td>
+<td>~4.4 tok/s</td>
+</tr>
+<tr class="even">
+<td>Generation speed</td>
+<td>~5.6 tok/s</td>
+<td>~2.5 tok/s</td>
 </tr>
 <tr class="odd">
 <td>Quality on structured JSON</td>
@@ -1398,8 +1500,8 @@ Qwen3.5-0.8B-Q8_0.gguf"</code></pre>
 </tr>
 <tr class="odd">
 <td>Thermal load</td>
-<td>~54 °C inference</td>
-<td>~58–62 °C inference</td>
+<td>~55–59 °C inference</td>
+<td>~58–61 °C inference</td>
 </tr>
 </tbody>
 </table>

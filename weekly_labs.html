@@ -226,6 +226,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Agentic AI at the Edge:</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./content/rag/rag.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">RAG at the Edge:</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start">
  <span class="menu-text">Fixed Function AI (Reactive)</span></span>
@@ -281,7 +287,8 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#class-24-building-an-agent-on-the-uno-q" id="toc-class-24-building-an-agent-on-the-uno-q" class="nav-link" data-scroll-target="#class-24-building-an-agent-on-the-uno-q">Class 24 — Building an Agent on the UNO Q</a></li>
   <li><a href="#class-25-physical-ai-and-bridge-rpc" id="toc-class-25-physical-ai-and-bridge-rpc" class="nav-link" data-scroll-target="#class-25-physical-ai-and-bridge-rpc">Class 25 — Physical AI and Bridge RPC</a></li>
   <li><a href="#class-26-physical-ai-project" id="toc-class-26-physical-ai-project" class="nav-link" data-scroll-target="#class-26-physical-ai-project">Class 26 — Physical AI Project</a></li>
-  <li><a href="#classes-27-and-28-rag-at-the-edge" id="toc-classes-27-and-28-rag-at-the-edge" class="nav-link" data-scroll-target="#classes-27-and-28-rag-at-the-edge">Classes 27 and 28 — RAG at the Edge</a></li>
+  <li><a href="#class-27-rag-at-the-edge" id="toc-class-27-rag-at-the-edge" class="nav-link" data-scroll-target="#class-27-rag-at-the-edge">Class 27 — RAG at the Edge</a></li>
+  <li><a href="#class-28-hands-on-rag-application-and-advanced-techniques" id="toc-class-28-hands-on-rag-application-and-advanced-techniques" class="nav-link" data-scroll-target="#class-28-hands-on-rag-application-and-advanced-techniques">Class 28 — Hands-on: RAG Application and Advanced Techniques</a></li>
   <li><a href="#notes-for-instructors" id="toc-notes-for-instructors" class="nav-link" data-scroll-target="#notes-for-instructors">Notes for Instructors</a></li>
   </ul>
 </nav>
@@ -532,9 +539,43 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>Deliverable:</strong> A demonstration video showing a changed sensor reading producing a different model verdict and a different physical output, plus your project repository.</p>
 <hr>
 </section>
-<section id="classes-27-and-28-rag-at-the-edge" class="level2">
-<h2 class="anchored" data-anchor-id="classes-27-and-28-rag-at-the-edge">Classes 27 and 28 — RAG at the Edge</h2>
-<p><em>In development.</em> These classes will cover retrieval-augmented generation on the UNO Q. Until the material exists, the <a href="https://mjrovai.github.io/EdgeML_Made_Ease_ebook/raspi/advancing_adgeai/adv_edgeai.html">Advancing Edge AI</a> chapter of the companion Raspberry Pi volume covers the same ground, and the approach carries over using the <code>llama-server</code> setup from Class 21.</p>
+<section id="class-27-rag-at-the-edge" class="level2">
+<h2 class="anchored" data-anchor-id="class-27-rag-at-the-edge">Class 27 — RAG at the Edge</h2>
+<p>Chapter: <a href="./content/rag/rag.html">RAG at the Edge, Part 1 (sections 2 to 7)</a></p>
+<p><strong>Objectives:</strong></p>
+<ul>
+<li>Explain what an embedding is and how similarity search works</li>
+<li>Serve an embedding model with <code>llama-server --embedding</code></li>
+<li>Build a complete RAG over a small list of facts and see where the time goes</li>
+</ul>
+<p><strong>Instructions:</strong></p>
+<ol type="1">
+<li>Download <code>bge-small-en-v1.5</code> and start both servers with <code>start_rag_servers.sh</code>.</li>
+<li>Run <code>embed_demo.py</code>. Add two sentences of your own, one close in meaning to an existing sentence and one unrelated, and predict their scores before running it.</li>
+<li>Run <code>rag_mini.py</code> with and without <code>--no-rag</code> on the same question. Record both answers and the timing line.</li>
+<li>Add three facts from your own field to <code>FACTS</code> and ask questions only they can answer.</li>
+</ol>
+<p><strong>Deliverable:</strong> Your two <code>embed_demo.py</code> predictions next to the measured scores, the with/without-RAG answers for one question, and a sentence explaining which part of the timing line dominates and why.</p>
+<hr>
+</section>
+<section id="class-28-hands-on-rag-application-and-advanced-techniques" class="level2">
+<h2 class="anchored" data-anchor-id="class-28-hands-on-rag-application-and-advanced-techniques">Class 28 — Hands-on: RAG Application and Advanced Techniques</h2>
+<p>Chapter: <a href="./content/rag/rag.html">RAG at the Edge, Part 2 (sections 8 to 14)</a></p>
+<p><strong>Objectives:</strong></p>
+<ul>
+<li>Turn a 160-page PDF into a persistent, cited knowledge base</li>
+<li>Measure retrieval quality separately from answer quality</li>
+<li>Trade retrieval quality against latency with evidence</li>
+</ul>
+<p><strong>Instructions:</strong></p>
+<ol type="1">
+<li>Download the WHO dengue guidelines, extract the text with <code>pdftotext</code>, and build the index with <code>build_index.py</code>.</li>
+<li>Ask three questions with <code>ask_dengue.py</code> and check each answer against the cited sections.</li>
+<li>Write three new labeled questions for <code>eval_retrieval.py</code> and run it in <code>vector</code> and <code>hybrid</code> mode.</li>
+<li>Run <code>rag_bench.py</code> and choose a value of k for an interactive kiosk and another for a batch report.</li>
+<li>Optional: run <code>agentic_rag.py</code> on a question that needs both tools.</li>
+</ol>
+<p><strong>Deliverable:</strong> Your hit@k table for both modes, your two choices of k with the latency that justifies each, and one answer where the model misread a correctly retrieved passage (or a note saying you could not find one).</p>
 <hr>
 </section>
 <section id="notes-for-instructors" class="level2">

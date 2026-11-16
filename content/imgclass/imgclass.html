@@ -509,7 +509,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <blockquote class="blockquote">
-<p>An editor is not required — every step here works from an SSH terminal. If you’d rather use a full IDE, see <a href="../../content/physicalai/physicalai.html#2-setting-up-vs-code-with-remote-ssh">VS Code Remote-SSH setup</a>.</p>
+<p>An editor is not required — every step here works from an SSH terminal. If you’d rather use a full IDE, see <a href="../../content/physicalai/physicalai.html#setting-up-vs-code-with-remote-ssh">VS Code Remote-SSH setup</a>.</p>
 </blockquote>
 <hr>
 </section>
@@ -590,7 +590,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </blockquote>
 <section id="understanding-the-architecture" class="level3">
 <h3 class="anchored" data-anchor-id="understanding-the-architecture">Understanding the Architecture</h3>
-<p>The pre-installed <code>examples:image-classification</code> app works as follows:</p>
+<p>The pre-installed <code>examples:inspirational/image-classification</code> app works as follows:</p>
 <pre><code>Browser (your PC)                          UNO Q (MPU / Python)
 +-------------------+                     +-------------------------+
 |                   |   Upload image      |                         |
@@ -612,7 +612,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="step-1-start-the-example" class="level3">
 <h3 class="anchored" data-anchor-id="step-1-start-the-example">Step 1 — Start the Example</h3>
 <p>SSH into the UNO Q (or use the VS Code integrated terminal) and run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app start examples:image-classification</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app start examples:inspirational/image-classification</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Wait for the app to build and start.</p>
 <p><img src="./images/png/run_img_class_example.png" class="img-fluid"></p>
 </section>
@@ -633,18 +633,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="./images/png/python.png" class="img-fluid"></p>
 <p>Try uploading different images and observe how the model classifies them.</p>
 <blockquote class="blockquote">
-<p><strong>Note</strong>: The terminal logs (<code>arduino-app-cli app logs examples:image-classification</code>) will show the app startup messages but <strong>will not show the classification results</strong> — those are sent directly to the browser via WebSocket.</p>
+<p><strong>Note</strong>: The terminal logs (<code>arduino-app-cli app logs examples:inspirational/image-classification</code>) will show the app startup messages but <strong>will not show the classification results</strong> — those are sent directly to the browser via WebSocket.</p>
 </blockquote>
 <p><img src="./images/png/log.png" class="img-fluid"></p>
 </section>
 <section id="step-4-study-the-source-code" class="level3">
 <h3 class="anchored" data-anchor-id="step-4-study-the-source-code">Step 4 — Study the Source Code</h3>
 <p>Read through the example’s source to understand how it works. From an SSH terminal:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /var/lib/arduino-app-cli/examples/image-classification/python/main.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Or, if you’re using VS Code Remote-SSH (see <a href="../../content/physicalai/physicalai.html#2-setting-up-vs-code-with-remote-ssh">chapter 4 §2</a> for setup), open the folder and browse <code>python/main.py</code> directly:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> /var/lib/arduino-app-cli/examples/inspirational/common/image-classification/python/main.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Or, if you’re using VS Code Remote-SSH (see <a href="../../content/physicalai/physicalai.html#setting-up-vs-code-with-remote-ssh">chapter 4 §2</a> for setup), open the folder and browse <code>python/main.py</code> directly:</p>
 <ol type="1">
 <li><strong>File &gt; Open Folder…</strong></li>
-<li>Navigate to <code>/var/lib/arduino-app-cli/examples/image-classification/</code></li>
+<li>Navigate to <code>/var/lib/arduino-app-cli/examples/inspirational/common/image-classification/</code></li>
 <li>Open <code>python/main.py</code>.</li>
 </ol>
 <p>The key components:</p>
@@ -677,7 +677,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="step-5-stop-the-example" class="level3">
 <h3 class="anchored" data-anchor-id="step-5-stop-the-example">Step 5 — Stop the Example</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app stop examples:image-classification</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app stop examples:inspirational/image-classification</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="runing-an-example-from-arduino-app-lab" class="level3">
 <h3 class="anchored" data-anchor-id="runing-an-example-from-arduino-app-lab">Runing an Example from Arduino App Lab</h3>
@@ -873,7 +873,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="step-1-copy-the-pre-installed-example" class="level3">
 <h3 class="anchored" data-anchor-id="step-1-copy-the-pre-installed-example">Step 1 — Copy the Pre-Installed Example</h3>
 <p>We can copy an example using CLI as below</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> /var/lib/arduino-app-cli/examples/image-classification/ ~/ArduinoApps/my-classifier-bricks</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> /var/lib/arduino-app-cli/examples/inspirational/common/image-classification/ ~/ArduinoApps/my-classifier-bricks</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Or directly on the Arduino App Lab, giving it a new name. The project will be copied to <code>My Apps</code> area.</p>
 <p><img src="./images/png/copy_exemple.png" class="img-fluid"></p>
 </section>

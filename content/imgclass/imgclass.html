@@ -332,7 +332,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#step-3-classify-an-image" id="toc-step-3-classify-an-image" class="nav-link" data-scroll-target="#step-3-classify-an-image">Step 3 — Classify an Image</a></li>
   <li><a href="#step-4-study-the-source-code" id="toc-step-4-study-the-source-code" class="nav-link" data-scroll-target="#step-4-study-the-source-code">Step 4 — Study the Source Code</a></li>
   <li><a href="#step-5-stop-the-example" id="toc-step-5-stop-the-example" class="nav-link" data-scroll-target="#step-5-stop-the-example">Step 5 — Stop the Example</a></li>
-  <li><a href="#runing-an-example-from-arduino-app-lab" id="toc-runing-an-example-from-arduino-app-lab" class="nav-link" data-scroll-target="#runing-an-example-from-arduino-app-lab">Runing an Example from Arduino App Lab</a></li>
+  <li><a href="#running-an-example-from-arduino-app-lab" id="toc-running-an-example-from-arduino-app-lab" class="nav-link" data-scroll-target="#running-an-example-from-arduino-app-lab">Running an Example from Arduino App Lab</a></li>
   <li><a href="#what-we-learned-from-part-1" id="toc-what-we-learned-from-part-1" class="nav-link" data-scroll-target="#what-we-learned-from-part-1">What We Learned from Part 1</a></li>
   </ul></li>
   <li><a href="#part-2-building-a-custom-image-classifier" id="toc-part-2-building-a-custom-image-classifier" class="nav-link" data-scroll-target="#part-2-building-a-custom-image-classifier">5. Part 2 — Building a Custom Image Classifier</a>
@@ -682,8 +682,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="step-5-stop-the-example">Step 5 — Stop the Example</h3>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">arduino-app-cli</span> app stop examples:inspirational/image-classification</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="runing-an-example-from-arduino-app-lab" class="level3">
-<h3 class="anchored" data-anchor-id="runing-an-example-from-arduino-app-lab">Runing an Example from Arduino App Lab</h3>
+<section id="running-an-example-from-arduino-app-lab" class="level3">
+<h3 class="anchored" data-anchor-id="running-an-example-from-arduino-app-lab">Running an Example from Arduino App Lab</h3>
 <p>We will not go into more detail here because there is plenty of documentation on it. But the main steps are:</p>
 <ol type="1">
 <li>Open the Arduino App Lab on your main computer and connect your Arduino UnoQ via WiFi</li>
@@ -861,7 +861,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>Review the accuracy, confusion matrix, and on-device performance.</p>
 <p><img src="./images/png/ei-results.png" class="img-fluid"></p>
-<p>On Training, the model reached a high accuraccy (with a estimated latency of 100ms). With models with smaller alphas (0.35, for example), we can get faster inferences with similar accuraccy. you should test the better parameters for you project.</p>
+<p>On Training, the model reached a high accuracy (with an estimated latency of 100ms). With models with smaller alphas (0.35, for example), we can get faster inferences with similar accuracy. you should test the better parameters for you project.</p>
 </section>
 <section id="step-5-test-the-model" class="level3">
 <h3 class="anchored" data-anchor-id="step-5-test-the-model">Step 5 — Test the Model</h3>
@@ -893,10 +893,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Click <strong>Build</strong> and download the model file.</li>
 </ol>
 <p><img src="./images/png/ei-deploy.png" class="img-fluid"></p>
-<p>When the project is built, the .eim file will be downloded directly to your computer and a Pop-up window will appear, with a button <code>Go to Arduino</code>. When you do it, the model will be sent to App Lab.</p>
+<p>When the project is built, the .eim file will be downloaded directly to your computer and a Pop-up window will appear, with a button <code>Go to Arduino</code>. When you do it, the model will be sent to App Lab.</p>
 <p><img src="./images/png/build.png" class="img-fluid"></p>
 <blockquote class="blockquote">
-<p>Note that you can test your model, downloading it to your mobile of PC, using the Bar code availabel on the deploy page.</p>
+<p>Note that you can test your model, downloading it to your mobile or PC, using the Bar code available on the deploy page.</p>
 </blockquote>
 </section>
 <section id="step-3-replace-the-model-on-the-uno-q" class="level3">
@@ -1009,7 +1009,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This path gives you full control: live webcam capture, continuous classification, and Bridge communication to the MCU.</p>
 <section id="step-1-create-a-new-app-on-arduino-app-lab" class="level3">
 <h3 class="anchored" data-anchor-id="step-1-create-a-new-app-on-arduino-app-lab">Step 1 — Create a new App on Arduino App Lab</h3>
-<p>On The Arduino App Lab <code>My Apps</code>, click on the upper righ button <code>Create new app</code></p>
+<p>On The Arduino App Lab <code>My Apps</code>, click on the upper right button <code>Create new app</code></p>
 <p><img src="./images/png/new-project.png" class="img-fluid"></p>
 <p>And name it, for example: <code>Image Classification on Camera</code>.</p>
 </section>
@@ -1017,7 +1017,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="step-2-import-a-brick-and-select-the-model">Step 2 — Import a Brick and Select the Model</h3>
 <p>Go to <code>Bricks</code> and click on <code>Add Brick</code>.</p>
 <p><img src="./images/png/new-bric.png" class="img-fluid"></p>
-<p>A list of available Bricks will appear, Scroll down untill <code>Video Image Classification</code> and <code>Add brick</code>.</p>
+<p>A list of available Bricks will appear, Scroll down until <code>Video Image Classification</code> and <code>Add brick</code>.</p>
 <p><img src="./images/png/video-class-brick.png" class="img-fluid"></p>
 <p>As you did on the previous section, once the brick is installed, go to the <code>AI Models</code> tab and select <code>Uno-Q Image. Classification</code>, deployed on the last section.</p>
 <p><img src="./images/png/new-img-class-model.png" class="img-fluid"></p>
@@ -1188,7 +1188,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="step-3-update-the-python-script-to-call-bridge" class="level3">
 <h3 class="anchored" data-anchor-id="step-3-update-the-python-script-to-call-bridge">Step 3 — Update the Python Script to Call Bridge</h3>
-<p>Modify <code>python/main.py</code> to send classification results to the MCU via Bridge. In the previous example, we created abd use separate <code>on_detect</code> callbacks. Here we will use <strong>only</strong> <code>on_detect_all</code> and pick the highest-confidence result from there. This removes the individual <code>on_detect("periquito", ...)</code> / <code>on_detect("robot", ...)</code> callbacks entirely and relies on a single <code>on_detect_all</code> that always picks the top class. The <code>current_label</code> check ensures we only send a Bridge call when the result actually changes.</p>
+<p>Modify <code>python/main.py</code> to send classification results to the MCU via Bridge. In the previous example, we created and use separate <code>on_detect</code> callbacks. Here we will use <strong>only</strong> <code>on_detect_all</code> and pick the highest-confidence result from there. This removes the individual <code>on_detect("periquito", ...)</code> / <code>on_detect("robot", ...)</code> callbacks entirely and relies on a single <code>on_detect_all</code> that always picks the top class. The <code>current_label</code> check ensures we only send a Bridge call when the result actually changes.</p>
 <p>Also lowered the confidence to <code>0.3</code> so that “background” detections (which sometimes have lower confidence) still come through. You can tune this after testing.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> arduino.app_utils <span class="im">import</span> App, Bridge</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> arduino.app_bricks.video_imageclassification <span class="im">import</span> VideoImageClassification</span>
@@ -1346,7 +1346,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <th>Model</th>
 <th>Input Size</th>
 <th>Inference (approx.)</th>
-<th>Accuracy</th>
+<th>Rel. acc.</th>
 </tr>
 </thead>
 <tbody>
@@ -1376,6 +1376,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
+<p>Only the MobileNetV2 1.0 row was measured in this chapter (~444 ms, Path A). The other latencies and the relative accuracy labels are rough expectations, not results from this board: measure each candidate with the Path A script before you choose one.</p>
 <blockquote class="blockquote">
 <p>If you need faster inference (e.g., for responsive LED feedback), retrain with a smaller model (MobileNetV2 0.35 at 96×96). You should test different configurations to find the best balance for your project.</p>
 </blockquote>
@@ -1442,41 +1443,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td>Model</td>
-<td>MobileNetV2 0.05 (96×96, INT8)</td>
+<td>MobileNetV2 0.1 (96×96, INT8)</td>
 <td>MobileNetV2 0.35–1.0 (96×96 to 160×160)</td>
 </tr>
 <tr class="even">
 <td>Inference time</td>
-<td>~100–200 ms</td>
-<td>~50–500 ms (model-dependent)</td>
+<td>86 ms measured (Nicla Vision lab)</td>
+<td>444 ms measured (MobileNetV2 1.0, 160×160, Path A)</td>
 </tr>
 <tr class="odd">
-<td>Accuracy (3 classes)</td>
-<td>~85–90%</td>
-<td>~90–97%</td>
+<td>Power during inference</td>
+<td>~100 mW (estimate)</td>
+<td>~3–6 W (estimate, *)</td>
 </tr>
 <tr class="even">
-<td>Power during inference</td>
-<td>~100 mW</td>
-<td>~3–6 W (*)</td>
-</tr>
-<tr class="odd">
 <td>Framework</td>
 <td>TF Lite Micro (C++)</td>
 <td>App Lab Bricks (Python)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>Camera</td>
 <td>Built-in</td>
 <td>External USB webcam</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>MCU actuation</td>
 <td>Direct GPIO</td>
 <td>Bridge RPC</td>
 </tr>
 </tbody>
 </table>
+<p>The two latencies come from very different models and input sizes (MobileNetV2 0.1 at 96×96 is far smaller than MobileNetV2 1.0 at 160×160), so they show the range of each platform, not a head-to-head result. Accuracy is left out on purpose: the two labs used different datasets and splits, so their accuracy figures are not comparable. Exercise 5 sets up a fair comparison.</p>
 <p>**(*) Practical total estimate** Under live image classification (using the USB camera and USB hub), a realistic total power consumption profile is: • Board (Uno‑Q): ~2–3.5 W when CPU/NPU is busy. • USB camera: ~0.5–1.25 W. • Powered hub: ~0.5–1 W. → Total: ~3–6 W from the wall (5 V, ~0.6–1.2 A) for a typical one‑camera, one‑hub setup.</p>
 <blockquote class="blockquote">
 <p>The UNO Q can run larger, more accurate models but uses significantly more power. The Nicla Vision is ideal for battery-powered, always-on applications; the UNO Q excels when accuracy matters and you need the AI result to drive real-time hardware actions.</p>

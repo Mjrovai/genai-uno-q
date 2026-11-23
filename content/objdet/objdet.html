@@ -1537,7 +1537,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="inference-latency">Inference Latency</h3>
 <p>We measured all three models on the same UNO Q (4 GB) in two ways:</p>
 <ul>
-<li><strong>Path A (per image):</strong> a small app called <code>ObjectDetection.detect()</code> on six 320×240 images from the dataset, five rounds after one warm-up call, and timed each call in Python. This is the end-to-end time your code waits, including the transfer to the model runner.</li>
+<li><strong>Path A (per image):</strong> a small app called <code>ObjectDetection.detect()</code> on six 320×320 images from the dataset, five rounds after one warm-up call, and timed each call in Python. This is the end-to-end time your code waits, including the transfer to the model runner.</li>
 <li><strong>Path B (live stream):</strong> with the Video Object Detection Brick running, we counted the result messages that the model runner sends for each camera frame over 30 seconds.</li>
 </ul>
 <table class="caption-top table">
@@ -1594,7 +1594,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<p>The Path A numbers agree with the ones from the browser uploads in Section 8 (about 160 ms and 331 ms). A few things stand out:</p>
+<p>These numbers come from a separate timing run, so they differ a little from the first Path A test in Section 8 (about 160 ms for FOMO and 331 ms for YOLO-Pro Small, with a different set of images). Expect run-to-run differences of 10 to 15% in end-to-end timing. A few things stand out:</p>
 <ul>
 <li><strong>FOMO runs faster than the camera.</strong> The Brick asks the camera for 10 FPS (the log says <code>throttling to requested 10 FPS</code>), and FOMO keeps up with every frame: the runner reports about 23 ms of processing per frame. The rest of the 139 ms in Path A is the trip from Python to the runner and back, not the model.</li>
 <li><strong>YOLO-Pro Small gives about 3 counts per second</strong>, enough for objects sitting on a bench, and is faster than the pre-installed YOLOX-Nano, which has a larger input and 80 classes.</li>

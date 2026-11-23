@@ -491,7 +491,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </blockquote>
 <p>Check your available space before starting:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df</span> <span class="at">-h</span> /home/arduino</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>You need at least <strong>5 GB of free space</strong> to complete the build and model download. If you have less, see <a href="#11-tips-tricks-and-troubleshooting">Section 11</a> for cleanup tips.</p>
+<p>On newer images, check that <code>/home/arduino</code> has at least <strong>5 GB free</strong> for the build and the model download. Older images start with only ~830 MB free, which is not enough for that: use the shallow clone, delete the build tree after copying the binaries (Step 4), and see <a href="#11-tips-tricks-and-troubleshooting">Section 11</a> to free space before you start.</p>
 </section>
 <section id="why-qwen-3.5" class="level3">
 <h3 class="anchored" data-anchor-id="why-qwen-3.5">Why Qwen 3.5</h3>
@@ -557,6 +557,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>At sub-1B scale, Q4 is aggressive. The quantization error compounds in smaller model. Q6 or Q8 helps a lot.</p>
 <p>Also, prefer <code>min_p</code> over <code>top_p</code> for sampling. Something like <code>min_p=0.05</code> with <code>temp=0.7</code> works better for small models because it dynamically adjusts the candidate pool based on the probability distribution rather than using a fixed cutoff. <code>top_p</code> at low temperatures produces a very narrow beam, and repetition becomes almost inevitable at these model sizes.</p>
 </blockquote>
+<p>The commands in this tutorial keep the recommended Qwen3.5 sampling settings (see the parameter table below), which use <code>top_p</code> with <code>min_p</code> disabled. To try the <code>min_p</code> approach instead, replace <code>--top-p 0.8 --min-p 0.0</code> with <code>--top-p 1.0 --min-p 0.05</code> and compare the answers.</p>
 <p>Recommendations:</p>
 <ul>
 <li><strong>Use Q8_0 for the 0.8B</strong> (~800 MB). Quality is meaningfully better than Q4, and on the newer images with a separate 18 GB <code>/home</code> partition, space is no longer a concern. (This is the choice for this tutorial.)</li>
@@ -1090,8 +1091,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>With <strong>Terminal 1</strong> still running <code>llama-server</code> from Section 8, use <strong>Terminal 2</strong> for the examples below.</p>
 <section id="using-the-openai-client-library" class="level3">
 <h3 class="anchored" data-anchor-id="using-the-openai-client-library">9.1 Using the <code>openai</code> Client Library</h3>
-<p>Install it:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">--user</span> openai</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Debian’s system Python is externally managed, so <code>pip install</code> outside a virtual environment fails with an <code>externally-managed-environment</code> error. Create an environment for this chapter and install the library (and <code>requests</code>, used in Section 9.2) there:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Debian needs the python3-venv package to create environments</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install python3.13-venv</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python3.13</span> <span class="at">-m</span> venv ~/envs/slm-env</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/envs/slm-env/bin/activate</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install openai requests</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Activate the environment again (<code>source ~/envs/slm-env/bin/activate</code>) in every new terminal before running the scripts in this chapter. The scripts start with <code>#!/usr/bin/env python3</code>, which picks up the environment’s Python once it is active.</p>
 <p>Create <code>~/qwen_client.py</code>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> ~/qwen_client.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Paste:</p>

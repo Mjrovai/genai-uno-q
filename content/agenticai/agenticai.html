@@ -497,7 +497,7 @@ There's 14 GB free, well over 1 GB, so I've shown a checkmark on the matrix.</co
 <p>The word gets thrown around loosely. Pinned down, an agent is a model that does three things a plain chat model doesn’t.</p>
 <p><strong>It decides whether to act at all.</strong> Ask “What’s the capital of Brazil?” and the right move is to answer, “Brasíla”, from what it already knows — no tool needed.</p>
 <p>Ask “How much free disk space is there?” and it can’t know: that answer lives on your board. The model has to call a tool and read the result back.</p>
-<p>Another example is with calculation. If you ask a normal model to do a calculation, for example: <code>How much is 123456 multiplied by 123456?</code>, it will more than certanly give you a wrong answer. But if the model has access to tools (as a Python calculator, for example), the answer will be always correct.</p>
+<p>Another example is with calculation. If you ask a normal model to do a calculation, for example: <code>How much is 123456 multiplied by 123456?</code>, it will more than certainly give you a wrong answer. But if the model has access to tools (as a Python calculator, for example), the answer will be always correct.</p>
 <p><img src="./images/png/agents-tools.png" class="img-fluid"></p>
 <p><strong>It picks the tool and fills in the arguments.</strong> You hand it a list of available tools and their schemas; it chooses. You never write <code>if "disk" in prompt: get_system_info()</code>. That branch is the model’s job now.</p>
 <p><strong>It looks at the result and decides what comes next.</strong> Another tool call, or a final answer. And the decision chains — that’s what the trace in Section 1 shows: call <code>get_system_info</code>, pull the number out of the returned JSON, compare it against 1 GB, and only then choose which pattern to draw. Two model turns with a comparison in between that nobody hardcoded.</p>
@@ -656,10 +656,10 @@ There's 14 GB free, well over 1 GB, so I've shown a checkmark on the matrix.</co
 </section>
 <section id="step-2-start-the-server-with-read-only-tools-only" class="level3">
 <h3 class="anchored" data-anchor-id="step-2-start-the-server-with-read-only-tools-only">Step 2 — Start the Server With Read-Only Tools Only</h3>
-<p>Section 4 needs a <em>different</em> server than the rest of the chapter — the Section 3 command with one flag added, <code>--tools</code>. Stop the running server first, since only one process can hold port 8081:</p>
+<p>Section 4 needs a <em>different</em> server than the rest of the chapter — the Section 3 command with one flag added, <code>--tools</code>, and bound to <code>127.0.0.1</code> instead of <code>0.0.0.0</code>, so only the board itself can reach it. Stop the running server first, since only one process can hold port 8081:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">~/llama.cpp/build/bin/llama-server</span> <span class="dt">\</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--model</span> ~/models/Qwen3.5-0.8B-GGUF/Qwen3.5-0.8B-Q8_0.gguf <span class="dt">\</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--host</span> 0.0.0.0 <span class="at">--port</span> 8081 <span class="dt">\</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--host</span> 127.0.0.1 <span class="at">--port</span> 8081 <span class="dt">\</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--jinja</span> <span class="dt">\</span></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">--reasoning</span> off <span class="at">--reasoning-budget</span> 0 <span class="dt">\</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--ctx-size</span> 8192 <span class="at">--parallel</span> 1 <span class="at">--threads</span> 4 <span class="dt">\</span></span>
@@ -667,6 +667,10 @@ There's 14 GB free, well over 1 GB, so I've shown a checkmark on the matrix.</co
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">--predict</span> 1024 <span class="dt">\</span></span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">--tools</span> read_file,file_glob_search,grep_search,get_info <span class="dt">\</span></span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">--alias</span> qwen3.5-0.8b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then, on your laptop, open an SSH tunnel and browse through it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-L</span> 8081:127.0.0.1:8081 arduino@<span class="op">&lt;</span>UNO_Q_IP<span class="op">&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># then open http://localhost:8081/ on your laptop</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The Safety Note at the end of this section explains why a server with file tools stays off the network.</p>
 <p>Expect the first reply after starting this server to take about two minutes. Step 5 shows where that time goes.</p>
 <blockquote class="blockquote">
 <p>In the WebUI, you should turn reasoning <code>Off</code>, on the <code>+</code> menu.</p>
@@ -729,7 +733,7 @@ There's 14 GB free, well over 1 GB, so I've shown a checkmark on the matrix.</co
 </blockquote>
 <p><strong>DANGER:</strong> <code>--tools all</code> exposes all seven tools, including <code>exec_shell_command</code>. You can switch each one off in the WebUI, but that is a browser setting, not a boundary. We won’t use it here, because we want to decide explicitly which tools the model gets.</p>
 <blockquote class="blockquote">
-<p><strong>If the WebUI stops working when you add <code>--tools</code></strong>, you’ve hit the CORS default. Several builds clamp <code>--cors-origins</code> to localhost when tools are enabled, on the reasoning that a server handing out file access shouldn’t accept requests from arbitrary origins. You’re reaching the board at its LAN address, not localhost, so the origins won’t match. Either name your origin explicitly (<code>--cors-origins http://&lt;UNO_Q_IP&gt;:8081</code>) or use the SSH tunnel from the safety note below and browse <code>http://localhost:8081</code>. The tunnel is the better habit.</p>
+<p><strong>The tunnel also keeps the WebUI working with <code>--tools</code>.</strong> Several builds clamp <code>--cors-origins</code> to localhost when tools are enabled, on the reasoning that a server handing out file access shouldn’t accept requests from arbitrary origins. Through the tunnel your browser is at <code>http://localhost:8081</code>, so the origins match. Browsing the board’s LAN address instead fails on those builds.</p>
 </blockquote>
 </section>
 <section id="step-3-open-the-webui-and-read-the-tools-panel" class="level3">
@@ -792,7 +796,7 @@ There's 14 GB free, well over 1 GB, so I've shown a checkmark on the matrix.</co
 <section id="step-6-give-it-a-writing-tool-on-purpose" class="level3">
 <h3 class="anchored" data-anchor-id="step-6-give-it-a-writing-tool-on-purpose">Step 6 — Give It a Writing Tool, On Purpose</h3>
 <p>Stop the server and restart it with one more tool:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">--tools</span> read_file,file_glob_search,grep_search,get_info,write_file</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">--tools</span> read_file,file_glob_search,grep_search,get_info,write_file</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Then ask:</p>
 <blockquote class="blockquote">
 <p><em>“Create a file called notes.txt in /home/arduino directory with a two-line note about edge AI.”</em></p>
@@ -815,10 +819,8 @@ There's 14 GB free, well over 1 GB, so I've shown a checkmark on the matrix.</co
 <ol type="1">
 <li><strong>These tools have no directory restriction.</strong> <code>read_file</code> will read anything the <code>arduino</code> user can read — no root, no allow-list of paths. That’s the sharpest contrast with what you’ll build in Section 7, where the file tools resolve every path against a fixed workspace.</li>
 <li><strong><code>exec_shell_command</code> runs with your full user permissions.</strong> There’s nothing between a confused model and a destructive command except the confirmation card. It has a place in an advanced demo; it has no place in a first workshop.</li>
-<li><strong><code>--host 0.0.0.0</code> is fine on a network you control</strong> — the board is headless, so there’s no other way to reach the WebUI from a laptop browser, and that’s the trust level chapters 2–4 already assume. On an untrusted network it stops being safe: anyone who can reach <code>/v1/chat/completions</code> can drive the same tools through the raw API, and the confirmation card only exists in the WebUI. A script hitting the API directly gets no such prompt. There, bind to <code>127.0.0.1</code> and tunnel:</li>
+<li><strong>That’s why this section binds to <code>127.0.0.1</code> and tunnels.</strong> On <code>0.0.0.0</code>, anyone on the same network who can reach <code>/v1/chat/completions</code> can drive the same tools through the raw API, and the confirmation card only exists in the WebUI. A script hitting the API directly gets no such prompt, so with <code>write_file</code> enabled in Step 6, a classmate’s script could overwrite <code>~/.bashrc</code> or <code>~/.ssh/authorized_keys</code> without anyone clicking anything. The rest of the chapter goes back to <code>0.0.0.0</code> because the Python agent runs in a container and must reach the server across the container gateway; that server has no <code>--tools</code>, so it exposes generation, not files.</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> <span class="at">-L</span> 8081:127.0.0.1:8081 arduino@<span class="op">&lt;</span>UNO_Q_IP<span class="op">&gt;</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># then open http://localhost:8081/ on your laptop</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="considerations-about-the-model" class="level3">
 <h3 class="anchored" data-anchor-id="considerations-about-the-model">Considerations about the model</h3>
@@ -910,7 +912,7 @@ There's 14 GB free, well over 1 GB, so I've shown a checkmark on the matrix.</co
 <p>Two consequences shape the code in Section 7:</p>
 <ul>
 <li><strong>The file tools work inside a fixed workspace directory</strong>, not the whole filesystem. <code>list_files</code>/<code>read_file</code> resolve every path against a fixed root and reject anything that lands outside it. To be clear about what this does and doesn’t buy you: it protects nothing <em>from you</em>. You own this board and you have a shell — you can read any file on it in the next terminal window. The boundary is there because the <em>model</em> is now choosing that path argument, and the model is influenced by text you didn’t write. It’s the same reason MCP filesystem servers take a root directory and Claude Code works within a project folder. You’ll meet this pattern again.</li>
-<li><strong><code>calculate</code> walks a restricted AST, it doesn’t <code>eval()</code>.</strong> A tempting shortcut is <code>eval(expression)</code> — don’t. Walking a restricted AST (numbers, <code>+ - * / **</code>, parentheses, unary minus — nothing else) gets you a real calculator with no code-execution surface. Section 7 also caps the exponent, for a reason that’s worth seeing fail before you read the fix.</li>
+<li><strong><code>calculate</code> walks a restricted AST, it doesn’t <code>eval()</code>.</strong> A tempting shortcut is <code>eval(expression)</code> — don’t. Walking a restricted AST (numbers, <code>+ - * / **</code>, parentheses, unary minus — nothing else) gets you a real calculator with no code-execution surface. Section 7 also caps the exponent and the size of every integer result, for a reason that’s worth seeing fail before you read the fix.</li>
 </ul>
 <p>This is the JSON Schema the model actually sees for two of the tools (the full list is in Section 8):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
@@ -1162,29 +1164,45 @@ requests==2.32.3</code></pre>
 <span id="cb20-132"><a href="#cb20-132" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb20-133"><a href="#cb20-133" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-134"><a href="#cb20-134" aria-hidden="true" tabindex="-1"></a>MAX_EXPONENT <span class="op">=</span> <span class="dv">64</span></span>
-<span id="cb20-135"><a href="#cb20-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-135"><a href="#cb20-135" aria-hidden="true" tabindex="-1"></a>MAX_RESULT_BITS <span class="op">=</span> <span class="dv">4096</span>  <span class="co"># about 1,200 decimal digits</span></span>
 <span id="cb20-136"><a href="#cb20-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-137"><a href="#cb20-137" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _eval_node(node):</span>
-<span id="cb20-138"><a href="#cb20-138" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(node, ast.Constant) <span class="kw">and</span> <span class="bu">isinstance</span>(node.value, (<span class="bu">int</span>, <span class="bu">float</span>)):</span>
-<span id="cb20-139"><a href="#cb20-139" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> node.value</span>
-<span id="cb20-140"><a href="#cb20-140" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(node, ast.BinOp) <span class="kw">and</span> <span class="bu">type</span>(node.op) <span class="kw">in</span> _ALLOWED_OPS:</span>
-<span id="cb20-141"><a href="#cb20-141" aria-hidden="true" tabindex="-1"></a>        left, right <span class="op">=</span> _eval_node(node.left), _eval_node(node.right)</span>
-<span id="cb20-142"><a href="#cb20-142" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(node.op, ast.Pow) <span class="kw">and</span> <span class="bu">abs</span>(right) <span class="op">&gt;</span> MAX_EXPONENT:</span>
-<span id="cb20-143"><a href="#cb20-143" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"exponent </span><span class="sc">{</span>right<span class="sc">}</span><span class="ss"> is above the limit of </span><span class="sc">{</span>MAX_EXPONENT<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb20-144"><a href="#cb20-144" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> _ALLOWED_OPS[<span class="bu">type</span>(node.op)](left, right)</span>
-<span id="cb20-145"><a href="#cb20-145" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(node, ast.UnaryOp) <span class="kw">and</span> <span class="bu">type</span>(node.op) <span class="kw">in</span> _ALLOWED_OPS:</span>
-<span id="cb20-146"><a href="#cb20-146" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> _ALLOWED_OPS[<span class="bu">type</span>(node.op)](_eval_node(node.operand))</span>
-<span id="cb20-147"><a href="#cb20-147" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"disallowed expression element: </span><span class="sc">{</span><span class="bu">type</span>(node)<span class="sc">.</span><span class="va">__name__</span><span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb20-148"><a href="#cb20-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-149"><a href="#cb20-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-150"><a href="#cb20-150" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate(expression):</span>
-<span id="cb20-151"><a href="#cb20-151" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Safely evaluate an arithmetic expression (+ - * / ** and parentheses only)."""</span></span>
-<span id="cb20-152"><a href="#cb20-152" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
-<span id="cb20-153"><a href="#cb20-153" aria-hidden="true" tabindex="-1"></a>        tree <span class="op">=</span> ast.parse(expression, mode<span class="op">=</span><span class="st">"eval"</span>)</span>
-<span id="cb20-154"><a href="#cb20-154" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> _eval_node(tree.body)</span>
-<span id="cb20-155"><a href="#cb20-155" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> json.dumps({<span class="st">"expression"</span>: expression, <span class="st">"result"</span>: result})</span>
-<span id="cb20-156"><a href="#cb20-156" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
-<span id="cb20-157"><a href="#cb20-157" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> json.dumps({<span class="st">"expression"</span>: expression, <span class="st">"error"</span>: <span class="bu">str</span>(e)})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb20-137"><a href="#cb20-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-138"><a href="#cb20-138" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _check_size(op, left, right):</span>
+<span id="cb20-139"><a href="#cb20-139" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Refuse an integer result too large to build cheaply."""</span></span>
+<span id="cb20-140"><a href="#cb20-140" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(op, ast.Pow) <span class="kw">and</span> <span class="bu">abs</span>(right) <span class="op">&gt;</span> MAX_EXPONENT:</span>
+<span id="cb20-141"><a href="#cb20-141" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"exponent </span><span class="sc">{</span>right<span class="sc">}</span><span class="ss"> is above the limit of </span><span class="sc">{</span>MAX_EXPONENT<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb20-142"><a href="#cb20-142" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> (<span class="bu">isinstance</span>(left, <span class="bu">int</span>) <span class="kw">and</span> <span class="bu">isinstance</span>(right, <span class="bu">int</span>)):</span>
+<span id="cb20-143"><a href="#cb20-143" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span>  <span class="co"># float results overflow to an error, not to a huge number</span></span>
+<span id="cb20-144"><a href="#cb20-144" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(op, ast.Pow) <span class="kw">and</span> right <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb20-145"><a href="#cb20-145" aria-hidden="true" tabindex="-1"></a>        bits <span class="op">=</span> left.bit_length() <span class="op">*</span> right</span>
+<span id="cb20-146"><a href="#cb20-146" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> <span class="bu">isinstance</span>(op, ast.Mult):</span>
+<span id="cb20-147"><a href="#cb20-147" aria-hidden="true" tabindex="-1"></a>        bits <span class="op">=</span> left.bit_length() <span class="op">+</span> right.bit_length()</span>
+<span id="cb20-148"><a href="#cb20-148" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb20-149"><a href="#cb20-149" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span></span>
+<span id="cb20-150"><a href="#cb20-150" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> bits <span class="op">&gt;</span> MAX_RESULT_BITS:</span>
+<span id="cb20-151"><a href="#cb20-151" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"result would need about </span><span class="sc">{</span>bits<span class="sc">}</span><span class="ss"> bits; the limit is </span><span class="sc">{</span>MAX_RESULT_BITS<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb20-152"><a href="#cb20-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-153"><a href="#cb20-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-154"><a href="#cb20-154" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _eval_node(node):</span>
+<span id="cb20-155"><a href="#cb20-155" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(node, ast.Constant) <span class="kw">and</span> <span class="bu">isinstance</span>(node.value, (<span class="bu">int</span>, <span class="bu">float</span>)):</span>
+<span id="cb20-156"><a href="#cb20-156" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> node.value</span>
+<span id="cb20-157"><a href="#cb20-157" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(node, ast.BinOp) <span class="kw">and</span> <span class="bu">type</span>(node.op) <span class="kw">in</span> _ALLOWED_OPS:</span>
+<span id="cb20-158"><a href="#cb20-158" aria-hidden="true" tabindex="-1"></a>        left, right <span class="op">=</span> _eval_node(node.left), _eval_node(node.right)</span>
+<span id="cb20-159"><a href="#cb20-159" aria-hidden="true" tabindex="-1"></a>        _check_size(node.op, left, right)</span>
+<span id="cb20-160"><a href="#cb20-160" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> _ALLOWED_OPS[<span class="bu">type</span>(node.op)](left, right)</span>
+<span id="cb20-161"><a href="#cb20-161" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(node, ast.UnaryOp) <span class="kw">and</span> <span class="bu">type</span>(node.op) <span class="kw">in</span> _ALLOWED_OPS:</span>
+<span id="cb20-162"><a href="#cb20-162" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> _ALLOWED_OPS[<span class="bu">type</span>(node.op)](_eval_node(node.operand))</span>
+<span id="cb20-163"><a href="#cb20-163" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"disallowed expression element: </span><span class="sc">{</span><span class="bu">type</span>(node)<span class="sc">.</span><span class="va">__name__</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb20-164"><a href="#cb20-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-165"><a href="#cb20-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-166"><a href="#cb20-166" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate(expression):</span>
+<span id="cb20-167"><a href="#cb20-167" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Safely evaluate an arithmetic expression (+ - * / ** and parentheses only)."""</span></span>
+<span id="cb20-168"><a href="#cb20-168" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb20-169"><a href="#cb20-169" aria-hidden="true" tabindex="-1"></a>        tree <span class="op">=</span> ast.parse(expression, mode<span class="op">=</span><span class="st">"eval"</span>)</span>
+<span id="cb20-170"><a href="#cb20-170" aria-hidden="true" tabindex="-1"></a>        result <span class="op">=</span> _eval_node(tree.body)</span>
+<span id="cb20-171"><a href="#cb20-171" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> json.dumps({<span class="st">"expression"</span>: expression, <span class="st">"result"</span>: result})</span>
+<span id="cb20-172"><a href="#cb20-172" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb20-173"><a href="#cb20-173" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> json.dumps({<span class="st">"expression"</span>: expression, <span class="st">"error"</span>: <span class="bu">str</span>(e)})</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Test it standalone before wiring it to a model — you want to know these work before you start debugging tool <em>selection</em>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/ArduinoApps/board-agent/python</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-c</span> <span class="st">"</span></span>
@@ -1206,9 +1224,10 @@ requests==2.32.3</code></pre>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-c</span> <span class="st">"import tools; print(tools.read_file('escape.txt'))"</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> ~/ArduinoApps/board-agent/workspace/escape.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><img src="./images/png/error-test.png" class="img-fluid"></p>
-<p><strong>Why <code>calculate</code> caps the exponent.</strong> “No <code>eval()</code>” and “safe” are not the same claim, and the gap between them is worth feeling directly. Comment out the two <code>MAX_EXPONENT</code> lines and run this — then open a second SSH session, because you’ll need it:</p>
+<p><strong>Why <code>calculate</code> caps the result size.</strong> “No <code>eval()</code>” and “safe” are not the same claim, and the gap between them is worth feeling directly. Comment out the <code>_check_size(...)</code> call in <code>_eval_node</code> and run this — then open a second SSH session, because you’ll need it:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-c</span> <span class="st">"import tools; print(tools.calculate('9**9**9'))"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Nothing gets executed that shouldn’t. The AST walk works exactly as advertised. The board just stops responding while Python tries to build a number with 370 million digits. A restricted grammar closed the code-execution hole; it did nothing about resource exhaustion, and on a 2 GB board with four A53 cores that’s not a theoretical concern. Put the lines back.</p>
+<p>Nothing gets executed that shouldn’t. The AST walk works exactly as advertised. The board just stops responding while Python tries to build a number with 370 million digits. A restricted grammar closed the code-execution hole; it did nothing about resource exhaustion, and on a 2 GB board with four A53 cores that’s not a theoretical concern. Put the call back.</p>
+<p>Notice why the check bounds the <em>result</em> rather than only the exponent. An exponent cap alone rejects <code>9**9**9</code>, but <code>(((10**64)**64)**64)**64</code> keeps every exponent at 64 and still builds a number with more than sixteen million digits, because each step raises the previous result. Bounding the size of each intermediate integer closes that path too: the expression now fails at its second step with an error the model can read.</p>
 <p><strong>The general version of that lesson</strong>: when you write a tool, ask what a <em>hostile</em> argument costs, not just what a <em>malicious</em> one does. Cost comes in more flavors than code execution — CPU, memory, disk, wall-clock time, and money if the tool calls a paid API.</p>
 </section>
 <section id="step-2-the-mcu-sketch-built-in-led-and-led-matrix" class="level3">
